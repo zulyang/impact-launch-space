@@ -51,6 +51,8 @@ public class LoginController {
 
 	    boolean registerSuccess = registerService.registerNewUser(username, password, email, user_type);
 	    if(registerSuccess){
+	    	String verificationCode = vtService.retrieveVerificationCode(username);
+	    	vtService.sendVerificationEmail(verificationCode);
 	    	return "registrationsuccessful";
 	    }
 	    else{

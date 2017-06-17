@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.impactlaunchspace.dao.UserDAO;
 import com.impactlaunchspace.dao.VerificationTokenDAO;
+import com.sendgrid.SendGrid;
 
 @Service
 public class VerificationTokenService {
@@ -58,5 +59,30 @@ public class VerificationTokenService {
 	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
 	    
 	    userDAO.lockAccount(username);
+	}
+	
+	public void sendVerificationEmail(String verificationCode){
+		SendGrid sendgrid = new SendGrid("allworldhealth", "Healthcare01");
+
+        SendGrid.Email email = new SendGrid.Email();
+
+        email.addTo("edward.foo.2015@sis.smu.edu.sg");
+        email.setFrom("you@youremail.com");
+        email.setSubject("Sending with SendGrid is Fun");
+        email.setHtml("and easy to do anywhere, even with Java");
+        try{
+        	SendGrid.Response response = sendgrid.send(email);
+        }catch(Exception e){
+        	System.out.print(e.getMessage());
+        	e.printStackTrace();
+        }
+    
+	}
+	
+	public String retrieveVerificationCode(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		
+	    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
+	    return verificationTokenDAO.retrieveVerificationCode(username);
 	}
 }

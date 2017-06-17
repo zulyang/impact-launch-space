@@ -1,0 +1,6 @@
+0:0:0:0:0:0:0:1 - - [17/Jun/2017:21:18:53 +0800] "GET /login HTTP/1.1" 404 5 http-bio-8080-exec-1 37
+0:0:0:0:0:0:0:1 - - [17/Jun/2017:21:18:56 +0800] "GET /login1 HTTP/1.1" 200 676 http-bio-8080-exec-2 494
+0:0:0:0:0:0:0:1 - - [17/Jun/2017:21:18:56 +0800] "GET /favicon.ico HTTP/1.1" 404 5 http-bio-8080-exec-3 2
+0:0:0:0:0:0:0:1 - - [17/Jun/2017:21:49:28 +0800] "GET /register HTTP/1.1" 200 1039 http-bio-8080-exec-5 143
+0:0:0:0:0:0:0:1 - - [17/Jun/2017:21:49:33 +0800] "POST /registernewuser HTTP/1.1" 200 1039 http-bio-8080-exec-7 422
+0:0:0:0:0:0:0:1 - - [17/Jun/2017:21:51:13 +0800] "POST /registernewuser HTTP/1.1" 200 448 http-bio-8080-exec-9 213
