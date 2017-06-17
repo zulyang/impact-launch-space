@@ -62,12 +62,12 @@ public class VerificationTokenService {
 	}
 	
 	public void sendVerificationEmail(String verificationCode){
-		SendGrid sendgrid = new SendGrid("allworldhealth", "Healthcare01");
+		SendGrid sendgrid = new SendGrid("codezilla1", "Codezilla1");
 
         SendGrid.Email email = new SendGrid.Email();
 
-        email.addTo("edward.foo.2015@sis.smu.edu.sg");
-        email.setFrom("you@youremail.com");
+        email.addTo("edward.foo.2015@smu.edu.sg");
+        email.setFrom("edward.foo.2015@smu.edu.sg");
         email.setSubject("Sending with SendGrid is Fun");
         email.setHtml("and easy to do anywhere, even with Java");
         try{
@@ -78,6 +78,8 @@ public class VerificationTokenService {
         }
     
 	}
+	
+
 	
 	public String retrieveVerificationCode(String username){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
