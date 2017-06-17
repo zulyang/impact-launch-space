@@ -1,5 +1,6 @@
 package com.impactlaunchspace.login;
 
+import java.io.IOException;
 import java.util.Random;
 
 import org.springframework.context.ApplicationContext;
@@ -8,6 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.impactlaunchspace.dao.UserDAO;
 import com.impactlaunchspace.dao.VerificationTokenDAO;
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
 @Service
@@ -61,20 +68,34 @@ public class VerificationTokenService {
 	    userDAO.lockAccount(username);
 	}
 	
-	public void sendVerificationEmail(String verificationCode){
-		SendGrid sendgrid = new SendGrid("codezilla1", "Codezilla1");
+	public void sendVerificationEmail(String verificationCode, String email){
+		Email from = new Email("admin@impactlaunchspace.com");
+        String subject = "Verification code for ImpactLaunch.Space";
+        Email to = new Email(email);
+        Content content = new Content("text/plain", "You have recently registered for an account at ImpactLaunch.Space. \n" +
+        "Your verification code is: " + verificationCode);
+        Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid.Email email = new SendGrid.Email();
+        SendGrid sendGrid = new SendGrid("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");
+        Request request = new Request();
 
-        email.addTo("edward.foo.2015@smu.edu.sg");
-        email.setFrom("edward.foo.2015@smu.edu.sg");
-        email.setSubject("Sending with SendGrid is Fun");
-        email.setHtml("and easy to do anywhere, even with Java");
-        try{
-        	SendGrid.Response response = sendgrid.send(email);
-        }catch(Exception e){
-        	System.out.print(e.getMessage());
-        	e.printStackTrace();
+        try {
+            request.setMethod(Method.POST);
+            request.setBody(mail.build());
+
+            // make request
+            request.setBaseUri(sendGrid.getHost());
+            request.setEndpoint("/" + sendGrid.getVersion() + "/mail/send");
+            for (String key : sendGrid.getRequestHeaders().keySet())
+                request.addHeader(key, sendGrid.getRequestHeaders().get(key));
+
+            // send
+            Response response = sendGrid.makeCall(request);
+            System.out.println("status code: " + response.getStatusCode());
+            System.out.println("body: " + response.getBody());
+            System.out.println("headers: " + response.getHeaders());
+        } catch (IOException ex){
+            ex.printStackTrace();
         }
     
 	}
