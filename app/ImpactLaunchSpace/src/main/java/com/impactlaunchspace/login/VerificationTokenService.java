@@ -20,6 +20,8 @@ import com.sendgrid.SendGrid;
 @Service
 public class VerificationTokenService {
 	
+	LoginService loginService;
+	
 	//this method generates a 6 digit random number
 	public String generateToken(){
 		Random rand = new Random();
@@ -100,6 +102,18 @@ public class VerificationTokenService {
     
 	}
 	
+	public void updateVerificationCode(String newCode, String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+
+	    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
+	    verificationTokenDAO.updateVerificationCode(newCode, username);
+	}
+	
+	public void regenerateVerificationCode(String username, String email){
+		String newVerificationCode = generateToken();
+		updateVerificationCode(newVerificationCode, username);
+		sendVerificationEmail(retrieveVerificationCode(username), email);
+	}
 
 	
 	public String retrieveVerificationCode(String username){

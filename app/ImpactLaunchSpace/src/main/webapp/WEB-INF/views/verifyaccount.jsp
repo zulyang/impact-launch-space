@@ -12,8 +12,8 @@
 <form method="post" action="verifyaccount">
 		
 		<fieldset>
-		<label name ="username">Username/Email</label> 
-		<input name="username" type="text" required="required"/>
+		<label name ="usernameemail">Username/Email</label> 
+		<input name="usernameemail" type="text" required="required"/>
 		</fieldset>
 		
 		<br /> 

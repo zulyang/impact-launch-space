@@ -10,14 +10,14 @@ import com.impactlaunchspace.entity.User;
 
 @Service
 public class LoginService {
-	public boolean authenticate(String username, String password){
+	public boolean authenticate(String usernameemail, String password){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 
 	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
-		User user = userDAO.findByUsername(username);
+		User user = userDAO.findByUsername(usernameemail);
 		//if user is null, 
 		if(user == null){
-			user = userDAO.findByEmail(username);
+			user = userDAO.findByEmail(usernameemail);
 		}
 		
 		if(user!= null){
@@ -94,15 +94,53 @@ public class LoginService {
 	    userDAO.unlockAccount(username);	
 	}
 	
-	public boolean userExists(String username) {
+	public boolean userExists(String usernameemail) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
 	    User user = null;
-	    user = userDAO.findByUsername(username);
+	    user = userDAO.findByUsername(usernameemail);
 	    if(user == null){
-	    	return false;
+	    	user = userDAO.findByEmail(usernameemail);
+	    	if(user == null){
+	    		return false;
+	    	}
+	    	return true;
 	    }else{
 	    	return true;
+	    }
+	}
+	
+	//this method returns the username from a possible username/email field
+	public String returnUsernameFromEmail(String usernameemail){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
+	    User user = null;
+	    user = userDAO.findByUsername(usernameemail);
+	    if(user == null){
+	    	user = userDAO.findByEmail(usernameemail);
+	    	if(user == null){
+	    		return null;
+	    	}
+	    	return user.getUsername();
+	    }else{
+	    	return usernameemail;
+	    }
+	}
+	
+	//this method returns the email from a possible username/email field
+	public String returnEmailFromUsername(String usernameemail){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
+	    User user = null;
+	    user = userDAO.findByEmail(usernameemail);
+	    if(user == null){
+	    	user = userDAO.findByUsername(usernameemail);
+	    	if(user == null){
+	    		return null;
+	    	}
+	    	return user.getEmail();
+	    }else{
+	    	return usernameemail;
 	    }
 	}
 }
