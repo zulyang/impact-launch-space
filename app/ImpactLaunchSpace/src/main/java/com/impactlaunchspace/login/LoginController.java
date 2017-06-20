@@ -43,7 +43,17 @@ public class LoginController {
 	@RequestMapping(value = "/sendresetcodelocked", method = RequestMethod.POST)
 	public String sendResetCodeForLockedAccounts(@RequestParam String usernameemail
 			,@RequestParam String password,ModelMap model) {
-		return "unlockaccount";
+		boolean userExists = loginService.userExists(usernameemail);
+		if(userExists){
+			boolean isUser = loginService.authenticate(usernameemail, password);
+			String email = loginService.returnEmailFromUsername(usernameemail);
+			String username = loginService.returnUsernameFromEmail(usernameemail);
+			rtService.regenerateResetCode(username, email);
+			return "unlocksuccessful";
+		}else{
+			//print message that no such email exists
+			return "unlockaccount";
+		}
 	}
 
 	//Register Users

@@ -6,8 +6,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.ResetTokenDAO;
 import com.impactlaunchspace.dao.UserDAO;
 import com.impactlaunchspace.dao.VerificationTokenDAO;
+import com.impactlaunchspace.entity.ResetToken;
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.entity.VerificationToken;
 
@@ -21,10 +23,8 @@ public class RegisterService {
 				try{
 					ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 				
-
 				    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
 				    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
-				    
 				    String cipherpw = BCrypt.hashpw(password, BCrypt.gensalt());
 				    User user = new User(username, cipherpw, email, user_type);
 				    userDAO.insert(user);
