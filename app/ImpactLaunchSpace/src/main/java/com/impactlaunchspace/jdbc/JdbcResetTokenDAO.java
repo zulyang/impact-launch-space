@@ -7,9 +7,10 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import com.impactlaunchspace.dao.ResetTokenDAO;
 import com.impactlaunchspace.entity.ResetToken;
 
-public class JdbcResetTokenDAO {
+public class JdbcResetTokenDAO implements ResetTokenDAO{
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
@@ -42,7 +43,7 @@ public class JdbcResetTokenDAO {
 	}
 	
 	
-	public String retrieveVerificationCode(String username){
+	public String retrieveResetCode(String username){
 		String sql = "SELECT * FROM reset_tokens WHERE username = ?";
 
 		Connection conn = null;
@@ -71,7 +72,7 @@ public class JdbcResetTokenDAO {
 		}
 	}
 	
-	public void updateVerificationCode(String resetCode, String username) {
+	public void updateResetCode(String resetCode, String username) {
 		//this method is used to update the verification code in the VT DB
 
 		String sql = "UPDATE reset_tokens SET reset_code = ? WHERE username = ?";

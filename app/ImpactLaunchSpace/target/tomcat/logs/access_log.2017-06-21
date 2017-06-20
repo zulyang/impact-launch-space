@@ -69,3 +69,15 @@
 0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:37:46 +0800] "GET /verifyaccount HTTP/1.1" 200 867 http-bio-8080-exec-2 16
 0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:38:11 +0800] "POST /verifyaccount HTTP/1.1" 200 331 http-bio-8080-exec-3 349
 0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:38:13 +0800] "GET /verifyaccount HTTP/1.1" 200 867 http-bio-8080-exec-4 3
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:41:22 +0800] "GET /unlockmyaccount HTTP/1.1" 200 529 http-bio-8080-exec-8 369
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:41:27 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 320 http-bio-8080-exec-9 412
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:42:45 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 320 http-bio-8080-exec-1 446
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:42:48 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 320 http-bio-8080-exec-1 296
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:43:00 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 320 http-bio-8080-exec-1 298
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:51:21 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 320 http-bio-8080-exec-5 291
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:02:51:58 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 320 http-bio-8080-exec-2 767
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:03:02:09 +0800] "GET /login1 HTTP/1.1" 200 676 http-bio-8080-exec-4 34
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:03:02:13 +0800] "GET /register HTTP/1.1" 200 1039 http-bio-8080-exec-6 7
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:03:02:28 +0800] "POST /registernewuser HTTP/1.1" 200 564 http-bio-8080-exec-9 606
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:03:05:01 +0800] "POST /registernewuser HTTP/1.1" 200 564 http-bio-8080-exec-1 1245
+0:0:0:0:0:0:0:1 - - [21/Jun/2017:03:05:09 +0800] "POST /sendresetcodelocked HTTP/1.1" 200 313 http-bio-8080-exec-4 467
