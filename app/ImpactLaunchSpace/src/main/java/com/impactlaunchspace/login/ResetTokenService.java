@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.impactlaunchspace.dao.UserDAO;
-import com.impactlaunchspace.dao.VerificationTokenDAO;
+import com.impactlaunchspace.dao.ResetTokenDAO;
 import com.sendgrid.Content;
 import com.sendgrid.Email;
 import com.sendgrid.Mail;
@@ -18,9 +18,8 @@ import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
 @Service
-public class VerificationTokenService {
-	
-	LoginService loginService;
+public class ResetTokenService {
+LoginService loginService;
 	
 	//this method generates a 6 digit random number
 	public String generateToken(){
@@ -37,17 +36,17 @@ public class VerificationTokenService {
 	public boolean verifyToken(String token, String username){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 
-	    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
+	    ResetTokenDAO resetTokenDAO = (ResetTokenDAO) context.getBean("resetTokenDAO");
 	    
-	    String verificationCode = null;
+	    String resetCode = null;
 	    
-	    verificationCode = verificationTokenDAO.retrieveVerificationCode(username);
+	    resetCode = resetTokenDAO.retrieveResetCode(username);
 	    
-	    if(verificationCode == null){
+	    if(resetCode == null){
 	    	return false;
 	    }
 	    
-	    if(token.equals(verificationCode)){
+	    if(token.equals(resetCode)){
 	    	return true;
 	    }
 	    
@@ -70,12 +69,12 @@ public class VerificationTokenService {
 	    userDAO.lockAccount(username);
 	}
 	
-	public void sendVerificationEmail(String verificationCode, String email){
+	public void sendResetEmail(String resetCode, String email){
 		Email from = new Email("admin@impactlaunchspace.com");
-        String subject = "Verification code for ImpactLaunch.Space";
+        String subject = "Unlocking account at ImpactLaunch.Space";
         Email to = new Email(email);
-        Content content = new Content("text/plain", "You have recently registered for an account at ImpactLaunch.Space. \n" +
-        "Your verification code is: " + verificationCode);
+        Content content = new Content("text/plain", "You have recently requested to unlock your account at ImpactLaunch.Space. \n" +
+        "Your OTP code is: " + resetCode);
         Mail mail = new Mail(from, subject, to, content);
 
 
@@ -103,24 +102,24 @@ public class VerificationTokenService {
     
 	}
 	
-	public void updateVerificationCode(String newCode, String username){
+	public void updateResetCode(String newCode, String username){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 
-	    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
-	    verificationTokenDAO.updateVerificationCode(newCode, username);
+		ResetTokenDAO resetTokenDAO = (ResetTokenDAO) context.getBean("resetTokenDAO");
+		resetTokenDAO.updateResetCode(newCode, username);
 	}
 	
-	public void regenerateVerificationCode(String username, String email){
-		String newVerificationCode = generateToken();
-		updateVerificationCode(newVerificationCode, username);
-		sendVerificationEmail(retrieveVerificationCode(username), email);
+	public void regenerateResetCode(String username, String email){
+		String newResetCode = generateToken();
+		updateResetCode(newResetCode, username);
+		sendResetEmail(retrieveResetCode(username), email);
 	}
 
 	
-	public String retrieveVerificationCode(String username){
+	public String retrieveResetCode(String username){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		
-	    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
-	    return verificationTokenDAO.retrieveVerificationCode(username);
+		ResetTokenDAO resetTokenDAO = (ResetTokenDAO) context.getBean("resetTokenDAO");
+	    return resetTokenDAO.retrieveResetCode(username);
 	}
 }

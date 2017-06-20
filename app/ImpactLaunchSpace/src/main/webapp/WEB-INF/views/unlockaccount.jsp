@@ -8,9 +8,12 @@
 </head>
 <body>
 <h1> Unlock My Account</h1>
-	<form action="resendverification" method="POST">
+	<form action="sendresetcodelocked" method="POST">
 		Username/Email:
 		<input type="text" name="usernameemail"/>
+		</br>
+		Password:
+		<input type="text" name="password"/>
 		</br>
 		<input type="submit" value="Login"/>
 	</form>

@@ -1,4 +1,4 @@
-package com.impactlaunchspace.login;
+package com.impactlaunchspace.entity;
 
 public class VerificationToken {
 	private String verification_code;

@@ -7,25 +7,24 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import com.impactlaunchspace.dao.VerificationTokenDAO;
-import com.impactlaunchspace.entity.VerificationToken;
+import com.impactlaunchspace.entity.ResetToken;
 
-public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
+public class JdbcResetTokenDAO {
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
-	public void insert(VerificationToken verification_token){
-		String sql = "INSERT INTO verification_tokens " + "(verification_code, username) VALUES (?, ?)";
+	public void insert(ResetToken reset_token){
+		String sql = "INSERT INTO reset_tokens " + "(reset_code, username) VALUES (?, ?)";
 		Connection conn = null;
 
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, verification_token.getVerification_code());
-			ps.setString(2,  verification_token.getUsername());
+			ps.setString(1, reset_token.getReset_code());
+			ps.setString(2,  reset_token.getUsername());
 			ps.executeUpdate();
 			ps.close();
 
@@ -44,7 +43,7 @@ public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
 	
 	
 	public String retrieveVerificationCode(String username){
-		String sql = "SELECT * FROM verification_tokens WHERE username = ?";
+		String sql = "SELECT * FROM reset_tokens WHERE username = ?";
 
 		Connection conn = null;
 
@@ -52,14 +51,14 @@ public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
-			VerificationToken verification_token = null;
+			ResetToken reset_token = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				verification_token = new VerificationToken(rs.getString("verification_code"), rs.getString("username"));
+				reset_token = new ResetToken(rs.getString("reset_code"), rs.getString("username"));
 			}
 			rs.close();
 			ps.close();
-			return verification_token.getVerification_code();
+			return reset_token.getReset_code();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -72,17 +71,17 @@ public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
 		}
 	}
 	
-	public void updateVerificationCode(String verificationCode, String username) {
+	public void updateVerificationCode(String resetCode, String username) {
 		//this method is used to update the verification code in the VT DB
 
-		String sql = "UPDATE verification_tokens SET verification_code = ? WHERE username = ?";
+		String sql = "UPDATE reset_tokens SET reset_code = ? WHERE username = ?";
 
 		Connection conn = null;
 		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, verificationCode);
+			ps.setString(1, resetCode);
 			ps.setString(2, username);
 			ps.executeUpdate();
 			ps.close();

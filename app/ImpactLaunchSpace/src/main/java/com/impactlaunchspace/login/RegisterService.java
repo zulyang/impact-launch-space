@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.impactlaunchspace.dao.UserDAO;
 import com.impactlaunchspace.dao.VerificationTokenDAO;
 import com.impactlaunchspace.entity.User;
+import com.impactlaunchspace.entity.VerificationToken;
 
 @Service
 public class RegisterService {

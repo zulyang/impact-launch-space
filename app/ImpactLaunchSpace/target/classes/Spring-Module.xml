@@ -7,5 +7,6 @@
 	<import resource="users/Spring-Users.xml" />
 	<import resource="customer/Spring-Customer.xml" />
 	<import resource="verificationtoken/Spring-VerificationToken.xml" />
+	<import resource="resettoken/Spring-ResetToken.xml" />
 
 </beans>

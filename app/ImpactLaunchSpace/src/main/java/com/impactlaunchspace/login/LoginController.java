@@ -4,10 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -16,13 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.impactlaunchspace.dao.UserDAO;
-import com.impactlaunchspace.dao.VerificationTokenDAO;
-import com.impactlaunchspace.entity.User;
 import com.in28minutes.exception.ExceptionController;
-import com.in28minutes.todo.TodoService;
 
 @Controller
 public class LoginController {
@@ -35,6 +27,9 @@ public class LoginController {
 	@Autowired
 	RegisterService registerService;
 	
+	@Autowired
+	ResetTokenService rtService;
+	
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
 
@@ -44,24 +39,13 @@ public class LoginController {
 	public String showUnlockPage(ModelMap model) {
 		return "unlockaccount";
 	}
-
-	@RequestMapping(value = "/resendverification", method = RequestMethod.POST)
-	public String unlockAccount(@RequestParam String usernameemail,
-			ModelMap model) {
-		model.clear();
-		boolean userExists = loginService.userExists(usernameemail);
-		if(userExists){
-			String email = loginService.returnEmailFromUsername(usernameemail);
-			String username = loginService.returnUsernameFromEmail(usernameemail);
-			vtService.regenerateVerificationCode(username, email);
-			return "unlocksuccessful";
-		}else{
-			//print message that no such email exists
-			return "resendverification";
-		}
+	
+	@RequestMapping(value = "/sendresetcodelocked", method = RequestMethod.POST)
+	public String sendResetCodeForLockedAccounts(@RequestParam String usernameemail
+			,@RequestParam String password,ModelMap model) {
+		return "unlockaccount";
 	}
-		
-		
+
 	//Register Users
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegisterPage(ModelMap model) {
@@ -71,12 +55,12 @@ public class LoginController {
 	@RequestMapping(value = "/registernewuser", method = RequestMethod.POST)
 	public String registerNewUserPost(@RequestParam String username,@RequestParam String password,
 			@RequestParam String email, @RequestParam String user_type,ModelMap model) {
-		model.clear();
-
+		model.put("email", email);
 	    boolean registerSuccess = registerService.registerNewUser(username, password, email, user_type);
 	    if(registerSuccess){
 	    	String verificationCode = vtService.retrieveVerificationCode(username);
 	    	vtService.sendVerificationEmail(verificationCode, email);
+	    	//below is for resending verification
 	    	return "registrationsuccessful";
 	    }
 	    else{
@@ -112,6 +96,39 @@ public class LoginController {
 		}
 		
 		return "verifyaccount";
+	}
+	
+	//Resending Verification Code at potentially other screens
+	@RequestMapping(value = "/resendverification", method = RequestMethod.POST)
+	public String unlockAccount(@RequestParam String usernameemail,
+			ModelMap model) {
+		model.clear();
+		boolean userExists = loginService.userExists(usernameemail);
+		if(userExists){
+			String email = loginService.returnEmailFromUsername(usernameemail);
+			String username = loginService.returnUsernameFromEmail(usernameemail);
+			vtService.regenerateVerificationCode(username, email);
+			return "unlocksuccessful";
+		}else{
+			//print message that no such email exists
+			return "resendverification";
+		}
+	}
+	
+	//Resending Verification Code At success screen (after register)
+	@RequestMapping(value = "/resendverification", method = RequestMethod.GET)
+	public String unlockAccount2(@RequestParam String email,
+			ModelMap model) {
+		boolean userExists = loginService.userExists(email);
+		if(userExists){
+			String email2 = loginService.returnEmailFromUsername(email);
+			String username = loginService.returnUsernameFromEmail(email);
+			vtService.regenerateVerificationCode(username, email2);
+			return "unlocksuccessful";
+		}else{
+			//print message that no such email exists
+			return "resendverification";
+		}
 	}
 	
 	//Login and authenticate

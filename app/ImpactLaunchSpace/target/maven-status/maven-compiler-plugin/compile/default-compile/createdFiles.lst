@@ -1,0 +1,5 @@
+com\impactlaunchspace\jdbc\JdbcResetTokenDAO.class
+com\impactlaunchspace\entity\ResetToken.class
+com\impactlaunchspace\entity\VerificationToken.class
+com\impactlaunchspace\dao\ResetTokenDAO.class
+com\impactlaunchspace\login\ResetTokenService.class
