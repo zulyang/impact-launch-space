@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import com.impactlaunchspace.dao.VerificationTokenDAO;
-import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.login.VerificationToken;
 
 public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
@@ -42,6 +41,8 @@ public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
 			}
 		}
 	}
+	
+	
 	public String retrieveVerificationCode(String username){
 		String sql = "SELECT * FROM verification_tokens WHERE username = ?";
 
@@ -70,5 +71,32 @@ public class JdbcVerificationTokenDAO implements VerificationTokenDAO{
 			}
 		}
 	}
+	
+	public void updateVerificationCode(String verificationCode, String username) {
+		//this method is used to update the verification code in the VT DB
 
+		String sql = "UPDATE verification_tokens SET verification_code = ? WHERE username = ?";
+
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, verificationCode);
+			ps.setString(2, username);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

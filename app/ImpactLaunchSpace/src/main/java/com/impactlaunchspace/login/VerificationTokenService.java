@@ -20,6 +20,8 @@ import com.sendgrid.SendGrid;
 @Service
 public class VerificationTokenService {
 	
+	LoginService loginService;
+	
 	//this method generates a 6 digit random number
 	public String generateToken(){
 		Random rand = new Random();
@@ -75,6 +77,7 @@ public class VerificationTokenService {
         Content content = new Content("text/plain", "You have recently registered for an account at ImpactLaunch.Space. \n" +
         "Your verification code is: " + verificationCode);
         Mail mail = new Mail(from, subject, to, content);
+<<<<<<< HEAD
 
         SendGrid sendGrid = new SendGrid("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");
         Request request = new Request();
@@ -89,6 +92,22 @@ public class VerificationTokenService {
             for (String key : sendGrid.getRequestHeaders().keySet())
                 request.addHeader(key, sendGrid.getRequestHeaders().get(key));
 
+=======
+
+        SendGrid sendGrid = new SendGrid("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");
+        Request request = new Request();
+
+        try {
+            request.setMethod(Method.POST);
+            request.setBody(mail.build());
+
+            // make request
+            request.setBaseUri(sendGrid.getHost());
+            request.setEndpoint("/" + sendGrid.getVersion() + "/mail/send");
+            for (String key : sendGrid.getRequestHeaders().keySet())
+                request.addHeader(key, sendGrid.getRequestHeaders().get(key));
+
+>>>>>>> AccountModule
             // send
             Response response = sendGrid.makeCall(request);
             System.out.println("status code: " + response.getStatusCode());
@@ -100,6 +119,18 @@ public class VerificationTokenService {
     
 	}
 	
+	public void updateVerificationCode(String newCode, String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+
+	    VerificationTokenDAO verificationTokenDAO = (VerificationTokenDAO) context.getBean("verificationTokenDAO");
+	    verificationTokenDAO.updateVerificationCode(newCode, username);
+	}
+	
+	public void regenerateVerificationCode(String username, String email){
+		String newVerificationCode = generateToken();
+		updateVerificationCode(newVerificationCode, username);
+		sendVerificationEmail(retrieveVerificationCode(username), email);
+	}
 
 	
 	public String retrieveVerificationCode(String username){

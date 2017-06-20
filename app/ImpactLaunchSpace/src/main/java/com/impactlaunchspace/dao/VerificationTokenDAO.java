@@ -6,4 +6,5 @@ import com.impactlaunchspace.login.VerificationToken;
 public interface VerificationTokenDAO {
 	public void insert(VerificationToken verification_token);
 	public String retrieveVerificationCode(String username);
+	public void updateVerificationCode(String verificationCode, String username);
 }

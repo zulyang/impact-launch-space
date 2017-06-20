@@ -7,11 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>Account is locked</h2>
-
-User is not verified or locked. 
-<br/>
-
-<a href="/unlockmyaccount">Resend my verification code.</a>
+<h1> Unlock My Account</h1>
+	<form action="resendverification" method="POST">
+		Username/Email:
+		<input type="text" name="usernameemail"/>
+		</br>
+		<input type="submit" value="Login"/>
+	</form>
 </body>
 </html>

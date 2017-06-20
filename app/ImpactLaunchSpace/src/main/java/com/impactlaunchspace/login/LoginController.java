@@ -37,7 +37,31 @@ public class LoginController {
 	
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
-	
+
+
+	//Unlocking locked accounts
+	@RequestMapping(value = "/unlockmyaccount", method = RequestMethod.GET)
+	public String showUnlockPage(ModelMap model) {
+		return "unlockaccount";
+	}
+
+	@RequestMapping(value = "/resendverification", method = RequestMethod.POST)
+	public String unlockAccount(@RequestParam String usernameemail,
+			ModelMap model) {
+		model.clear();
+		boolean userExists = loginService.userExists(usernameemail);
+		if(userExists){
+			String email = loginService.returnEmailFromUsername(usernameemail);
+			String username = loginService.returnUsernameFromEmail(usernameemail);
+			vtService.regenerateVerificationCode(username, email);
+			return "unlocksuccessful";
+		}else{
+			//print message that no such email exists
+			return "resendverification";
+		}
+	}
+		
+		
 	//Register Users
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegisterPage(ModelMap model) {
@@ -74,12 +98,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.POST)
-	public String verifyAccount(@RequestParam String username, @RequestParam String password
+	public String verifyAccount(@RequestParam String usernameemail, @RequestParam String password
 			,@RequestParam String verificationcode,ModelMap model) {
-		boolean isUser = loginService.authenticate(username, password);
+		boolean isUser = loginService.authenticate(usernameemail, password);
 		if(isUser){
-			boolean isTokenValid = vtService.verifyToken(verificationcode, username);
-			vtService.unlock(username);
+			boolean isTokenValid = vtService.verifyToken(verificationcode, usernameemail);
+			vtService.unlock(usernameemail);
 			if(isTokenValid){
 				return "verificationsuccessful";
 			}else{
@@ -138,7 +162,6 @@ public class LoginController {
 			}
 		return "login1";
 	}
-	
 	
 	
 	@ExceptionHandler(value = Exception.class)
