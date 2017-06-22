@@ -4,21 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login Page</title>
+<title>Forgot Passwrd</title>
 </head>
 <body>
-
-<form action="authenticate" method="POST">
-Username:
-<input type="text" name="username"/>
-Password:
-<input type="text" name="password"/>
-</br>
-<input type="checkbox" name="rememberMe"/> Keep me Signed in
-</br>
-<input type="submit" value="Login"/>
+<h1>Forgot my password</h1>
+<form action="forgotpassword" method="POST">
+		Username/Email:
+		<input type="text" name="usernameemail"/>
+		</br>
+		<input type="submit" value="Login"/>
 </form>
-
 
 </body>
 </html>

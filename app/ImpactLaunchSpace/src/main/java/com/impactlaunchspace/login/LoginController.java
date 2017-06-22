@@ -191,6 +191,61 @@ public class LoginController {
 	}
 	
 	
+	//forget my password
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
+	public String showForgotPasswordPage(ModelMap model) {
+		return "forgotpassword";
+	}
+	
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
+	public String resetPassword(@RequestParam String usernameemail, ModelMap model) {
+		boolean userExists = loginService.userExists(usernameemail);
+		if(userExists){
+			
+			String email = loginService.returnEmailFromUsername(usernameemail);
+			String username = loginService.returnUsernameFromEmail(usernameemail);
+			
+			//reset login attempts and lock the account if the account has been reported to be forgotten
+			loginService.lockAccount(username);
+			loginService.resetLoginAttempts(username);
+			rtService.regenerateResetCode(username, email);
+			model.addAttribute("username", username);
+			model.addAttribute("email", email);
+			return "emailsent";
+		}
+		
+		//else error at current page
+		return "forgotpassword";
+		
+	}
+	
+	@RequestMapping(value = "/verifyreset", method = RequestMethod.POST)
+	public String verifyResetCode(@RequestParam String resetcode,@RequestParam String username,
+			@RequestParam String email, ModelMap model) {
+		boolean isResetCode = rtService.verifyToken(resetcode, username);
+		if(isResetCode){
+			model.addAttribute("username",username);
+			model.addAttribute("email",email);
+			rtService.unlock(username);
+			return "resetpassword";
+		}
+		
+		return "forgotpassword";
+	}
+	
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+	public String setNewPassword(@RequestParam String password1,@RequestParam String password2,
+			@RequestParam String username,ModelMap model) {
+		if(password1.equals(password2)){
+			loginService.unlockAccount(username);
+			rtService.setNewPassword(password1, username);
+			model.addAttribute("username",username);
+			return "loginsuccessful";
+		}
+		return "forgotpassword";
+	}
+	
+	
 	@ExceptionHandler(value = Exception.class)
 	public String handleError(HttpServletRequest req, Exception exception) {
 		logger.error("Request: " + req.getRequestURL() + " raised " + exception);

@@ -122,4 +122,12 @@ LoginService loginService;
 		ResetTokenDAO resetTokenDAO = (ResetTokenDAO) context.getBean("resetTokenDAO");
 	    return resetTokenDAO.retrieveResetCode(username);
 	}
+	
+	public void setNewPassword(String password, String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		
+	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
+	    
+	    userDAO.updatePasswordInDB(username, password);
+	}
 }

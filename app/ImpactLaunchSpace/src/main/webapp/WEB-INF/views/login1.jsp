@@ -20,5 +20,7 @@
 		</br>
 		<input type="submit" value="Login"/>
 	</form>
+	
+	<a href="/forgotpassword">Forgot Your Password?</a>
 </body>
 </html>
