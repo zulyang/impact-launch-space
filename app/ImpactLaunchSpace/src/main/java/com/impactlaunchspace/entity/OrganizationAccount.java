@@ -5,6 +5,7 @@ import java.sql.Blob;
 public class OrganizationAccount{
 	//primary key is username, this is also the company name
 	private String username;
+	private String email;
 	
 	//Multiple countries are available for input, seperated with commas
 	private String countriesOfOperation;
@@ -26,11 +27,12 @@ public class OrganizationAccount{
 	private String contactDetails;
 	
 	
-	public OrganizationAccount(String username, String countriesOfOperation, String jobSector1, String jobSector2,
+	public OrganizationAccount(String username, String email, String countriesOfOperation, String jobSector1, String jobSector2,
 			String jobSector3, boolean needsSupport, boolean offeringSupport, Blob profilePicture, String companyBio,
 			String contactDetails) {
 		super();
 		this.username = username;
+		this.email = email;
 		this.countriesOfOperation = countriesOfOperation;
 		this.jobSector1 = jobSector1;
 		this.jobSector2 = jobSector2;

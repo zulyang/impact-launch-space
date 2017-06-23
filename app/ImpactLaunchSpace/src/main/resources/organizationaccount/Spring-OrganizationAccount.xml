@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<bean id="customerDAO" class="com.in28minutes.JDBCmappers.JdbcCustomerDAO">
+	<bean id="organizationAccountDAO" class="com.impactlaunchspace.jdbc.JdbcOrganizationAccountDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 

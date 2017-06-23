@@ -5,8 +5,9 @@
 
 	<import resource="database/Spring-Datasource.xml" />
 	<import resource="users/Spring-Users.xml" />
-	<import resource="customer/Spring-Customer.xml" />
 	<import resource="verificationtoken/Spring-VerificationToken.xml" />
 	<import resource="resettoken/Spring-ResetToken.xml" />
+	<import resource="organizationaccount/Spring-OrganizationAccount.xml" />
+	<import resource="individualaccount/Spring-IndividualAccount.xml" />
 
 </beans>

@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/resettoken"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/organizationaccount"/>
         <property name="context-root" value="in28Minutes-first-webapp"/>
         <property name="java-output-path" value="/Step07/target/classes"/>
     </wb-module>

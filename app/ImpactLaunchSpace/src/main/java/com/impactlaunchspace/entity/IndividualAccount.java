@@ -6,6 +6,7 @@ import java.sql.Date;
 public class IndividualAccount{
 	//primary key is username
 	private String username;
+	private String email;
 	
 	private Date dateOfBirth;
 	private String country;
@@ -49,13 +50,14 @@ public class IndividualAccount{
 	private String contactDetails;
 	
 	//Default constructor, some fields can accept null values
-	public IndividualAccount(String username, Date dateOfBirth, String country, String jobTitle, String jobSector1,
+	public IndividualAccount(String username, String email,Date dateOfBirth, String country, String jobTitle, String jobSector1,
 			int js1YearsOfExperience, String jobSector2, int js2YearsOfExperience, String jobSector3,
 			int js3YearsOfExperience, String skills, String interestedSectorsToUser, String importantSectorsToUser,
 			int minimumVolunteerHours, int maximumVolunteerHours, String interestedCountries, String organization,
 			boolean isPublicProfile, Blob profilePicture, String personalBio, String contactDetails) {
 		super();
 		this.username = username;
+		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.country = country;
 		this.jobTitle = jobTitle;
