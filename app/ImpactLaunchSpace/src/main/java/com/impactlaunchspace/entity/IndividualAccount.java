@@ -87,11 +87,14 @@ public class IndividualAccount{
 	}
 	
 	
-	
-	
 	public String getUsername() {
 		return username;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
