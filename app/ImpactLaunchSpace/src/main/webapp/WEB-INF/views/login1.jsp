@@ -43,7 +43,7 @@
                         <form class="form-horizontal" action="authenticate" method="POST">                                                   
                             <div class="form-group">   
                                 <div class="col-lg-12">
-                                    <input name="username" type="email" class="form-control field" id="inputEmail3" placeholder="Email">
+                                    <input name="username" type="text" class="form-control field" id="inputEmail3" placeholder="Username or Email">
                                 </div>
                             </div>
                             <div class="form-group">

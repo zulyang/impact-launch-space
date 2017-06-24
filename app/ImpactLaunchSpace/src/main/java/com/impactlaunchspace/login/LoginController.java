@@ -67,10 +67,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/registernewuser", method = RequestMethod.POST)
-	public String registerNewUserPost(@RequestParam String username,@RequestParam String password,
+	public String registerNewUserPost(@RequestParam String username,@RequestParam String password1,@RequestParam String password2,
 			@RequestParam String email, @RequestParam String user_type,ModelMap model) {
 		model.put("email", email);
-	    boolean registerSuccess = registerService.registerNewUser(username, password, email, user_type);
+	    if(!password1.equals(password2)){
+	    	return "register";
+	    }
+		
+		boolean registerSuccess = registerService.registerNewUser(username, password1, email, user_type);
+	    
 	    if(registerSuccess){
 	    	String verificationCode = vtService.retrieveVerificationCode(username);
 	    	vtService.sendVerificationEmail(verificationCode, email);

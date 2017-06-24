@@ -54,17 +54,17 @@
                             <br>
                             <div class="form-group">   
                                 <div class="col-lg-12">
-                                    <input  name="username" type="email" class="form-control field" placeholder="Username">
+                                    <input  name="username" type="text" class="form-control field" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input name="password" type="password" class="form-control field" placeholder="Password">
+                                    <input name="password1" type="password" class="form-control field" placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input name="password" type="password" class="form-control field" placeholder="Repeat your password">
+                                    <input name="password2" type="password" class="form-control field" placeholder="Repeat your password">
                                 </div>
                             </div>
                             <div class="form-group">
