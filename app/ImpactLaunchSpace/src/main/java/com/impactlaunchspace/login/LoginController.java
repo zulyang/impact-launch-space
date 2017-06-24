@@ -87,7 +87,7 @@ public class LoginController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showWelcomePage(ModelMap model) {
 		model.put("name", getPrincipal());
-		return "login1";
+		return "index";
 	}
 	
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.GET)

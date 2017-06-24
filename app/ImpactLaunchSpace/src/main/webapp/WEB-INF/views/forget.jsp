@@ -39,10 +39,10 @@
                     
                     <div class="col-lg-12 form_container">
                         <h4 class="welcome">Forgot your password?</h4>
-                        <form class="form-horizontal forgot_form">
+                        <form action="forgotpassword" method="POST" class="form-horizontal forgot_form">
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Enter your email address">
+                                    <input type="email" name="usernameemail" class="form-control" id="inputEmail3" placeholder="Enter your email address">
                                 </div>
                             </div>
                             
