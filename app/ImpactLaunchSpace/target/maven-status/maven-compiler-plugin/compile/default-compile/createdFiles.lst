@@ -1,6 +1,7 @@
 com\impactlaunchspace\entity\IndividualAccount.class
 com\impactlaunchspace\jdbc\JdbcOrganizationAccountDAO.class
 com\impactlaunchspace\jdbc\JdbcIndividualAccountDAO.class
+com\impactlaunchspace\profile\ProfileService.class
 com\impactlaunchspace\jdbc\JdbcResetTokenDAO.class
 com\impactlaunchspace\entity\OrganizationAccount.class
 com\impactlaunchspace\profile\ProfileController.class
