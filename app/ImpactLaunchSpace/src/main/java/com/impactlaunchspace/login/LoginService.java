@@ -114,6 +114,7 @@ public class LoginService {
 	public String returnUsernameFromEmail(String usernameemail){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
+	    String username = null;
 	    User user = null;
 	    user = userDAO.findByUsername(usernameemail);
 	    if(user == null){
@@ -121,7 +122,8 @@ public class LoginService {
 	    	if(user == null){
 	    		return null;
 	    	}
-	    	return user.getUsername();
+	    	username = user.getUsername();
+	    	return username;
 	    }else{
 	    	return usernameemail;
 	    }

@@ -1,12 +1,15 @@
 package com.impactlaunchspace.login;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,7 +35,8 @@ public class LoginController {
 	
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
-
+	
+	
 
 	//Unlocking locked accounts
 	@RequestMapping(value = "/unlockmyaccount", method = RequestMethod.GET)
@@ -82,8 +86,8 @@ public class LoginController {
 	// Verify Account
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showWelcomePage(ModelMap model) {
-		model.put("name", getLoggedInUserName());
-		return "login";
+		model.put("name", getPrincipal());
+		return "login1";
 	}
 	
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.GET)
@@ -91,22 +95,35 @@ public class LoginController {
 		return "verifyaccount";
 	}
 	
+	@RequestMapping(value = "/tokenexpired", method = RequestMethod.GET)
+	  public String showExpiredPage(ModelMap model) {
+	    return "tokenexpired";
+	  }
+	
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.POST)
-	public String verifyAccount(@RequestParam String usernameemail, @RequestParam String password
-			,@RequestParam String verificationcode,ModelMap model) {
-		boolean isUser = loginService.authenticate(usernameemail, password);
-		if(isUser){
-			boolean isTokenValid = vtService.verifyToken(verificationcode, usernameemail);
-			vtService.unlock(usernameemail);
-			if(isTokenValid){
-				return "verificationsuccessful";
-			}else{
-				return "verifyaccount";
-			}
-		}
-		
-		return "verifyaccount";
-	}
+	  public String verifyAccount(@RequestParam String usernameemail, @RequestParam String password
+	      ,@RequestParam String verificationcode,ModelMap model) {
+	    boolean isUser = loginService.authenticate(usernameemail, password);
+	    String username = loginService.returnUsernameFromEmail(usernameemail);
+	    String email = loginService.returnEmailFromUsername(usernameemail);
+	    if(isUser){
+	      boolean isTokenValid = vtService.verifyToken(verificationcode, usernameemail);
+	      boolean isTokenExpired = vtService.ifTokenExpired(username);
+	      
+	      if(isTokenValid){
+	        if(isTokenExpired){
+	          vtService.regenerateVerificationCode(username, email);
+	          return "tokenexpired";
+	        }
+	        vtService.unlock(usernameemail);
+	        return "verificationsuccessful";
+	      }else{
+	        return "verifyaccount";
+	      }
+	    }
+	    
+	    return "verifyaccount";
+	  }
 	
 	//Resending Verification Code at potentially other screens
 	@RequestMapping(value = "/resendverification", method = RequestMethod.POST)
@@ -197,6 +214,11 @@ public class LoginController {
 		return "forgotpassword";
 	}
 	
+	@RequestMapping(value = "/errorgeneric", method = RequestMethod.GET)
+	public String showErrorPage(ModelMap model) {
+		return "error.jsp";
+	}
+	
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
 	public String resetPassword(@RequestParam String usernameemail, ModelMap model) {
 		boolean userExists = loginService.userExists(usernameemail);
@@ -251,8 +273,20 @@ public class LoginController {
 		logger.error("Request: " + req.getRequestURL() + " raised " + exception);
 		return "error-login-specific";
 	}
+
+	//Logout Functionality
+	@RequestMapping(value ="/logout", method= RequestMethod.GET)
+	public String logout(HttpServletRequest request, HttpServletResponse response){
+		//terminate authentication
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login1";
+	}
 	
-	private String getLoggedInUserName() {
+	private String getPrincipal() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails)
