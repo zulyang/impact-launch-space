@@ -48,6 +48,7 @@ public class ProfileController {
 	
 	@RequestMapping(value ="/setup-organization111", method= RequestMethod.POST)
 	public String blah1(HttpServletRequest request, HttpServletResponse response){
+		/*
 		String saveFile = "";
 		String contentType = request.getContentType();
 		if ((contentType != null)
@@ -110,6 +111,7 @@ public class ProfileController {
 		        e.printStackTrace();
 		    }
 		}
+		*/
 		return "redirect:/";
 	}
 	
