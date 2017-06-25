@@ -8,11 +8,10 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import com.impactlaunchspace.dao.CountryOfOperationDAO;
-import com.impactlaunchspace.entity.CountryOfOperation;
-import com.impactlaunchspace.entity.User;
+import com.impactlaunchspace.dao.JobSectorOrganizationDAO;
+import com.impactlaunchspace.entity.JobSectorOrganization;
 
-public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
+public class JdbcJobSectorOrganizationDAO implements JobSectorOrganizationDAO{
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
@@ -20,15 +19,15 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 	}
 
 	
-	public void insert(CountryOfOperation countryOfOperation){
-		String sql = "INSERT INTO COUNTRIES_OF_OPERATION " + "(country_code, username) VALUES (?, ?)";
+	public void insert(JobSectorOrganization jobSectorOrganization){
+		String sql = "INSERT INTO JOB_SECTORS_ORGANIZATION " + "(job_sector, username) VALUES (?, ?)";
 		Connection conn = null;
 
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, countryOfOperation.getCountry_name());
-			ps.setString(2, countryOfOperation.getUsername());
+			ps.setString(1, jobSectorOrganization.getJob_sector());
+			ps.setString(2, jobSectorOrganization.getUsername());
 			ps.executeUpdate();
 			ps.close();
 
@@ -45,20 +44,20 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 		}
 	}
 	
-	public ArrayList<CountryOfOperation> retrieveCountriesOfOperations(String username){
-		ArrayList<CountryOfOperation> output = new ArrayList<CountryOfOperation>();
+	public ArrayList<JobSectorOrganization> retrieveCountriesOfOperations(String username){
+		ArrayList<JobSectorOrganization> output = new ArrayList<JobSectorOrganization>();
 		
-		String sql = "SELECT * FROM COUNTRIES_OF_OPERATION WHERE username = ?";
+		String sql = "SELECT * FROM JOB_SECTORS_ORGANIZATION WHERE username = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
-			CountryOfOperation countryOfOperation = null;
+			JobSectorOrganization jobSectorOrganization = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				countryOfOperation = new CountryOfOperation(rs.getString(1),rs.getString(2));
-				output.add(countryOfOperation);
+				jobSectorOrganization = new JobSectorOrganization(rs.getString(1),rs.getString(2));
+				output.add(jobSectorOrganization);
 			}
 			rs.close();
 			ps.close();

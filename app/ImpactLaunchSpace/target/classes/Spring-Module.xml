@@ -9,5 +9,9 @@
 	<import resource="resettoken/Spring-ResetToken.xml" />
 	<import resource="organizationaccount/Spring-OrganizationAccount.xml" />
 	<import resource="individualaccount/Spring-IndividualAccount.xml" />
+	<import resource="countries/Spring-Countries.xml" />
+	<import resource="countries/Spring-CountriesOfOperation.xml" />
+	<import resource="jobsectors/Spring-JobSector.xml" />
+	<import resource="jobsectors/Spring-JobSectorOrganization.xml" />
 
 </beans>
