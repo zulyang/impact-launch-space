@@ -39,7 +39,7 @@ public class OrganizationAccount{
 		this.jobSector3 = jobSector3;
 		this.needsSupport = needsSupport;
 		this.offeringSupport = offeringSupport;
-		this.profilePicture = profilePicture;
+		this.profilePicture = null;
 		this.companyBio = companyBio;
 		this.contactDetails = contactDetails;
 	}

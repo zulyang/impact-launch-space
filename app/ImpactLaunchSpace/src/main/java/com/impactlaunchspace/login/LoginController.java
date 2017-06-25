@@ -56,6 +56,7 @@ public class LoginController {
 			return "unlocksuccessful";
 		}else{
 			//print message that no such email exists
+			//FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
 			return "unlockaccount";
 		}
 	}
@@ -70,9 +71,25 @@ public class LoginController {
 	public String registerNewUserPost(@RequestParam String username,@RequestParam String password1,@RequestParam String password2,
 			@RequestParam String email, @RequestParam String user_type,ModelMap model) {
 		model.put("email", email);
-	    if(!password1.equals(password2)){
+	    
+		//FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
+		if(!password1.equals(password2)){
 	    	return "register";
 	    }
+	    
+		boolean usernameExists = loginService.userExists(username);
+		boolean emailExists = loginService.userExists(email);
+		
+		//FRONT END TO PRINT ERROR THAT USERNAME AND EMAIL HAS ALR BEEN USED
+		if(usernameExists && emailExists){
+			return "register";
+		}else if(usernameExists && !emailExists){
+			//FRONT END TO PRINT ERROR THAT USERNAME HAS ALR BEEN USED
+			return "register";
+		}else if(!usernameExists && emailExists){
+			//FRONT END TO PRINT ERROR THAT EMAIL HAS ALR BEEN USED
+			return "register";
+		}
 		
 		boolean registerSuccess = registerService.registerNewUser(username, password1, email, user_type);
 	    
@@ -83,6 +100,7 @@ public class LoginController {
 	    	return "registrationsuccessful";
 	    }
 	    else{
+	    	//FRONT END TO PRINT GENERIC ERROR, ERROR REGISTERING
 	    	return "register";
 	    }
 	}
@@ -118,12 +136,15 @@ public class LoginController {
 	      if(isTokenValid){
 	        if(isTokenExpired){
 	          vtService.regenerateVerificationCode(username, email);
+	          //FRONT END TO PRINT TOKEN HAS EXPIRED, A NEW ONE HAS BEEN SENT TO UR INBOX
 	          return "tokenexpired";
 	        }
 	        vtService.unlock(usernameemail);
+	        //FRONT END TO BRING TO SUCCESS PAGE
 	        return "verificationsuccessful";
 	      }else{
-	        return "verifyaccount";
+	    	//FRONT END TO PRINT TOKEN IS INVALID
+	    	  return "verifyaccount";
 	      }
 	    }
 	    
@@ -142,7 +163,7 @@ public class LoginController {
 			vtService.regenerateVerificationCode(username, email);
 			return "unlocksuccessful";
 		}else{
-			//print message that no such email exists
+			//FRONT END TO PRINT NO SUCH EMAIL EXIST
 			return "resendverification";
 		}
 	}
@@ -158,7 +179,7 @@ public class LoginController {
 			vtService.regenerateVerificationCode(username, email2);
 			return "unlocksuccessful";
 		}else{
-			//print message that no such email exists
+			//FRONT END TO PRINT NO SUCH EMAIL EXIST
 			return "resendverification";
 		}
 	}
@@ -180,23 +201,27 @@ public class LoginController {
 			
 			if(!userExists){
 				//user does not exist
+				//FRONT END TO PRINT USERNAME/PW IS WRONG
 				return "login1";
 			}else{
 				isUser = loginService.authenticate(username, password);
 				isEnabled = loginService.checkEnabled(username);
 					
 				if(!isEnabled && isUser){
+					//FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
 					//account locked or verified, do not increase login attempts
 					return "lockedlogin";
 				}else if(isEnabled && !isUser){
 					loginAttempts = loginService.getLoginAttempts(username);
-
+					
 					//if wrong but still within max login threshold, increase attempts
 					//and redirect to page
 					if(loginAttempts < MAX_LOGIN_ATTEMPTS - 1){
+						//FRONT END TO PRINT USERNAME/PW IS WRONG
 						loginService.increaseLoginAttempts(username);
 						return "login1";
 					}else{
+						//FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS LOCKED BECAUSE EXCEED 5 ATTEMPTS
 						//else lock the account
 						loginService.lockAccount(username);
 						return "accountjustlocked";
@@ -240,7 +265,7 @@ public class LoginController {
 			model.addAttribute("email", email);
 			return "emailsent";
 		}
-		
+		//FRONT END TO PRINT AN ACCOUNT WITH THAT EMAIL DOESN NOT EXIST
 		//else error at current page
 		return "forgotpassword";
 		
@@ -256,7 +281,7 @@ public class LoginController {
 			rtService.unlock(username);
 			return "resetpassword";
 		}
-		
+		//FRONT END TO PRINT PIN IS WRONG
 		return "forgotpassword";
 	}
 	
@@ -269,6 +294,7 @@ public class LoginController {
 			model.addAttribute("username",username);
 			return "loginsuccessful";
 		}
+		//FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		return "forgotpassword";
 	}
 	

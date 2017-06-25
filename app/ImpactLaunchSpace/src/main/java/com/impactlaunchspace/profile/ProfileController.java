@@ -36,12 +36,11 @@ public class ProfileController {
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
 			@RequestParam String countriesOfOperation,@RequestParam String jobSector1,
 			@RequestParam String jobSector2,@RequestParam String jobSector3,
-			@RequestParam String companyBio,@RequestParam String contactDetails,
-			@RequestParam Blob profilePicture){
+			@RequestParam String companyBio,@RequestParam String contactDetails){
 		
 		OrganizationAccount organizationAccount = new OrganizationAccount(username,email,countriesOfOperation,
 				jobSector1,jobSector2,jobSector3,false,false,
-				profilePicture,companyBio,contactDetails);
+				null,companyBio,contactDetails);
 		profileService.firstSetup(organizationAccount);
 		return "setup-complete";
 	}
