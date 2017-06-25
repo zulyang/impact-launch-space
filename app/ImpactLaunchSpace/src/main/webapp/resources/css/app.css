@@ -119,6 +119,7 @@ html, body {
     margin-right: auto;
     position: initial;
     margin-bottom: 35rem;
+    padding-bottom: 5rem;
 }
 
 .verify_success_message {
@@ -170,6 +171,10 @@ html, body {
 
 .finePrint {
     width: 30rem;
+}
+
+.registerError {
+    color: red;
 }
 
 .radio_indi {

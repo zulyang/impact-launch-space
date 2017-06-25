@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,7 +12,7 @@
         <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <script src="./js/app.js"></script>
+        
     </head>
     <body class="signup">
         <div class="container-fluid">
@@ -45,31 +46,31 @@
                             <br>
                             <div class="form-radio center">   
                                 <div class="radio_indi">
-                                    <input name="user_type" type="radio" value="individual">Individual
+                                    <input name="user_type" required="required" type="radio" value="individual">Individual
                                 </div>     
                                 <div class="radio_org">
-                                    <input name="user_type" type="radio" value="organization">Organisation
+                                    <input name="user_type" required="required" type="radio" value="organization">Organisation
                                 </div>
                             </div>
                             <br>
                             <div class="form-group">   
                                 <div class="col-lg-12">
-                                    <input  name="username" type="text" class="form-control field" placeholder="Username">
+                                    <input  name="username" required="required" type="text" class="form-control field" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input name="password1" type="password" class="form-control field" placeholder="Password">
+                                    <input name="password1" required="required" type="password" class="form-control field" placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input name="password2" type="password" class="form-control field" placeholder="Repeat your password">
+                                    <input name="password2" required="required" type="password" class="form-control field" placeholder="Repeat your password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                    <input name="email" type="email" class="form-control field" placeholder="Email address">
+                                    <input name="email" required="required" type="email" class="form-control field" placeholder="Email address">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -77,6 +78,7 @@
                                     <button type="submit" value="Register" class="btn btn-success field" id="register_button">Register</button>
                                 </div>
                             </div>
+                            <p class="registerError">${registerCheck}</p>
                             <p class="finePrint">By registering, you confirm that you agree with our Terms & Conditions and Privacy Policy.</p>
                         </form>
                     </div>

@@ -71,9 +71,9 @@ public class LoginController {
 	public String registerNewUserPost(@RequestParam String username,@RequestParam String password1,@RequestParam String password2,
 			@RequestParam String email, @RequestParam String user_type,ModelMap model) {
 		model.put("email", email);
-	    
 		//FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
 		if(!password1.equals(password2)){
+			model.addAttribute("registerCheck", "Please ensure that both your passwords match.");
 	    	return "register";
 	    }
 	    
@@ -82,12 +82,15 @@ public class LoginController {
 		
 		//FRONT END TO PRINT ERROR THAT USERNAME AND EMAIL HAS ALR BEEN USED
 		if(usernameExists && emailExists){
+			model.addAttribute("registerCheck", "The username and email is already in use.");
 			return "register";
 		}else if(usernameExists && !emailExists){
 			//FRONT END TO PRINT ERROR THAT USERNAME HAS ALR BEEN USED
+			model.addAttribute("registerCheck", "The username is already in use.");
 			return "register";
 		}else if(!usernameExists && emailExists){
 			//FRONT END TO PRINT ERROR THAT EMAIL HAS ALR BEEN USED
+			model.addAttribute("registerCheck", "The email is already in use.");
 			return "register";
 		}
 		
@@ -97,10 +100,12 @@ public class LoginController {
 	    	String verificationCode = vtService.retrieveVerificationCode(username);
 	    	vtService.sendVerificationEmail(verificationCode, email);
 	    	//below is for resending verification
+	    	model.addAttribute("registerCheck", "success");
 	    	return "registrationsuccessful";
 	    }
 	    else{
 	    	//FRONT END TO PRINT GENERIC ERROR, ERROR REGISTERING
+	    	model.addAttribute("registerCheck", "An error has occurred during registration.");
 	    	return "register";
 	    }
 	}
