@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import com.impactlaunchspace.dao.JobSectorOrganizationDAO;
+import com.impactlaunchspace.dao.JobSectorIndividualDAO;
+import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.JobSectorOrganization;
 
-public class JdbcJobSectorOrganizationDAO implements JobSectorOrganizationDAO{
+public class JdbcJobSectorIndividualDAO implements JobSectorIndividualDAO{
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
@@ -19,15 +20,15 @@ public class JdbcJobSectorOrganizationDAO implements JobSectorOrganizationDAO{
 	}
 
 	
-	public void insert(JobSectorOrganization jobSectorOrganization){
-		String sql = "INSERT INTO JOB_SECTORS_ORGANIZATION " + "(job_sector, username) VALUES (?, ?)";
+	public void insert(JobSectorIndividual jobSectorIndividual){
+		String sql = "INSERT INTO JOB_SECTORS_INDIVIDUAL " + "(job_sector, username) VALUES (?, ?)";
 		Connection conn = null;
 
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, jobSectorOrganization.getJob_sector());
-			ps.setString(2, jobSectorOrganization.getUsername());
+			ps.setString(1, jobSectorIndividual.getJob_sector());
+			ps.setString(2, jobSectorIndividual.getUsername());
 			ps.executeUpdate();
 			ps.close();
 
@@ -44,20 +45,20 @@ public class JdbcJobSectorOrganizationDAO implements JobSectorOrganizationDAO{
 		}
 	}
 	
-	public ArrayList<JobSectorOrganization> retrieveOrganizationJobSectors(String username){
-		ArrayList<JobSectorOrganization> output = new ArrayList<JobSectorOrganization>();
+	public ArrayList<JobSectorIndividual> retrieveIndividualJobSectors(String username){
+		ArrayList<JobSectorIndividual> output = new ArrayList<JobSectorIndividual>();
 		
-		String sql = "SELECT * FROM JOB_SECTORS_ORGANIZATION WHERE username = ?";
+		String sql = "SELECT * FROM JOB_SECTORS_INDIVIDUAL WHERE username = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
-			JobSectorOrganization jobSectorOrganization = null;
+			JobSectorIndividual jobSectorIndividual = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				jobSectorOrganization = new JobSectorOrganization(rs.getString(1),rs.getString(2));
-				output.add(jobSectorOrganization);
+				jobSectorIndividual = new JobSectorIndividual(rs.getString(1),rs.getString(2));
+				output.add(jobSectorIndividual);
 			}
 			rs.close();
 			ps.close();

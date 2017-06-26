@@ -13,5 +13,6 @@
 	<import resource="countries/Spring-CountriesOfOperation.xml" />
 	<import resource="jobsectors/Spring-JobSector.xml" />
 	<import resource="jobsectors/Spring-JobSectorOrganization.xml" />
-
+	<import resource="jobsectors/Spring-JobSectorIndividual.xml" />
+	<import resource="projectarea/Spring-ProjectArea.xml" />
 </beans>

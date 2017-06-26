@@ -6,6 +6,6 @@ import com.impactlaunchspace.entity.JobSectorOrganization;
 
 public interface JobSectorOrganizationDAO {
 	public void insert(JobSectorOrganization jobSectorOrganization);
-	public ArrayList<JobSectorOrganization> retrieveCountriesOfOperations(String username);
+	public ArrayList<JobSectorOrganization> retrieveOrganizationJobSectors(String username);
 }
 
