@@ -21,7 +21,7 @@ public class JdbcJobSectorIndividualDAO implements JobSectorIndividualDAO{
 
 	
 	public void insert(JobSectorIndividual jobSectorIndividual){
-		String sql = "INSERT INTO JOB_SECTORS_INDIVIDUAL " + "(job_sector, username) VALUES (?, ?)";
+		String sql = "INSERT INTO JOB_SECTORS_INDIVIDUAL " + "(job_sector, username, yearsOfExperience) VALUES (?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -29,6 +29,7 @@ public class JdbcJobSectorIndividualDAO implements JobSectorIndividualDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, jobSectorIndividual.getJob_sector());
 			ps.setString(2, jobSectorIndividual.getUsername());
+			ps.setInt(3, jobSectorIndividual.getYearsOfExperience());
 			ps.executeUpdate();
 			ps.close();
 
@@ -57,7 +58,7 @@ public class JdbcJobSectorIndividualDAO implements JobSectorIndividualDAO{
 			JobSectorIndividual jobSectorIndividual = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				jobSectorIndividual = new JobSectorIndividual(rs.getString(1),rs.getString(2));
+				jobSectorIndividual = new JobSectorIndividual(rs.getString(1),rs.getString(2),rs.getInt(3));
 				output.add(jobSectorIndividual);
 			}
 			rs.close();

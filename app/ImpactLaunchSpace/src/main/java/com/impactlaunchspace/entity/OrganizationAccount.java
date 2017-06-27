@@ -6,15 +6,7 @@ public class OrganizationAccount{
 	//primary key is username, this is also the company name
 	private String username;
 	private String email;
-	
-	//Multiple countries are available for input, seperated with commas
-	private String countriesOfOperation;
-	
-	//at least 1 job sector, and up to 3
-	private String jobSector1;
-	
-	private String jobSector2;
-	private String jobSector3;
+	private String companyName;
 	
 	//Organization profiles can align their profile to either these 2 options or both. 
 	//Selecting the appropriate options will chase this value in db accordingly 
@@ -27,16 +19,14 @@ public class OrganizationAccount{
 	private String contactDetails;
 	
 	
-	public OrganizationAccount(String username, String email, String countriesOfOperation, String jobSector1, String jobSector2,
-			String jobSector3, boolean needsSupport, boolean offeringSupport, Blob profilePicture, String companyBio,
+	public OrganizationAccount(String username, String email, String companyName,
+			boolean needsSupport, boolean offeringSupport, 
+			Blob profilePicture, String companyBio,
 			String contactDetails) {
 		super();
 		this.username = username;
 		this.email = email;
-		this.countriesOfOperation = countriesOfOperation;
-		this.jobSector1 = jobSector1;
-		this.jobSector2 = jobSector2;
-		this.jobSector3 = jobSector3;
+		this.companyName = companyName;
 		this.needsSupport = needsSupport;
 		this.offeringSupport = offeringSupport;
 		this.profilePicture = null;
@@ -52,18 +42,10 @@ public class OrganizationAccount{
 		return email;
 	}
 	
-	public String getCountriesOfOperation() {
-		return countriesOfOperation;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public String getJobSector1() {
-		return jobSector1;
-	}
-	public String getJobSector2() {
-		return jobSector2;
-	}
-	public String getJobSector3() {
-		return jobSector3;
-	}
+	
 	public boolean isNeedsSupport() {
 		return needsSupport;
 	}

@@ -34,13 +34,11 @@ public class ProfileController {
 	
 	@RequestMapping(value ="/setup-organization", method= RequestMethod.POST)
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
-			@RequestParam String countriesOfOperation,@RequestParam String jobSector1,
-			@RequestParam String jobSector2,@RequestParam String jobSector3,
-			@RequestParam String companyBio,@RequestParam String contactDetails){
+			@RequestParam String companyName, @RequestParam String companyBio,
+			@RequestParam String contactDetails){
 		
-		OrganizationAccount organizationAccount = new OrganizationAccount(username,email,countriesOfOperation,
-				jobSector1,jobSector2,jobSector3,false,false,
-				null,companyBio,contactDetails);
+		OrganizationAccount organizationAccount = new OrganizationAccount(username,email,companyName,
+				false,false,null,companyBio,contactDetails);
 		profileService.firstSetup(organizationAccount);
 		return "setup-complete";
 	}
