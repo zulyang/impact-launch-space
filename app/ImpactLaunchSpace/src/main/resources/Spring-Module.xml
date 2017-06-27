@@ -11,6 +11,7 @@
 	<import resource="individualaccount/Spring-IndividualAccount.xml" />
 	<import resource="countries/Spring-Countries.xml" />
 	<import resource="countries/Spring-CountriesOfOperation.xml" />
+	<import resource="countries/Spring-PreferredCountries.xml" />
 	<import resource="jobsectors/Spring-JobSector.xml" />
 	<import resource="jobsectors/Spring-JobSectorOrganization.xml" />
 	<import resource="jobsectors/Spring-JobSectorIndividual.xml" />

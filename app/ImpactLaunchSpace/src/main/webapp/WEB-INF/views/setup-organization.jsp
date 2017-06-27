@@ -12,12 +12,14 @@
 <form action="setup-organization" method="post">
 	Username <input type="text" name="username"/><br>
 	Email <input type="text" name="email"/><br>
+	Company Name<input type="text" name="companyName"/><br>
 	Countries of Operation <input type="text" name="countriesOfOperation"/><br>
 	Job Sector (needs to be list)<input type="text" name="jobSector1"/><br>
 	<h2>These fields are null:</h2>
 	<br>
 	Job Sector 2(needs to be list)<input type="text" name="jobSector2"/><br>
 	Job Sector 3(needs to be list)<input type="text" name="jobSector3"/><br>
+	
 	Company Bio<input type="text" name="companyBio"/><br>
 	Company Contact Details<input type="text" name="contactDetails"/><br>
 	Picture<input type="file" name="profilePicture"/><br>

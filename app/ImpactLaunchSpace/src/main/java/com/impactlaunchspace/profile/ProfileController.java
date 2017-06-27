@@ -36,7 +36,6 @@ public class ProfileController {
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
 			@RequestParam String companyName, @RequestParam String companyBio,
 			@RequestParam String contactDetails){
-		
 		OrganizationAccount organizationAccount = new OrganizationAccount(username,email,companyName,
 				false,false,null,companyBio,contactDetails);
 		profileService.firstSetup(organizationAccount);

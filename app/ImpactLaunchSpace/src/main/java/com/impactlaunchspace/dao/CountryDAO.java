@@ -1,7 +1,5 @@
 package com.impactlaunchspace.dao;
 
-import java.util.ArrayList;
-
 import com.impactlaunchspace.entity.Country;
 
 public interface CountryDAO {
