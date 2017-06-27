@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import com.impactlaunchspace.dao.CountryOfOperationDAO;
-import com.impactlaunchspace.entity.CountryOfOperation;
+import com.impactlaunchspace.dao.UserSkillDAO;
+import com.impactlaunchspace.entity.UserSkill;
 
-public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
+public class JdbcUserSkillDAO implements UserSkillDAO{
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
@@ -19,15 +19,15 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 	}
 
 	
-	public void insert(CountryOfOperation countryOfOperation){
-		String sql = "INSERT INTO COUNTRIES_OF_OPERATION " + "(country_code, username) VALUES (?, ?)";
+	public void insert(UserSkill userSkill){
+		String sql = "INSERT INTO user_skills " + "(skillset, username) VALUES (?, ?)";
 		Connection conn = null;
 
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, countryOfOperation.getCountry_name());
-			ps.setString(2, countryOfOperation.getUsername());
+			ps.setString(1, userSkill.getSkillset());
+			ps.setString(2, userSkill.getUsername());
 			ps.executeUpdate();
 			ps.close();
 
@@ -43,21 +43,20 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 			}
 		}
 	}
-	
-	public ArrayList<CountryOfOperation> retrieveCountriesOfOperations(String username){
-		ArrayList<CountryOfOperation> output = new ArrayList<CountryOfOperation>();
+	public ArrayList<UserSkill> retrieveAllSkillsOfUser(String username){
+		ArrayList<UserSkill> output = new ArrayList<UserSkill>();
 		
-		String sql = "SELECT * FROM COUNTRIES_OF_OPERATION WHERE username = ?";
+		String sql = "SELECT * FROM user_skills WHERE username = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
-			CountryOfOperation countryOfOperation = null;
+			UserSkill userSkill = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				countryOfOperation = new CountryOfOperation(rs.getString(1),rs.getString(2));
-				output.add(countryOfOperation);
+				userSkill = new UserSkill(rs.getString(1),rs.getString(2));
+				output.add(userSkill);
 			}
 			rs.close();
 			ps.close();
