@@ -20,7 +20,7 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 
 	
 	public void insert(CountryOfOperation countryOfOperation){
-		String sql = "INSERT INTO COUNTRIES_OF_OPERATION " + "(country_code, username) VALUES (?, ?)";
+		String sql = "INSERT INTO COUNTRIES_OF_OPERATIONS " + "(country_name, username) VALUES (?, ?)";
 		Connection conn = null;
 
 		try {
@@ -47,7 +47,7 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 	public ArrayList<CountryOfOperation> retrieveCountriesOfOperations(String username){
 		ArrayList<CountryOfOperation> output = new ArrayList<CountryOfOperation>();
 		
-		String sql = "SELECT * FROM COUNTRIES_OF_OPERATION WHERE username = ?";
+		String sql = "SELECT * FROM COUNTRIES_OF_OPERATIONS WHERE username = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();

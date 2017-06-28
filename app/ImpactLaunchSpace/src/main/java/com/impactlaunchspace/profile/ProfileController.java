@@ -1,12 +1,6 @@
 package com.impactlaunchspace.profile;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.impactlaunchspace.entity.CountryOfOperation;
+import com.impactlaunchspace.entity.JobSectorOrganization;
 import com.impactlaunchspace.entity.OrganizationAccount;
-import com.mysql.jdbc.Blob;
-import com.mysql.jdbc.Connection;
 
 @Controller
 public class ProfileController {
@@ -34,11 +28,28 @@ public class ProfileController {
 	
 	@RequestMapping(value ="/setup-organization", method= RequestMethod.POST)
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
-			@RequestParam String companyName, @RequestParam String companyBio,
+			@RequestParam String companyName, @RequestParam String countriesOfOperation, @RequestParam String companyBio, 
+			@RequestParam String jobSector1,@RequestParam String jobSector2,@RequestParam String jobSector3,
 			@RequestParam String contactDetails){
 		OrganizationAccount organizationAccount = new OrganizationAccount(username,email,companyName,
 				false,false,null,companyBio,contactDetails);
-		profileService.firstSetup(organizationAccount);
+		
+		//this requires changing
+		JobSectorOrganization jobSectorOrganization1 = new JobSectorOrganization(jobSector1, username);
+		JobSectorOrganization jobSectorOrganization2 = new JobSectorOrganization(jobSector2, username);
+		JobSectorOrganization jobSectorOrganization3 = new JobSectorOrganization(jobSector3, username);
+		
+		ArrayList<JobSectorOrganization> jobSectorsOrganization = new ArrayList<JobSectorOrganization>();
+		ArrayList<CountryOfOperation> countriesOfOperationList = new ArrayList<CountryOfOperation>();
+		CountryOfOperation countryOfOperation = new CountryOfOperation(countriesOfOperation,username);
+		
+		jobSectorsOrganization.add(jobSectorOrganization1);
+		jobSectorsOrganization.add(jobSectorOrganization2);
+		jobSectorsOrganization.add(jobSectorOrganization3);
+		
+		countriesOfOperationList.add(countryOfOperation);
+		
+		profileService.firstSetup(organizationAccount,countriesOfOperationList,jobSectorsOrganization);
 		return "setup-complete";
 	}
 	
