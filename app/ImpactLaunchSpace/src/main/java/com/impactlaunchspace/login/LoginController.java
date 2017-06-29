@@ -236,7 +236,7 @@ public class LoginController {
 						//if successful login reset the login attempts of the user
 						//direct user to successful page
 						loginService.resetLoginAttempts(username);
-						return "loginsuccessful";
+						return "profile";
 				}
 			}
 		return "login1";

@@ -1,188 +1,248 @@
 html, body {
-    height: 100%;
-    width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 .signin {
-    display: flex;
-    align-items: center;
-    position: relative;
-    background-image: url("../img/rocketGirl.jpeg");
-    background-repeat:no-repeat;
-    background-size:100% 100vh;
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-image: url("../img/rocketGirl.jpeg");
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
 }
 
 .signup {
-    display: flex;
-    align-items: center;
-    position: relative;
-    background-image: url("../img/signup.jpeg");
-    background-repeat:no-repeat;
-    background-size:100% 100vh;
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-image: url("../img/signup.jpeg");
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-color: white;
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
+	overflow: scroll;
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+.profileNav {
+	background-color: white;
 }
 
 .learn {
-    color: white;
-    font-size: large;
-    margin-top: 55rem;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: 0.4rem solid white;
-    border-radius: 0;
-    padding: 1.2rem 10rem;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    margin-left: auto;
-    margin-right: auto;
+	color: white;
+	font-size: large;
+	margin-top: 55rem;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0.4rem solid white;
+	border-radius: 0;
+	padding: 1.2rem 10rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .landing {
-    display: flex;
-    align-items: center;
-    position: relative;
-    background-image: url("../img/landingpage.jpg");
-    background-repeat:no-repeat;
-    background-size:100% 100vh;
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-image: url("../img/landingpage.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
 }
 
 .landing-nav {
-    background-color: transparent;
-    border: none;
+	background-color: transparent;
+	border: none;
 }
 
 #logo {
-    height: auto;
-    width: auto;
-    max-width: 70%;
-    max-height: 10rem;
-    background-size: contain;
-    margin-left: 3rem;
+	height: auto;
+	width: auto;
+	max-width: 70%;
+	max-height: 10rem;
+	background-size: contain;
+	margin-left: 3rem;
 }
 
 .navbar-default .navbar-nav>li>a {
-    color : white;
-    font-weight: bold;
-    font-size: 2rem;
+	color: white;
+	font-weight: bold;
+	font-size: 2rem;
 }
 
 .nav_elements {
-    margin-top: 1.5rem;
-    margin-right: 6rem;
-    padding: 1.5rem;
+	margin-top: 1.5rem;
+	margin-right: 6rem;
+	padding: 1.5rem;
 }
 
-.center{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .form_container, .register_success, .verify_container {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    height: 45rem;
-    width: 60rem;
-    position: relative;
-    background: rgba(255, 255, 255, 0.8);
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	height: 45rem;
+	width: 60rem;
+	position: relative;
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.profile_container {
+	margin-top: 62rem;
+	margin-bottom: 5rem;
+	height: 100rem;
+	width: 75rem;
+	border: 0.125rem solid black;
+}
+
+.profile_form {
+	margin-top: -10rem;
+}
+
+.profileField {
+	margin-top: 1rem;
+	width: 40rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.circle_profile_image {
+	margin-top: 20rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.profile_save {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 20rem;
 }
 
 .verify_success {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    height: 30rem;
-    width: 60rem;
-    position: relative;
-    background: rgba(255, 255, 255, 0.8);
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	height: 30rem;
+	width: 60rem;
+	position: relative;
+	background: rgba(255, 255, 255, 0.8);
 }
 
-
 .form-horizontal {
-    position: absolute;
+	position: absolute;
 }
 
 .forgot_form {
-    margin-top: -10rem;
+	margin-top: -10rem;
 }
 
-.welcome, .createAccount, .register_success_message, .verifyAccountMessage {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    position: initial;
-    margin-bottom: 35rem;
-    padding-bottom: 5rem;
+.welcome, .createAccount, .register_success_message,
+	.verifyAccountMessage {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: initial;
+	margin-bottom: 35rem;
+	padding-bottom: 5rem;
 }
 
 .verify_success_message {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    position: initial;
-    margin-bottom: 28rem;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: initial;
+	margin-bottom: 28rem;
 }
 
 .forget {
-    text-align: center;
-    font-style: italic;
+	text-align: center;
+	font-style: italic;
 }
 
 .field {
-    width: 30rem;
+	width: 30rem;
 }
 
 .returnLogin, .signInNow, .verify_account {
-    position: absolute;
-    color: black;
-    border: 0.125rem solid grey;
-    border-radius: 0;
-    width: 15rem;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 8rem;
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 8rem;
 }
 
 .returnHome {
-    position: absolute;
-    color: black;
-    border: 0.125rem solid grey;
-    border-radius: 0;
-    width: 15rem;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 12rem;
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12rem;
 }
 
 .finePrint {
-    width: 30rem;
+	width: 30rem;
 }
 
 .registerError {
-    color: red;
+	color: red;
 }
 
-.radio_indi {
-    margin-left: auto;
-    margin-right: auto;
+.radio_indi, .radio_org, .offerSupport, .needSupport, .bothSupport {
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.radio_org {
-    margin-left: auto;
-    margin-right: auto;
+.profileNav {
+	background-color: #00008B;
+	border-color: #00008B;
+}
+
+.homeIcon, .alertsIcon, .bellIcon, .chatIcon, .profilePictureIcon,
+	.moreOptionsIcon {
+	max-width: 130%;
+	max-height: 130%;
+	margin-left: 2rem;
 }
