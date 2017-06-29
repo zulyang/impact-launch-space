@@ -1,5 +1,12 @@
 package com.impactlaunchspace.jdbc;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +29,6 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 		String sql = "INSERT INTO ORGANIZATION_ACCOUNTS "
 				+ "(username,  email, companyName, needsSupport, offeringSupport, profilePicture, companyBio, contactDetails) VALUES (?, ?, ?, ?, ? ,? ,? ,?)";
 		Connection conn = null;
-
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -31,7 +37,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			ps.setString(3, organizationAccount.getCompanyName());
 			ps.setBoolean(4, organizationAccount.isNeedsSupport());
 			ps.setBoolean(5, organizationAccount.isOfferingSupport());
-			ps.setBlob(6, organizationAccount.getProfilePicture());
+			ps.setBlob(6, new FileInputStream(organizationAccount.getProfilePicture()));
 			ps.setString(7, organizationAccount.getCompanyBio());
 			ps.setString(8, organizationAccount.getContactDetails());
 			ps.executeUpdate();
@@ -39,7 +45,9 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {
@@ -63,15 +71,31 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),rs.getString("companyName"),
-						rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"), rs.getBlob("profilePicture"),
-						rs.getString("companyBio"), rs.getString("contactDetails"));
+
+				File temp = File.createTempFile("temp-file-name", ".jpeg");
+				Blob blob = rs.getBlob("profilePicture");
+				InputStream in = blob.getBinaryStream();
+				OutputStream out = new FileOutputStream(temp);
+				byte[] buff = new byte[4096]; // how much of the blob to
+												// read/write at a time
+				int len = 0;
+
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+
+				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
+						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
+						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
 			}
 			rs.close();
 			ps.close();
 			return organizationAccount;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {
@@ -80,6 +104,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				}
 			}
 		}
+		return null;
 	}
 
 	public OrganizationAccount findByEmail(String email) {
@@ -94,16 +119,32 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			ps.setString(1, email);
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
+			
 			if (rs.next()) {
-				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),rs.getString("companyName"),
-						rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"), rs.getBlob("profilePicture"),
-						rs.getString("companyBio"), rs.getString("contactDetails"));
+				File temp = File.createTempFile("temp-file-name", ".jpeg");
+				Blob blob = rs.getBlob("profilePicture");
+				InputStream in = blob.getBinaryStream();
+				OutputStream out = new FileOutputStream(temp);
+				byte[] buff = new byte[4096]; // how much of the blob to
+												// read/write at a time
+				int len = 0;
+
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+
+				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
+						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
+						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
 			}
 			rs.close();
 			ps.close();
 			return organizationAccount;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {
@@ -112,6 +153,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				}
 			}
 		}
+		return null;
 
 	}
 
@@ -127,10 +169,23 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
+			
 			if (rs.next()) {
-				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),rs.getString("companyName"),
-						rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"), rs.getBlob("profilePicture"),
-						rs.getString("companyBio"), rs.getString("contactDetails"));
+				File temp = File.createTempFile("temp-file-name", ".jpeg");
+				Blob blob = rs.getBlob("profilePicture");
+				InputStream in = blob.getBinaryStream();
+				OutputStream out = new FileOutputStream(temp);
+				byte[] buff = new byte[4096]; // how much of the blob to
+												// read/write at a time
+				int len = 0;
+
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+
+				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
+						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
+						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
 
 				output.add(organizationAccount);
 			}
@@ -139,6 +194,9 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			return output;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {
@@ -147,6 +205,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				}
 			}
 		}
+		return output;
 	}
 
 	public ArrayList<OrganizationAccount> retrieveOrganizationsOfferingSupport() {
@@ -161,10 +220,23 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
+			
 			if (rs.next()) {
-				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),rs.getString("companyName"),
-						rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"), rs.getBlob("profilePicture"),
-						rs.getString("companyBio"), rs.getString("contactDetails"));
+				File temp = File.createTempFile("temp-file-name", ".jpeg");
+				Blob blob = rs.getBlob("profilePicture");
+				InputStream in = blob.getBinaryStream();
+				OutputStream out = new FileOutputStream(temp);
+				byte[] buff = new byte[4096]; // how much of the blob to
+												// read/write at a time
+				int len = 0;
+
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+
+				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
+						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
+						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
 
 				output.add(organizationAccount);
 			}
@@ -173,6 +245,9 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			return output;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {
@@ -181,6 +256,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				}
 			}
 		}
+		return output;
 	}
 
 }

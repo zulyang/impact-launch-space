@@ -9,7 +9,7 @@
 <body>
 <h1>Setup your individual account here:</h1>
 
-<form action="setup-individual" method="post">
+<form action="setup-individual" method="post" enctype="multipart/form-data">
 	Username <input type="text" name="username"/><br>
 	Email <input type="text" name="email"/><br>
 	Country <input type="text" name="country"/><br>

@@ -9,7 +9,7 @@
 <body>
 <h1>Setup your organization account here:</h1>
 
-<form action="setup-organization" method="post">
+<form action="setup-organization" method="post" enctype="multipart/form-data">
 	Username <input type="text" name="username"/><br>
 	Email <input type="text" name="email"/><br>
 	Company Name<input type="text" name="companyName"/><br>

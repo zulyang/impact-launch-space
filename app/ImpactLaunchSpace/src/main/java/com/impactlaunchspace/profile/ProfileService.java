@@ -18,6 +18,7 @@ public class ProfileService {
 	public void firstSetup(OrganizationAccount organizationAccount, 
 			ArrayList<CountryOfOperation> countriesOfOperation,
 			ArrayList<JobSectorOrganization> jobSectorsOrganization){
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
 		CountryOfOperationDAO countryOfOperationDAO = (CountryOfOperationDAO) context.getBean("countryOfOperationDAO");
@@ -36,5 +37,12 @@ public class ProfileService {
 	    }
 	    
 		organizationAccountDAO.insert(organizationAccount);
+	}
+	
+	public OrganizationAccount getOrganizationAccountDetails(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
+
+		return organizationAccountDAO.findByUsername(username);
 	}
 }

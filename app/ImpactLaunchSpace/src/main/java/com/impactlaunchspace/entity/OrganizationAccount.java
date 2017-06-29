@@ -1,6 +1,6 @@
 package com.impactlaunchspace.entity;
 
-import java.sql.Blob;
+import java.io.File;
 
 public class OrganizationAccount{
 	//primary key is username, this is also the company name
@@ -14,14 +14,14 @@ public class OrganizationAccount{
 	private boolean offeringSupport;
 	
 	//profile based information (optional fields that can be deferred till after creation)
-	private Blob profilePicture;
+	private File profilePicture;
 	private String companyBio;
 	private String contactDetails;
 	
 	
 	public OrganizationAccount(String username, String email, String companyName,
 			boolean needsSupport, boolean offeringSupport, 
-			Blob profilePicture, String companyBio,
+			File profilePicture, String companyBio,
 			String contactDetails) {
 		super();
 		this.username = username;
@@ -29,7 +29,7 @@ public class OrganizationAccount{
 		this.companyName = companyName;
 		this.needsSupport = needsSupport;
 		this.offeringSupport = offeringSupport;
-		this.profilePicture = null;
+		this.profilePicture = profilePicture;
 		this.companyBio = companyBio;
 		this.contactDetails = contactDetails;
 	}
@@ -52,7 +52,7 @@ public class OrganizationAccount{
 	public boolean isOfferingSupport() {
 		return offeringSupport;
 	}
-	public Blob getProfilePicture() {
+	public File getProfilePicture() {
 		return profilePicture;
 	}
 	public String getCompanyBio() {
