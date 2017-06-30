@@ -7,11 +7,23 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.impactlaunchspace.dao.CountryOfOperationDAO;
+import com.impactlaunchspace.dao.IndividualAccountDAO;
+import com.impactlaunchspace.dao.JobSectorIndividualDAO;
 import com.impactlaunchspace.dao.JobSectorOrganizationDAO;
 import com.impactlaunchspace.dao.OrganizationAccountDAO;
+import com.impactlaunchspace.dao.PreferredCountryDAO;
+import com.impactlaunchspace.dao.PreferredJobSectorDAO;
+import com.impactlaunchspace.dao.PreferredProjectAreaDAO;
+import com.impactlaunchspace.dao.UserSkillDAO;
 import com.impactlaunchspace.entity.CountryOfOperation;
+import com.impactlaunchspace.entity.IndividualAccount;
+import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.JobSectorOrganization;
 import com.impactlaunchspace.entity.OrganizationAccount;
+import com.impactlaunchspace.entity.PreferredCountry;
+import com.impactlaunchspace.entity.PreferredJobSector;
+import com.impactlaunchspace.entity.PreferredProjectArea;
+import com.impactlaunchspace.entity.UserSkill;
 
 @Service
 public class ProfileService {
@@ -40,28 +52,53 @@ public class ProfileService {
 	}
 	
 	
-	public void firstSetupIndividual(OrganizationAccount organizationAccount, 
-			ArrayList<CountryOfOperation> countriesOfOperation,
-			ArrayList<JobSectorOrganization> jobSectorsOrganization){
+	public void firstSetupIndividual(IndividualAccount individualAccount, 
+			ArrayList<JobSectorIndividual> jobSectorsIndividual,
+			ArrayList<PreferredCountry> prferredCountryList,
+			ArrayList<PreferredJobSector> preferredJobSectorList,
+			ArrayList<PreferredProjectArea> preferredProjectAreaList,
+			ArrayList<UserSkill> userSkillsetList){
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
-		CountryOfOperationDAO countryOfOperationDAO = (CountryOfOperationDAO) context.getBean("countryOfOperationDAO");
-		JobSectorOrganizationDAO jobSectorOrganizationDAO = (JobSectorOrganizationDAO) context.getBean("jobSectorOrganizationDAO");
-	    for(CountryOfOperation countryOfOperation : countriesOfOperation){
-	    	if(countryOfOperation!= null){
-	    		countryOfOperationDAO.insert(countryOfOperation);
+		IndividualAccountDAO individualAccountDAO = (IndividualAccountDAO) context.getBean("individualAccountDAO");
+		JobSectorIndividualDAO jobSectorIndividualDAO = (JobSectorIndividualDAO) context.getBean("jobSectorIndividualDAO");
+		PreferredCountryDAO preferredCountryDAO = (PreferredCountryDAO) context.getBean("preferredCountryDAO");
+		PreferredJobSectorDAO preferredJobSectorDAO = (PreferredJobSectorDAO) context.getBean("preferredJobSectorDAO");
+		PreferredProjectAreaDAO preferredProjectAreaDAO = (PreferredProjectAreaDAO) context.getBean("preferredProjectAreaDAO");
+		UserSkillDAO userSkillDAO = (UserSkillDAO) context.getBean("userSkillDAO");
+		
+	    for(JobSectorIndividual jobSectorIndividual : jobSectorsIndividual){
+	    	if(jobSectorIndividual!= null){
+	    		jobSectorIndividualDAO.insert(jobSectorIndividual);
 	    	}
 	    	
 	    }
 	    
-	    for(JobSectorOrganization jobSectorOrganization : jobSectorsOrganization){
-	    	if(jobSectorOrganization != null){
-	    		jobSectorOrganizationDAO.insert(jobSectorOrganization);
+	    for(PreferredCountry preferredCountry : prferredCountryList){
+	    	if(preferredCountry != null){
+	    		preferredCountryDAO.insert(preferredCountry);
 	    	}
 	    }
 	    
-		organizationAccountDAO.insert(organizationAccount);
+	    for(PreferredJobSector preferredJobSector : preferredJobSectorList){
+	    	if(preferredJobSector != null){
+	    		preferredJobSectorDAO.insert(preferredJobSector);
+	    	}
+	    }
+	    
+	    for(PreferredProjectArea preferredProjectArea : preferredProjectAreaList){
+	    	if(preferredProjectArea != null){
+	    		preferredProjectAreaDAO.insert(preferredProjectArea);
+	    	}
+	    }
+	    
+	    for(UserSkill userskill : userSkillsetList){
+	    	if(userskill != null){
+	    		userSkillDAO.insert(userskill);
+	    	}
+	    }
+	    
+	    individualAccountDAO.insert(individualAccount);
 	}
 	
 	public OrganizationAccount getOrganizationAccountDetails(String username){
@@ -69,6 +106,13 @@ public class ProfileService {
 		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
 
 		return organizationAccountDAO.findByUsername(username);
+	}
+	
+	public IndividualAccount getIndividualAccountDetails(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		IndividualAccountDAO individualAccountDAO = (IndividualAccountDAO) context.getBean("individualAccountDAO");
+
+		return individualAccountDAO.findByUsername(username);
 	}
 	
 }

@@ -41,7 +41,8 @@
 	Personal Bio<input type="text" name="personalBio"/><br>
 	Personal Contact Details<input type="text" name="contactDetails"/><br>
 	Picture<input type="file" name="profilePicture"/><br>
-	Private Profile<input type="checkbox" name="isPublicProfile" value="false"/><br>
+	Private Profile<input type="radio" name="isPublicProfile" value="false"/><br>
+	Public Profile<input type="radio" name="isPublicProfile" value="true"/><br>
 	
 	<input type="submit" value="Set Account Details!">
 </body>

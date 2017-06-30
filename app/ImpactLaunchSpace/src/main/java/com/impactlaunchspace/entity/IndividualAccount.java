@@ -35,8 +35,8 @@ public class IndividualAccount{
 	private String contactDetails;
 	
 	//Default constructor, some fields can accept null values
-	public IndividualAccount(String username, String email,String first_name, 
-			String last_name, Date dateOfBirth, String country, String jobTitle,
+	public IndividualAccount(String username, String email,Date dateOfBirth,String first_name, 
+			String last_name,  String country, String jobTitle,
 			int minimumVolunteerHours, int maximumVolunteerHours, String organization,
 			boolean isPublicProfile, File profilePicture, String personalBio, String contactDetails) {
 		super();

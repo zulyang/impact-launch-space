@@ -15,6 +15,7 @@
 	<import resource="jobsectors/Spring-JobSector.xml" />
 	<import resource="jobsectors/Spring-JobSectorOrganization.xml" />
 	<import resource="jobsectors/Spring-JobSectorIndividual.xml" />
+	<import resource="jobsectors/Spring-PreferredJobSector.xml" />
 	<import resource="projectarea/Spring-ProjectArea.xml" />
 	<import resource="projectarea/Spring-PreferredProjectArea.xml" />
 	<import resource="skillset/Spring-Skillset.xml" />

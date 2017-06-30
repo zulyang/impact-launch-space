@@ -1,3 +1,4 @@
+C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\dao\PreferredJobSectorDAO.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\login\LoginController.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\login\ResetTokenService.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\dao\PreferredProjectAreaDAO.java
@@ -46,6 +47,7 @@ C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\ma
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\dao\JobSectorOrganizationDAO.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\dao\VerificationTokenDAO.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\dao\UserDAO.java
+C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\entity\PreferredJobSector.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\jdbc\JdbcUserSkillDAO.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\entity\JobSectorIndividual.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\entity\PreferredProjectArea.java
@@ -53,4 +55,5 @@ C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\ma
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\entity\Country.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\dao\JobSectorDAO.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\entity\JobSectorOrganization.java
+C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\jdbc\JdbcPreferredJobSectorDAO.java
 C:\Users\Edward Foo\Desktop\FYP\impact-launch-space\app\ImpactLaunchSpace\src\main\java\com\impactlaunchspace\entity\ResetToken.java
