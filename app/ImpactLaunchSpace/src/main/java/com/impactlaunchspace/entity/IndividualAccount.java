@@ -1,5 +1,6 @@
 package com.impactlaunchspace.entity;
 
+import java.io.File;
 import java.sql.Blob;
 import java.sql.Date;
 
@@ -29,7 +30,7 @@ public class IndividualAccount{
 	private boolean isPublicProfile;
 	
 	//profile based information (optional fields that can be deferred till after creation)
-	private Blob profilePicture;
+	private File profilePicture;
 	private String personalBio;
 	private String contactDetails;
 	
@@ -37,7 +38,7 @@ public class IndividualAccount{
 	public IndividualAccount(String username, String email,String first_name, 
 			String last_name, Date dateOfBirth, String country, String jobTitle,
 			int minimumVolunteerHours, int maximumVolunteerHours, String organization,
-			boolean isPublicProfile, Blob profilePicture, String personalBio, String contactDetails) {
+			boolean isPublicProfile, File profilePicture, String personalBio, String contactDetails) {
 		super();
 		this.username = username;
 		this.email = email;
@@ -100,7 +101,7 @@ public class IndividualAccount{
 	public boolean isPublicProfile() {
 		return isPublicProfile;
 	}
-	public Blob getProfilePicture() {
+	public File getProfilePicture() {
 		return profilePicture;
 	}
 	public String getPersonalBio() {

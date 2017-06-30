@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.sql.DataSource;
 
 import com.impactlaunchspace.dao.PreferredCountryDAO;
-import com.impactlaunchspace.entity.CountryOfOperation;
 import com.impactlaunchspace.entity.PreferredCountry;
 
 public class JdbcPreferredCountryDAO implements PreferredCountryDAO{

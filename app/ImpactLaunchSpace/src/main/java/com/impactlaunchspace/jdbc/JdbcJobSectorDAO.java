@@ -2,12 +2,13 @@ package com.impactlaunchspace.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
 import com.impactlaunchspace.dao.JobSectorDAO;
-import com.impactlaunchspace.entity.Country;
 import com.impactlaunchspace.entity.JobSector;
 
 public class JdbcJobSectorDAO implements JobSectorDAO{
@@ -55,6 +56,35 @@ public class JdbcJobSectorDAO implements JobSectorDAO{
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	public ArrayList<JobSector> retrieveAll(){
+		ArrayList<JobSector> output = new ArrayList<JobSector>();
+		
+		String sql = "SELECT * FROM JOB_SECTORS_LIST";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			JobSector jobSector = null;
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				jobSector = new JobSector(rs.getString(1));
+				output.add(jobSector);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			if (conn != null) {
 				try {

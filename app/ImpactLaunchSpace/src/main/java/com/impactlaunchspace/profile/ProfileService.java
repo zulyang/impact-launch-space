@@ -15,7 +15,32 @@ import com.impactlaunchspace.entity.OrganizationAccount;
 
 @Service
 public class ProfileService {
-	public void firstSetup(OrganizationAccount organizationAccount, 
+	public void firstSetupOrganization(OrganizationAccount organizationAccount, 
+			ArrayList<CountryOfOperation> countriesOfOperation,
+			ArrayList<JobSectorOrganization> jobSectorsOrganization){
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
+		CountryOfOperationDAO countryOfOperationDAO = (CountryOfOperationDAO) context.getBean("countryOfOperationDAO");
+		JobSectorOrganizationDAO jobSectorOrganizationDAO = (JobSectorOrganizationDAO) context.getBean("jobSectorOrganizationDAO");
+	    for(CountryOfOperation countryOfOperation : countriesOfOperation){
+	    	if(countryOfOperation!= null){
+	    		countryOfOperationDAO.insert(countryOfOperation);
+	    	}
+	    	
+	    }
+	    
+	    for(JobSectorOrganization jobSectorOrganization : jobSectorsOrganization){
+	    	if(jobSectorOrganization != null){
+	    		jobSectorOrganizationDAO.insert(jobSectorOrganization);
+	    	}
+	    }
+	    
+		organizationAccountDAO.insert(organizationAccount);
+	}
+	
+	
+	public void firstSetupIndividual(OrganizationAccount organizationAccount, 
 			ArrayList<CountryOfOperation> countriesOfOperation,
 			ArrayList<JobSectorOrganization> jobSectorsOrganization){
 		
@@ -45,4 +70,5 @@ public class ProfileService {
 
 		return organizationAccountDAO.findByUsername(username);
 	}
+	
 }

@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.impactlaunchspace.dao.VerificationTokenDAO;
 import com.impactlaunchspace.entity.VerificationToken;
 import com.impactlaunchspace.login.LoginService;

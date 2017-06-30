@@ -9,6 +9,6 @@
 <body>
 Setup Complete
 
-<img src = "/imageDisplay?username=xiaowei" height="42" width="42">
+<img src = "/imageDisplay?username=${username}" height="42" width="42">
 </body>
 </html>

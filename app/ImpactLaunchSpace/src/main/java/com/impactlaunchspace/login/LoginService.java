@@ -5,7 +5,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.IndividualAccountDAO;
+import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.dao.UserDAO;
+import com.impactlaunchspace.entity.IndividualAccount;
+import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.User;
 
 @Service
@@ -42,16 +46,16 @@ public class LoginService {
 		}
 	}
 	
-	public boolean checkEnabled(String username){
+	public boolean checkEnabled(String usernameemail){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 
 	    UserDAO userDAO = (UserDAO) context.getBean("userDAO");
 		User user = null;
-		user = userDAO.findByUsername(username);
+		user = userDAO.findByUsername(usernameemail);
 		
 		//if user is null, 
 		if(user == null){
-			user = userDAO.findByEmail(username);
+			user = userDAO.findByEmail(usernameemail);
 		}
 		
 		if(user== null){
@@ -144,5 +148,25 @@ public class LoginService {
 	    }else{
 	    	return usernameemail;
 	    }
+	}
+	
+	public boolean isFirstTimeLogin(String usernameemail){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
+		IndividualAccountDAO individualAccountDAO = (IndividualAccountDAO) context.getBean("individualAccountDAO");
+		OrganizationAccount organizationAccount = null;
+		IndividualAccount individualAccount = null;
+		organizationAccount = organizationAccountDAO.findByUsername(usernameemail);
+		if(organizationAccount == null){
+			organizationAccount = organizationAccountDAO.findByEmail(usernameemail);
+		}if(organizationAccount == null){
+			individualAccount = individualAccountDAO.findByUsername(usernameemail);
+		}if(individualAccount == null){
+			individualAccount = individualAccountDAO.findByEmail(usernameemail);
+		}if(individualAccount == null && organizationAccount == null){
+			return true;
+		}
+		
+		return false;
 	}
 }
