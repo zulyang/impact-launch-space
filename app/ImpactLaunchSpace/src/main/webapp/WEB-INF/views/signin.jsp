@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="forget">
-                                <a href="forget.jsp">Forget your password?</a>
+                                <a href="forgotpassword.jsp">Forget your password?</a>
                             </div>
                         </form>
                     </div>
