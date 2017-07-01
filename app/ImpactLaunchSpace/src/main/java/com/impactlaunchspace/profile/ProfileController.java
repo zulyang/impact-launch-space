@@ -197,4 +197,16 @@ public class ProfileController {
 		model.put("username", username);
 		return "setup-complete";
 	}
+	
+	
+	@RequestMapping(value = "/organizationprofile1", method = RequestMethod.GET)
+	public String showOrganizationDashboardPage(HttpServletRequest request) {
+		return "organizationprofile1";
+	}
+	
+	@RequestMapping(value = "/editprofile", method = RequestMethod.GET)
+	public String showEditProfilePage(HttpServletRequest request) {
+		return "editprofile";
+	}
+
 }

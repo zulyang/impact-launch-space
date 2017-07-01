@@ -1,13 +1,12 @@
 package com.impactlaunchspace.login;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +24,7 @@ import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
 
 @Controller
+@Scope("session")
 public class LoginController {
 	@Autowired
 	VerificationTokenService vtService;
@@ -208,7 +208,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public String authenticate(@RequestParam String usernameemail,
-			@RequestParam String password, ModelMap model) {
+			@RequestParam String password, ModelMap model, HttpServletRequest request) {
 
 			boolean userExists = loginService.userExists(usernameemail);
 			boolean isUser = false;
@@ -222,7 +222,8 @@ public class LoginController {
 			}else{
 				isUser = loginService.authenticate(usernameemail, password);
 				isEnabled = loginService.checkEnabled(usernameemail);
-				String username = loginService.returnUsernameFromEmail(usernameemail)	;
+				String username = loginService.returnUsernameFromEmail(usernameemail);
+				String email = loginService.returnEmailFromUsername(usernameemail);
 				if(!isEnabled && isUser){
 					//FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
 					//account locked or verified, do not increase login attempts
@@ -240,6 +241,7 @@ public class LoginController {
 						//FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS LOCKED BECAUSE EXCEED 5 ATTEMPTS
 						//else lock the account
 						loginService.lockAccount(username);
+						rtService.regenerateUnlockCode(username, email);
 						return "accountjustlocked";
 					}
 						
@@ -253,14 +255,15 @@ public class LoginController {
 						boolean isFirstTimeLogin = loginService.isFirstTimeLogin(usernameemail);
 						
 						//inserts information in the model for the view
-						model.addAttribute("username", user.getUsername());
-						model.addAttribute("email", user.getEmail());
-						model.addAttribute("user", user);
+						request.getSession().setAttribute("username",user.getUsername());
+						request.getSession().setAttribute("email",user.getEmail());
+						request.getSession().setAttribute("user", user);
+						
 						if(isFirstTimeLogin == false){
 							if(userType.equals("organization")){
-								model.addAttribute("organization", profileService.getOrganizationAccountDetails(username));
-								model.addAttribute("countriesOfOperation", profileService.retrieveCountriesOfOperations(username));
-								model.addAttribute("jobSectorsOrganization", profileService.retrieveOrganizationJobSectors(username));
+								request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
+								request.getSession().setAttribute("countriesOfOperation", profileService.retrieveCountriesOfOperations(username));
+								request.getSession().setAttribute("jobSectorsOrganization", profileService.retrieveOrganizationJobSectors(username));
 								return "organizationprofile1";
 							}else if (userType.equals("individual")){
 								return "individualprofile1";
