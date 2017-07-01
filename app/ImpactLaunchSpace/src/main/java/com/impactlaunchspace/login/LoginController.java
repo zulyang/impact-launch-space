@@ -40,10 +40,21 @@ public class LoginController {
 
 	@Autowired
 	UserService userService;
+<<<<<<< HEAD
 
 	@Autowired
 	ProfileService profileService;
 
+=======
+<<<<<<< Updated upstream
+	
+	@Autowired
+	ProfileService profileService;
+	
+=======
+
+>>>>>>> Stashed changes
+>>>>>>> AccountModule
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
 
@@ -57,8 +68,14 @@ public class LoginController {
 	public String sendResetCodeForLockedAccounts(@RequestParam String usernameemail, @RequestParam String password,
 			ModelMap model) {
 		boolean userExists = loginService.userExists(usernameemail);
+<<<<<<< HEAD
 
 		if (userExists) {
+=======
+<<<<<<< Updated upstream
+		
+		if(userExists){
+>>>>>>> AccountModule
 			boolean isUser = loginService.authenticate(usernameemail, password);
 			if (isUser) {
 				String email = loginService.returnEmailFromUsername(usernameemail);
@@ -85,6 +102,24 @@ public class LoginController {
 				// FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
 				return "unlockaccount";
 			}
+<<<<<<< HEAD
+=======
+		}else{
+			//print message that no such email exists
+			//FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
+=======
+		if (userExists) {
+			boolean isUser = loginService.authenticate(usernameemail, password);
+			String email = loginService.returnEmailFromUsername(usernameemail);
+			String username = loginService.returnUsernameFromEmail(usernameemail);
+			rtService.regenerateResetCode(username, email);
+			return "unlocksuccessful";
+		} else {
+			// print message that no such email exists
+			// FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
+>>>>>>> Stashed changes
+			return "unlockaccount";
+>>>>>>> AccountModule
 		}
 	}
 
@@ -237,6 +272,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+<<<<<<< HEAD
 	public String authenticate(@RequestParam String usernameemail, @RequestParam String password, ModelMap model) {
 
 		boolean userExists = loginService.userExists(usernameemail);
@@ -302,6 +338,144 @@ public class LoginController {
 						return "setup-individual";
 					}
 
+=======
+<<<<<<< Updated upstream
+	public String authenticate(@RequestParam String usernameemail,
+			@RequestParam String password, ModelMap model, HttpServletRequest request) {
+
+			boolean userExists = loginService.userExists(usernameemail);
+			boolean isUser = false;
+			boolean isEnabled = false;
+			int loginAttempts = 0;
+			
+			if(!userExists){
+				//user does not exist
+				//FRONT END TO PRINT USERNAME/PW IS WRONG
+				return "login1";
+			}else{
+				isUser = loginService.authenticate(usernameemail, password);
+				isEnabled = loginService.checkEnabled(usernameemail);
+				String username = loginService.returnUsernameFromEmail(usernameemail);
+				String email = loginService.returnEmailFromUsername(usernameemail);
+				if(!isEnabled && isUser){
+					//FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
+					//account locked or verified, do not increase login attempts
+					return "lockedlogin";
+				}else if(isEnabled && !isUser){
+					loginAttempts = loginService.getLoginAttempts(username);
+					
+					//if wrong but still within max login threshold, increase attempts
+					//and redirect to page
+					if(loginAttempts < MAX_LOGIN_ATTEMPTS - 1){
+						//FRONT END TO PRINT USERNAME/PW IS WRONG
+						loginService.increaseLoginAttempts(username);
+						return "login1";
+					}else{
+						//FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS LOCKED BECAUSE EXCEED 5 ATTEMPTS
+						//else lock the account
+						loginService.lockAccount(username);
+						rtService.regenerateUnlockCode(username, email);
+						return "accountjustlocked";
+					}
+						
+				}else if(isEnabled && isUser){
+						//if successful login reset the login attempts of the user
+						//direct user to successful page
+						loginService.resetLoginAttempts(username);
+						User user = userService.retrieveUser(usernameemail);
+						String userType = user.getUser_type();
+						//To decide if the user logs in for the first time
+						boolean isFirstTimeLogin = loginService.isFirstTimeLogin(usernameemail);
+						
+						//inserts information in the model for the view
+						request.getSession().setAttribute("username",user.getUsername());
+						request.getSession().setAttribute("email",user.getEmail());
+						request.getSession().setAttribute("user", user);
+						
+						if(isFirstTimeLogin == false){
+							if(userType.equals("organization")){
+								request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
+								request.getSession().setAttribute("countriesOfOperation", profileService.retrieveCountriesOfOperations(username));
+								request.getSession().setAttribute("jobSectorsOrganization", profileService.retrieveOrganizationJobSectors(username));
+								return "organizationprofile1";
+							}else if (userType.equals("individual")){
+								return "individualprofile1";
+							}
+						}else{
+							//userservice to determine if indiv/organ and redirect to page
+							if(userType.equals("organization")){
+								return "setup-organization";
+							}else if (userType.equals("individual")){
+								return "setup-individual";
+							}
+						}
+=======
+	public String authenticate(@RequestParam String usernameemail, @RequestParam String password, ModelMap model) {
+
+		boolean userExists = loginService.userExists(usernameemail);
+		boolean isUser = false;
+		boolean isEnabled = false;
+		int loginAttempts = 0;
+
+		if (!userExists) {
+			// user does not exist
+			// FRONT END TO PRINT USERNAME/PW IS WRONG
+			return "login1";
+		} else {
+			isUser = loginService.authenticate(usernameemail, password);
+			isEnabled = loginService.checkEnabled(usernameemail);
+			String username = loginService.returnUsernameFromEmail(usernameemail);
+			if (!isEnabled && isUser) {
+				// FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
+				// account locked or verified, do not increase login attempts
+				return "lockedlogin";
+			} else if (isEnabled && !isUser) {
+				loginAttempts = loginService.getLoginAttempts(username);
+
+				// if wrong but still within max login threshold, increase
+				// attempts
+				// and redirect to page
+				if (loginAttempts < MAX_LOGIN_ATTEMPTS - 1) {
+					// FRONT END TO PRINT USERNAME/PW IS WRONG
+					loginService.increaseLoginAttempts(username);
+					return "login1";
+				} else {
+					// FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS
+					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
+					// else lock the account
+					loginService.lockAccount(username);
+					return "accountjustlocked";
+				}
+
+			} else if (isEnabled && isUser) {
+				// if successful login reset the login attempts of the user
+				// direct user to successful page
+				loginService.resetLoginAttempts(username);
+				User user = userService.retrieveUser(usernameemail);
+				String userType = user.getUser_type();
+				// To decide if the user logs in for the first time
+				boolean isFirstTimeLogin = loginService.isFirstTimeLogin(usernameemail);
+
+				// inserts information in the model for the view
+				model.addAttribute("username", user.getUsername());
+				model.addAttribute("email", user.getEmail());
+
+				if (isFirstTimeLogin == false) {
+					if (userType.equals("organization")) {
+						return "profile";
+					} else if (userType.equals("individual")) {
+						return "profile";
+					}
+				} else {
+					// userservice to determine if indiv/organ and redirect to
+					// page
+					if (userType.equals("organization")) {
+						return "setup-organization";
+					} else if (userType.equals("individual")) {
+						return "setup-individual";
+					}
+>>>>>>> Stashed changes
+>>>>>>> AccountModule
 				}
 			}
 		}
