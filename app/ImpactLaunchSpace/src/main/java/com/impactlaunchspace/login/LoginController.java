@@ -59,17 +59,40 @@ public class LoginController {
 	public String sendResetCodeForLockedAccounts(@RequestParam String usernameemail
 			,@RequestParam String password,ModelMap model) {
 		boolean userExists = loginService.userExists(usernameemail);
+		
 		if(userExists){
 			boolean isUser = loginService.authenticate(usernameemail, password);
-			String email = loginService.returnEmailFromUsername(usernameemail);
-			String username = loginService.returnUsernameFromEmail(usernameemail);
-			rtService.regenerateResetCode(username, email);
-			return "unlocksuccessful";
+			if(isUser){
+				String email = loginService.returnEmailFromUsername(usernameemail);
+				String username = loginService.returnUsernameFromEmail(usernameemail);
+				model.addAttribute("username",username);
+				model.addAttribute("email",email);
+				return "unlockaccountpin";
+			}else{
+				//FRONT END TO PRINT ERROR THAT THE USERNAME/PW IS WRONG
+				return "unlockaccount";
+			}
 		}else{
 			//print message that no such email exists
 			//FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
 			return "unlockaccount";
 		}
+	}
+	
+	@RequestMapping(value = "/processunlockaccount", method = RequestMethod.POST)
+	public String processUnlockAccount(@RequestParam String resetcode,@RequestParam String username,
+			@RequestParam String email, ModelMap model) {
+		boolean isResetCode = rtService.verifyToken(resetcode, username);
+		if(isResetCode){
+			model.addAttribute("username",username);
+			model.addAttribute("email",email);
+			rtService.unlock(username);
+			loginService.resetLoginAttempts(username);
+			//FRONT END TO PRINT THAT ACCOUNT HAS BEEN UNLOCKED
+			return "login1";
+		}
+		//FRONT END TO PRINT PIN IS WRONG
+		return "unlockaccountpin";
 	}
 
 	//Register Users
