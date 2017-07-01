@@ -20,13 +20,13 @@
                     <nav class="navbar navbar-default navbar-fixed-top landing-nav">
                         <div class="container-fluid">
                             <div class="navbar-header">
-                                <a class="navbar-brand" href="index.jsp">
-                                    <img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo.png"></a>
+                                <a class="navbar-brand" href="/">
+                                    <img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo2.png"></a>
                             </div>
                             
                             <ul class="nav navbar-nav navbar-right nav_elements">
                                 <li>
-                                    <a href="/index">Home</a>
+                                    <a href="/">Home</a>
                                 </li>
                                 <li>
                                     <a href="/login1">Sign In</a>
