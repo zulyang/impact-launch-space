@@ -114,5 +114,55 @@ public class ProfileService {
 
 		return individualAccountDAO.findByUsername(username);
 	}
+
+	//These 2 methods help return information for organizations accounts
+	public ArrayList<CountryOfOperation> retrieveCountriesOfOperations(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CountryOfOperationDAO countryOfOperationDAO = (CountryOfOperationDAO) context.getBean("countryOfOperationDAO");
+
+		return countryOfOperationDAO.retrieveCountriesOfOperations(username);
+	}
 	
+	public ArrayList<JobSectorOrganization> retrieveOrganizationJobSectors(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		JobSectorOrganizationDAO jobSectorOrganizationDAO = (JobSectorOrganizationDAO) context.getBean("jobSectorOrganizationDAO");
+
+		return jobSectorOrganizationDAO.retrieveOrganizationJobSectors(username);
+	}
+	
+	//These methods help return information for individual accounts
+	public ArrayList<JobSectorIndividual> retrieveIndividualJobSectors(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		JobSectorIndividualDAO jobSectorIndividualDAO = (JobSectorIndividualDAO) context.getBean("jobSectorIndividualDAO");
+
+		return jobSectorIndividualDAO.retrieveIndividualJobSectors(username);
+	}
+	
+	public ArrayList<PreferredCountry> retrievePreferredCountries(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		PreferredCountryDAO preferredCountryDAO = (PreferredCountryDAO) context.getBean("preferredCountryDAO");
+
+		return preferredCountryDAO.retrievePreferredCountries(username);
+	}
+	
+	public ArrayList<PreferredJobSector> retrievePreferredJobSectors(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		PreferredJobSectorDAO preferredJobSectorDAO = (PreferredJobSectorDAO) context.getBean("preferredJobSectorDAO");
+
+		return preferredJobSectorDAO.retrievePreferredJobSectors(username);
+	}
+	
+	public ArrayList<PreferredProjectArea> retrievePreferredProjectArea(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		PreferredProjectAreaDAO preferredProjectAreaDAO = (PreferredProjectAreaDAO) context.getBean("preferredProjectAreaDAO");
+
+		return preferredProjectAreaDAO.retrievePreferredProjectArea(username);
+	}
+	
+	public ArrayList<UserSkill> retrieveAllSkillsOfUser(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		UserSkillDAO userSkillDAO = (UserSkillDAO) context.getBean("userSkillDAO");
+
+		return userSkillDAO.retrieveAllSkillsOfUser(username);
+	}
 }

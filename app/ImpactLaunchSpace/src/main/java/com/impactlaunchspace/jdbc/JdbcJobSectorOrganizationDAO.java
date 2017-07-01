@@ -55,7 +55,7 @@ public class JdbcJobSectorOrganizationDAO implements JobSectorOrganizationDAO{
 			ps.setString(1, username);
 			JobSectorOrganization jobSectorOrganization = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				jobSectorOrganization = new JobSectorOrganization(rs.getString(1),rs.getString(2));
 				output.add(jobSectorOrganization);
 			}

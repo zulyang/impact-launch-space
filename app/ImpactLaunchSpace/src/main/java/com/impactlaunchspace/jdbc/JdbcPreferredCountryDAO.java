@@ -53,7 +53,7 @@ public class JdbcPreferredCountryDAO implements PreferredCountryDAO{
 			ps.setString(1, username);
 			PreferredCountry preferredCountry = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				preferredCountry = new PreferredCountry(rs.getString(1),rs.getString(2));
 				output.add(preferredCountry);
 			}

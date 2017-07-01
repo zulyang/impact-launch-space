@@ -1,5 +1,7 @@
 package com.impactlaunchspace.login;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.exception.ExceptionController;
+import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
 
 @Controller
@@ -37,6 +40,9 @@ public class LoginController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	ProfileService profileService;
 	
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
@@ -249,12 +255,15 @@ public class LoginController {
 						//inserts information in the model for the view
 						model.addAttribute("username", user.getUsername());
 						model.addAttribute("email", user.getEmail());
-						
+						model.addAttribute("user", user);
 						if(isFirstTimeLogin == false){
 							if(userType.equals("organization")){
-								return "profile";
+								model.addAttribute("organization", profileService.getOrganizationAccountDetails(username));
+								model.addAttribute("countriesOfOperation", profileService.retrieveCountriesOfOperations(username));
+								model.addAttribute("jobSectorsOrganization", profileService.retrieveOrganizationJobSectors(username));
+								return "organizationprofile1";
 							}else if (userType.equals("individual")){
-								return "profile";
+								return "individualprofile1";
 							}
 						}else{
 							//userservice to determine if indiv/organ and redirect to page

@@ -55,7 +55,7 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 			ps.setString(1, username);
 			CountryOfOperation countryOfOperation = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				countryOfOperation = new CountryOfOperation(rs.getString(1),rs.getString(2));
 				output.add(countryOfOperation);
 			}

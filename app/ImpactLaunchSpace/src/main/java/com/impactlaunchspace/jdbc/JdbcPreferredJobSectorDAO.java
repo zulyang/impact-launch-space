@@ -55,7 +55,7 @@ public class JdbcPreferredJobSectorDAO implements PreferredJobSectorDAO {
 			ps.setString(1, username);
 			PreferredJobSector preferredJobSector = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				preferredJobSector = new PreferredJobSector(rs.getString(1), rs.getString(2));
 				output.add(preferredJobSector);
 			}

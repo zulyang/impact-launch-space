@@ -57,7 +57,7 @@ public class JdbcJobSectorIndividualDAO implements JobSectorIndividualDAO{
 			ps.setString(1, username);
 			JobSectorIndividual jobSectorIndividual = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				jobSectorIndividual = new JobSectorIndividual(rs.getString(1),rs.getString(2),rs.getInt(3));
 				output.add(jobSectorIndividual);
 			}

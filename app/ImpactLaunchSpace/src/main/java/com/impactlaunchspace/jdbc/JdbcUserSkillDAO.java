@@ -54,7 +54,7 @@ public class JdbcUserSkillDAO implements UserSkillDAO{
 			ps.setString(1, username);
 			UserSkill userSkill = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				userSkill = new UserSkill(rs.getString(1),rs.getString(2));
 				output.add(userSkill);
 			}

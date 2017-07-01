@@ -54,7 +54,7 @@ public class JdbcPreferredProjectAreaDAO implements PreferredProjectAreaDAO {
 			ps.setString(1, username);
 			PreferredProjectArea preferredProjectArea = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				preferredProjectArea = new PreferredProjectArea(rs.getString(1), rs.getString(2));
 				output.add(preferredProjectArea);
 			}
