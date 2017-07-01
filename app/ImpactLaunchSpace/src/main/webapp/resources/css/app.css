@@ -170,8 +170,8 @@ html, body {
 	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
-	position: initial;
-	margin-bottom: 35rem;
+	position: absolute;
+	margin-top: -16rem;
 	padding-bottom: 5rem;
 }
 
@@ -194,7 +194,7 @@ html, body {
 	width: 30rem;
 }
 
-.returnLogin, .signInNow, .verify_account {
+.signInNow, .verify_account {
 	position: absolute;
 	color: black;
 	border: 0.125rem solid grey;
@@ -206,6 +206,20 @@ html, body {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 8rem;
+}
+
+.returnLogin {
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12em;
 }
 
 .returnHome {
@@ -245,4 +259,30 @@ html, body {
 	max-width: 130%;
 	max-height: 130%;
 	margin-left: 2rem;
+}
+
+#resetcode {
+	float: left;
+	width: 15rem;
+	margin-right: 2rem;
+}
+
+#submitPIN {
+	float: left;
+	width: 12rem;
+	margin-left: 1rem;
+}
+
+#verify_pin {
+	margin-top: 8rem;
+}
+
+#email_sent_prompt {
+	width: 30rem;
+	position: absolute;
+}
+
+#wait_prompt {
+	margin-top: 8rem;
+	position: absolute;
 }
