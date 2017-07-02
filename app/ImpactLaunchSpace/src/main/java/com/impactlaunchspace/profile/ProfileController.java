@@ -35,7 +35,7 @@ public class ProfileController {
 
 	@Autowired
 	ProfileService profileService;
-	
+
 	@Autowired
 	UserService userService;
 
@@ -99,7 +99,7 @@ public class ProfileController {
 	public void showImage(@RequestParam("username") String username, HttpServletResponse response,
 			HttpServletRequest request) throws ServletException, IOException {
 		User user = userService.retrieveUser(username);
-		if(user.getUser_type().equals("organization")){
+		if (user.getUser_type().equals("organization")) {
 			OrganizationAccount organizationAccount = profileService.getOrganizationAccountDetails(username);
 			File file = organizationAccount.getProfilePicture();
 			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
@@ -109,7 +109,7 @@ public class ProfileController {
 			fis.close();
 			response.getOutputStream().write(bytesArray);
 			response.getOutputStream().close();
-		}else if(user.getUser_type().equals("individual")){
+		} else if (user.getUser_type().equals("individual")) {
 			IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
 			File file = individualAccount.getProfilePicture();
 			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
@@ -120,7 +120,7 @@ public class ProfileController {
 			response.getOutputStream().write(bytesArray);
 			response.getOutputStream().close();
 		}
-		
+
 	}
 
 	// Setup for Individuals
@@ -153,7 +153,7 @@ public class ProfileController {
 		}
 		System.out.println(profilePictureFile);
 
-		IndividualAccount individualAccount = new IndividualAccount(username, email,dateOfBirth, firstName, lastName, 
+		IndividualAccount individualAccount = new IndividualAccount(username, email, dateOfBirth, firstName, lastName,
 				country, jobTitle, minimumHours, maximumHours, organization, isPublicProfile, profilePictureFile,
 				personalBio, contactDetails);
 
@@ -162,7 +162,7 @@ public class ProfileController {
 		ArrayList<PreferredCountry> prferredCountryList = new ArrayList<PreferredCountry>();
 		ArrayList<PreferredJobSector> preferredJobSectorList = new ArrayList<PreferredJobSector>();
 		ArrayList<PreferredProjectArea> preferredProjectAreaList = new ArrayList<PreferredProjectArea>();
-		ArrayList<UserSkill> userSkillsetList = new ArrayList<UserSkill>(); 
+		ArrayList<UserSkill> userSkillsetList = new ArrayList<UserSkill>();
 
 		if (jobSector1 != null && jobSector1.length() != 0) {
 			JobSectorIndividual jobSectorIndividual1 = new JobSectorIndividual(jobSector1, username, js1Years);
@@ -179,34 +179,55 @@ public class ProfileController {
 			jobSectorsIndividual.add(jobSectorIndividual3);
 		}
 
-		
-		//we assume theres only one just for testing sake.
+		// we assume theres only one just for testing sake.
 		PreferredCountry preferredCountry = new PreferredCountry(preferredCountries, username);
 		PreferredJobSector preferredJobSectors = new PreferredJobSector(importantSectorsToUser, username);
-		PreferredProjectArea preferredProjectArea = new PreferredProjectArea(interestedSectors,username);
-		UserSkill userskill = new UserSkill(skillset,username);
-		
+		PreferredProjectArea preferredProjectArea = new PreferredProjectArea(interestedSectors, username);
+		UserSkill userskill = new UserSkill(skillset, username);
+
 		prferredCountryList.add(preferredCountry);
 		preferredJobSectorList.add(preferredJobSectors);
 		preferredProjectAreaList.add(preferredProjectArea);
 		userSkillsetList.add(userskill);
-		
-		profileService.firstSetupIndividual(individualAccount, jobSectorsIndividual, prferredCountryList, preferredJobSectorList, preferredProjectAreaList, userSkillsetList);
-		
+
+		profileService.firstSetupIndividual(individualAccount, jobSectorsIndividual, prferredCountryList,
+				preferredJobSectorList, preferredProjectAreaList, userSkillsetList);
 
 		model.put("username", username);
 		return "setup-complete";
 	}
-	
-	
+
+	// Dashboard and Edit Pages for Organization Profiles
 	@RequestMapping(value = "/organizationprofile1", method = RequestMethod.GET)
 	public String showOrganizationDashboardPage(HttpServletRequest request) {
 		return "organizationprofile1";
 	}
-	
-	@RequestMapping(value = "/editprofile", method = RequestMethod.GET)
-	public String showEditProfilePage(HttpServletRequest request) {
-		return "editprofile";
+
+	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.GET)
+	public String showEditProfilePageOrganization(HttpServletRequest request) {
+		return "editprofile-organization";
+	}
+
+	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.POST)
+	public String processUpdateOrganizationProfile(@RequestParam String companyName, @RequestParam String companyBio,
+			@RequestParam String contactDetails, HttpServletRequest request) {
+		OrganizationAccount organization = (OrganizationAccount)request.getSession().getAttribute("organization");
+		String username = organization.getUsername();
+		String email = organization.getEmail();
+		//todo
+		
+		return "editprofile-organization";
+	}
+
+	// Dashboard and Edit Pages for Individual Profiles
+	@RequestMapping(value = "/individualprofile1", method = RequestMethod.GET)
+	public String showIndividualDashboardPage(HttpServletRequest request) {
+		return "individualprofile1";
+	}
+
+	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
+	public String showEditProfilePageIndividual(HttpServletRequest request) {
+		return "/editprofile-individual";
 	}
 
 }

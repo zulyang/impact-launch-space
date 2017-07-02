@@ -1,5 +1,7 @@
 package com.impactlaunchspace.login;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.exception.ExceptionController;
 import com.impactlaunchspace.profile.ProfileService;
@@ -58,7 +61,7 @@ public class LoginController {
 			ModelMap model) {
 		boolean userExists = loginService.userExists(usernameemail);
 
-		if(userExists){
+		if (userExists) {
 			boolean isUser = loginService.authenticate(usernameemail, password);
 			if (isUser) {
 				String email = loginService.returnEmailFromUsername(usernameemail);
@@ -237,7 +240,8 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public String authenticate(@RequestParam String usernameemail, @RequestParam String password, ModelMap model) {
+	public String authenticate(@RequestParam String usernameemail, @RequestParam String password, ModelMap model,
+			HttpServletRequest request) {
 
 		boolean userExists = loginService.userExists(usernameemail);
 		boolean isUser = false;
@@ -284,14 +288,35 @@ public class LoginController {
 				boolean isFirstTimeLogin = loginService.isFirstTimeLogin(usernameemail);
 
 				// inserts information in the model for the view
-				model.addAttribute("username", user.getUsername());
-				model.addAttribute("email", user.getEmail());
+				request.getSession().setAttribute("username", user.getUsername());
+				request.getSession().setAttribute("email", user.getEmail());
+				request.getSession().setAttribute("user", user);
 
 				if (isFirstTimeLogin == false) {
 					if (userType.equals("organization")) {
-						return "profile";
+						request.getSession().setAttribute("organization",
+								profileService.getOrganizationAccountDetails(username));
+						request.getSession().setAttribute("countriesOfOperation",
+								profileService.retrieveCountriesOfOperations(username));
+						request.getSession().setAttribute("jobSectorsOrganization",
+								profileService.retrieveOrganizationJobSectors(username));
+						return "organizationprofile1";
 					} else if (userType.equals("individual")) {
-						return "profile";
+						request.getSession().setAttribute("individual",
+								profileService.getIndividualAccountDetails(username));
+						request.getSession().setAttribute("jobSectorsIndividual",
+								profileService.retrieveIndividualJobSectors(username));
+						ArrayList<JobSectorIndividual> blah = profileService.retrieveIndividualJobSectors(username);
+						
+						request.getSession().setAttribute("preferredCountries",
+								profileService.retrievePreferredCountries(username));
+						request.getSession().setAttribute("preferredJobSectors",
+								profileService.retrievePreferredJobSectors(username));
+						request.getSession().setAttribute("preferredProjectArea",
+								profileService.retrievePreferredProjectArea(username));
+						request.getSession().setAttribute("userSkills",
+								profileService.retrieveAllSkillsOfUser(username));
+						return "individualprofile1";
 					}
 				} else {
 					// userservice to determine if indiv/organ and redirect to

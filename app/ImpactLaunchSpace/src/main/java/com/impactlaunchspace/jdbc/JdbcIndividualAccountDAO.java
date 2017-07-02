@@ -161,4 +161,45 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO{
 		}
 		return null;
 	}
+	
+	
+	public void update(IndividualAccount updatedIndividualAccount, String username){
+		String sql = "UPDATE INDIVIDUAL_ACCOUNTS SET "
+				+ "username = ?,  email = ?, dateOfBirth = ?, first_name = ?, last_name = ?, country = ?, jobTitle = ?, minimumVolunteerHours = ?, maximumVolunteerHours = ?, organization = ?, isPublicProfile = ?, profilePicture = ?, personalBio = ?, contactDetails = ?) WHERE username = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, updatedIndividualAccount.getUsername());
+			ps.setString(2, updatedIndividualAccount.getEmail());
+			ps.setDate(3, updatedIndividualAccount.getDateOfBirth());
+			ps.setString(4, updatedIndividualAccount.getFirst_name());
+			ps.setString(5, updatedIndividualAccount.getLast_name());
+			ps.setString(6, updatedIndividualAccount.getCountry());
+			ps.setString(7, updatedIndividualAccount.getJobTitle());
+			ps.setInt(8, updatedIndividualAccount.getMinimumVolunteerHours());
+			ps.setInt(9, updatedIndividualAccount.getMaximumVolunteerHours());
+			ps.setString(10, updatedIndividualAccount.getOrganization());
+			ps.setBoolean(11, updatedIndividualAccount.isPublicProfile());
+			ps.setBlob(12, new FileInputStream(updatedIndividualAccount.getProfilePicture()));
+			ps.setString(13, updatedIndividualAccount.getPersonalBio());
+			ps.setString(14, updatedIndividualAccount.getContactDetails());
+			ps.setString(15, username);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

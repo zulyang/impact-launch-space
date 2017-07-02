@@ -9,11 +9,12 @@
 </head>
 <body>
 	<div align="center">
+		<form action="editprofile-organization" method="post">
 		<h4>Company Name <input type="text" value="${organization.getCompanyName()}" name="companyName"></h4>
 		<h4>Company Bio <input type="text" value="${organization.getCompanyBio()}" name="companyBio"> </h4>
-		<h3>Email: <input type="text" value="${user.getEmail()}" name="email"></h3>
+		<h3>Email: <input type="text" value="${user.getEmail()}" name="email" readonly></h3>
 		<h3>Phone: <input type="text" value="${organization.getContactDetails()}" name="contactDetails"></h3>
-
+		</form>
 	</div>
 	<div align="center">
 		<h4>

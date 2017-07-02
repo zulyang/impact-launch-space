@@ -28,7 +28,7 @@
     	${item.getJob_sector()}<br>
 			</c:forEach>
 		</h4>
-		<h4><a href="editprofile">Edit Profile</a></h4>
+		<h4><a href="editprofile-organization">Edit Profile</a></h4>
 	</div>
 </body>
 </html>

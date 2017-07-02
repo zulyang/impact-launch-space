@@ -119,7 +119,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			ps.setString(1, email);
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
@@ -169,7 +169,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
@@ -220,7 +220,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
@@ -259,4 +259,37 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 		return output;
 	}
 
+	public void update(OrganizationAccount updatedOrganizationAccount, String username) {
+		String sql = "UPDATE ORGANIZATION_ACCOUNTS SET "
+				+ "username = ?,  email = ?, companyName = ?, needsSupport = ?, offeringSupport = ?, profilePicture = ?, companyBio = ?, contactDetails = ?) WHERE username = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, updatedOrganizationAccount.getUsername());
+			ps.setString(2, updatedOrganizationAccount.getEmail());
+			ps.setString(3, updatedOrganizationAccount.getCompanyName());
+			ps.setBoolean(4, updatedOrganizationAccount.isNeedsSupport());
+			ps.setBoolean(5, updatedOrganizationAccount.isOfferingSupport());
+			ps.setBlob(6, new FileInputStream(updatedOrganizationAccount.getProfilePicture()));
+			ps.setString(7, updatedOrganizationAccount.getCompanyBio());
+			ps.setString(8, updatedOrganizationAccount.getContactDetails());
+			ps.setString(9, username);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

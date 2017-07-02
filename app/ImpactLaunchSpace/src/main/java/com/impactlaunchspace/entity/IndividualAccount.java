@@ -19,10 +19,7 @@ public class IndividualAccount{
 	//takes the values from a range an puts them in integers e.g. 1-2 hours
 	private int minimumVolunteerHours;
 	private int maximumVolunteerHours;
-	
-	//Multiple countries that the user is interested to work in
-	private String interestedCountries;
-	
+
 	//ONLY 1 ORGANIZATION CAN BE CHOSEN
 	private String organization;
 	
@@ -91,9 +88,6 @@ public class IndividualAccount{
 	}
 	public int getMaximumVolunteerHours() {
 		return maximumVolunteerHours;
-	}
-	public String getInterestedCountries() {
-		return interestedCountries;
 	}
 	public String getOrganization() {
 		return organization;
