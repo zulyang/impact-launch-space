@@ -85,7 +85,8 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="submit" class="btn btn-success field" value="Register" id="register_button">
+								<input type="submit" class="btn btn-success field"
+									value="Register" id="register_button">
 							</div>
 						</div>
 						<p class="registerError">${registerCheck}</p>
@@ -144,10 +145,41 @@
 						IN NOW</a> <a href="/index" class="btn btn-default returnHome"
 						role="button">Return to Home</a>
 				</div>
+				
+				<input type="hidden" id="registerCheck"
+						name="registerCheck" value="${registerCheck}">
 			</div>
 		</div>
 
 	</div>
 
 </body>
+<script type="text/javascript">
+	window.onload = function() {
+		var registerCheckStatus = document.getElementById("registerCheck").value;
+		
+		console.log(registerCheckStatus);
+		
+		if (registerCheckStatus.length > 0) {
+			if ($('#register_container').css('display') !== 'none') {
+				$('#register_success').show().siblings('div').hide();
+				event.preventDefault();
+			}
+		}
+
+		$('#verify_account').click(function() {
+			if ($('#register_success').css('display') !== 'none') {
+				$('#verify_container').show().siblings('div').hide();
+				event.preventDefault();
+			}
+		});
+
+		$('#verify_button').click(function() {
+			if ($('#verify_container').css('display') !== 'none') {
+				$('#verify_success').show().siblings('div').hide();
+				event.preventDefault();
+			}
+		});
+	}
+</script>
 </html>

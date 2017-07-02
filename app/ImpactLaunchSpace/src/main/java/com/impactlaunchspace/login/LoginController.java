@@ -148,7 +148,7 @@ public class LoginController {
 			vtService.sendVerificationEmail(verificationCode, email);
 			// below is for resending verification
 			model.addAttribute("registerCheck", "success");
-			return "registrationsuccessful";
+			return "register";
 		} else {
 			// FRONT END TO PRINT GENERIC ERROR, ERROR REGISTERING
 			model.addAttribute("registerCheck", "An error has occurred during registration.");
