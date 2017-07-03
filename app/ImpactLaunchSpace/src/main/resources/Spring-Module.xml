@@ -20,4 +20,5 @@
 	<import resource="projectarea/Spring-PreferredProjectArea.xml" />
 	<import resource="skillset/Spring-Skillset.xml" />
 	<import resource="skillset/Spring-UserSkill.xml" />
+	<import resource="cookies/Spring-cookies.xml" />
 </beans>

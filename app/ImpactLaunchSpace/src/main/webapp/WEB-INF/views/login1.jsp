@@ -55,18 +55,8 @@
                                 <div class="col-lg-12">
                                     <div class="checkbox remember">
                                         <label>
-                                            <input name="rememberMe" type="checkbox">
+                                            <input name="rememberMe" type="checkbox" value = "true">
                                             Remember me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <div class="checkbox logged">
-                                        <label>
-                                            <input type="checkbox">
-                                            Keep me logged in
                                         </label>
                                     </div>
                                 </div>

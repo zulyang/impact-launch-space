@@ -1,10 +1,13 @@
 package com.impactlaunchspace.login;
 
+import java.util.UUID;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.CookieDAO;
 import com.impactlaunchspace.dao.IndividualAccountDAO;
 import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.dao.UserDAO;
@@ -168,5 +171,13 @@ public class LoginService {
 		}
 		
 		return false;
+	}
+	
+	public UUID generateCookieSecret(String username){
+		UUID secret = UUID.randomUUID();
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CookieDAO cookieDAO = (CookieDAO) context.getBean("cookieDAO");
+		cookieDAO.insert(username, secret.toString());
+		return secret;
 	}
 }

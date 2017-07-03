@@ -1,7 +1,9 @@
 package com.impactlaunchspace.login;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -241,7 +243,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public String authenticate(@RequestParam String usernameemail, @RequestParam String password, ModelMap model,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse response) {
 
 		boolean userExists = loginService.userExists(usernameemail);
 		boolean isUser = false;
@@ -291,9 +293,21 @@ public class LoginController {
 				request.getSession().setAttribute("username", user.getUsername());
 				request.getSession().setAttribute("email", user.getEmail());
 				request.getSession().setAttribute("user", user);
+				
+				//Remember me cookie
+				Cookie c = null;
+
+				//Only if remember me is checked,generate the cookie. 
+				  if(request.getParameter("rememberMe").equals("true")){
+					   UUID s = loginService.generateCookieSecret(username); //generates a secret token 
+					   c = new Cookie("rememberMeCookie", s.toString());
+					   c.setMaxAge(365 * 24 * 60 * 60); // one year
+					  }
 
 				if (isFirstTimeLogin == false) {
 					if (userType.equals("organization")) {
+						//add a cookie to the response. 
+						response.addCookie(c);
 						request.getSession().setAttribute("organization",
 								profileService.getOrganizationAccountDetails(username));
 						request.getSession().setAttribute("countriesOfOperation",
@@ -302,6 +316,8 @@ public class LoginController {
 								profileService.retrieveOrganizationJobSectors(username));
 						return "organizationprofile1";
 					} else if (userType.equals("individual")) {
+						//add a cookie to the response. 
+						response.addCookie(c);
 						request.getSession().setAttribute("individual",
 								profileService.getIndividualAccountDetails(username));
 						request.getSession().setAttribute("jobSectorsIndividual",
@@ -319,11 +335,12 @@ public class LoginController {
 						return "individualprofile1";
 					}
 				} else {
-					// userservice to determine if indiv/organ and redirect to
-					// page
+					// userservice to determine if indiv/organ and redirect to page
 					if (userType.equals("organization")) {
+						response.addCookie(c);
 						return "setup-organization";
 					} else if (userType.equals("individual")) {
+						response.addCookie(c);
 						return "setup-individual";
 					}
 				}

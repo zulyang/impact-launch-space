@@ -25,6 +25,8 @@ public class User {
 	
 	public static final int MAX_LOGIN_ATTEMPTS = 5;
 	
+	private String user_role;
+	
 	public User(){
 		
 	}
@@ -53,6 +55,8 @@ public class User {
 		this.enabled = false;
 		this.user_type = user_type;
 		this.login_attempts = 0;
+		//by default just a USER
+		this.user_role = "USER";
 	}
 	
 	public String getUsername() {
@@ -78,6 +82,10 @@ public class User {
 
 	public int getLogin_attempts() {
 		return login_attempts;
+	}
+	
+	public String getUser_role(){
+		return user_role;
 	}
 
 }
