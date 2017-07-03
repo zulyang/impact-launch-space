@@ -261,7 +261,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 
 	public void update(OrganizationAccount updatedOrganizationAccount, String username) {
 		String sql = "UPDATE ORGANIZATION_ACCOUNTS SET "
-				+ "username = ?,  email = ?, companyName = ?, needsSupport = ?, offeringSupport = ?, profilePicture = ?, companyBio = ?, contactDetails = ?) WHERE username = ?";
+				+ "username = ?,  email = ?, companyName = ?, needsSupport = ?, offeringSupport = ?, profilePicture = ?, companyBio = ?, contactDetails = ? WHERE username = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();

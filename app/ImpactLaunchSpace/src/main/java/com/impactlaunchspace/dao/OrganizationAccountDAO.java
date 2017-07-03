@@ -10,4 +10,5 @@ public interface OrganizationAccountDAO {
 	public OrganizationAccount findByEmail(String email);
 	public ArrayList<OrganizationAccount> retrieveOrganizationsNeedingSupport();
 	public ArrayList<OrganizationAccount> retrieveOrganizationsOfferingSupport();
+	public void update(OrganizationAccount updatedOrganizationAccount, String username);
 }

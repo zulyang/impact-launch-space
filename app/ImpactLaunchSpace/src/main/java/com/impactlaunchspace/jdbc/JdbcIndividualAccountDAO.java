@@ -165,7 +165,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO{
 	
 	public void update(IndividualAccount updatedIndividualAccount, String username){
 		String sql = "UPDATE INDIVIDUAL_ACCOUNTS SET "
-				+ "username = ?,  email = ?, dateOfBirth = ?, first_name = ?, last_name = ?, country = ?, jobTitle = ?, minimumVolunteerHours = ?, maximumVolunteerHours = ?, organization = ?, isPublicProfile = ?, profilePicture = ?, personalBio = ?, contactDetails = ?) WHERE username = ?";
+				+ "username = ?,  email = ?, dateOfBirth = ?, first_name = ?, last_name = ?, country = ?, jobTitle = ?, minimumVolunteerHours = ?, maximumVolunteerHours = ?, organization = ?, isPublicProfile = ?, profilePicture = ?, personalBio = ?, contactDetails = ? WHERE username = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();

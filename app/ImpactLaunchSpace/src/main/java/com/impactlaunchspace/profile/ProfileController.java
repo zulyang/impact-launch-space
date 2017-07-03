@@ -211,12 +211,19 @@ public class ProfileController {
 	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.POST)
 	public String processUpdateOrganizationProfile(@RequestParam String companyName, @RequestParam String companyBio,
 			@RequestParam String contactDetails, HttpServletRequest request) {
-		OrganizationAccount organization = (OrganizationAccount)request.getSession().getAttribute("organization");
+		OrganizationAccount organization = (OrganizationAccount) request.getSession().getAttribute("organization");
 		String username = organization.getUsername();
 		String email = organization.getEmail();
-		//todo
+		// todo
+		OrganizationAccount updatedOrganizationAccount = new OrganizationAccount(organization.getUsername(),
+				organization.getEmail(), companyName, organization.isNeedsSupport(), organization.isOfferingSupport(),
+				organization.getProfilePicture(), companyBio, contactDetails);
+		profileService.updateOrganizationAccount(updatedOrganizationAccount, username);
+
+		// change the session attributes
+		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
 		
-		return "editprofile-organization";
+		return "organizationprofile1";
 	}
 
 	// Dashboard and Edit Pages for Individual Profiles
@@ -228,6 +235,28 @@ public class ProfileController {
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
 	public String showEditProfilePageIndividual(HttpServletRequest request) {
 		return "/editprofile-individual";
+	}
+	
+	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.POST)
+	public String processUpdateIndividualProfile(@RequestParam String firstName, @RequestParam String lastName,
+			@RequestParam String jobTitle, @RequestParam String organization, @RequestParam String country,
+			@RequestParam String contactDetails, @RequestParam String personalBio, @RequestParam Date dateOfBirth, 
+			@RequestParam int minimumVolunteerHours, @RequestParam int maximumVolunteerHours,
+			HttpServletRequest request) {
+		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
+		String username = individual.getUsername();
+		String email = individual.getEmail();
+		// to-do
+		IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(), individual.getEmail(),
+				dateOfBirth,firstName,lastName,country, jobTitle,
+				minimumVolunteerHours, maximumVolunteerHours, organization,
+				individual.isPublicProfile(), individual.getProfilePicture(), personalBio,contactDetails) ;
+		profileService.updateIndividualAccount(updatedIndividualAccount, username);
+
+		// change the session attributes
+		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
+		
+		return "individualprofile1";
 	}
 
 }

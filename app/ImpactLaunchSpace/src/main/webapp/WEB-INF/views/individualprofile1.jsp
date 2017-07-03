@@ -12,6 +12,8 @@
 		<h1>${individual.getFirst_name()} ${individual.getLast_name()} </h1>
 		<h2>${individual.getJobTitle()}</h2>
 		<h2>${individual.getOrganization()}</h2>
+		<h3>Date Of Birth: ${individual.getDateOfBirth()}</h3>
+		<h3>Country: ${individual.getCountry()}</h3>
 		<h3>Email: ${user.getEmail()}</h3>
 		<h3>Phone: ${individual.getContactDetails()}</h3>
 		<h5>Personal Bio: ${individual.getPersonalBio()}</h5>

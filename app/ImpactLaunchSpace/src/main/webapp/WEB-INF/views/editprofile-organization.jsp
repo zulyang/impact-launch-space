@@ -14,6 +14,7 @@
 		<h4>Company Bio <input type="text" value="${organization.getCompanyBio()}" name="companyBio"> </h4>
 		<h3>Email: <input type="text" value="${user.getEmail()}" name="email" readonly></h3>
 		<h3>Phone: <input type="text" value="${organization.getContactDetails()}" name="contactDetails"></h3>
+		<input type="submit" value="Update details"/>
 		</form>
 	</div>
 	<div align="center">
