@@ -167,7 +167,8 @@ public class LoginController {
 
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.GET)
 	public String showVerifyAccountPage(ModelMap model) {
-		return "verifyaccount";
+		System.out.println("in verify account 0");
+		return "register";
 	}
 
 	@RequestMapping(value = "/tokenexpired", method = RequestMethod.GET)
@@ -181,27 +182,34 @@ public class LoginController {
 		boolean isUser = loginService.authenticate(usernameemail, password);
 		String username = loginService.returnUsernameFromEmail(usernameemail);
 		String email = loginService.returnEmailFromUsername(usernameemail);
+		System.out.println("in verify account 1");
 		if (isUser) {
 			boolean isTokenValid = vtService.verifyToken(verificationcode, usernameemail);
 			boolean isTokenExpired = vtService.ifTokenExpired(username);
-
+			System.out.println("in verify account 2");
 			if (isTokenValid) {
+				System.out.println("in verify account 3");
 				if (isTokenExpired) {
+					System.out.println("in verify account 4");
 					vtService.regenerateVerificationCode(username, email);
+					model.addAttribute("verifyNewAccount", "Your token has expired. Please check your email for a new token.");
 					// FRONT END TO PRINT TOKEN HAS EXPIRED, A NEW ONE HAS BEEN
 					// SENT TO UR INBOX
-					return "tokenexpired";
+					return "register"; //tokenexpired
 				}
 				vtService.unlock(usernameemail);
 				// FRONT END TO BRING TO SUCCESS PAGE
-				return "verificationsuccessful";
+				model.addAttribute("verifyNewAccountSuccess", "Your account has been verified.");
+				return "register"; //verificationsuccessful
 			} else {
+				System.out.println("in verify account 5");
 				// FRONT END TO PRINT TOKEN IS INVALID
-				return "verifyaccount";
+				model.addAttribute("verifyNewAccount", "Your token has expired. Please check your email for a new token.");
+				return "register"; //verifyaccount
 			}
 		}
-
-		return "verifyaccount";
+		System.out.println("in verify account 6");
+		return "register"; //verifyaccount
 	}
 
 	// Resending Verification Code at potentially other screens
@@ -249,20 +257,27 @@ public class LoginController {
 		boolean isUser = false;
 		boolean isEnabled = false;
 		int loginAttempts = 0;
-
+		System.out.println(usernameemail);
+		System.out.println(password);
 		if (!userExists) {
 			// user does not exist
 			// FRONT END TO PRINT USERNAME/PW IS WRONG
+			System.out.println("authenticate 1");
+			model.addAttribute("loginValidation", "Username/password is incorrect.");
 			return "login1";
 		} else {
+			System.out.println("authenticate 2");
 			isUser = loginService.authenticate(usernameemail, password);
 			isEnabled = loginService.checkEnabled(usernameemail);
 			String username = loginService.returnUsernameFromEmail(usernameemail);
 			if (!isEnabled && isUser) {
 				// FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
 				// account locked or verified, do not increase login attempts
-				return "lockedlogin";
+				System.out.println("authenticate 3");
+				model.addAttribute("loginValidation", "This account is locked or unverified.");
+				return "login1"; //lockedlogin
 			} else if (isEnabled && !isUser) {
+				System.out.println("authenticate 4");
 				loginAttempts = loginService.getLoginAttempts(username);
 
 				// if wrong but still within max login threshold, increase
@@ -270,12 +285,16 @@ public class LoginController {
 				// and redirect to page
 				if (loginAttempts < MAX_LOGIN_ATTEMPTS - 1) {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG
+					System.out.println("authenticate 5");
+					model.addAttribute("loginValidation", "Username/password is incorrect.");
 					loginService.increaseLoginAttempts(username);
 					return "login1";
 				} else {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS
 					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
 					// else lock the account
+					System.out.println("authenticate 6");
+					model.addAttribute("loginValidation", "Username/password is incorrect. You have exceeded 5 login attempts and your account has been locked.");
 					loginService.lockAccount(username);
 					return "accountjustlocked";
 				}
@@ -283,6 +302,7 @@ public class LoginController {
 			} else if (isEnabled && isUser) {
 				// if successful login reset the login attempts of the user
 				// direct user to successful page
+				System.out.println("authenticate 7");
 				loginService.resetLoginAttempts(username);
 				User user = userService.retrieveUser(usernameemail);
 				String userType = user.getUser_type();
@@ -346,6 +366,7 @@ public class LoginController {
 				}
 			}
 		}
+		System.out.println("authenticate 8");
 		return "login1";
 	}
 

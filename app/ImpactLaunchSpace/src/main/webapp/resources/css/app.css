@@ -181,8 +181,8 @@ html, body {
 	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
-	position: initial;
-	margin-bottom: 28rem;
+	position: absolute;
+	margin-top: -12rem;
 }
 
 .forget {
@@ -194,12 +194,19 @@ html, body {
 	width: 30rem;
 }
 
-.signInNow, .verify_account {
+.signInNowBox {
+	position: absolute;
+	width: 20rem;
+    height: 4rem;
+	margin-top: 5rem;
+}
+
+.verify_account {
 	position: absolute;
 	color: black;
 	border: 0.125rem solid grey;
 	border-radius: 0;
-	width: 15rem;
+	width: 20rem;
 	cursor: pointer;
 	overflow: hidden;
 	outline: none;
@@ -213,13 +220,14 @@ html, body {
 	color: black;
 	border: 0.125rem solid grey;
 	border-radius: 0;
+	height: 4rem;
 	width: 15rem;
 	cursor: pointer;
 	overflow: hidden;
 	outline: none;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 12em;
+	margin-top: 5em;
 }
 
 .returnHome {

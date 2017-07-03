@@ -108,23 +108,23 @@
 				<div class="col-lg-12 verify_container" id="verify_container"
 					style="display: none;">
 					<h4 class="verifyAccountMessage">Verify your account</h4>
-					<form class="form-horizontal">
+					<form method="post" class="form-horizontal" action="verifyaccount">
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="email" class="form-control field"
-									placeholder="Username">
+								<input type="text" name="usernameemail"
+									class="form-control field" placeholder="Username/Email">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="password" class="form-control field"
-									placeholder="Password">
+								<input type="password" name="password"
+									class="form-control field" placeholder="Password">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="text" class="form-control field"
-									placeholder="Verification code">
+								<input type="text" name="verificationcode"
+									class="form-control field" placeholder="Verification code">
 							</div>
 						</div>
 						<div class="form-group">
@@ -133,6 +133,7 @@
 									class="btn btn-success field" id="verify_button">Submit</button>
 							</div>
 						</div>
+						<p class="verifyNewAccount">${verifyNewAccount}</p>
 					</form>
 				</div>
 
@@ -140,14 +141,18 @@
 				<div class="col-lg-12 verify_success" id="verify_success"
 					style="display: none;">
 					<h4 class="verify_success_message">Verification Successful</h4>
-					<p>Hi username, your account has been verified!</p>
-					<a href="/login1" class="btn btn-success signInNow" role="button">SIGN
-						IN NOW</a> <a href="/index" class="btn btn-default returnHome"
-						role="button">Return to Home</a>
+					<p>Hi ${usernameemail}, your account has been verified!</p>
+					<a href="/signin" class="btn btn-success signInNowBox">SIGN IN NOW</a>
+					<a href="/index" class="btn btn-default returnHome" role="button">Return
+						to Home</a>
 				</div>
-				
-				<input type="hidden" id="registerCheck"
-						name="registerCheck" value="${registerCheck}">
+
+				<input type="hidden" id="registerCheck" name="registerCheck"
+					value="${registerCheck}"> <input type="hidden"
+					id="verifyNewAccount" name="verifyNewAccount"
+					value="${verifyNewAccount}"> <input type="hidden"
+					id="verifyNewAccountSuccess" name="verifyNewAccountSuccess"
+					value="${verifyNewAccountSuccess}">
 			</div>
 		</div>
 
@@ -157,9 +162,16 @@
 <script type="text/javascript">
 	window.onload = function() {
 		var registerCheckStatus = document.getElementById("registerCheck").value;
-		
+		var verifyNewAccountStatus = document
+				.getElementById("verifyNewAccount").value;
+		var verifyNewAccountSuccessStatus = document
+				.getElementById("verifyNewAccountSuccess").value;
+
 		console.log(registerCheckStatus);
-		
+		console.log(verifyNewAccountStatus);
+		console.log(verifyNewAccountSuccessStatus);
+		console.log(verifyNewAccountSuccessStatus.length);
+
 		if (registerCheckStatus.length > 0) {
 			if ($('#register_container').css('display') !== 'none') {
 				$('#register_success').show().siblings('div').hide();
@@ -174,12 +186,22 @@
 			}
 		});
 
-		$('#verify_button').click(function() {
-			if ($('#verify_container').css('display') !== 'none') {
-				$('#verify_success').show().siblings('div').hide();
-				event.preventDefault();
-			}
-		});
+		if (verifyNewAccountStatus.length > 0) {
+			console.log("in here la");
+			$('#register_container').hide();
+			$('#register_success').hide();
+			$('#verify_container').show();
+			event.preventDefault();
+		}
+
+		if (verifyNewAccountSuccessStatus.length > 0) {
+			console.log("in here 2");
+			$('#register_container').hide();
+			$('#register_success').hide();
+			$('#verify_container').hide();
+			$('#verify_success').show();
+			event.preventDefault();
+		}
 	}
 </script>
 </html>

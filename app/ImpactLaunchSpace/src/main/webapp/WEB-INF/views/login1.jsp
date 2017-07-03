@@ -66,6 +66,7 @@
                                     <button type="submit" class="btn btn-success field">Login</button>
                                 </div>
                             </div>
+                            <p class="loginValidation">${loginValidation}</p>
                             <div class="forget">
                                 <a href="/forgotpassword">Forget your password?</a>
                             </div>
