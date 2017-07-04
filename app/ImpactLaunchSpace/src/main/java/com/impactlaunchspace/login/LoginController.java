@@ -122,7 +122,7 @@ public class LoginController {
 		model.put("email", email);
 		// FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
 		if (!password1.equals(password2)) {
-			model.addAttribute("registerCheck", "Please ensure that both your passwords match.");
+			model.addAttribute("passwordCheck", "Please ensure that both your passwords match.");
 			return "register";
 		}
 
@@ -168,7 +168,7 @@ public class LoginController {
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.GET)
 	public String showVerifyAccountPage(ModelMap model) {
 		System.out.println("in verify account 0");
-		return "register";
+		return "verifyaccount";
 	}
 
 	@RequestMapping(value = "/tokenexpired", method = RequestMethod.GET)
@@ -195,21 +195,21 @@ public class LoginController {
 					model.addAttribute("verifyNewAccount", "Your token has expired. Please check your email for a new token.");
 					// FRONT END TO PRINT TOKEN HAS EXPIRED, A NEW ONE HAS BEEN
 					// SENT TO UR INBOX
-					return "register"; //tokenexpired
+					return "verifyaccount"; //tokenexpired
 				}
 				vtService.unlock(usernameemail);
 				// FRONT END TO BRING TO SUCCESS PAGE
 				model.addAttribute("verifyNewAccountSuccess", "Your account has been verified.");
-				return "register"; //verificationsuccessful
+				return "verifyaccount"; //verificationsuccessful
 			} else {
 				System.out.println("in verify account 5");
 				// FRONT END TO PRINT TOKEN IS INVALID
-				model.addAttribute("verifyNewAccount", "Your token has expired. Please check your email for a new token.");
-				return "register"; //verifyaccount
+				model.addAttribute("verifyNewAccount", "Your token is incorrect. Please try again.");
+				return "verifyaccount"; //verifyaccount
 			}
 		}
 		System.out.println("in verify account 6");
-		return "register"; //verifyaccount
+		return "verifyaccount"; //verifyaccount
 	}
 
 	// Resending Verification Code at potentially other screens
