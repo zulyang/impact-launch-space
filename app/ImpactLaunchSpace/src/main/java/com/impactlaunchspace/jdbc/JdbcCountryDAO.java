@@ -77,7 +77,7 @@ public class JdbcCountryDAO implements CountryDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			Country country = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				country = new Country(rs.getString(1),rs.getString(2));
 				output.add(country);
 			}

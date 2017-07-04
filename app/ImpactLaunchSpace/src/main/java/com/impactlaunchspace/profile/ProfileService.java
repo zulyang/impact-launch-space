@@ -6,23 +6,32 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.CountryDAO;
 import com.impactlaunchspace.dao.CountryOfOperationDAO;
+import com.impactlaunchspace.dao.DocumentsIndividualDAO;
 import com.impactlaunchspace.dao.IndividualAccountDAO;
+import com.impactlaunchspace.dao.JobSectorDAO;
 import com.impactlaunchspace.dao.JobSectorIndividualDAO;
 import com.impactlaunchspace.dao.JobSectorOrganizationDAO;
 import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.dao.PreferredCountryDAO;
 import com.impactlaunchspace.dao.PreferredJobSectorDAO;
 import com.impactlaunchspace.dao.PreferredProjectAreaDAO;
+import com.impactlaunchspace.dao.ProjectAreaDAO;
+import com.impactlaunchspace.dao.SkillsetDAO;
 import com.impactlaunchspace.dao.UserSkillDAO;
+import com.impactlaunchspace.entity.Country;
 import com.impactlaunchspace.entity.CountryOfOperation;
 import com.impactlaunchspace.entity.IndividualAccount;
+import com.impactlaunchspace.entity.JobSector;
 import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.JobSectorOrganization;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.PreferredCountry;
 import com.impactlaunchspace.entity.PreferredJobSector;
 import com.impactlaunchspace.entity.PreferredProjectArea;
+import com.impactlaunchspace.entity.ProjectArea;
+import com.impactlaunchspace.entity.Skillset;
 import com.impactlaunchspace.entity.UserSkill;
 
 @Service
@@ -67,6 +76,8 @@ public class ProfileService {
 		PreferredProjectAreaDAO preferredProjectAreaDAO = (PreferredProjectAreaDAO) context
 				.getBean("preferredProjectAreaDAO");
 		UserSkillDAO userSkillDAO = (UserSkillDAO) context.getBean("userSkillDAO");
+		DocumentsIndividualDAO documentsIndividualDAO = (DocumentsIndividualDAO) context
+				.getBean("documentsIndividualDAO");
 
 		for (JobSectorIndividual jobSectorIndividual : jobSectorsIndividual) {
 			if (jobSectorIndividual != null) {
@@ -173,17 +184,47 @@ public class ProfileService {
 
 	public void updateOrganizationAccount(OrganizationAccount updatedOrganizationAccount, String username) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context
+				.getBean("organizationAccountDAO");
 
 		organizationAccountDAO.update(updatedOrganizationAccount, username);
-	
+
 	}
-	
-	public void updateIndividualAccount(IndividualAccount updatedIndividualAccount, String username){
+
+	public void updateIndividualAccount(IndividualAccount updatedIndividualAccount, String username) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		IndividualAccountDAO individualAccountDAO = (IndividualAccountDAO) context.getBean("individualAccountDAO");
 
 		individualAccountDAO.update(updatedIndividualAccount, username);
+	}
+
+	// These methods are for populating the set-up page
+	public ArrayList<Country> retrieveCountryList() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CountryDAO countryDAO = (CountryDAO) context.getBean("countryDAO");
+
+		return countryDAO.retrieveAll();
+	}
+
+	public ArrayList<JobSector> retrieveJobSectorList() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		JobSectorDAO jobSectorDAO = (JobSectorDAO) context.getBean("jobSectorDAO");
+
+		return jobSectorDAO.retrieveAll();
+	}
+
+	public ArrayList<ProjectArea> retrieveProjectAreaList() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectAreaDAO projectAreaDAO = (ProjectAreaDAO) context.getBean("projectAreaDAO");
+
+		return projectAreaDAO.retrieveAll();
+	}
+
+	public ArrayList<Skillset> retrieveSkillsetList() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		SkillsetDAO skillsetDAO = (SkillsetDAO) context.getBean("skillsetDAO");
+
+		return skillsetDAO.retrieveAll();
 	}
 
 }

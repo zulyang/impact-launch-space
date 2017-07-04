@@ -8,13 +8,12 @@
 <title>Organization Dashboard</title>
 </head>
 <body>
-
 	<div align="center">
+		<img src="/imageDisplay?username=${username}" height="64" width="64">
 		<h1>${organization.getCompanyName()}</h1>
 		<h2>${organization.getCompanyBio()}</h2>
 		<h3>Email: ${user.getEmail()}</h3>
 		<h3>Phone: ${organization.getContactDetails()}</h3>
-
 	</div>
 	<div align="center">
 		<h4>
@@ -22,13 +21,14 @@
 			<c:forEach items="${countriesOfOperation}" var="item">
     	${item.getCountry_name()}<br>
 			</c:forEach>
-			<br>
-			Job Sector: <br>
+			<br> Job Sector: <br>
 			<c:forEach items="${jobSectorsOrganization}" var="item">
     	${item.getJob_sector()}<br>
 			</c:forEach>
 		</h4>
-		<h4><a href="editprofile-organization">Edit Profile</a></h4>
+		<h4>
+			<a href="editprofile-organization">Edit Profile</a>
+		</h4>
 	</div>
 </body>
 </html>

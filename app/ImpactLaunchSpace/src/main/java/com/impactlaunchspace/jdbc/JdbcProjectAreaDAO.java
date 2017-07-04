@@ -76,7 +76,7 @@ public class JdbcProjectAreaDAO implements ProjectAreaDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ProjectArea projectArea = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				projectArea = new ProjectArea(rs.getString(1));
 				output.add(projectArea);
 			}

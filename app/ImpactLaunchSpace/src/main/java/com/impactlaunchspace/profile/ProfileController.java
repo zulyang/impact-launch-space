@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,7 +63,7 @@ public class ProfileController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(profilePictureFile);
+
 		OrganizationAccount organizationAccount = new OrganizationAccount(username, email, companyName, false, false,
 				profilePictureFile, companyBio, contactDetails);
 
@@ -95,34 +96,6 @@ public class ProfileController {
 		return "setup-complete";
 	}
 
-	@RequestMapping(value = "/imageDisplay", method = RequestMethod.GET)
-	public void showImage(@RequestParam("username") String username, HttpServletResponse response,
-			HttpServletRequest request) throws ServletException, IOException {
-		User user = userService.retrieveUser(username);
-		if (user.getUser_type().equals("organization")) {
-			OrganizationAccount organizationAccount = profileService.getOrganizationAccountDetails(username);
-			File file = organizationAccount.getProfilePicture();
-			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-			byte[] bytesArray = new byte[(int) file.length()];
-			FileInputStream fis = new FileInputStream(file);
-			fis.read(bytesArray); // read file into bytes[]
-			fis.close();
-			response.getOutputStream().write(bytesArray);
-			response.getOutputStream().close();
-		} else if (user.getUser_type().equals("individual")) {
-			IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
-			File file = individualAccount.getProfilePicture();
-			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-			byte[] bytesArray = new byte[(int) file.length()];
-			FileInputStream fis = new FileInputStream(file);
-			fis.read(bytesArray); // read file into bytes[]
-			fis.close();
-			response.getOutputStream().write(bytesArray);
-			response.getOutputStream().close();
-		}
-
-	}
-
 	// Setup for Individuals
 	@RequestMapping(value = "/setup-individual", method = RequestMethod.GET)
 	public String showSetupPageForIndividual() {
@@ -139,23 +112,33 @@ public class ProfileController {
 			@RequestParam String importantSectorsToUser, @RequestParam int minimumHours, @RequestParam int maximumHours,
 			@RequestParam String preferredCountries, @RequestParam String personalBio,
 			@RequestParam String contactDetails, @RequestParam("profilePicture") MultipartFile profilePicture,
-			ModelMap model) {
+			@RequestParam("documents") MultipartFile[] documents, ModelMap model) {
 
 		File profilePictureFile = new File(profilePicture.getOriginalFilename());
 		try {
 			profilePicture.transferTo(profilePictureFile);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(profilePictureFile);
+
+		ArrayList<File> documentList = new ArrayList<>();
+		if (documents != null && documents.length > 0) {
+			for (MultipartFile document : documents) {
+				File documentFile = new File(document.getOriginalFilename());
+				try {
+					document.transferTo(documentFile);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				documentList.add(documentFile);
+			}
+		}
 
 		IndividualAccount individualAccount = new IndividualAccount(username, email, dateOfBirth, firstName, lastName,
 				country, jobTitle, minimumHours, maximumHours, organization, isPublicProfile, profilePictureFile,
-				personalBio, contactDetails);
+				personalBio, contactDetails, documentList);
 
 		// this requires changing
 		ArrayList<JobSectorIndividual> jobSectorsIndividual = new ArrayList<JobSectorIndividual>();
@@ -222,7 +205,7 @@ public class ProfileController {
 
 		// change the session attributes
 		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
-		
+
 		return "organizationprofile1";
 	}
 
@@ -236,27 +219,137 @@ public class ProfileController {
 	public String showEditProfilePageIndividual(HttpServletRequest request) {
 		return "/editprofile-individual";
 	}
-	
+
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.POST)
 	public String processUpdateIndividualProfile(@RequestParam String firstName, @RequestParam String lastName,
 			@RequestParam String jobTitle, @RequestParam String organization, @RequestParam String country,
-			@RequestParam String contactDetails, @RequestParam String personalBio, @RequestParam Date dateOfBirth, 
+			@RequestParam String contactDetails, @RequestParam String personalBio, @RequestParam Date dateOfBirth,
 			@RequestParam int minimumVolunteerHours, @RequestParam int maximumVolunteerHours,
 			HttpServletRequest request) {
 		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
 		String username = individual.getUsername();
 		String email = individual.getEmail();
 		// to-do
-		IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(), individual.getEmail(),
-				dateOfBirth,firstName,lastName,country, jobTitle,
-				minimumVolunteerHours, maximumVolunteerHours, organization,
-				individual.isPublicProfile(), individual.getProfilePicture(), personalBio,contactDetails) ;
+		IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
+				individual.getEmail(), dateOfBirth, firstName, lastName, country, jobTitle, minimumVolunteerHours,
+				maximumVolunteerHours, organization, individual.isPublicProfile(), individual.getProfilePicture(),
+				personalBio, contactDetails, individual.getDocumentList());
 		profileService.updateIndividualAccount(updatedIndividualAccount, username);
 
 		// change the session attributes
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		
+
 		return "individualprofile1";
 	}
 
+	@RequestMapping(value = "/editprofile-individual-profilepic", method = RequestMethod.POST)
+	public String processUpdateIndividualProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture,
+			HttpServletRequest request) {
+		if (profilePicture.isEmpty() || profilePicture == null) {
+			return "editprofile-individual";
+		} else {
+			File profilePictureFile = new File(profilePicture.getOriginalFilename());
+			try {
+				profilePicture.transferTo(profilePictureFile);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
+			IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
+					individual.getEmail(), individual.getDateOfBirth(), individual.getFirst_name(),
+					individual.getLast_name(), individual.getCountry(), individual.getJobTitle(),
+					individual.getMinimumVolunteerHours(), individual.getMaximumVolunteerHours(),
+					individual.getOrganization(), individual.isPublicProfile(), profilePictureFile,
+					individual.getPersonalBio(), individual.getContactDetails(), individual.getDocumentList());
+			profileService.updateIndividualAccount(updatedIndividualAccount, individual.getUsername());
+
+			// change the session attributes
+			request.getSession().setAttribute("individual",
+					profileService.getIndividualAccountDetails(individual.getUsername()));
+
+			return "editprofile-individual";
+		}
+	}
+
+	@RequestMapping(value = "/editprofile-organization-profilepic", method = RequestMethod.POST)
+	public String processUpdateOrganizationProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture,
+			HttpServletRequest request) {
+		if (profilePicture.isEmpty() || profilePicture == null) {
+			return "editprofile-organization";
+		} else {
+			File profilePictureFile = new File(profilePicture.getOriginalFilename());
+			try {
+				profilePicture.transferTo(profilePictureFile);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			OrganizationAccount organization = (OrganizationAccount) request.getSession().getAttribute("organization");
+			OrganizationAccount updatedOrganizationAccount = new OrganizationAccount(organization.getUsername(),
+					organization.getEmail(), organization.getCompanyName(), organization.isNeedsSupport(),
+					organization.isOfferingSupport(), profilePictureFile, organization.getCompanyBio(),
+					organization.getContactDetails());
+
+			profileService.updateOrganizationAccount(updatedOrganizationAccount, organization.getUsername());
+			request.getSession().setAttribute("organization",
+					profileService.getOrganizationAccountDetails(organization.getUsername()));
+			return "editprofile-organization";
+		}
+	}
+
+	@RequestMapping(value = "/imageDisplay", method = RequestMethod.GET)
+	public void showImage(@RequestParam("username") String username, HttpServletResponse response,
+			HttpServletRequest request) throws ServletException, IOException {
+		User user = userService.retrieveUser(username);
+		if (user !=null && user.getUser_type().equals("organization")) {
+			OrganizationAccount organizationAccount = profileService.getOrganizationAccountDetails(username);
+			File file = organizationAccount.getProfilePicture();
+			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+			byte[] bytesArray = new byte[(int) file.length()];
+			FileInputStream fis = new FileInputStream(file);
+			fis.read(bytesArray); // read file into bytes[]
+			fis.close();
+			response.getOutputStream().write(bytesArray);
+			response.getOutputStream().close();
+		} else if (user !=null && user.getUser_type().equals("individual")) {
+			IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
+			File file = individualAccount.getProfilePicture();
+			response.setContentType("image/jpeg");
+			System.out.println(file.getName());
+			System.out.println(response.getContentType());
+			byte[] bytesArray = new byte[(int) file.length()];
+			FileInputStream fis = new FileInputStream(file);
+			fis.read(bytesArray); // read file into bytes[]
+			fis.close();
+			response.getOutputStream().write(bytesArray);
+			response.getOutputStream().close();
+		}
+	}
+
+	@RequestMapping(value = "/showFiles", method = RequestMethod.GET)
+	public void showFiles(@RequestParam("username") String username, HttpServletResponse response,
+			HttpServletRequest request) throws ServletException {
+		 IndividualAccount individualAccount =
+		 profileService.getIndividualAccountDetails(username);
+		 System.out.println("username: " + username + "\n account: " +
+		 individualAccount);
+		 File file = individualAccount.getProfilePicture();
+		 FileInputStream inputStream;
+		 try {
+		 inputStream = new FileInputStream(file);
+		 response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+		 response.setHeader("Content-Length", String.valueOf(file.length()));
+		 FileCopyUtils.copy(inputStream, response.getOutputStream());
+		 } catch (IOException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 }
+	}
 }

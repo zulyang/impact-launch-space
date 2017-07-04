@@ -77,7 +77,7 @@ public class JdbcSkillsetDAO implements SkillsetDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			Skillset skillset = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				skillset = new Skillset(rs.getString(1));
 				output.add(skillset);
 			}

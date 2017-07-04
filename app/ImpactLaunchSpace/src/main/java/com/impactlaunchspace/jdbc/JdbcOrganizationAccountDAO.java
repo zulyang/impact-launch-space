@@ -15,8 +15,12 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.apache.tika.io.IOUtils;
+
 import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.entity.OrganizationAccount;
+import com.impactlaunchspace.exception.ContentTypeException;
+import com.impactlaunchspace.utility.FileTypeUtils;
 
 public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 	private DataSource dataSource;
@@ -71,10 +75,21 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			OrganizationAccount organizationAccount = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-
-				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
 				InputStream in = blob.getBinaryStream();
+				byte[] bytes = IOUtils.toByteArray(in);
+				String fileType = "";
+				try {
+					fileType = FileTypeUtils.getContentType(bytes);
+				} catch (ContentTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fileType = "." + fileType.split("/")[1];
+				
+				blob = rs.getBlob("profilePicture");
+				in = blob.getBinaryStream();
+				File temp = File.createTempFile("ILS-download", fileType);
 				OutputStream out = new FileOutputStream(temp);
 				byte[] buff = new byte[4096]; // how much of the blob to
 												// read/write at a time
@@ -121,9 +136,21 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
 				InputStream in = blob.getBinaryStream();
+				byte[] bytes = IOUtils.toByteArray(in);
+				String fileType = "";
+				try {
+					fileType = FileTypeUtils.getContentType(bytes);
+				} catch (ContentTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fileType = "." + fileType.split("/")[1];
+				
+				blob = rs.getBlob("profilePicture");
+				in = blob.getBinaryStream();
+				File temp = File.createTempFile("ILS-download", fileType);
 				OutputStream out = new FileOutputStream(temp);
 				byte[] buff = new byte[4096]; // how much of the blob to
 												// read/write at a time
@@ -171,9 +198,21 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
 				InputStream in = blob.getBinaryStream();
+				byte[] bytes = IOUtils.toByteArray(in);
+				String fileType = "";
+				try {
+					fileType = FileTypeUtils.getContentType(bytes);
+				} catch (ContentTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fileType = "." + fileType.split("/")[1];
+				
+				blob = rs.getBlob("profilePicture");
+				in = blob.getBinaryStream();
+				File temp = File.createTempFile("ILS-download", fileType);
 				OutputStream out = new FileOutputStream(temp);
 				byte[] buff = new byte[4096]; // how much of the blob to
 												// read/write at a time
@@ -222,9 +261,21 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				File temp = File.createTempFile("temp-file-name", ".jpeg");
 				Blob blob = rs.getBlob("profilePicture");
 				InputStream in = blob.getBinaryStream();
+				byte[] bytes = IOUtils.toByteArray(in);
+				String fileType = "";
+				try {
+					fileType = FileTypeUtils.getContentType(bytes);
+				} catch (ContentTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fileType = "." + fileType.split("/")[1];
+				
+				blob = rs.getBlob("profilePicture");
+				in = blob.getBinaryStream();
+				File temp = File.createTempFile("ILS-download", fileType);
 				OutputStream out = new FileOutputStream(temp);
 				byte[] buff = new byte[4096]; // how much of the blob to
 												// read/write at a time

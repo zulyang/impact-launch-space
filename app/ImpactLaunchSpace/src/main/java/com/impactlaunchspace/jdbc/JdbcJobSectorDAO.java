@@ -76,7 +76,7 @@ public class JdbcJobSectorDAO implements JobSectorDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			JobSector jobSector = null;
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				jobSector = new JobSector(rs.getString(1));
 				output.add(jobSector);
 			}
