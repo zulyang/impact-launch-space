@@ -3,7 +3,7 @@ html, body {
 	width: 100%;
 }
 
-.signin {
+.signin, .unlockaccount {
 	display: flex;
 	align-items: center;
 	position: relative;
@@ -164,7 +164,7 @@ html, body {
 }
 
 .welcome, .createAccount, .register_success_message,
-	.verifyAccountMessage {
+	.verifyAccountMessage, .unlockAccountMessage, .unlockAccountPinMessage {
 	justify-content: center;
 	display: flex;
 	align-items: center;
@@ -231,6 +231,20 @@ html, body {
 }
 
 .returnHome {
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12rem;
+}
+
+.redirectUnlockAccount {
 	position: absolute;
 	color: black;
 	border: 0.125rem solid grey;

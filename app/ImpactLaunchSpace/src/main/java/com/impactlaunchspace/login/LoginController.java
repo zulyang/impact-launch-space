@@ -70,26 +70,20 @@ public class LoginController {
 				String username = loginService.returnUsernameFromEmail(usernameemail);
 				model.addAttribute("username", username);
 				model.addAttribute("email", email);
-				return "unlockaccountpin";
+				model.addAttribute("accountUnlockValidation", "Please check your email for your verification token");
+				rtService.regenerateResetCode(username, email);
+				System.out.println("unlock account pin");
+				return "unlockaccountpin"; //unlockaccountpin
 			} else {
 				// FRONT END TO PRINT ERROR THAT THE USERNAME/PW IS WRONG
-				return "unlockaccount";
+				model.addAttribute("accountUnlockValidation", "Username/password is incorrect.");
+				return "unlockaccount"; //unlockaccount
 			}
 		} else {
-			// print message that no such email exists
 			// FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
+			model.addAttribute("accountUnlockValidation", "The account does not exist.");
+			return "unlockaccount"; //unlockaccount
 
-			if (userExists) {
-				boolean isUser = loginService.authenticate(usernameemail, password);
-				String email = loginService.returnEmailFromUsername(usernameemail);
-				String username = loginService.returnUsernameFromEmail(usernameemail);
-				rtService.regenerateResetCode(username, email);
-				return "unlocksuccessful";
-			} else {
-				// print message that no such email exists
-				// FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
-				return "unlockaccount";
-			}
 		}
 	}
 
@@ -102,10 +96,13 @@ public class LoginController {
 			model.addAttribute("email", email);
 			rtService.unlock(username);
 			loginService.resetLoginAttempts(username);
+			System.out.println("account unlocked");
+			model.addAttribute("unlockAccountPin", "Your account has been unlocked.");
 			// FRONT END TO PRINT THAT ACCOUNT HAS BEEN UNLOCKED
 			return "login1";
 		}
 		// FRONT END TO PRINT PIN IS WRONG
+		model.addAttribute("unlockAccountPin", "You have entered an incorrect verification token.");
 		return "unlockaccountpin";
 	}
 
@@ -122,7 +119,7 @@ public class LoginController {
 		model.put("email", email);
 		// FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
 		if (!password1.equals(password2)) {
-			model.addAttribute("registerCheck", "Please ensure that both your passwords match.");
+			model.addAttribute("passwordCheck", "Please ensure that both your passwords match.");
 			return "register";
 		}
 
@@ -168,7 +165,7 @@ public class LoginController {
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.GET)
 	public String showVerifyAccountPage(ModelMap model) {
 		System.out.println("in verify account 0");
-		return "register";
+		return "verifyaccount";
 	}
 
 	@RequestMapping(value = "/tokenexpired", method = RequestMethod.GET)
@@ -192,24 +189,25 @@ public class LoginController {
 				if (isTokenExpired) {
 					System.out.println("in verify account 4");
 					vtService.regenerateVerificationCode(username, email);
-					model.addAttribute("verifyNewAccount", "Your token has expired. Please check your email for a new token.");
+					model.addAttribute("verifyNewAccount",
+							"Your token has expired. Please check your email for a new token.");
 					// FRONT END TO PRINT TOKEN HAS EXPIRED, A NEW ONE HAS BEEN
 					// SENT TO UR INBOX
-					return "register"; //tokenexpired
+					return "verifyaccount"; //tokenexpired
 				}
 				vtService.unlock(usernameemail);
 				// FRONT END TO BRING TO SUCCESS PAGE
 				model.addAttribute("verifyNewAccountSuccess", "Your account has been verified.");
-				return "register"; //verificationsuccessful
+				return "verifyaccount"; //verificationsuccessful
 			} else {
 				System.out.println("in verify account 5");
 				// FRONT END TO PRINT TOKEN IS INVALID
-				model.addAttribute("verifyNewAccount", "Your token has expired. Please check your email for a new token.");
-				return "register"; //verifyaccount
+				model.addAttribute("verifyNewAccount", "Your token is incorrect. Please try again.");
+				return "verifyaccount"; //verifyaccount
 			}
 		}
 		System.out.println("in verify account 6");
-		return "register"; //verifyaccount
+		return "verifyaccount"; //verifyaccount
 	}
 
 	// Resending Verification Code at potentially other screens
@@ -258,7 +256,6 @@ public class LoginController {
 		boolean isEnabled = false;
 		int loginAttempts = 0;
 		System.out.println(usernameemail);
-		System.out.println(password);
 		if (!userExists) {
 			// user does not exist
 			// FRONT END TO PRINT USERNAME/PW IS WRONG
@@ -275,7 +272,7 @@ public class LoginController {
 				// account locked or verified, do not increase login attempts
 				System.out.println("authenticate 3");
 				model.addAttribute("loginValidation", "This account is locked or unverified.");
-				return "login1"; //lockedlogin
+				return "login1"; // lockedlogin
 			} else if (isEnabled && !isUser) {
 				System.out.println("authenticate 4");
 				loginAttempts = loginService.getLoginAttempts(username);
@@ -294,9 +291,10 @@ public class LoginController {
 					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
 					// else lock the account
 					System.out.println("authenticate 6");
-					model.addAttribute("loginValidation", "Username/password is incorrect. You have exceeded 5 login attempts and your account has been locked.");
+					model.addAttribute("accountLockedValidation",
+							"Your account has been locked. You may unlock it here. ");
 					loginService.lockAccount(username);
-					return "accountjustlocked";
+					return "unlockaccount";
 				}
 
 			} else if (isEnabled && isUser) {
@@ -313,20 +311,23 @@ public class LoginController {
 				request.getSession().setAttribute("username", user.getUsername());
 				request.getSession().setAttribute("email", user.getEmail());
 				request.getSession().setAttribute("user", user);
-				
-				//Remember me cookie
+
+				// Remember me cookie
 				Cookie c = null;
 
-				//Only if remember me is checked,generate the cookie. 
-				  if(request.getParameter("rememberMe").equals("true")){
-					   UUID s = loginService.generateCookieSecret(username); //generates a secret token 
-					   c = new Cookie("rememberMeCookie", s.toString());
-					   c.setMaxAge(365 * 24 * 60 * 60); // one year
-					  }
+				// Only if remember me is checked,generate the cookie.
+				if (request.getParameter("rememberMe").equals("true")) {
+					UUID s = loginService.generateCookieSecret(username); // generates
+																			// a
+																			// secret
+																			// token
+					c = new Cookie("rememberMeCookie", s.toString());
+					c.setMaxAge(365 * 24 * 60 * 60); // one year
+				}
 
 				if (isFirstTimeLogin == false) {
 					if (userType.equals("organization")) {
-						//add a cookie to the response. 
+						// add a cookie to the response.
 						response.addCookie(c);
 						request.getSession().setAttribute("organization",
 								profileService.getOrganizationAccountDetails(username));
@@ -336,14 +337,14 @@ public class LoginController {
 								profileService.retrieveOrganizationJobSectors(username));
 						return "organizationprofile1";
 					} else if (userType.equals("individual")) {
-						//add a cookie to the response. 
+						// add a cookie to the response.
 						response.addCookie(c);
 						request.getSession().setAttribute("individual",
 								profileService.getIndividualAccountDetails(username));
 						request.getSession().setAttribute("jobSectorsIndividual",
 								profileService.retrieveIndividualJobSectors(username));
 						ArrayList<JobSectorIndividual> blah = profileService.retrieveIndividualJobSectors(username);
-						
+
 						request.getSession().setAttribute("preferredCountries",
 								profileService.retrievePreferredCountries(username));
 						request.getSession().setAttribute("preferredJobSectors",
@@ -355,7 +356,8 @@ public class LoginController {
 						return "individualprofile1";
 					}
 				} else {
-					// userservice to determine if indiv/organ and redirect to page
+					// userservice to determine if indiv/organ and redirect to
+					// page
 					if (userType.equals("organization")) {
 						response.addCookie(c);
 						return "setup-organization";

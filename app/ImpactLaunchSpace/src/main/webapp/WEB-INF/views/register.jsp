@@ -90,6 +90,7 @@
 							</div>
 						</div>
 						<p class="registerError">${registerCheck}</p>
+						<p class="registerError">${passwordCheck}</p>
 						<p class="finePrint">By registering, you confirm that you
 							agree with our Terms & Conditions and Privacy Policy.</p>
 					</form>
@@ -101,59 +102,14 @@
 					<p class="success_verify_message">You have successfully
 						registered for an account. A verification code has been sent to
 						your email.</p>
-					<a href="#" class="btn btn-info verify_account" id="verify_account"
+					<a href="/verifyaccount" class="btn btn-info verify_account" id="verify_account"
 						role="button">Verify My Account</a>
 				</div>
 
-				<div class="col-lg-12 verify_container" id="verify_container"
-					style="display: none;">
-					<h4 class="verifyAccountMessage">Verify your account</h4>
-					<form method="post" class="form-horizontal" action="verifyaccount">
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="usernameemail"
-									class="form-control field" placeholder="Username/Email">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="password" name="password"
-									class="form-control field" placeholder="Password">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="verificationcode"
-									class="form-control field" placeholder="Verification code">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<button type="submit" value="Register"
-									class="btn btn-success field" id="verify_button">Submit</button>
-							</div>
-						</div>
-						<p class="verifyNewAccount">${verifyNewAccount}</p>
-					</form>
-				</div>
-
-
-				<div class="col-lg-12 verify_success" id="verify_success"
-					style="display: none;">
-					<h4 class="verify_success_message">Verification Successful</h4>
-					<p>Hi ${usernameemail}, your account has been verified!</p>
-					<a href="/signin" class="btn btn-success signInNowBox">SIGN IN NOW</a>
-					<a href="/index" class="btn btn-default returnHome" role="button">Return
-						to Home</a>
-				</div>
 
 				<input type="hidden" id="registerCheck" name="registerCheck"
-					value="${registerCheck}"> <input type="hidden"
-					id="verifyNewAccount" name="verifyNewAccount"
-					value="${verifyNewAccount}"> <input type="hidden"
-					id="verifyNewAccountSuccess" name="verifyNewAccountSuccess"
-					value="${verifyNewAccountSuccess}">
-			</div>
+					value="${registerCheck}"> 
+			</div> 
 		</div>
 
 	</div>
@@ -162,15 +118,8 @@
 <script type="text/javascript">
 	window.onload = function() {
 		var registerCheckStatus = document.getElementById("registerCheck").value;
-		var verifyNewAccountStatus = document
-				.getElementById("verifyNewAccount").value;
-		var verifyNewAccountSuccessStatus = document
-				.getElementById("verifyNewAccountSuccess").value;
 
 		console.log(registerCheckStatus);
-		console.log(verifyNewAccountStatus);
-		console.log(verifyNewAccountSuccessStatus);
-		console.log(verifyNewAccountSuccessStatus.length);
 
 		if (registerCheckStatus.length > 0) {
 			if ($('#register_container').css('display') !== 'none') {
@@ -179,29 +128,13 @@
 			}
 		}
 
-		$('#verify_account').click(function() {
+		 $('#verify_account').click(function() {
 			if ($('#register_success').css('display') !== 'none') {
 				$('#verify_container').show().siblings('div').hide();
 				event.preventDefault();
 			}
 		});
 
-		if (verifyNewAccountStatus.length > 0) {
-			console.log("in here la");
-			$('#register_container').hide();
-			$('#register_success').hide();
-			$('#verify_container').show();
-			event.preventDefault();
-		}
-
-		if (verifyNewAccountSuccessStatus.length > 0) {
-			console.log("in here 2");
-			$('#register_container').hide();
-			$('#register_success').hide();
-			$('#verify_container').hide();
-			$('#verify_success').show();
-			event.preventDefault();
-		}
 	}
 </script>
 </html>
