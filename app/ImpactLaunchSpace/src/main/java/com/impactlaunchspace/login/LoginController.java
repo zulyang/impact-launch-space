@@ -73,16 +73,16 @@ public class LoginController {
 				model.addAttribute("accountUnlockValidation", "Please check your email for your verification token");
 				rtService.regenerateResetCode(username, email);
 				System.out.println("unlock account pin");
-				return "unlockaccountpin"; //unlockaccountpin
+				return "unlockaccountpin"; // unlockaccountpin
 			} else {
 				// FRONT END TO PRINT ERROR THAT THE USERNAME/PW IS WRONG
 				model.addAttribute("accountUnlockValidation", "Username/password is incorrect.");
-				return "unlockaccount"; //unlockaccount
+				return "unlockaccount"; // unlockaccount
 			}
 		} else {
 			// FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
 			model.addAttribute("accountUnlockValidation", "The account does not exist.");
-			return "unlockaccount"; //unlockaccount
+			return "unlockaccount"; // unlockaccount
 
 		}
 	}
@@ -117,6 +117,27 @@ public class LoginController {
 			@RequestParam String password2, @RequestParam String email, @RequestParam String user_type,
 			ModelMap model) {
 		model.put("email", email);
+
+		int passLength = password1.length();
+		boolean hasLetters = false;
+		boolean hasDigits = false;
+		boolean hasSomethingElse = false;
+
+		for (int i = 0; i < passLength; i++) {
+			char c = password1.charAt(i);
+			if (Character.isLetter(c))
+				hasLetters = true;
+			else if (Character.isDigit(c))
+				hasDigits = true;
+			else
+				hasSomethingElse = true;
+		}
+
+		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
+			model.addAttribute("passwordCheck", "Password must contain letters, digits, symbols and have at least 6 characters.");
+			return "register";
+		}
+
 		// FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
 		if (!password1.equals(password2)) {
 			model.addAttribute("passwordCheck", "Please ensure that both your passwords match.");
@@ -193,21 +214,21 @@ public class LoginController {
 							"Your token has expired. Please check your email for a new token.");
 					// FRONT END TO PRINT TOKEN HAS EXPIRED, A NEW ONE HAS BEEN
 					// SENT TO UR INBOX
-					return "verifyaccount"; //tokenexpired
+					return "verifyaccount"; // tokenexpired
 				}
 				vtService.unlock(usernameemail);
 				// FRONT END TO BRING TO SUCCESS PAGE
 				model.addAttribute("verifyNewAccountSuccess", "Your account has been verified.");
-				return "verifyaccount"; //verificationsuccessful
+				return "verifyaccount"; // verificationsuccessful
 			} else {
 				System.out.println("in verify account 5");
 				// FRONT END TO PRINT TOKEN IS INVALID
 				model.addAttribute("verifyNewAccount", "Your token is incorrect. Please try again.");
-				return "verifyaccount"; //verifyaccount
+				return "verifyaccount"; // verifyaccount
 			}
 		}
 		System.out.println("in verify account 6");
-		return "verifyaccount"; //verifyaccount
+		return "verifyaccount"; // verifyaccount
 	}
 
 	// Resending Verification Code at potentially other screens
@@ -360,7 +381,7 @@ public class LoginController {
 					// page
 					if (userType.equals("organization")) {
 						response.addCookie(c);
-						return "setup-organization";
+						return "profile";
 					} else if (userType.equals("individual")) {
 						response.addCookie(c);
 						return "setup-individual";

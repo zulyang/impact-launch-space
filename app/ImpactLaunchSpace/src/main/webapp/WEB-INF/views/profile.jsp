@@ -38,9 +38,9 @@
 									class="icon-bar"></span> <span class="icon-bar"></span> <span
 									class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="index.jsp"> <img
-								alt="ImpactLaunch.Space" id="logo"
-								src="<%=request.getContextPath()%>/resources/img/"></a>
+							<a class="navbar-brand" href="index.jsp"> 
+								<img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo2.png">
+							</a>
 						</div>
 
 						<!-- Collect the nav links, forms, and other content for toggling -->
@@ -123,84 +123,71 @@
 				</nav>
 
 				<div class="col-lg-12 form_container profile_container">
-					<form method="post" action="" class="form-horizontal profile_form">
+					<form method="post" action="setup-organization" enctype="multipart/form-data" class="form-horizontal profile_form">
 						<div class="form-group">
-							<img class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 circle_profile_image" src="<%=request.getContextPath()%>/resources/img/rocketGirl.jpeg">
+							<img class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 circle_profile_image" src="/imageDisplay?username=${username}">
 							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
-								<input type="file" name="pic" accept="image/*">
+								<input type="file" name="profilePicture">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="username" required="required" type="text"
-									class="form-control profileField" placeholder="Username">
+								<input type="text" name="username" value="${username}" readonly class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="password" required="required" type="password"
-									class="form-control profileField" placeholder="Password">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="repeatpassword" required="required" type="password"
-									class="form-control profileField"
-									placeholder="Repeat your password">
+								<input type="text" name="email" value="${email}" readonly
+									class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input name="companyName" required="required" type="text"
-									class="form-control profileField" placeholder="Official name">
+									class="form-control profileField" placeholder="Company name">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="companyEmail" required="required" type="email"
-									class="form-control profileField"
-									placeholder="Official email address">
+								<input name="countriesOfOperation" required="required" type="text"
+									class="form-control profileField" placeholder="Countries of Operation">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<textarea rows="4" class="form-control profileField companyBio"
+								<input name="jobSector1" required="required" type="text"
+									class="form-control profileField" placeholder="Job Sector 1">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<input name="jobSector2" required="required" type="text"
+									class="form-control profileField" placeholder="Job Sector 2">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<input name="jobSector3" required="required" type="text"
+									class="form-control profileField" placeholder="Job Sector 3">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<textarea rows="4" name="companyBio" class="form-control companyBio"
 									placeholder="A short company bio"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="sector" required="required" type="text"
-									class="form-control profileField" placeholder="Sector">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="companyCountries" required="required" type="text"
+								<input name="contactDetails" required="required" type="text"
 									class="form-control profileField"
-									placeholder="Countries in which organisation exists in">
+									placeholder="Office telephone number">
 							</div>
 						</div>
-						<br>
-						<div class="form-radio center">
-							<div class="offerSupport">
-								<input name="user_type" required="required" type="radio"
-									value="offer">Offer support
-							</div>
-							<div class="needSupport">
-								<input name="user_type" required="required" type="radio"
-									value="need">Need support
-							</div>
-							<div class="bothSupport">
-								<input name="user_type" required="required" type="radio"
-									value="both">Both
-							</div>
-						</div>
-						<br>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<button type="submit" value="Save"
-									class="btn btn-success profile_save">SAVE</button>
+									class="btn btn-success profile_save">Save Account Details</button>
 							</div>
 						</div>
 					</form>

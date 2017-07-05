@@ -128,13 +128,6 @@
 			}
 		}
 
-		 $('#verify_account').click(function() {
-			if ($('#register_success').css('display') !== 'none') {
-				$('#verify_container').show().siblings('div').hide();
-				event.preventDefault();
-			}
-		});
-
 	}
 </script>
 </html>

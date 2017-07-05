@@ -46,6 +46,12 @@ public class ProfileController {
 		return "setup-organization";
 	}
 
+	// Setup for Organizations
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String showSetupPageForOrganizationProfile() {
+		return "profile";
+	}
+
 	@RequestMapping(value = "/setup-organization", method = RequestMethod.POST)
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
 			@RequestParam String companyName, @RequestParam String countriesOfOperation,
@@ -93,7 +99,7 @@ public class ProfileController {
 		profileService.firstSetupOrganization(organizationAccount, countriesOfOperationList, jobSectorsOrganization);
 
 		model.put("username", username);
-		return "setup-complete";
+		return "organizationprofile1";
 	}
 
 	// Setup for Individuals
