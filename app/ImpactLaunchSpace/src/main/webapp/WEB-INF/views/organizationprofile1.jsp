@@ -1,7 +1,7 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div align="center">
-		<img src="/imageDisplay?username=${username}" height="64" width="64">
+		<img src="/imageDisplay?username=${username}" class="circle_profile_image">
 		<h1>${organization.getCompanyName()}</h1>
 		<h2>${organization.getCompanyBio()}</h2>
 		<h3>Email: ${user.getEmail()}</h3>

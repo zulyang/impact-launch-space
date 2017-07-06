@@ -106,7 +106,7 @@ html, body {
 	background: rgba(255, 255, 255, 0.8);
 }
 
-.profile_container {
+.org_profile_container {
 	margin-top: 62rem;
 	margin-bottom: 5rem;
 	height: 100rem;
@@ -114,9 +114,22 @@ html, body {
 	border: 0.125rem solid black;
 }
 
-.profile_form {
+.indi_profile_container {
+	margin-top: 128rem;
+	margin-bottom: 5rem;
+	height: 170rem;
+	width: 75rem;
+	border: 0.125rem solid black;
+}
+
+.org_profile_form {
 	margin-top: -10rem;
 }
+
+.indi_profile_form {
+	margin-top: -2rem;
+}
+
 
 .profileField {
 	margin-top: 1rem;
@@ -125,7 +138,7 @@ html, body {
 	margin-right: auto;
 }
 
-.companyBio {
+.companyBio, .personalBio {
 	margin-top: 1rem;
 	width: 40rem;
 	margin-left: auto;
@@ -271,6 +284,8 @@ html, body {
 
 .registerError {
 	color: red;
+	width: 30rem;
+	text-align: center;
 }
 
 .radio_indi, .radio_org, .offerSupport, .needSupport, .bothSupport {

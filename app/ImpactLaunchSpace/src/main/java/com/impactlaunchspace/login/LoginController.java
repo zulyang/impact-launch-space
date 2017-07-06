@@ -381,10 +381,10 @@ public class LoginController {
 					// page
 					if (userType.equals("organization")) {
 						response.addCookie(c);
-						return "profile";
+						return "orgProfileForm";
 					} else if (userType.equals("individual")) {
 						response.addCookie(c);
-						return "setup-individual";
+						return "indiProfileForm";
 					}
 				}
 			}

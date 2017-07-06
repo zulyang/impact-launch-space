@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -122,10 +123,9 @@
 					<!-- /.container-fluid -->
 				</nav>
 
-				<div class="col-lg-12 form_container profile_container">
-					<form method="post" action="setup-organization" enctype="multipart/form-data" class="form-horizontal profile_form">
+				<div class="col-lg-12 form_container org_profile_container">
+					<form method="post" action="setup-organization" enctype="multipart/form-data" class="form-horizontal org_profile_form">
 						<div class="form-group">
-							<img class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 circle_profile_image" src="/imageDisplay?username=${username}">
 							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
 								<input type="file" name="profilePicture">
 							</div>

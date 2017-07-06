@@ -41,15 +41,9 @@ public class ProfileController {
 	UserService userService;
 
 	// Setup for Organizations
-	@RequestMapping(value = "/setup-organization", method = RequestMethod.GET)
-	public String showSetupPageForOrganization() {
-		return "setup-organization";
-	}
-
-	// Setup for Organizations
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	@RequestMapping(value = "/orgProfileForm", method = RequestMethod.GET)
 	public String showSetupPageForOrganizationProfile() {
-		return "profile";
+		return "orgProfileForm";
 	}
 
 	@RequestMapping(value = "/setup-organization", method = RequestMethod.POST)
@@ -103,9 +97,9 @@ public class ProfileController {
 	}
 
 	// Setup for Individuals
-	@RequestMapping(value = "/setup-individual", method = RequestMethod.GET)
-	public String showSetupPageForIndividual() {
-		return "setup-individual";
+	@RequestMapping(value = "/indiProfileForm", method = RequestMethod.GET)
+	public String showSetupPageForIndividualProfile() {
+		return "indiProfileForm";
 	}
 
 	@RequestMapping(value = "/setup-individual", method = RequestMethod.POST)
@@ -183,7 +177,8 @@ public class ProfileController {
 				preferredJobSectorList, preferredProjectAreaList, userSkillsetList);
 
 		model.put("username", username);
-		return "setup-complete";
+		model.put("username", username);
+		return "individualprofile1";
 	}
 
 	// Dashboard and Edit Pages for Organization Profiles
@@ -314,7 +309,7 @@ public class ProfileController {
 	public void showImage(@RequestParam("username") String username, HttpServletResponse response,
 			HttpServletRequest request) throws ServletException, IOException {
 		User user = userService.retrieveUser(username);
-		if (user !=null && user.getUser_type().equals("organization")) {
+		if (user != null && user.getUser_type().equals("organization")) {
 			OrganizationAccount organizationAccount = profileService.getOrganizationAccountDetails(username);
 			File file = organizationAccount.getProfilePicture();
 			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
@@ -324,7 +319,7 @@ public class ProfileController {
 			fis.close();
 			response.getOutputStream().write(bytesArray);
 			response.getOutputStream().close();
-		} else if (user !=null && user.getUser_type().equals("individual")) {
+		} else if (user != null && user.getUser_type().equals("individual")) {
 			IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
 			File file = individualAccount.getProfilePicture();
 			response.setContentType("image/jpeg");
@@ -342,20 +337,18 @@ public class ProfileController {
 	@RequestMapping(value = "/showFiles", method = RequestMethod.GET)
 	public void showFiles(@RequestParam("username") String username, HttpServletResponse response,
 			HttpServletRequest request) throws ServletException {
-		 IndividualAccount individualAccount =
-		 profileService.getIndividualAccountDetails(username);
-		 System.out.println("username: " + username + "\n account: " +
-		 individualAccount);
-		 File file = individualAccount.getProfilePicture();
-		 FileInputStream inputStream;
-		 try {
-		 inputStream = new FileInputStream(file);
-		 response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-		 response.setHeader("Content-Length", String.valueOf(file.length()));
-		 FileCopyUtils.copy(inputStream, response.getOutputStream());
-		 } catch (IOException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
-		 }
+		IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
+		System.out.println("username: " + username + "\n account: " + individualAccount);
+		File file = individualAccount.getProfilePicture();
+		FileInputStream inputStream;
+		try {
+			inputStream = new FileInputStream(file);
+			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+			response.setHeader("Content-Length", String.valueOf(file.length()));
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
