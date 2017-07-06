@@ -379,11 +379,19 @@ public class LoginController {
 				} else {
 					// userservice to determine if indiv/organ and redirect to
 					// page
+					
+					//puts the necessary lists into model for setup pages to obtain
+					model.addAttribute("country_list", profileService.retrieveCountryList());
+					model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
+					
+					
 					if (userType.equals("organization")) {
 						response.addCookie(c);
 						return "orgProfileForm";
 					} else if (userType.equals("individual")) {
 						response.addCookie(c);
+						model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
+						model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
 						return "indiProfileForm";
 					}
 				}
