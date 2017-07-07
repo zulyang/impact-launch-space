@@ -34,17 +34,8 @@
 					<div class="container-fluid">
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed"
-								data-toggle="collapse"
-								data-target="#bs-example-navbar-collapse-1"
-								aria-expanded="false">
-								<span class="sr-only">Toggle navigation</span> <span
-									class="icon-bar"></span> <span class="icon-bar"></span> <span
-									class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="index.jsp"> <img
-								alt="ImpactLaunch.Space" id="logo"
-								src="<%=request.getContextPath()%>/resources/img/logo2.png">
+							<a class="navbar-brand" href="index.jsp"> 
+								<img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
 
@@ -117,31 +108,32 @@
 						<div class="panel-body">
 							<div style="display: inline-block">
 								<img src="/imageDisplay?username=${username}"
-									class="circle_profile_image">
+									class="circle_indi_profile_image">
 							</div>
 
 							<div style="display: inline-block">
 								<h1 style="display: inline-block">John Smith</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<button type="button" class="btn btn-default dropdown-toggle"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">
+									<button type="button" class="btn btn-default ">
 										Edit Profile <span class="caret"></span>
 									</button>
-									<button type="button" class="btn btn-default dropdown-toggle"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">
-										Leave a message <span class="caret"></span>
+									<button type="button" class="btn btn-default ">
+										Leave A Message <span class="caret"></span>
 									</button>
 								</div>
 
 								<hr>
+								<p class="indi_bio">Lorem Ipsum is simply dummy text of the printing and
+									typesetting industry. Lorem Ipsum has been the industry's
+									standard dummy text ever since the 1500s, when an unknown
+									printer took a galley of type and scrambled it to make a type
+									specimen book.</p>
 								<p>Intern</p>
 								<p>Microsoft</p>
 								<hr>
 								<p>john@outlook</p>
-								<p>Intern</p>
+								<p>New York</p>
 							</div>
 						</div>
 					</div>
@@ -176,15 +168,30 @@
 								<p class="indi_project_area">${item.getProject_area()}</p>
 							</c:forEach>
 
-							<br>
-
+							<p>Sectors that are important to me:</p>
 							<c:forEach items="${preferredJobSectors}" var="item">
-    							${item.getJob_sector()}
-						</c:forEach>
+								<p class="indi_job_sector">${item.getJob_sector()}</p>
+							</c:forEach>
 
+							<p>
+								I can dedicate an average of <strong>${individual.getMinimumVolunteerHours()}</strong>
+								to <strong>${individual.getMaximumVolunteerHours()}</strong>
+								hours in a week.
+							</p>
+
+							<p>I am interested to work in:</p>
+							<c:forEach items="${preferredCountries}" var="item">
+								<p class="indi_preferred_countries">${item.getCountry_name()}</p>
+							</c:forEach>
 
 						</div>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Documents</div>
+						<div class="panel-body">${individual.getDocumentList()}</div>
+					</div>
+
 				</div>
 			</div>
 		</div>

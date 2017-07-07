@@ -229,16 +229,27 @@ public class ProfileController {
 		jobSectorsIndividual.add(jobSectorIndividual2);
 		model.put("jobSectorsIndividual", jobSectorsIndividual);
 		
-		ArrayList<PreferredCountry> prferredCountryList = new ArrayList<PreferredCountry>();
-		ArrayList<PreferredJobSector> preferredJobSectorList = new ArrayList<PreferredJobSector>();
-		
 		ArrayList<PreferredProjectArea> preferredProjectArea = new ArrayList<PreferredProjectArea>();
 		PreferredProjectArea preferredProjectArea1 = new PreferredProjectArea("healthcare", "nigel");
 		PreferredProjectArea preferredProjectArea2 = new PreferredProjectArea("sports", "nigel");
 		preferredProjectArea.add(preferredProjectArea1);
 		preferredProjectArea.add(preferredProjectArea2);
 		model.put("preferredProjectArea", preferredProjectArea);
-				
+		
+		ArrayList<PreferredJobSector> preferredJobSectors = new ArrayList<PreferredJobSector>();
+		PreferredJobSector preferredJobSectors1 = new PreferredJobSector("marine", "nigel");
+		PreferredJobSector preferredJobSectors2 = new PreferredJobSector("fashion", "nigel");
+		preferredJobSectors.add(preferredJobSectors1);
+		preferredJobSectors.add(preferredJobSectors2);
+		model.put("preferredJobSectors", preferredJobSectors);
+		
+		ArrayList<PreferredCountry> preferredCountries = new ArrayList<PreferredCountry>();
+		PreferredCountry preferredCountry1 = new PreferredCountry("scotland", "nigel");
+		PreferredCountry preferredCountry2 = new PreferredCountry("japan", "nigel");
+		preferredCountries.add(preferredCountry1);
+		preferredCountries.add(preferredCountry2);
+		model.put("preferredCountries", preferredCountries);
+		
 		return "individualProfileDisplay";
 	}
 

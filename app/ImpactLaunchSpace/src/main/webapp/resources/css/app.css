@@ -331,8 +331,27 @@ html, body {
 	position: absolute;
 }
 
+.indi_profile_display_container {
+	margin-top: 75rem;
+	margin-bottom: 5rem;
+	width: 75rem;
+}
+
 .panel-heading {
 	text-align: center;
+}
+
+.circle_indi_profile_image {
+	margin-top: -36rem;
+    margin-right: 1rem;
+    border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.indi_bio {
+	width: 45rem;
 }
 
 .indi_skills {
@@ -357,8 +376,25 @@ html, body {
 	font-size: large;
 }
 
-.indi_profile_display_container {
-	margin-top: 65rem;
-	margin-bottom: 5rem;
-	width: 75rem;
+.indi_job_sector {
+	display: inline-block;
+	background-color: #eba410;
+	border-radius: 25px;
+	border: 0.1rem solid #eba410;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
 }
+
+.indi_preferred_countries {
+	display: inline-block;
+	background-color: #ec0faa;
+	border-radius: 25px;
+	border: 0.1rem solid #ec0faa;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
