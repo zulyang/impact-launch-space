@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <title>Individual Dashboard</title>
 </head>
 <body>
@@ -23,7 +25,7 @@
 	<br>
 	<br>
 	<div align="center">
-		<h4>
+		
 			I can dedicate ${individual.getMinimumVolunteerHours()} to
 			${individual.getMaximumVolunteerHours()} hours in a week. <br> I
 			prefer to work in:
@@ -44,9 +46,9 @@
 			</c:forEach>
 			<br> My Skills: <br>
 			<c:forEach items="${userSkills}" var="item">
-    	${item.getSkillset()}<br>
+    			<p class="indi_skills">${item}</p>
 			</c:forEach>
-		</h4>
+	
 
 		${individual.getDocumentList()}
 

@@ -130,7 +130,6 @@ html, body {
 	margin-top: -2rem;
 }
 
-
 .profileField {
 	margin-top: 1rem;
 	width: 40rem;
@@ -184,7 +183,8 @@ html, body {
 }
 
 .welcome, .createAccount, .register_success_message,
-	.verifyAccountMessage, .unlockAccountMessage, .unlockAccountPinMessage {
+	.verifyAccountMessage, .unlockAccountMessage, .unlockAccountPinMessage
+	{
 	justify-content: center;
 	display: flex;
 	align-items: center;
@@ -217,7 +217,7 @@ html, body {
 .signInNowBox {
 	position: absolute;
 	width: 20rem;
-    height: 4rem;
+	height: 4rem;
 	margin-top: 5rem;
 }
 
@@ -329,4 +329,36 @@ html, body {
 #wait_prompt {
 	margin-top: 8rem;
 	position: absolute;
+}
+
+.panel-heading {
+	text-align: center;
+}
+
+.indi_skills {
+	display: inline-block;
+	background-color: #4CAF50;
+	border-radius: 25px;
+	border: 0.1rem solid #4CAF50;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_project_area {
+	display: inline-block;
+	background-color: #24b8d7;
+	border-radius: 25px;
+	border: 0.1rem solid #24b8d7;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_profile_display_container {
+	margin-top: 65rem;
+	margin-bottom: 5rem;
+	width: 75rem;
 }

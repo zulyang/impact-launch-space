@@ -1,58 +1,194 @@
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import = "java.io.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page import="java.io.*"%>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Individual Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ImpactLaunch.Space</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<!--custom css codes -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+
 </head>
-<body>
-	<div align="center">
-		<img src="/imageDisplay?username=${username}" class="circle_profile_image">
-		<h1>${individual.getFirst_name()}${individual.getLast_name()}</h1>
-		<h2>${individual.getJobTitle()}</h2>
-		<h2>${individual.getOrganization()}</h2>
-		<h3>Date Of Birth: ${individual.getDateOfBirth()}</h3>
-		<h3>Country: ${individual.getCountry()}</h3>
-		<h3>Email: ${user.getEmail()}</h3>
-		<h3>Phone: ${individual.getContactDetails()}</h3>
-		<h5>Personal Bio: ${individual.getPersonalBio()}</h5>
-	</div>
-	<br>
-	<br>
-	<div align="center">
-		<h4>
-			I can dedicate ${individual.getMinimumVolunteerHours()} to
-			${individual.getMaximumVolunteerHours()} hours in a week. <br> I
-			prefer to work in:
-			<c:forEach items="${preferredCountries}" var="item">
-    	${item.getCountry_name()}<br>
-			</c:forEach>
-			<br> I have expertise in these Job Sectors: <br>
-			<c:forEach items="${jobSectorsIndividual}" var="item">
-    	${item.getJob_sector()} : ${item.getYearsOfExperience()} Years Of Experience<br>
-			</c:forEach>
-			<br> Preferred Project Areas: <br>
-			<c:forEach items="${preferredProjectArea}" var="item">
-    	${item.getProject_area()}<br>
-			</c:forEach>
-			<br> Preferred Job Sectors: <br>
-			<c:forEach items="${preferredJobSectors}" var="item">
-    	${item.getJob_sector()}<br>
-			</c:forEach>
-			<br> My Skills: <br>
-			<c:forEach items="${userSkills}" var="item">
-    	${item.getSkillset()}<br>
-			</c:forEach>
-		</h4>
+<body class="profile">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
 
-		${individual.getDocumentList()}
+				<nav class="navbar navbar-default navbar-fixed-top profileNav">
+					<div class="container-fluid">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed"
+								data-toggle="collapse"
+								data-target="#bs-example-navbar-collapse-1"
+								aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="index.jsp"> <img
+								alt="ImpactLaunch.Space" id="logo"
+								src="<%=request.getContextPath()%>/resources/img/logo2.png">
+							</a>
+						</div>
 
-		<h4>
-			<a href="editprofile-individual">Edit Profile</a>
-		</h4>
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse"
+							id="bs-example-navbar-collapse-1">
+							<form class="navbar-form navbar-left">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Search">
+								</div>
+							</form>
+							<ul class="nav navbar-nav">
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Projects <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Action</a></li>
+										<li><a href="#">Another action</a></li>
+										<li><a href="#">Something else here</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="#">Separated link</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="#">One more separated link</a></li>
+									</ul></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Resources <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Action</a></li>
+										<li><a href="#">Another action</a></li>
+										<li><a href="#">Something else here</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="#">Separated link</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="#">One more separated link</a></li>
+									</ul></li>
+								<li class=""><a class="navbar-brand" href="/index"> <img
+										alt="home" class="homeIcon"
+										src="<%=request.getContextPath()%>/resources/img/homeIcon.png">
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/alerts"> <img alt="alerts" class="alertsIcon"
+										src="<%=request.getContextPath()%>/resources/img/bellIcon.png">
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/chat"> <img alt="chat" class="chatIcon"
+										src="<%=request.getContextPath()%>/resources/img/chatIcon.png">
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/profile"> <img alt="profilePicture"
+										class="profilePictureIcon"
+										src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/profile">Username</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/options"> <img alt="moreOptions"
+										class="moreOptionsIcon"
+										src="<%=request.getContextPath()%>/resources/img/3dotsIcon.png">
+								</a></li>
+							</ul>
+						</div>
+						<!-- /.navbar-collapse -->
+					</div>
+					<!-- /.container-fluid -->
+				</nav>
+
+				<div class="indi_profile_display_container">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div style="display: inline-block">
+								<img src="/imageDisplay?username=${username}"
+									class="circle_profile_image">
+							</div>
+
+							<div style="display: inline-block">
+								<h1 style="display: inline-block">John Smith</h1>
+
+								<div style="display: inline-block" class="btn-group">
+									<button type="button" class="btn btn-default dropdown-toggle"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">
+										Edit Profile <span class="caret"></span>
+									</button>
+									<button type="button" class="btn btn-default dropdown-toggle"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">
+										Leave a message <span class="caret"></span>
+									</button>
+								</div>
+
+								<hr>
+								<p>Intern</p>
+								<p>Microsoft</p>
+								<hr>
+								<p>john@outlook</p>
+								<p>Intern</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Skills</div>
+						<div class="panel-body">
+							<c:forEach items="${userSkills}" var="item">
+								<p class="indi_skills">${item}</p>
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Experience</div>
+						<div class="panel-body">
+							<c:forEach items="${jobSectorsIndividual}" var="item">
+								<p>
+									<strong>${item.getYearsOfExperience()}</strong> years of
+									experience in <strong>${item.getJob_sector()}</strong>.
+								</p>
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Interest</div>
+						<div class="panel-body">
+
+							<p>I want to make a difference in:</p>
+							<c:forEach items="${preferredProjectArea}" var="item">
+								<p class="indi_project_area">${item.getProject_area()}</p>
+							</c:forEach>
+
+							<br>
+
+							<c:forEach items="${preferredJobSectors}" var="item">
+    							${item.getJob_sector()}
+						</c:forEach>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 </body>
 </html>

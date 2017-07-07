@@ -178,7 +178,7 @@ public class ProfileController {
 
 		model.put("username", username);
 		model.put("username", username);
-		return "individualprofile1";
+		return "individualProfileDisplay";
 	}
 
 	// Dashboard and Edit Pages for Organization Profiles
@@ -211,9 +211,35 @@ public class ProfileController {
 	}
 
 	// Dashboard and Edit Pages for Individual Profiles
-	@RequestMapping(value = "/individualprofile1", method = RequestMethod.GET)
-	public String showIndividualDashboardPage(HttpServletRequest request) {
-		return "individualprofile1";
+	@RequestMapping(value = "/individualProfileDisplay", method = RequestMethod.GET)
+	public String showIndividualDashboardPage(HttpServletRequest request, ModelMap model) {
+		ArrayList<String> userSkills = new ArrayList<String>();
+		userSkills.add("draw");
+		userSkills.add("paint");
+		userSkills.add("code");
+		userSkills.add("adobe illustrator");
+		userSkills.add("adobe illustrator");
+		userSkills.add("adobe illustrator");
+		model.put("userSkills", userSkills);
+		
+		ArrayList<JobSectorIndividual> jobSectorsIndividual = new ArrayList<JobSectorIndividual>();
+		JobSectorIndividual jobSectorIndividual1 = new JobSectorIndividual("finance", "nigel", 3);
+		JobSectorIndividual jobSectorIndividual2 = new JobSectorIndividual("tech", "nigel", 2);
+		jobSectorsIndividual.add(jobSectorIndividual1);
+		jobSectorsIndividual.add(jobSectorIndividual2);
+		model.put("jobSectorsIndividual", jobSectorsIndividual);
+		
+		ArrayList<PreferredCountry> prferredCountryList = new ArrayList<PreferredCountry>();
+		ArrayList<PreferredJobSector> preferredJobSectorList = new ArrayList<PreferredJobSector>();
+		
+		ArrayList<PreferredProjectArea> preferredProjectArea = new ArrayList<PreferredProjectArea>();
+		PreferredProjectArea preferredProjectArea1 = new PreferredProjectArea("healthcare", "nigel");
+		PreferredProjectArea preferredProjectArea2 = new PreferredProjectArea("sports", "nigel");
+		preferredProjectArea.add(preferredProjectArea1);
+		preferredProjectArea.add(preferredProjectArea2);
+		model.put("preferredProjectArea", preferredProjectArea);
+				
+		return "individualProfileDisplay";
 	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
