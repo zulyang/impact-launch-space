@@ -22,4 +22,9 @@
 	<import resource="skillset/Spring-Skillset.xml" />
 	<import resource="skillset/Spring-UserSkill.xml" />
 	<import resource="cookies/Spring-cookies.xml" />
+	<import resource="project/Spring-Project.xml" />
+	<import resource="project/Spring-ProjectBanList.xml" />
+	<import resource="project/Spring-ProjectRequestedResource.xml" />
+	<import resource="project/Spring-ProjectTargetArea.xml" />
+	<import resource="project/Spring-ProjectResourceCategory.xml" />
 </beans>

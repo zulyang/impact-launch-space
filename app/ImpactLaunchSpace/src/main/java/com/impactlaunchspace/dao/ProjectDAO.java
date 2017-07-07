@@ -6,5 +6,7 @@ import com.impactlaunchspace.entity.Project;
 
 public interface ProjectDAO {
 	public void insert(Project project);
-	public ArrayList<Project> retrieveProject(String project_name);
+	public Project retrieveProject(String project_name);
+	public ArrayList<Project> retrieveProjectByUser(String username);
+	public ArrayList<Project> retrievePublicProjects();
 }
