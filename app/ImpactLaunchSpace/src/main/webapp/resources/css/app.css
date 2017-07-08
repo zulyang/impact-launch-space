@@ -76,6 +76,16 @@ html, body {
 	margin-left: 3rem;
 }
 
+#logoLoggedIn{
+	height: auto;
+	width: auto;
+	max-width: 70%;
+	max-height: 10rem;
+	background-size: contain;
+	margin-top: -3rem;
+	margin-left: 3rem;
+}
+
 .navbar-default .navbar-nav>li>a {
 	color: white;
 	font-weight: bold;
@@ -137,6 +147,12 @@ html, body {
 	margin-right: auto;
 }
 
+.edit_profileField {
+	width: 20rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .companyBio, .personalBio {
 	margin-top: 1rem;
 	width: 40rem;
@@ -153,6 +169,16 @@ html, body {
 }
 
 .profile_save {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 20rem;
+}
+
+.edit_org_profile_save {
 	justify-content: center;
 	display: flex;
 	align-items: center;
@@ -347,13 +373,38 @@ html, body {
 	width: 85rem;
 }
 
+.edit_org_profile_display_container {
+	margin-top: 35rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+}
+
 .circle_org_profile_image {
 	margin-top: -16rem;
-    margin-right: 1rem;
-    border-radius: 50%;
+	margin-right: 1rem;
+	border-radius: 50%;
 	width: 250px;
 	height: 250px;
 	min-height: 100%;
+}
+
+.circle_edit_org_profile_image {
+	margin-right: 1rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.edit_org_pic, .org_profile_display_countries {
+	margin: 1rem;
+}
+
+.edit_org_profile_container {
+	display: inline-block;
+	width: 40rem;
+	margin-left: 10rem;
+	margin-top: 3rem;
 }
 
 .org_countries {
@@ -372,7 +423,7 @@ html, body {
 	background-color: #eba410;
 	border-radius: 25px;
 	border: 0.1rem solid #eba410;
-	width: 120px;
+	width: 220px;
 	color: white;
 	text-align: center;
 	font-size: large;
@@ -394,8 +445,8 @@ html, body {
 
 .circle_indi_profile_image {
 	margin-top: -36rem;
-    margin-right: 1rem;
-    border-radius: 50%;
+	margin-right: 1rem;
+	border-radius: 50%;
 	width: 250px;
 	height: 250px;
 	min-height: 100%;
@@ -448,4 +499,3 @@ html, body {
 	text-align: center;
 	font-size: large;
 }
-

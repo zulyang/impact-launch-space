@@ -43,7 +43,7 @@
 									class="icon-bar"></span>
 							</button>
 							<a class="navbar-brand" href="index.jsp"> 
-								<img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo2.png">
+								<img alt="ImpactLaunch.Space" id="logoLoggedIn" src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
 
