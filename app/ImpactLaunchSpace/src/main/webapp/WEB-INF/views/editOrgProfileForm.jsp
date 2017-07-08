@@ -35,7 +35,7 @@
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">
 							<a class="navbar-brand" href="index.jsp"> <img
-								alt="ImpactLaunch.Space" id="logo"
+								alt="ImpactLaunch.Space" id="logoLoggedIn"
 								src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
@@ -104,38 +104,75 @@
 					<!-- /.container-fluid -->
 				</nav>
 
-				<div class="org_profile_display_container">
+				<div class="edit_org_profile_display_container">
 					<div class="panel panel-default">
+						<div class="panel-heading">Edit Organisation Profile Form</div>
 						<div class="panel-body">
 
-							<div style="display: inline-block">
+							<div class="edit_org_pic" style="display: inline-block">
 								<form action="editprofile-organization-profilepic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${organization.getUsername()}"
-										class="circle_org_profile_image" height="64" width="64">
-										
-									<label for="editChooseOrgPic" class="form-control btn btn-info profile_save">Choose A New Picture</label>
-									<input style="display: inline-block; visibility:hidden;" type="file"
-										name="profilePicture" id="editChooseOrgPic" />
-										 
-									<label for="editUploadOrgPic" class="form-control btn btn-info profile_save">Upload</label>
-									<input style="display: inline-block; visibility:hidden; "
-										type="submit" value="Update picture" id="editUploadOrgPic"/>
+										class="circle_edit_org_profile_image" height="64" width="64">
+
+									<label for="editChooseOrgPic"
+										class="form-control btn btn-info edit_org_profile_save">Choose
+										A New Picture</label> <input
+										style="display: inline-block; visibility: hidden;" type="file"
+										name="profilePicture" id="editChooseOrgPic" /> <label
+										for="editUploadOrgPic"
+										class="form-control btn btn-info edit_org_profile_save">Upload</label>
+									<input style="display: inline-block; visibility: hidden;"
+										type="submit" value="Update picture" id="editUploadOrgPic" />
 								</form>
 							</div>
 
-							<div style="display: inline-block">
-								<form action="editprofile-organization" method="post">
-									<input type="text" value="${organization.getCompanyName()}"
-										name="companyName"> <input type="text"
-										value="${organization.getCompanyBio()}" name="companyBio">
-									<input type="text" value="${user.getEmail()}" name="email"
-										readonly> <input type="text"
-										value="${organization.getContactDetails()}"
-										name="contactDetails"> <input type="submit"
-										value="Update details" />
-								</form>
-							</div>
+							<form class="form-horizontal edit_org_profile_container"
+								action="editprofile-organization" method="post">
+								<div class="form-group">
+									<label for="editOrgName" class="col-sm-2 control-label">Company
+										Name</label>
+									<div class="col-sm-10">
+										<input type="text" id="editOrgName"
+											class="form-control edit_profileField"
+											value="${organization.getCompanyName()}" name="companyName">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="editOrgEmail" class="col-sm-2 control-label">Email</label>
+									<div class="col-sm-10">
+										<input class="form-control edit_profileField"
+											id="editOrgEmail" type="text" value="${user.getEmail()}"
+											name="email" readonly>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="editOrgContact" class="col-sm-2 control-label">Contact
+										Details</label>
+									<div class="col-sm-10">
+										<input id="editOrgContact"
+											class="form-control edit_profileField" type="text"
+											value="${organization.getContactDetails()}"
+											name="contactDetails">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="editOrgBio" class="col-sm-2 control-label">Contact
+										Details</label>
+									<div class="col-sm-10">
+										<textarea id="editOrgBio" rows="4" name="companyBio"
+											class="form-control edit_profileField"
+											value="${organization.getCompanyBio()}">
+										</textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<input class="btn btn-success edit_org_profile_save"
+											type="submit" value="Update details" />
+									</div>
+								</div>
+							</form>
 
 							<hr>
 							<div class="org_profile_display_countries">

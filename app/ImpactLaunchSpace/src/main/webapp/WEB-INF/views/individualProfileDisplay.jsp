@@ -35,7 +35,7 @@
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">
 							<a class="navbar-brand" href="index.jsp"> <img
-								alt="ImpactLaunch.Space" id="logo"
+								alt="ImpactLaunch.Space" id="logoLoggedIn"
 								src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>

@@ -49,7 +49,7 @@
 									class="icon-bar"></span>
 							</button>
 							<a class="navbar-brand" href="index.jsp"> <img
-								alt="ImpactLaunch.Space" id="logo"
+								alt="ImpactLaunch.Space" id="logoLoggedIn"
 								src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
@@ -123,8 +123,7 @@
 						enctype="multipart/form-data"
 						class="form-horizontal org_profile_form">
 						<div class="form-group">
-							<div
-								class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
 								<input type="file" name="profilePicture">
 							</div>
 						</div>
