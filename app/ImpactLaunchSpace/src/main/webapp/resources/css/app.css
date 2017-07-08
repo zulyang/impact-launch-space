@@ -178,6 +178,16 @@ html, body {
 	position: absolute;
 }
 
+.profile_save {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 10rem;
+}
+
 .forgot_form {
 	margin-top: -10rem;
 }
@@ -329,6 +339,47 @@ html, body {
 #wait_prompt {
 	margin-top: 8rem;
 	position: absolute;
+}
+
+.org_profile_display_container {
+	margin-top: 15rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+}
+
+.circle_org_profile_image {
+	margin-top: -16rem;
+    margin-right: 1rem;
+    border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.org_countries {
+	display: inline-block;
+	background-color: #ec0faa;
+	border-radius: 25px;
+	border: 0.1rem solid #ec0faa;
+	width: 120px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.org_job_sectors {
+	display: inline-block;
+	background-color: #eba410;
+	border-radius: 25px;
+	border: 0.1rem solid #eba410;
+	width: 120px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_bio, .org_bio {
+	width: 45rem;
 }
 
 .indi_profile_display_container {

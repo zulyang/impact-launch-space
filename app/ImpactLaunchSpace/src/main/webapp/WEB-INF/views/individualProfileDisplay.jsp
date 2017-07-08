@@ -34,8 +34,9 @@
 					<div class="container-fluid">
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">
-							<a class="navbar-brand" href="index.jsp"> 
-								<img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo2.png">
+							<a class="navbar-brand" href="index.jsp"> <img
+								alt="ImpactLaunch.Space" id="logo"
+								src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
 
@@ -112,28 +113,24 @@
 							</div>
 
 							<div style="display: inline-block">
-								<h1 style="display: inline-block">John Smith</h1>
+								<h1 style="display: inline-block">${individual.getFirst_name()} ${individual.getLast_name()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<button type="button" class="btn btn-default ">
-										Edit Profile <span class="caret"></span>
-									</button>
-									<button type="button" class="btn btn-default ">
-										Leave A Message <span class="caret"></span>
-									</button>
+									<a href="editprofile-organization" class="btn btn-default">
+										Edit Profile </a> 
+									<a href="" class="btn btn-default"> Leave A
+										Message </a>
 								</div>
 
 								<hr>
-								<p class="indi_bio">Lorem Ipsum is simply dummy text of the printing and
-									typesetting industry. Lorem Ipsum has been the industry's
-									standard dummy text ever since the 1500s, when an unknown
-									printer took a galley of type and scrambled it to make a type
-									specimen book.</p>
-								<p>Intern</p>
-								<p>Microsoft</p>
+								<p class="indi_bio">${individual.getPersonalBio()}</p>
 								<hr>
-								<p>john@outlook</p>
-								<p>New York</p>
+								<p>${individual.getJobTitle()}</p>
+								<p>${individual.getOrganization()}</p>
+								<hr>
+								<p style="display: inline-block">${user.getEmail()}</p>
+								<p style="display: inline-block">${individual.getContactDetails()}</p>
+								<p>${individual.getCountry()}</p>
 							</div>
 						</div>
 					</div>

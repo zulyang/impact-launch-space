@@ -107,32 +107,41 @@
 				<div class="org_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
+
 							<div style="display: inline-block">
-								<img src="/imageDisplay?username=${username}"
-									class="circle_org_profile_image">
+								<form action="editprofile-organization-profilepic" method="post"
+									enctype="multipart/form-data">
+									<img src="/imageDisplay?username=${organization.getUsername()}"
+										class="circle_org_profile_image" height="64" width="64">
+										
+									<label for="editChooseOrgPic" class="form-control btn btn-info profile_save">Choose A New Picture</label>
+									<input style="display: inline-block; visibility:hidden;" type="file"
+										name="profilePicture" id="editChooseOrgPic" />
+										 
+									<label for="editUploadOrgPic" class="form-control btn btn-info profile_save">Upload</label>
+									<input style="display: inline-block; visibility:hidden; "
+										type="submit" value="Update picture" id="editUploadOrgPic"/>
+								</form>
 							</div>
 
 							<div style="display: inline-block">
-								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>
+								<form action="editprofile-organization" method="post">
+									<input type="text" value="${organization.getCompanyName()}"
+										name="companyName"> <input type="text"
+										value="${organization.getCompanyBio()}" name="companyBio">
+									<input type="text" value="${user.getEmail()}" name="email"
+										readonly> <input type="text"
+										value="${organization.getContactDetails()}"
+										name="contactDetails"> <input type="submit"
+										value="Update details" />
+								</form>
+							</div>
 
-								<div style="display: inline-block" class="btn-group">
-									<a href="editOrgProfileForm" class="btn btn-default">
-										Edit Profile </a> 
-									<a href="" class="btn btn-default"> Leave A
-										Message </a>
-								</div>
-
-								<hr>
-								<p class="org_bio">${organization.getCompanyBio()}</p>
-								<hr>
-								<p style="display: inline-block">${user.getEmail()}</p>
-								<p style="display: inline-block">${organization.getContactDetails()}</p>
-								<hr>
-								<div class="org_profile_display_countries">
-									<c:forEach items="${countriesOfOperation}" var="item">
-										<p class="org_countries">${item.getCountry_name()}</p>
-									</c:forEach>
-								</div>
+							<hr>
+							<div class="org_profile_display_countries">
+								<c:forEach items="${countriesOfOperation}" var="item">
+									<p class="org_countries">${item.getCountry_name()}</p>
+								</c:forEach>
 							</div>
 						</div>
 					</div>

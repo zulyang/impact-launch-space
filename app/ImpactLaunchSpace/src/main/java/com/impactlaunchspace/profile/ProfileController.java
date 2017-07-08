@@ -96,6 +96,39 @@ public class ProfileController {
 		return "organizationProfileDisplay";
 	}
 
+	@RequestMapping(value = "/organizationProfileDisplay", method = RequestMethod.GET)
+	public String showOrganizationDisplayPage(HttpServletRequest request) {
+		return "organizationProfileDisplay";
+	}
+
+	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.GET)
+	public String showEditProfilePageOrganization(HttpServletRequest request) {
+		return "editprofile-organization";
+	}
+	
+	@RequestMapping(value = "/editOrgProfileForm", method = RequestMethod.GET)
+	public String EditProfilePageOrganization(HttpServletRequest request) {
+		return "editOrgProfileForm";
+	}
+
+	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.POST)
+	public String processUpdateOrganizationProfile(@RequestParam String companyName, @RequestParam String companyBio,
+			@RequestParam String contactDetails, HttpServletRequest request) {
+		OrganizationAccount organization = (OrganizationAccount) request.getSession().getAttribute("organization");
+		String username = organization.getUsername();
+		String email = organization.getEmail();
+		// todo
+		OrganizationAccount updatedOrganizationAccount = new OrganizationAccount(organization.getUsername(),
+				organization.getEmail(), companyName, organization.isNeedsSupport(), organization.isOfferingSupport(),
+				organization.getProfilePicture(), companyBio, contactDetails);
+		profileService.updateOrganizationAccount(updatedOrganizationAccount, username);
+
+		// change the session attributes
+		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
+
+		return "organizationProfileDisplay";
+	}
+
 	// Setup for Individuals
 	@RequestMapping(value = "/indiProfileForm", method = RequestMethod.GET)
 	public String showSetupPageForIndividualProfile() {
@@ -189,10 +222,9 @@ public class ProfileController {
 		return "individualProfileDisplay";
 	}
 
-	// Dashboard and Edit Pages for Organization Profiles
-	@RequestMapping(value = "/organizationprofile1", method = RequestMethod.GET)
-	public String showOrganizationDashboardPage(HttpServletRequest request) {
-		return "organizationprofile1";
+	@RequestMapping(value = "/individualprofile1", method = RequestMethod.GET)
+	public String showIndividualDashboardPage(HttpServletRequest request) {
+		return "individualprofile1";
 	}
 
 	@RequestMapping(value = "/organizationProfileDisplay", method = RequestMethod.GET)
