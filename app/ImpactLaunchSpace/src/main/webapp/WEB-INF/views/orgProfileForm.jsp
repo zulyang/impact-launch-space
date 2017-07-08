@@ -14,12 +14,21 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+	rel="stylesheet" />
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
+
+<!--for multiple select (Select2)-->
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 </head>
 <body class="profile">
@@ -39,8 +48,9 @@
 									class="icon-bar"></span> <span class="icon-bar"></span> <span
 									class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="index.jsp"> 
-								<img alt="ImpactLaunch.Space" id="logo" src="<%=request.getContextPath()%>/resources/img/logo2.png">
+							<a class="navbar-brand" href="index.jsp"> <img
+								alt="ImpactLaunch.Space" id="logo"
+								src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
 
@@ -76,46 +86,31 @@
 										<li><a href="#">Separated link</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a href="#">One more separated link</a></li>
-									</ul>
-								</li>
-								<li class="">
-									<a class="navbar-brand" href="/index"> 
-										<img
+									</ul></li>
+								<li class=""><a class="navbar-brand" href="/index"> <img
 										alt="home" class="homeIcon"
 										src="<%=request.getContextPath()%>/resources/img/homeIcon.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/alerts"> 
-										<img
-										alt="alerts" class="alertsIcon"
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/alerts"> <img alt="alerts" class="alertsIcon"
 										src="<%=request.getContextPath()%>/resources/img/bellIcon.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/chat"> 
-										<img
-										alt="chat" class="chatIcon"
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/chat"> <img alt="chat" class="chatIcon"
 										src="<%=request.getContextPath()%>/resources/img/chatIcon.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/profile"> 
-										<img
-										alt="profilePicture" class="profilePictureIcon"
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/profile"> <img alt="profilePicture"
+										class="profilePictureIcon"
 										src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/profile">Username</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/options"> 
-										<img
-										alt="moreOptions" class="moreOptionsIcon"
+								</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/profile">Username</a></li>
+								<li class="profileIcons"><a class="navbar-brand"
+									href="/options"> <img alt="moreOptions"
+										class="moreOptionsIcon"
 										src="<%=request.getContextPath()%>/resources/img/3dotsIcon.png">
-									</a>
-								</li>
+								</a></li>
 							</ul>
 						</div>
 						<!-- /.navbar-collapse -->
@@ -124,15 +119,19 @@
 				</nav>
 
 				<div class="col-lg-12 form_container org_profile_container">
-					<form method="post" action="setup-organization" enctype="multipart/form-data" class="form-horizontal org_profile_form">
+					<form method="post" action="setup-organization"
+						enctype="multipart/form-data"
+						class="form-horizontal org_profile_form">
 						<div class="form-group">
-							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+							<div
+								class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
 								<input type="file" name="profilePicture">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="text" name="username" value="${username}" readonly class="form-control profileField">
+								<input type="text" name="username" value="${username}" readonly
+									class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
@@ -149,31 +148,28 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="countriesOfOperation" required="required" type="text"
-									class="form-control profileField" placeholder="Countries of Operation">
+								<select class="js-example-basic-multiple" multiple="multiple"
+									name="countriesOfOperation">
+									<c:forEach items="${country_list}" var="item">
+										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+									</c:forEach>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="jobSector1" required="required" type="text"
-									class="form-control profileField" placeholder="Job Sector 1">
+								<select class="js-example-basic-multiple2" multiple="multiple"
+									name="selected_jobsectors" required>
+									<c:forEach items="${job_sector_list}" var="item">
+										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+									</c:forEach>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="jobSector2" required="required" type="text"
-									class="form-control profileField" placeholder="Job Sector 2">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="jobSector3" required="required" type="text"
-									class="form-control profileField" placeholder="Job Sector 3">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<textarea rows="4" name="companyBio" class="form-control companyBio"
+								<textarea rows="4" name="companyBio"
+									class="form-control companyBio"
 									placeholder="A short company bio"></textarea>
 							</div>
 						</div>
@@ -187,7 +183,8 @@
 						<div class="form-group">
 							<div class="col-lg-12">
 								<button type="submit" value="Save"
-									class="btn btn-success profile_save">Save Account Details</button>
+									class="btn btn-success profile_save">Save Account
+									Details</button>
 							</div>
 						</div>
 					</form>
@@ -196,6 +193,20 @@
 			</div>
 		</div>
 	</div>
+
+
+
+	<script type="text/javascript">
+		$(".js-example-basic-multiple").select2({
+			placeholder : "Select a country"
+		});
+	</script>
+	<script type="text/javascript">
+		$(".js-example-basic-multiple2").select2({
+			maximumSelectionLength : 3,
+			placeholder : "Select Up to 3 Job Sectors"
+		});
+	</script>
 
 </body>
 </html>

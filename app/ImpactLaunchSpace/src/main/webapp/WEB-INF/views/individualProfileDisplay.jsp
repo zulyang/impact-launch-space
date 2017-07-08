@@ -142,7 +142,7 @@
 						<div class="panel-heading">Skills</div>
 						<div class="panel-body">
 							<c:forEach items="${userSkills}" var="item">
-								<p class="indi_skills">${item}</p>
+								<p class="indi_skills">${item.getSkillset()}</p>
 							</c:forEach>
 						</div>
 					</div>

@@ -48,10 +48,9 @@ public class ProfileController {
 
 	@RequestMapping(value = "/setup-organization", method = RequestMethod.POST)
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
-			@RequestParam String companyName, @RequestParam String countriesOfOperation,
-			@RequestParam String companyBio, @RequestParam String jobSector1, @RequestParam String jobSector2,
-			@RequestParam String jobSector3, @RequestParam String contactDetails,
-			@RequestParam("profilePicture") MultipartFile profilePicture, ModelMap model) {
+			@RequestParam String companyName, @RequestParam ArrayList<String> countriesOfOperation,
+			@RequestParam String companyBio, @RequestParam ArrayList<String> selected_jobsectors, 
+			@RequestParam String contactDetails,@RequestParam("profilePicture") MultipartFile profilePicture, ModelMap model, HttpServletRequest request) {
 
 		File profilePictureFile = new File(profilePicture.getOriginalFilename());
 		try {
@@ -71,29 +70,30 @@ public class ProfileController {
 		ArrayList<JobSectorOrganization> jobSectorsOrganization = new ArrayList<JobSectorOrganization>();
 		ArrayList<CountryOfOperation> countriesOfOperationList = new ArrayList<CountryOfOperation>();
 
-		if (jobSector1 != null && jobSector1.length() != 0) {
-			JobSectorOrganization jobSectorOrganization1 = new JobSectorOrganization(jobSector1, username);
-			jobSectorsOrganization.add(jobSectorOrganization1);
-		}
-
-		if (jobSector2 != null && jobSector2.length() != 0) {
-			JobSectorOrganization jobSectorOrganization2 = new JobSectorOrganization(jobSector2, username);
-			jobSectorsOrganization.add(jobSectorOrganization2);
-		}
-
-		if (jobSector3 != null && jobSector3.length() != 0) {
-			JobSectorOrganization jobSectorOrganization3 = new JobSectorOrganization(jobSector3, username);
+		for(String jobSectorOrganization : selected_jobsectors){
+			JobSectorOrganization jobSectorOrganization3 = new JobSectorOrganization(jobSectorOrganization, username);
 			jobSectorsOrganization.add(jobSectorOrganization3);
 		}
-
-		CountryOfOperation countryOfOperation = new CountryOfOperation(countriesOfOperation, username);
-
-		countriesOfOperationList.add(countryOfOperation);
+		
+		//handle multiple select for countries of operation
+		for(String countryOfOperation: countriesOfOperation){
+			System.out.print(countryOfOperation);
+			CountryOfOperation countryOfOperationObj = new CountryOfOperation(countryOfOperation, username);
+			countriesOfOperationList.add(countryOfOperationObj);
+		}
+		
 
 		profileService.firstSetupOrganization(organizationAccount, countriesOfOperationList, jobSectorsOrganization);
 
 		model.put("username", username);
-		return "organizationprofile1";
+		model.addAttribute("organization", profileService.getOrganizationAccountDetails(username));
+		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
+		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
+		request.getSession().setAttribute("countriesOfOperation",
+				profileService.retrieveCountriesOfOperations(username));
+		request.getSession().setAttribute("jobSectorsOrganization",
+				profileService.retrieveOrganizationJobSectors(username));
+		return "organizationProfileDisplay";
 	}
 
 	// Setup for Individuals
@@ -112,7 +112,7 @@ public class ProfileController {
 			@RequestParam String importantSectorsToUser, @RequestParam int minimumHours, @RequestParam int maximumHours,
 			@RequestParam String preferredCountries, @RequestParam String personalBio,
 			@RequestParam String contactDetails, @RequestParam("profilePicture") MultipartFile profilePicture,
-			@RequestParam("documents") MultipartFile[] documents, ModelMap model) {
+			@RequestParam("documents") MultipartFile[] documents, ModelMap model, HttpServletRequest request) {
 
 		File profilePictureFile = new File(profilePicture.getOriginalFilename());
 		try {
@@ -175,9 +175,17 @@ public class ProfileController {
 
 		profileService.firstSetupIndividual(individualAccount, jobSectorsIndividual, prferredCountryList,
 				preferredJobSectorList, preferredProjectAreaList, userSkillsetList);
+		
+		model.put("username", username);
+		request.getSession().setAttribute("individual",	profileService.getIndividualAccountDetails(username));
+		request.getSession().setAttribute("jobSectorsIndividual",profileService.retrieveIndividualJobSectors(username));
+		ArrayList<JobSectorIndividual> blah = profileService.retrieveIndividualJobSectors(username);
 
-		model.put("username", username);
-		model.put("username", username);
+		request.getSession().setAttribute("preferredCountries",profileService.retrievePreferredCountries(username));
+		request.getSession().setAttribute("preferredJobSectors",profileService.retrievePreferredJobSectors(username));
+		request.getSession().setAttribute("preferredProjectArea",profileService.retrievePreferredProjectArea(username));
+		request.getSession().setAttribute("userSkills",	profileService.retrieveAllSkillsOfUser(username));
+		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
 		return "individualProfileDisplay";
 	}
 
@@ -185,6 +193,11 @@ public class ProfileController {
 	@RequestMapping(value = "/organizationprofile1", method = RequestMethod.GET)
 	public String showOrganizationDashboardPage(HttpServletRequest request) {
 		return "organizationprofile1";
+	}
+
+	@RequestMapping(value = "/organizationProfileDisplay", method = RequestMethod.GET)
+	public String showOrganizationDisplayPage(HttpServletRequest request) {
+		return "organizationProfileDisplay";
 	}
 
 	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.GET)
@@ -207,50 +220,18 @@ public class ProfileController {
 		// change the session attributes
 		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
 
-		return "organizationprofile1";
+		return "organizationProfileDisplay";
 	}
 
 	// Dashboard and Edit Pages for Individual Profiles
 	@RequestMapping(value = "/individualProfileDisplay", method = RequestMethod.GET)
-	public String showIndividualDashboardPage(HttpServletRequest request, ModelMap model) {
-		ArrayList<String> userSkills = new ArrayList<String>();
-		userSkills.add("draw");
-		userSkills.add("paint");
-		userSkills.add("code");
-		userSkills.add("adobe illustrator");
-		userSkills.add("adobe illustrator");
-		userSkills.add("adobe illustrator");
-		model.put("userSkills", userSkills);
-		
-		ArrayList<JobSectorIndividual> jobSectorsIndividual = new ArrayList<JobSectorIndividual>();
-		JobSectorIndividual jobSectorIndividual1 = new JobSectorIndividual("finance", "nigel", 3);
-		JobSectorIndividual jobSectorIndividual2 = new JobSectorIndividual("tech", "nigel", 2);
-		jobSectorsIndividual.add(jobSectorIndividual1);
-		jobSectorsIndividual.add(jobSectorIndividual2);
-		model.put("jobSectorsIndividual", jobSectorsIndividual);
-		
-		ArrayList<PreferredProjectArea> preferredProjectArea = new ArrayList<PreferredProjectArea>();
-		PreferredProjectArea preferredProjectArea1 = new PreferredProjectArea("healthcare", "nigel");
-		PreferredProjectArea preferredProjectArea2 = new PreferredProjectArea("sports", "nigel");
-		preferredProjectArea.add(preferredProjectArea1);
-		preferredProjectArea.add(preferredProjectArea2);
-		model.put("preferredProjectArea", preferredProjectArea);
-		
-		ArrayList<PreferredJobSector> preferredJobSectors = new ArrayList<PreferredJobSector>();
-		PreferredJobSector preferredJobSectors1 = new PreferredJobSector("marine", "nigel");
-		PreferredJobSector preferredJobSectors2 = new PreferredJobSector("fashion", "nigel");
-		preferredJobSectors.add(preferredJobSectors1);
-		preferredJobSectors.add(preferredJobSectors2);
-		model.put("preferredJobSectors", preferredJobSectors);
-		
-		ArrayList<PreferredCountry> preferredCountries = new ArrayList<PreferredCountry>();
-		PreferredCountry preferredCountry1 = new PreferredCountry("scotland", "nigel");
-		PreferredCountry preferredCountry2 = new PreferredCountry("japan", "nigel");
-		preferredCountries.add(preferredCountry1);
-		preferredCountries.add(preferredCountry2);
-		model.put("preferredCountries", preferredCountries);
-		
+	public String showIndividualProfilePage(HttpServletRequest request, ModelMap model) {
 		return "individualProfileDisplay";
+	}
+
+	@RequestMapping(value = "/individualprofile1", method = RequestMethod.GET)
+	public String showIndividualDashboardPage(HttpServletRequest request) {
+		return "individualprofile1";
 	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
@@ -277,7 +258,7 @@ public class ProfileController {
 		// change the session attributes
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
 
-		return "individualprofile1";
+		return "individualProfileDisplay";
 	}
 
 	@RequestMapping(value = "/editprofile-individual-profilepic", method = RequestMethod.POST)
@@ -369,6 +350,29 @@ public class ProfileController {
 			response.getOutputStream().write(bytesArray);
 			response.getOutputStream().close();
 		}
+	}
+	
+	@RequestMapping(value = "/testSelect2", method = RequestMethod.GET)
+	public String displaySelect(ModelMap model){
+		model.addAttribute("country_list", profileService.retrieveCountryList());
+		model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
+		
+		return "testSelect2";
+	}
+	
+	@RequestMapping(value = "/processSelect2", method = RequestMethod.POST)
+	public String displaySelect2(@RequestParam ArrayList<String> selected_countries, ModelMap model){
+		for(String country: selected_countries){
+			System.out.print(country);
+		}
+		
+		model.put("selected_countries", selected_countries);
+		return "processSelect2";
+	}
+	
+	@RequestMapping(value = "/processSelect2", method = RequestMethod.GET)
+	public String displaySelect12(@RequestParam ArrayList<String> selected_countries, ModelMap model){
+		return "processSelect2";
 	}
 
 	@RequestMapping(value = "/showFiles", method = RequestMethod.GET)

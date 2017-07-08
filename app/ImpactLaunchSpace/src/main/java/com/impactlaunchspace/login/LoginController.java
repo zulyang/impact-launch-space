@@ -356,7 +356,7 @@ public class LoginController {
 								profileService.retrieveCountriesOfOperations(username));
 						request.getSession().setAttribute("jobSectorsOrganization",
 								profileService.retrieveOrganizationJobSectors(username));
-						return "organizationprofile1";
+						return "organizationProfileDisplay";
 					} else if (userType.equals("individual")) {
 						// add a cookie to the response.
 						response.addCookie(c);
@@ -364,7 +364,6 @@ public class LoginController {
 								profileService.getIndividualAccountDetails(username));
 						request.getSession().setAttribute("jobSectorsIndividual",
 								profileService.retrieveIndividualJobSectors(username));
-						ArrayList<JobSectorIndividual> blah = profileService.retrieveIndividualJobSectors(username);
 
 						request.getSession().setAttribute("preferredCountries",
 								profileService.retrievePreferredCountries(username));
@@ -374,7 +373,7 @@ public class LoginController {
 								profileService.retrievePreferredProjectArea(username));
 						request.getSession().setAttribute("userSkills",
 								profileService.retrieveAllSkillsOfUser(username));
-						return "individualprofile1";
+						return "individualProfileDisplay";
 					}
 				} else {
 					// userservice to determine if indiv/organ and redirect to

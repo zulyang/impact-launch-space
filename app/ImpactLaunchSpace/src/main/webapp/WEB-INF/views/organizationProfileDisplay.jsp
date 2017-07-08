@@ -142,7 +142,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="text" value="${${user.getEmail()}}" readonly
+								<input type="text" value="${user.getEmail()}" readonly
 									class="form-control profileField">
 							</div>
 						</div>
