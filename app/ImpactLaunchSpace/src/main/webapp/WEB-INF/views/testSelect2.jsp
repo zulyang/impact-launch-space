@@ -27,14 +27,6 @@
 				<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
 			</c:forEach>
 		</select> <br>
-		
-		<h3>Country (Indiv):</h3>
-		<select class="js-example-basic-single" multiple="multiple"
-			name="country" required>
-			<c:forEach items="${country_list}" var="item">
-				<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
-			</c:forEach>
-		</select> <br>
 
 		<h3>Job Sector:</h3>
 		<select class="js-example-basic-multiple2" multiple="multiple"
@@ -43,9 +35,10 @@
 				<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 			</c:forEach>
 		</select>
-		
+
 		<h3>Job Sector (Indiv Kind):</h3>
-		<select class="js-example-basic-single" name="selected_jobsectors_indiv" required>
+		<select class="js-example-basic-single"
+			name="selected_jobsectors_indiv" required>
 			<c:forEach items="${job_sector_list}" var="item">
 				<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 			</c:forEach>
@@ -65,12 +58,48 @@
 			<c:forEach items="${skillset_list}" var="item">
 				<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 			</c:forEach>
-		</select> <input type="submit" value="test it!" />
+		</select>
+
+		<h3>Job Sector Organization (Edit 1):</h3>
+		<select class="js-example-basic-multiple2" multiple="multiple"
+			name="country" required>
+			<c:forEach items="${job_sector_list}" var="item">
+				<c:choose>
+					<c:when
+						test="${edwardo_jobsector_list.contains(item.getJob_sector())}">
+						<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+					</c:when>
+					<c:otherwise>
+						<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</select> <br>
+
+
+		<h3>Country of Operations (Edit 1):</h3>
+		<select class="js-example-basic-multiple" multiple="multiple"
+			name="country" required>
+			<c:forEach items="${country_list}" var="item">
+				<c:choose>
+					<c:when
+						test="${edwardo_country_list.contains(item.getCountry_name())}">
+						<option value="${item.getCountry_name()}" selected="selected">${item.getCountry_name()}</option>
+					</c:when>
+					<c:otherwise>
+						<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</select> <br>
+
+
+		 <input type="submit" value="test it!" />
 	</form>
-	
+
 	<form action="test-number" method="post">
-		<input name="numba" type="number"placeholder="Years of experience" required/>
-		<input type="submit" value="Send"/>
+		<input name="numba" type="number" placeholder="Years of experience"
+			required /> <input type="submit" value="Send" />
 	</form>
 
 	<script type="text/javascript">
@@ -101,7 +130,7 @@
 			$(".js-example-basic-single").select2();
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".js-example-basic-single-country").select2();

@@ -23,6 +23,12 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
+<!--for multiple select (Select2)-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 </head>
 <body class="profile">
@@ -157,13 +163,59 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgBio" class="col-sm-2 control-label">Contact
-										Details</label>
+									<label for="editOrgBio" class="col-sm-2 control-label">Company
+										Bio</label>
 									<div class="col-sm-10">
-										<textarea id="editOrgBio" rows="4" name="companyBio"
-											class="form-control edit_profileField"
+										<textarea id="editOrgBio" rows="4" type="text"
+											name="companyBio" class="form-control edit_profileField"
 											value="${organization.getCompanyBio()}">
 										</textarea>
+									</div>
+								</div>
+
+
+								<hr>
+								<div class="org_profile_display_countries">
+
+									<select class="js-example-basic-multiple" multiple="multiple"
+										name="selected_countryofoperation" required>
+										<c:forEach items="${country_list}" var="item">
+											<p class="org_countries">
+												<c:choose>
+													<c:when
+														test="${organization_countriesofoperation_list.contains(item.getCountry_name())}">
+														<option value="${item.getCountry_name()}"
+															selected="selected">${item.getCountry_name()}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+													</c:otherwise>
+												</c:choose>
+											</p>
+										</c:forEach>
+									</select>
+
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">Job Sectors</div>
+									<div class="panel-body">
+										<div class="org_profile_display_jobSectors">
+											<select class="js-example-basic-multiple2"
+												multiple="multiple" name="selected_jobsectors" required>
+												<c:forEach items="${job_sector_list}" var="item">
+													<c:choose>
+														<c:when
+															test="${organization_jobsector_list.contains(item.getJob_sector())}">
+															<option value="${item.getJob_sector()}"
+																selected="selected">${item.getJob_sector()}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</select>
+										</div>
 									</div>
 								</div>
 								<div class="form-group">
@@ -172,31 +224,29 @@
 											type="submit" value="Update details" />
 									</div>
 								</div>
+
+
 							</form>
-
-							<hr>
-							<div class="org_profile_display_countries">
-								<c:forEach items="${countriesOfOperation}" var="item">
-									<p class="org_countries">${item.getCountry_name()}</p>
-								</c:forEach>
-							</div>
 						</div>
 					</div>
 
-					<div class="panel panel-default">
-						<div class="panel-heading">Job Sectors</div>
-						<div class="panel-body">
-							<div class="org_profile_display_jobSectors">
-								<c:forEach items="${jobSectorsOrganization}" var="item">
-									<p class="org_job_sectors">${item.getJob_sector()}</p>
-								</c:forEach>
-							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		$(".js-example-basic-multiple").select2({
+			placeholder : "Select countries where you wish to be involved in"
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(".js-example-basic-multiple2").select2({
+			maximumSelectionLength : 3,
+			placeholder : "Select Up to 3 Job Sectors"
+		});
+	</script>
 </body>
 </html>

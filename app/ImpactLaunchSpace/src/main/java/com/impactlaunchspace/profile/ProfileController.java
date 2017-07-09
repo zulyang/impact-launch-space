@@ -84,7 +84,7 @@ public class ProfileController {
 		}
 
 		profileService.firstSetupOrganization(organizationAccount, countriesOfOperationList, jobSectorsOrganization);
-
+		
 		model.put("username", username);
 		model.addAttribute("organization", profileService.getOrganizationAccountDetails(username));
 		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
@@ -102,7 +102,29 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/editOrgProfileForm", method = RequestMethod.GET)
-	public String EditProfilePageOrganization(HttpServletRequest request) {
+	public String EditProfilePageOrganization(ModelMap model, HttpServletRequest request) {
+		
+		//Populate the JobSectors and countries the organization has chosen for editing
+		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
+		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
+		
+		ArrayList<CountryOfOperation> coos = profileService.retrieveCountriesOfOperations((String)request.getSession().getAttribute("username"));
+		ArrayList<String> organization_countriesofoperation_list = new ArrayList<String>();
+		for(CountryOfOperation coo : coos){
+			organization_countriesofoperation_list.add(coo.getCountry_name());
+		}
+
+		
+		ArrayList<JobSectorOrganization> jsos = profileService.retrieveOrganizationJobSectors((String)request.getSession().getAttribute("username"));
+		ArrayList<String> organization_jobsector_list = new ArrayList<String>();
+		for(JobSectorOrganization jso : jsos){
+			organization_jobsector_list.add(jso.getJob_sector());
+		}
+		
+		request.getSession().setAttribute("organization_jobsector_list",organization_jobsector_list);
+		request.getSession().setAttribute("organization_countriesofoperation_list",organization_countriesofoperation_list);
+		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
+		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
 		return "editOrgProfileForm";
 	}	
 
@@ -226,7 +248,9 @@ public class ProfileController {
 
 	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.POST)
 	public String processUpdateOrganizationProfile(@RequestParam String companyName, @RequestParam String companyBio,
-			@RequestParam String contactDetails, HttpServletRequest request) {
+			@RequestParam String contactDetails,@RequestParam ArrayList<String> selected_countryofoperation,
+			@RequestParam ArrayList<String> selected_jobsectors, HttpServletRequest request) {
+		
 		OrganizationAccount organization = (OrganizationAccount) request.getSession().getAttribute("organization");
 		String username = organization.getUsername();
 		String email = organization.getEmail();
@@ -235,10 +259,28 @@ public class ProfileController {
 				organization.getEmail(), companyName, organization.isNeedsSupport(), organization.isOfferingSupport(),
 				organization.getProfilePicture(), companyBio, contactDetails);
 		profileService.updateOrganizationAccount(updatedOrganizationAccount, username);
-
+		
+		ArrayList<CountryOfOperation> updated_countriesofoperations = new ArrayList<CountryOfOperation>();
+		
+		for(String countryofoperation : selected_countryofoperation){
+			updated_countriesofoperations.add(new CountryOfOperation(countryofoperation,username));
+		}
+		
+		ArrayList<JobSectorOrganization> updated_jobsector_organization = new ArrayList<JobSectorOrganization>();
+		
+		for(String jobsectororganization : selected_jobsectors){
+			updated_jobsector_organization.add(new JobSectorOrganization(jobsectororganization,username));
+		}
+		
+		profileService.updateMultipleFieldsOrganization(username, updated_jobsector_organization, updated_countriesofoperations);
+		
 		// change the session attributes
 		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
-
+		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
+		request.getSession().setAttribute("countriesOfOperation",
+				profileService.retrieveCountriesOfOperations(username));
+		request.getSession().setAttribute("jobSectorsOrganization",
+				profileService.retrieveOrganizationJobSectors(username));
 		return "organizationProfileDisplay";
 	}
 
@@ -372,6 +414,22 @@ public class ProfileController {
 		model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
 		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
+		
+		ArrayList<CountryOfOperation> coos = profileService.retrieveCountriesOfOperations("edwardo");
+		ArrayList<String> edwardo_country_list = new ArrayList<String>();
+		for(CountryOfOperation coo : coos){
+			edwardo_country_list.add(coo.getCountry_name());
+		}
+		model.addAttribute("edwardo_country_list",edwardo_country_list);
+		
+		ArrayList<JobSectorOrganization> jsos = profileService.retrieveOrganizationJobSectors("edwardo");
+		ArrayList<String> edwardo_jobsector_list = new ArrayList<String>();
+		for(JobSectorOrganization jso : jsos){
+			edwardo_jobsector_list.add(jso.getJob_sector());
+		}
+		model.addAttribute("edwardo_jobsector_list",edwardo_jobsector_list);
+		
+		System.out.print(edwardo_country_list.contains("Singapore"));
 		return "testSelect2";
 	}
 

@@ -226,5 +226,71 @@ public class ProfileService {
 
 		return skillsetDAO.retrieveAll();
 	}
+	
+	public void updateMultipleFieldsOrganization(String username, ArrayList<JobSectorOrganization> updated_jobsector_organization,
+			ArrayList<CountryOfOperation> updated_countriesofoperations) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context
+				.getBean("organizationAccountDAO");
+		CountryOfOperationDAO countryOfOperationDAO = (CountryOfOperationDAO) context.getBean("countryOfOperationDAO");
+		JobSectorOrganizationDAO jobSectorOrganizationDAO = (JobSectorOrganizationDAO) context
+				.getBean("jobSectorOrganizationDAO");
+		
+		countryOfOperationDAO.deleteUserCountriesOfOperations(username);
+		jobSectorOrganizationDAO.deleteUserJobSectorOrganization(username);
+		
+		for(CountryOfOperation coo: updated_countriesofoperations){
+			countryOfOperationDAO.insert(coo);
+		}
+		
+		for(JobSectorOrganization jso: updated_jobsector_organization){
+			jobSectorOrganizationDAO.insert(jso);
+		}
+	}
+	
+	public void updateMultipleFieldsIndividual(String username, JobSectorIndividual jobSector1, JobSectorIndividual jobSector2, 
+			JobSectorIndividual jobSector3,	ArrayList<PreferredCountry> updated_preferredcountries, 
+			ArrayList<PreferredJobSector> updated_preferredjobsectors, 
+			ArrayList<PreferredProjectArea> updated_preferredprojectareas, ArrayList<UserSkill> updated_skillsets) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		
+		JobSectorIndividualDAO jobSectorIndividualDAO = (JobSectorIndividualDAO) context.getBean("jobSectorIndividualDAO");
+		PreferredCountryDAO preferredCountryDAO = (PreferredCountryDAO) context.getBean("preferredCountryDAO");
+		PreferredJobSectorDAO preferredJobSectorDAO = (PreferredJobSectorDAO) context.getBean("preferredJobSectorDAO");
+		PreferredProjectAreaDAO preferredProjectAreaDAO = (PreferredProjectAreaDAO) context.getBean("preferredProjectAreaDAO");
+		UserSkillDAO userSkillDAO = (UserSkillDAO) context.getBean("userSkillDAO");
+		
+		jobSectorIndividualDAO.deleteUserJobSectorIndividual(username);
+		preferredCountryDAO.deleteUserPreferredCountry(username);
+		preferredJobSectorDAO.deleteUserPreferredJobSector(username);
+		preferredProjectAreaDAO.deleteUserPreferredProjectArea(username);
+		userSkillDAO.deleteUserSkillset(username);
+		
+		if(jobSector1 != null ){
+			jobSectorIndividualDAO.insert(jobSector1);
+		}
+		if(jobSector2 != null ){
+			jobSectorIndividualDAO.insert(jobSector2);
+		}
+		if(jobSector3 != null ){
+			jobSectorIndividualDAO.insert(jobSector3);
+		}
+		
+		for(PreferredCountry pc: updated_preferredcountries){
+			preferredCountryDAO.insert(pc);
+		}	
+		
+		for(PreferredJobSector pjs: updated_preferredjobsectors){
+			preferredJobSectorDAO.insert(pjs);
+		}
+		
+		for(PreferredProjectArea ppa: updated_preferredprojectareas){
+			preferredProjectAreaDAO.insert(ppa);
+		}
+		
+		for(UserSkill us: updated_skillsets){
+			userSkillDAO.insert(us);
+		}
+	}
 
 }

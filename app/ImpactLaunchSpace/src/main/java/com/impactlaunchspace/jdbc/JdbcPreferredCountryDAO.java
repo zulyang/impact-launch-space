@@ -71,4 +71,28 @@ public class JdbcPreferredCountryDAO implements PreferredCountryDAO{
 			}
 		}
 	}
+	
+	public void deleteUserPreferredCountry(String username){
+		String sql = "DELETE FROM PREFERRED_COUNTRIES WHERE username = ?";
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

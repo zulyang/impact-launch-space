@@ -44,6 +44,30 @@ public class JdbcCountryOfOperationDAO implements CountryOfOperationDAO{
 		}
 	}
 	
+	public void deleteUserCountriesOfOperations(String username){
+		String sql = "DELETE FROM COUNTRIES_OF_OPERATIONS WHERE username = ?";
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
 	public ArrayList<CountryOfOperation> retrieveCountriesOfOperations(String username){
 		ArrayList<CountryOfOperation> output = new ArrayList<CountryOfOperation>();
 		
