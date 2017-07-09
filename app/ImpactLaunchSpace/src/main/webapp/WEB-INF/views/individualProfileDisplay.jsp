@@ -108,17 +108,17 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div style="display: inline-block">
-								<img src="/imageDisplay?username=${username}"
+								<img src="/imageDisplay?username=${individual.getUsername()}"
 									class="circle_indi_profile_image">
 							</div>
 
 							<div style="display: inline-block">
-								<h1 style="display: inline-block">${individual.getFirst_name()} ${individual.getLast_name()}</h1>
+								<h1 style="display: inline-block">${individual.getFirst_name()}
+									${individual.getLast_name()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<a href="editprofile-organization" class="btn btn-default">
-										Edit Profile </a> 
-									<a href="" class="btn btn-default"> Leave A
+									<a href="editprofile-individual" class="btn btn-default">
+										Edit Profile </a> <a href="" class="btn btn-default"> Leave A
 										Message </a>
 								</div>
 
@@ -186,7 +186,19 @@
 
 					<div class="panel panel-default">
 						<div class="panel-heading">Documents</div>
-						<div class="panel-body">${individual.getDocumentList()}</div>
+						<div class="panel-body">
+							<table>
+								<c:forEach items="${individual.getDocumentList()}"
+									var="document">
+									<tr>
+										<td>${document.getName()}</td>
+										<td><a href="/downloadFile?file=${document}">Download</a></td>
+										<td><a
+											href="/deleteFile?username=${username}&file=${document}">Delete</a></td>
+									<tr>
+								</c:forEach>
+							</table>
+						</div>
 					</div>
 
 				</div>

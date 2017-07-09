@@ -215,6 +215,7 @@
 							<div class="col-lg-12">
 								<select class="js-example-basic-single-jobsector-optional"
 									name="jobSector3">
+									<option></option>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>

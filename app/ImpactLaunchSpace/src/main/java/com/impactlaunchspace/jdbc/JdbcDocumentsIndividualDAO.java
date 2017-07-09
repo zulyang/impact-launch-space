@@ -60,7 +60,7 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 
 	@Override
 	public void delete(String username, File document) {
-		String sql = "DELETE FROM documents_individual WHERE username = ?, document_name = ?";
+		String sql = "DELETE FROM documents_individual WHERE username = ? and document_name = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -97,16 +97,8 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 				Blob blob = rs.getBlob("document");
 				String name = rs.getString("document_name");
 				InputStream in = blob.getBinaryStream();
-				byte[] bytes = IOUtils.toByteArray(in);
-				String fileType = "";
-				try {
-					fileType = FileTypeUtils.getContentType(bytes);
-				} catch (ContentTypeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				fileType = "." + fileType.split("/")[1];
-				File temp = File.createTempFile(name, fileType);
+				
+				File temp = new File(name);
 				OutputStream out = new FileOutputStream(temp);
 				byte[] buff = new byte[4096]; // how much of the blob to
 												// read/write at a time
@@ -116,6 +108,7 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 					out.write(buff, 0, len);
 				}
 				documentList.add(temp);
+				
 			}
 			rs.close();
 			ps.close();

@@ -1,15 +1,12 @@
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import = "java.io.*"%>
-<html lang="en">
+<%@ page import="java.io.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ImpactLaunch.Space</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Edit Your Individual Profile</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -23,7 +20,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
-
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -31,237 +27,272 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
 				<nav class="navbar navbar-default navbar-fixed-top profileNav">
-					<div class="container-fluid">
-						<!-- Brand and toggle get grouped for better mobile display -->
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed"
-								data-toggle="collapse"
-								data-target="#bs-example-navbar-collapse-1"
-								aria-expanded="false">
-								<span class="sr-only">Toggle navigation</span> <span
-									class="icon-bar"></span> <span class="icon-bar"></span> <span
-									class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="index.jsp"> 
-								<img alt="ImpactLaunch.Space" id="logoLoggedIn" src="<%=request.getContextPath()%>/resources/img/logo2.png">
-							</a>
-						</div>
-
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse"
-							id="bs-example-navbar-collapse-1">
-							<form class="navbar-form navbar-left">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Search">
-								</div>
-							</form>
-							<ul class="nav navbar-nav">
-								<li class="dropdown"><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false">Projects <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#">One more separated link</a></li>
-									</ul></li>
-								<li class="dropdown"><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false">Resources <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#">One more separated link</a></li>
-									</ul>
-								</li>
-								<li class="">
-									<a class="navbar-brand" href="/index"> 
-										<img
-										alt="home" class="homeIcon"
-										src="<%=request.getContextPath()%>/resources/img/homeIcon.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/alerts"> 
-										<img
-										alt="alerts" class="alertsIcon"
-										src="<%=request.getContextPath()%>/resources/img/bellIcon.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/chat"> 
-										<img
-										alt="chat" class="chatIcon"
-										src="<%=request.getContextPath()%>/resources/img/chatIcon.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/profile"> 
-										<img
-										alt="profilePicture" class="profilePictureIcon"
-										src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
-									</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/profile">Username</a>
-								</li>
-								<li class="profileIcons">
-									<a class="navbar-brand" href="/options"> 
-										<img
-										alt="moreOptions" class="moreOptionsIcon"
-										src="<%=request.getContextPath()%>/resources/img/3dotsIcon.png">
-									</a>
-								</li>
-							</ul>
-						</div>
-						<!-- /.navbar-collapse -->
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="index.jsp"> <img
+							alt="ImpactLaunch.Space" id="logoLoggedIn"
+							src="<%=request.getContextPath()%>/resources/img/logo2.png">
+						</a>
 					</div>
-					<!-- /.container-fluid -->
-				</nav>
 
-				<div class="col-lg-12 form_container indi_profile_container">
-					<form method="post" action="setup-individual" enctype="multipart/form-data" class="form-horizontal indi_profile_form">
-						<h3>Personal information</h3>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="username" value="${username}" readonly class="form-control profileField">
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse"
+						id="bs-example-navbar-collapse-1">
+						<form class="navbar-form navbar-left">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search">
 							</div>
+						</form>
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Projects <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">One more separated link</a></li>
+								</ul></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Resources <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">One more separated link</a></li>
+								</ul></li>
+							<li class=""><a class="navbar-brand" href="/index"> <img
+									alt="home" class="homeIcon"
+									src="<%=request.getContextPath()%>/resources/img/homeIcon.png">
+							</a></li>
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/alerts"> <img alt="alerts" class="alertsIcon"
+									src="<%=request.getContextPath()%>/resources/img/bellIcon.png">
+							</a></li>
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/chat"> <img alt="chat" class="chatIcon"
+									src="<%=request.getContextPath()%>/resources/img/chatIcon.png">
+							</a></li>
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/profile"> <img alt="profilePicture"
+									class="profilePictureIcon"
+									src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
+							</a></li>
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/profile">Username</a></li>
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/options"> <img alt="moreOptions"
+									class="moreOptionsIcon"
+									src="<%=request.getContextPath()%>/resources/img/3dotsIcon.png">
+							</a></li>
+
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid --> </nav>
+				<div class="edit_ind_profile_display_container">
+					<div class="panel panel-default">
+						<div class="panel-heading">Edit Individual Profile Form</div>
+						<div class="panel-body">
+							<div class="edit_org_pic" style="display: inline-block">
+								<form action="editprofile-individual-profilepic" method="post"
+									enctype="multipart/form-data">
+									<img src="/imageDisplay?username=${username}"
+										class="circle_edit_ind_profile_image" height="64" width="64">
+
+									<label for="editChooseIndPic"
+										class="form-control btn btn-info edit_org_profile_save">Choose
+										A New Picture</label> <input type="file" name="profilePicture"
+										style="display: inline-block; visibility: hidden;"
+										id="editChooseIndPic" /> <label for="editUploadIndPic"
+										class="form-control btn btn-info edit_org_profile_save">Upload</label>
+									<input style="display: inline-block; visibility: hidden;"
+										type="submit" value="Update picture" id="editUploadIndPic" />
+
+								</form>
+							</div>
+
+							<form class="form-horizontal edit_ind_profile_container"
+								action="editprofile-individual" method="post">
+								<div class="form-group">
+									<label for="editIndFirstName" class="col-sm-3 control-label">First
+										Name</label>
+									<div class="col-sm-9">
+										<input type="text" id="editIndFirstName"
+											value="${individual.getFirst_name()}" name="firstName"
+											class="form-control edit_profileField" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editIndLastName" class="col-sm-3 control-label">Last
+										Name</label>
+									<div class="col-sm-9">
+										<input type="text" value="${individual.getLast_name()}"
+											name="lastName" class="form-control edit_profileField"
+											id="editIndLastName" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editJobTitle" class="col-sm-3 control-label">Job
+										Title</label>
+									<div class="col-sm-9">
+										<input type="text" value="${individual.getJobTitle()}"
+											name="jobTitle" class="form-control edit_profileField"
+											id="editJobTitle" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editOrg" class="col-sm-3 control-label">Organization</label>
+									<div class="col-sm-9">
+										<input type="text" value="${individual.getOrganization()}"
+											name="organization" class="form-control edit_profileField"
+											id="editOrg" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editDob" class="col-sm-3 control-label">Date
+										Of Birth</label>
+									<div class="col-sm-9">
+										<input type="date" value="${individual.getDateOfBirth()}"
+											name="dateOfBirth" class="form-control edit_profileField"
+											id="editDob" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editCountry" class="col-sm-3 control-label">Country</label>
+									<div class="col-sm-9">
+										<input type="text" value="${individual.getCountry()}"
+											name="country" class="form-control edit_profileField"
+											id="editCountry" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editEmail" class="col-sm-3 control-label">Email</label>
+									<div class="col-sm-9">
+										<input type="text" value="${user.getEmail()}" name="email"
+											class="form-control edit_profileField" id="editEmail"
+											readonly />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editContactDetails" class="col-sm-3 control-label">Phone</label>
+									<div class="col-sm-9">
+										<input type="text" value="${individual.getContactDetails()}"
+											name="contactDetails" class="form-control edit_profileField"
+											id="editContact" />
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editPersonalBio" class="col-sm-3 control-label">Personal
+										Bio</label>
+									<div class="col-sm-9">
+										<input type="text" value="${individual.getPersonalBio()}"
+											name="personalBio" class="form-control edit_profileField"
+											id="editPersonalBio" />
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editMinHour" class="col-sm-3 control-label">Min
+										Hours</label>
+									<div class="col-sm-9">
+										<input type="number"
+											value="${individual.getMinimumVolunteerHours()}"
+											name="minimumVolunteerHours"
+											class="form-control edit_profileField" id="editMinHour" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="editMaxHour" class="col-sm-3 control-label">Max
+										Hours</label>
+									<div class="col-sm-9">
+										<input type="number"
+											value="${individual.getMaximumVolunteerHours()}"
+											name="maximumVolunteerHours"
+											class="form-control edit_profileField" id="editMaxHour" />
+									</div>
+								</div>
 						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="email" value="${email}" readonly class="form-control profileField">
-							</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Skills</div>
+						<div class="panel-body">
+							My Skills: <br>
+							<c:forEach items="${userSkills}" var="item">
+      ${item.getSkillset()}<br>
+							</c:forEach>
 						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="firstName" placeholder="First name" class="form-control profileField">
-								<input type="text" name="lastName" placeholder="Last name" class="form-control profileField">
-							</div>
+					</div>
+					<br> <br>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Experience</div>
+						<div class="panel-body">
+							<br> I have expertise in these Job Sectors: <br>
+							<c:forEach items="${jobSectorsIndividual}" var="item">
+      ${item.getJob_sector()} : ${item.getYearsOfExperience()} Years Of Experience<br>
+							</c:forEach>
 						</div>
-						<div class="form-group">
-							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
-								<label for="indiPic" class="form-control btn btn-info profile_save">Upload Profile Picture</label>
-								<input type="file" style="visibility:hidden;" name="profilePicture" id="indiPic">
-							</div>
+					</div>
+					<br> <br>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Interests</div>
+						<div class="panel-body">
+							I prefer to work in:
+							<c:forEach items="${preferredCountries}" var="item">
+      ${item.getCountry_name()}<br>
+							</c:forEach>
+
+							<br> Preferred Project Areas: <br>
+							<c:forEach items="${preferredProjectArea}" var="item">
+      ${item.getProject_area()}<br>
+							</c:forEach>
+							<br> Preferred Job Sectors: <br>
+							<c:forEach items="${preferredJobSectors}" var="item">
+      ${item.getJob_sector()}<br>
+							</c:forEach>
+
 						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="date" name="dateOfBirth" placeholder="Date of Birth (dd/mm/yyyy) class="form-control profileField">
-							</div>
+					</div>
+					<br> <br>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-9">
+							<input class="btn btn-success edit_org_profile_save"
+								type="submit" value="Update details" />
 						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="country" type="text"
-									class="form-control profileField" placeholder="Country which you are based in">
-							</div>
-						</div>
-						<h3>Work</h3>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="jobTitle" type="text" class="form-control profileField" placeholder="Current job title">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="organization" type="text" class="form-control profileField" placeholder="Current organisation">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="jobSector1" type="text"
-									class="form-control profileField" placeholder="Job Sector 1">
-								<input name="js1Years" type="number"
-									class="form-control profileField" placeholder="Years of experience">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="jobSector2" type="text"
-									class="form-control profileField" placeholder="Job Sector 2">
-								<input name="js2Years" type="number"
-									class="form-control profileField" placeholder="Years of experience">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="jobSector3" type="text"
-									class="form-control profileField" placeholder="Job Sector 3">
-								<input name="js3Years" type="number"
-									class="form-control profileField" placeholder="Years of experience">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="skillset" type="text" class="form-control profileField" placeholder="Skillsets">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="interestedSectors" type="text" class="form-control profileField" placeholder="Interested sectors">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="importantSectorsToUser" type="text" class="form-control profileField" placeholder="Important Sectors to User">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="number" name="minimumHours" min="1" max="100" class="form-control profileField" placeholder="Minimum Hours">
-								<input type="number" name="maximumHours" min="1" max="100" class="form-control profileField" placeholder="Maximum Hours">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="preferredCountries" type="text" class="form-control profileField" placeholder="Preferred Countries">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<textarea rows="4" name="personalBio" class="form-control personalBio"
-									placeholder="A short personal bio"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input name="contactDetails" type="text" class="form-control profileField" placeholder="Mobile Number">
-							</div>
-						</div>
-						<br>
-						<div class="form-radio center">
-							<div class="radio_public">
-								<input name="isPublicProfile" required="required"  value="true" type="radio"
-									value="Public Profile">Public Profile
-							</div>
-							<div class="radio_private">
-								<input name="isPublicProfile" required="required"  value="false" type="radio"
-									value="Private Profile">Private Profile
-							</div>
-						</div>
-						<br>
-						<div class="form-group">
-							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
-								<input type="file" name="documents" multiple>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="submit" class="btn btn-success profile_save" value="Set Account Details">
-							</div>
-						</div>
+					</div>
+					<br>
+					<h4>
+						<button type="btn" class="btn btn-default">
+							<a href="individualProfileDisplay">Go back to profile</a>
+						</button>
+					</h4>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -199,8 +199,6 @@ public class ProfileController {
 			jobSectorsIndividual.add(jobSectorIndividual3);
 		}
 
-		// we assume theres only one just for testing sake.
-		
 		
 		for(String preferredCountry  : selected_preferredcountries){
 			PreferredCountry preferredCountryObj = new PreferredCountry(preferredCountry, username);
@@ -229,7 +227,6 @@ public class ProfileController {
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(username));
-		ArrayList<JobSectorIndividual> blah = profileService.retrieveIndividualJobSectors(username);
 
 		request.getSession().setAttribute("preferredCountries", profileService.retrievePreferredCountries(username));
 		request.getSession().setAttribute("preferredJobSectors", profileService.retrievePreferredJobSectors(username));
@@ -291,9 +288,21 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
-	public String showEditProfilePageIndividual(HttpServletRequest request) {
-		return "/editprofile-individual";
-	}
+	  public String showEditProfilePageIndividual(HttpServletRequest request, ModelMap model) {
+	    IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
+	    String username2 = individual.getUsername();
+	    request.getSession().setAttribute("jobSectorsIndividual",
+	        profileService.retrieveIndividualJobSectors(username2));
+	    request.getSession().setAttribute("preferredCountries", profileService.retrievePreferredCountries(username2));
+	    request.getSession().setAttribute("preferredJobSectors", profileService.retrievePreferredJobSectors(username2));
+	    request.getSession().setAttribute("preferredProjectArea",
+	        profileService.retrievePreferredProjectArea(username2));
+	    request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username2));
+	    request.getSession().setAttribute("individual",
+	        profileService.getIndividualAccountDetails(individual.getUsername()));
+
+	    return "/editIndiProfileForm";
+	  }
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.POST)
 	public String processUpdateIndividualProfile(@RequestParam String firstName, @RequestParam String lastName,
@@ -448,21 +457,29 @@ public class ProfileController {
 		return "processSelect2";
 	}
 	
-	@RequestMapping(value = "/showFiles", method = RequestMethod.GET)
-	public void showFiles(@RequestParam("username") String username, HttpServletResponse response,
-			HttpServletRequest request) throws ServletException {
-		IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
-		System.out.println("username: " + username + "\n account: " + individualAccount);
-		File file = individualAccount.getProfilePicture();
-		FileInputStream inputStream;
-		try {
-			inputStream = new FileInputStream(file);
-			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-			response.setHeader("Content-Length", String.valueOf(file.length()));
-			FileCopyUtils.copy(inputStream, response.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
+	  public void showFiles(@RequestParam File file,
+	      HttpServletResponse response, HttpServletRequest request) throws ServletException {
+	    FileInputStream inputStream;
+	    try {
+	      inputStream = new FileInputStream(file);
+	      response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+	      response.setHeader("Content-Length", String.valueOf(file.length()));
+	      FileCopyUtils.copy(inputStream, response.getOutputStream());
+	      inputStream.close();
+	    } catch (IOException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	    }
+	  }
+	  
+	  @RequestMapping(value = "/deleteFile", method = RequestMethod.GET)
+	  public String deleteFile(@RequestParam String username, @RequestParam File file, 
+	      HttpServletResponse response, HttpServletRequest request)
+	      throws ServletException {
+	    profileService.deleteDocument(username, file);
+	    // change the session attributes
+	    request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
+	    return "individualProfileDisplay";
+	  }
 }

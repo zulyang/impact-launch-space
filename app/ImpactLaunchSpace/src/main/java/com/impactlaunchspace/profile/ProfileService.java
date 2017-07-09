@@ -1,5 +1,6 @@
 package com.impactlaunchspace.profile;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.springframework.context.ApplicationContext;
@@ -76,8 +77,6 @@ public class ProfileService {
 		PreferredProjectAreaDAO preferredProjectAreaDAO = (PreferredProjectAreaDAO) context
 				.getBean("preferredProjectAreaDAO");
 		UserSkillDAO userSkillDAO = (UserSkillDAO) context.getBean("userSkillDAO");
-		DocumentsIndividualDAO documentsIndividualDAO = (DocumentsIndividualDAO) context
-				.getBean("documentsIndividualDAO");
 
 		for (JobSectorIndividual jobSectorIndividual : jobSectorsIndividual) {
 			if (jobSectorIndividual != null) {
@@ -292,5 +291,11 @@ public class ProfileService {
 			userSkillDAO.insert(us);
 		}
 	}
+	
+	public void deleteDocument(String username, File document){
+	    ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+	    DocumentsIndividualDAO documentsIndividualDAO = (DocumentsIndividualDAO) context.getBean("documentsIndividualDAO");
+	    documentsIndividualDAO.delete(username, document);
+	  }
 
 }

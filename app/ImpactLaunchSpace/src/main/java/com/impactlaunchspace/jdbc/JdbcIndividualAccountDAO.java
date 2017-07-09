@@ -125,6 +125,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 						rs.getInt("maximumVolunteerHours"), rs.getString("organization"),
 						rs.getBoolean("isPublicProfile"), temp, rs.getString("personalBio"),
 						rs.getString("contactDetails"), documentsIndividualDAO.retrieveAll(rs.getString("username")));
+				
 			}
 			rs.close();
 			ps.close();
@@ -190,6 +191,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 						rs.getInt("maximumVolunteerHours"), rs.getString("organization"),
 						rs.getBoolean("isPublicProfile"), temp, rs.getString("personalBio"),
 						rs.getString("contactDetails"), documentsIndividualDAO.retrieveAll(rs.getString("username")));
+				
 			}
 			rs.close();
 			ps.close();

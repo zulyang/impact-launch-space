@@ -76,7 +76,7 @@ html, body {
 	margin-left: 3rem;
 }
 
-#logoLoggedIn{
+#logoLoggedIn {
 	height: auto;
 	width: auto;
 	max-width: 70%;
@@ -330,8 +330,8 @@ html, body {
 }
 
 .profileNav {
-	background-color: #00008B;
-	border-color: #00008B;
+	background-color: #091743;
+	border-color: #091743;
 }
 
 .homeIcon, .alertsIcon, .bellIcon, .chatIcon, .profilePictureIcon,
@@ -379,6 +379,13 @@ html, body {
 	width: 85rem;
 }
 
+.edit_ind_profile_display_container {
+	margin-top: 85rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+
+}
+
 .circle_org_profile_image {
 	margin-top: -16rem;
 	margin-right: 1rem;
@@ -396,11 +403,26 @@ html, body {
 	min-height: 100%;
 }
 
+.circle_edit_ind_profile_image {
+	margin-right: 1rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
 .edit_org_pic, .org_profile_display_countries {
 	margin: 1rem;
 }
 
 .edit_org_profile_container {
+	display: inline-block;
+	width: 40rem;
+	margin-left: 10rem;
+	margin-top: 3rem;
+}
+
+.edit_ind_profile_container {
 	display: inline-block;
 	width: 40rem;
 	margin-left: 10rem;
@@ -441,6 +463,14 @@ html, body {
 
 .panel-heading {
 	text-align: center;
+}
+
+.panel{
+	height: 100%;
+}
+
+.panel-body{
+	height: 100%;
 }
 
 .circle_indi_profile_image {
