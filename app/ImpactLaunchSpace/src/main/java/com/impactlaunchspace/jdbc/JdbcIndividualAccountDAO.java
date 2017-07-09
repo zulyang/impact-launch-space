@@ -40,8 +40,10 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		DocumentsIndividualDAO documentsIndividualDAO = (DocumentsIndividualDAO) context
 				.getBean("documentsIndividualDAO");
+		
 		Connection conn = null;
 		try {
+			FileInputStream fis = new FileInputStream(individualAccount.getProfilePicture());
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, individualAccount.getUsername());
@@ -55,7 +57,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 			ps.setInt(9, individualAccount.getMaximumVolunteerHours());
 			ps.setString(10, individualAccount.getOrganization());
 			ps.setBoolean(11, individualAccount.isPublicProfile());
-			ps.setBlob(12, new FileInputStream(individualAccount.getProfilePicture()));
+			ps.setBlob(12, fis);
 			ps.setString(13, individualAccount.getPersonalBio());
 			ps.setString(14, individualAccount.getContactDetails());
 			ps.executeUpdate();
@@ -65,7 +67,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 			for (File document : individualAccount.getDocumentList()) {
 				documentsIndividualDAO.insert(individualAccount.getUsername(), document);
 			}
-
+			fis.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
@@ -126,6 +128,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 						rs.getBoolean("isPublicProfile"), temp, rs.getString("personalBio"),
 						rs.getString("contactDetails"), documentsIndividualDAO.retrieveAll(rs.getString("username")));
 				
+				temp.deleteOnExit();
 			}
 			rs.close();
 			ps.close();
@@ -191,7 +194,7 @@ public class JdbcIndividualAccountDAO implements IndividualAccountDAO {
 						rs.getInt("maximumVolunteerHours"), rs.getString("organization"),
 						rs.getBoolean("isPublicProfile"), temp, rs.getString("personalBio"),
 						rs.getString("contactDetails"), documentsIndividualDAO.retrieveAll(rs.getString("username")));
-				
+				temp.deleteOnExit();
 			}
 			rs.close();
 			ps.close();

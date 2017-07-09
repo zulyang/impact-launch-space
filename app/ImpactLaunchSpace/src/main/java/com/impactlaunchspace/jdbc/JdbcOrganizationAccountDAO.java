@@ -102,6 +102,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
 						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
 						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
+				temp.deleteOnExit();
 			}
 			rs.close();
 			ps.close();
@@ -163,6 +164,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
 						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
 						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
+				temp.deleteOnExit();
 			}
 			rs.close();
 			ps.close();
@@ -225,6 +227,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
 						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
 						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
+				temp.deleteOnExit();
 
 				output.add(organizationAccount);
 			}
@@ -288,7 +291,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
 						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
 						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
-
+				temp.deleteOnExit();
 				output.add(organizationAccount);
 			}
 			rs.close();

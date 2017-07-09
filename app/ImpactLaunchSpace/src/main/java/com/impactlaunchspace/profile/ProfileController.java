@@ -67,6 +67,7 @@ public class ProfileController {
 		OrganizationAccount organizationAccount = new OrganizationAccount(username, email, companyName, false, false,
 				profilePictureFile, companyBio, contactDetails);
 
+		profilePictureFile.deleteOnExit();
 		// this requires changing
 		ArrayList<JobSectorOrganization> jobSectorsOrganization = new ArrayList<JobSectorOrganization>();
 		ArrayList<CountryOfOperation> countriesOfOperationList = new ArrayList<CountryOfOperation>();
@@ -176,6 +177,8 @@ public class ProfileController {
 		IndividualAccount individualAccount = new IndividualAccount(username, email, dateOfBirth, firstName, lastName,
 				country, jobTitle, minimumHours, maximumHours, organization, isPublicProfile, profilePictureFile,
 				personalBio, contactDetails, documentList);
+		
+		profilePictureFile.deleteOnExit();
 
 		// this requires changing
 		ArrayList<JobSectorIndividual> jobSectorsIndividual = new ArrayList<JobSectorIndividual>();
@@ -350,6 +353,8 @@ public class ProfileController {
 					individual.getOrganization(), individual.isPublicProfile(), profilePictureFile,
 					individual.getPersonalBio(), individual.getContactDetails(), individual.getDocumentList());
 			profileService.updateIndividualAccount(updatedIndividualAccount, individual.getUsername());
+			
+			profilePictureFile.deleteOnExit();
 
 			// change the session attributes
 			request.getSession().setAttribute("individual",

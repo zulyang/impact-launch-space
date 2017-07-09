@@ -108,7 +108,7 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 					out.write(buff, 0, len);
 				}
 				documentList.add(temp);
-				
+				temp.deleteOnExit();
 			}
 			rs.close();
 			ps.close();
