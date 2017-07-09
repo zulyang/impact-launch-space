@@ -20,6 +20,14 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
+
+<!--for multiple select (Select2)-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -238,10 +246,22 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Skills</div>
 						<div class="panel-body">
-							My Skills: <br>
-							<c:forEach items="${userSkills}" var="item">
-      ${item.getSkillset()}<br>
-							</c:forEach>
+							My Skills: <br> <select
+								class="js-example-basic-multiple-skills" multiple="multiple"
+								name="selected_skillsets" required>
+								<c:forEach items="${skillset_list}" var="item">
+									<c:choose>
+										<c:when
+											test="${individual_userskill_list.contains(item.getSkillset())}">
+											<option value="${item.getSkillset()}" selected="selected">${item.getSkillset()}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select>
+
 						</div>
 					</div>
 					<br> <br>
@@ -250,6 +270,7 @@
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
 							<br> I have expertise in these Job Sectors: <br>
+
 							<c:forEach items="${jobSectorsIndividual}" var="item">
       ${item.getJob_sector()} : ${item.getYearsOfExperience()} Years Of Experience<br>
 							</c:forEach>
@@ -260,19 +281,55 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Interests</div>
 						<div class="panel-body">
-							I prefer to work in:
-							<c:forEach items="${preferredCountries}" var="item">
-      ${item.getCountry_name()}<br>
-							</c:forEach>
+							I prefer to work in: <select
+								class="js-example-basic-multiple-preferredcountries"
+								multiple="multiple" name="selected_preferredcountries" required>
+								<c:forEach items="${country_list}" var="item">
+									<c:choose>
+										<c:when
+											test="${individual_preferredcountry_list.contains(item.getCountry_name())}">
+											<option value="${item.getCountry_name()}" selected="selected">${item.getCountry_name()}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
 
-							<br> Preferred Project Areas: <br>
-							<c:forEach items="${preferredProjectArea}" var="item">
-      ${item.getProject_area()}<br>
-							</c:forEach>
-							<br> Preferred Job Sectors: <br>
-							<c:forEach items="${preferredJobSectors}" var="item">
-      ${item.getJob_sector()}<br>
-							</c:forEach>
+							</select> <br> Preferred Project Areas: <br> <select
+								class="js-example-basic-multiple-preferredprojectareas"
+								multiple="multiple" name="selected_preferredprojectareas"
+								required>
+								<c:forEach items="${project_area_list}" var="item">
+									<c:choose>
+										<c:when
+											test="${individual_preferredprojectarea_list.contains(item.getProject_area())}">
+											<option value="${item.getProject_area()}" selected="selected">${item.getProject_area()}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${item.getProject_area()}">${item.getProject_area()}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+
+
+							</select> <br> Preferred Job Sectors: <br> <select
+								class="js-example-basic-multiple-preferredjobsectors"
+								multiple="multiple" name="selected_preferredjobsectors" required>
+								<c:forEach items="${job_sector_list}" var="item">
+									<c:choose>
+										<c:when
+											test="${individual_preferredjobsector_list.contains(item.getJob_sector())}">
+											<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+
+
+							</select>
 
 						</div>
 					</div>
@@ -284,15 +341,50 @@
 						</div>
 					</div>
 					<br>
+					</form>
 					<h4>
 						<button type="btn" class="btn btn-default">
 							<a href="individualProfileDisplay">Go back to profile</a>
 						</button>
 					</h4>
-					</form>
+
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		$(".js-example-basic-multiple3").select2({
+			maximumSelectionLength : 5,
+			placeholder : "Where do you want to make a difference?"
+		});
+	</script>
+	<script type="text/javascript">
+		$(".js-example-basic-multiple-skills").select2({
+			placeholder : "Select Your Skills"
+		});
+	</script>
+	<script type="text/javascript">
+		$(".js-example-basic-multiple-preferredjobsectors").select2({
+			placeholder : "Which job sectors are important to you?"
+		});
+	</script>
+	<script type="text/javascript">
+		$(".js-example-basic-multiple-preferredcountries").select2({
+			placeholder : "Select Countries that you are Interested to Help"
+		});
+	</script>
+	<script type="text/javascript">
+		$(".js-example-basic-multiple-preferredprojectareas").select2({
+			placeholder : "Which areas do you which to impact?"
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-jobsectorindividual").select2({
+				placeholder : "Primary Job Sector: "
+			});
+		});
+	</script>
 </body>
 </html>
