@@ -11,10 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -179,7 +175,6 @@ public class LoginController {
 	// Verify Account
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showWelcomePage(ModelMap model) {
-		model.put("name", getPrincipal());
 		return "index";
 	}
 
@@ -337,19 +332,46 @@ public class LoginController {
 				Cookie c = null;
 
 				// Only if remember me is checked,generate the cookie.
-				if (request.getParameter("rememberMe").equals("true")) {
-					UUID s = loginService.generateCookieSecret(username); // generates
-																			// a
-																			// secret
-																			// token
-					c = new Cookie("rememberMeCookie", s.toString());
-					c.setMaxAge(365 * 24 * 60 * 60); // one year
+				if (request.getParameter("rememberMe") != null &&
+						request.getParameter("rememberMe").equals("true")) {
+
+					 /*Check if there is a record in the database.
+					 Same user might log in from a different machine. If so, need to update the cookie
+					 database.*/
+
+					boolean check = loginService.checkCookie(username);
+					if(check == false){
+						//No cookie in database
+						System.out.print("LOLOL1");
+						UUID s = loginService.generateCookieSecret(username);
+						c = new Cookie("rememberMeCookie", s.toString());
+						c.setMaxAge(365 * 24 * 60 * 60); // one year
+					}else{
+						//Have cookie in database, update cookie.
+						//Remove cookie from browser first.
+						System.out.print("LOLOL2");
+					    Cookie[] cookies = request.getCookies();
+					    if (cookies != null)
+					        for (Cookie cookie : cookies) {
+					        	if(cookie.getValue().equals("rememberMe")){
+					            cookie.setValue("");
+					            cookie.setPath("/");
+					            cookie.setMaxAge(0);
+					            response.addCookie(cookie);
+					        	}
+					        }
+						String s = UUID.randomUUID().toString();
+						c = new Cookie("rememberMeCookie", s);
+						loginService.updateCookie(username,s);
+					}
 				}
 
 				if (isFirstTimeLogin == false) {
 					if (userType.equals("organization")) {
 						// add a cookie to the response.
+						if(c!=null){
 						response.addCookie(c);
+						}
 						request.getSession().setAttribute("organization",
 								profileService.getOrganizationAccountDetails(username));
 						request.getSession().setAttribute("countriesOfOperation",
@@ -359,7 +381,9 @@ public class LoginController {
 						return "organizationProfileDisplay";
 					} else if (userType.equals("individual")) {
 						// add a cookie to the response.
+						if(c!=null){
 						response.addCookie(c);
+						}
 						request.getSession().setAttribute("individual",
 								profileService.getIndividualAccountDetails(username));
 						request.getSession().setAttribute("jobSectorsIndividual",
@@ -385,10 +409,14 @@ public class LoginController {
 					
 					
 					if (userType.equals("organization")) {
+						if(c!=null){
 						response.addCookie(c);
+						}
 						return "orgProfileForm";
 					} else if (userType.equals("individual")) {
+						if(c!=null){
 						response.addCookie(c);
+						}
 						model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 						model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
 						return "indiProfileForm";
@@ -476,20 +504,29 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		// terminate authentication
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
+		request.getSession().invalidate(); //invalidate session.
+		String cookieValue = "";
+		Cookie cookies[] = request.getCookies();
+		Cookie myCookie = null;
+		// Goes through all the cookies and checks if there is the remember me cookie.
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				if (cookies[i].getName().equals("rememberMeCookie")) {
+					cookieValue = cookies[i].getValue();
+					// delete this cookie.
+					loginService.cookieLogout(cookieValue);
+					break;
+				}
+			}
+			return "redirect:/login1";
 		}
-		return "redirect:/login1";
+		return "false";
+
 	}
-
-	private String getPrincipal() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal instanceof UserDetails)
-			return ((UserDetails) principal).getUsername();
-
-		return principal.toString();
+	
+	@RequestMapping(value = "/testcookie", method = RequestMethod.GET)
+	public String test(){
+		return "testcookie";
 	}
 
 }

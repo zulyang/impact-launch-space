@@ -66,7 +66,7 @@ public class JdbcUserDAO implements UserDAO{
 			if (rs.next()) {
 				user = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"),
 						rs.getBoolean("keep_me_signed_in"), rs.getBoolean("enabled"),rs.getString("user_type")
-						,rs.getInt("login_attempts"));
+						,rs.getInt("login_attempts"),rs.getString("user_role"));
 			}
 			rs.close();
 			ps.close();
@@ -96,7 +96,7 @@ public class JdbcUserDAO implements UserDAO{
 			if (rs.next()) {
 				user = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"),
 						rs.getBoolean("keep_me_signed_in"), rs.getBoolean("enabled"),rs.getString("user_type")
-						,rs.getInt("login_attempts"));
+						,rs.getInt("login_attempts"),rs.getString("user_role"));
 			}
 			rs.close();
 			ps.close();

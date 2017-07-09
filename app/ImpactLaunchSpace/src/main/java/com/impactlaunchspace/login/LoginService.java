@@ -180,4 +180,31 @@ public class LoginService {
 		cookieDAO.insert(username, secret.toString());
 		return secret;
 	}
+	
+	public boolean cookieLogout(String secret){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CookieDAO cookieDAO = (CookieDAO) context.getBean("cookieDAO");
+		cookieDAO.delete(secret);
+		return true;
+	}
+
+	public boolean checkCookie(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CookieDAO cookieDAO = (CookieDAO) context.getBean("cookieDAO");
+		return cookieDAO.haveRecord(username);
+	}
+
+	public void updateCookie(String username, String secret){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CookieDAO cookieDAO = (CookieDAO) context.getBean("cookieDAO");
+		cookieDAO.update(username, secret);
+	}
+
+	public User retrieveUser(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		UserDAO userDAO = (UserDAO) context.getBean("userDAO");
+		User u = userDAO.findByUsername(username);
+		return u;
+	}
+
 }

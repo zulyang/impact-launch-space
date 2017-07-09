@@ -10,5 +10,11 @@ public interface CookieDAO {
 	//Remove cookie from database
 	public void delete(String username);
 	
+	//Update cookie from database
+	public void update(String username ,String secret);
+
+	//Check whether there is a record in the database.
+	public boolean haveRecord(String username);
+	
 
 }

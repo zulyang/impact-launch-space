@@ -83,18 +83,6 @@
 			<version>1.9.1</version>
 		</dependency>
 
-		<!-- Security Module -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>4.0.1.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>4.0.1.RELEASE</version>
-		</dependency>
-
 		<!-- Binding Entities -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

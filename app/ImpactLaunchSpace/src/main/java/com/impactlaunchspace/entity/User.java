@@ -3,46 +3,45 @@ package com.impactlaunchspace.entity;
 
 import javax.validation.constraints.Size;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 public class User {
 	@Size(min=6, message="Username must contain at least 6 characters")
 	private String username;
-	
+
 	@Size(min=8, message="Password must contain at least 8 characters")
 	private String password;
-	
+
 	@Size(min=1, message="Email cannot be empty")
 	private String email;
-	
-	private boolean keep_me_signed_in;
-	
-	private boolean enabled;
-	
-	private String user_type;
-	
-	private int login_attempts;
-	
-	public static final int MAX_LOGIN_ATTEMPTS = 5;
-	
-	private String user_role;
-	
-	public User(){
-		
-	}
-	
 
-	public User(String username, String password, String email, 
+	private boolean keep_me_signed_in;
+
+	private boolean enabled;
+
+	private String user_type;
+
+	private int login_attempts;
+
+	public static final int MAX_LOGIN_ATTEMPTS = 5;
+
+	private String user_role;
+
+	public User(){
+
+	}
+
+
+	public User(String username, String password, String email,
 			boolean keep_me_signed_in, boolean enabled, String user_type,
-			int login_attempts){
+			int login_attempts, String user_role){
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.keep_me_signed_in = keep_me_signed_in;
 		this.enabled = enabled;
 		this.user_type = user_type;
+		this.user_role = user_role;
 	}
-	
+
 	//this constructor is used for initializing account
 	public User(String username, String password, String email, String user_type) {
 		super();
@@ -58,7 +57,7 @@ public class User {
 		//by default just a USER
 		this.user_role = "USER";
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -71,7 +70,7 @@ public class User {
 	public boolean isKeep_me_signed_in() {
 		return keep_me_signed_in;
 	}
-	
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -83,7 +82,7 @@ public class User {
 	public int getLogin_attempts() {
 		return login_attempts;
 	}
-	
+
 	public String getUser_role(){
 		return user_role;
 	}
