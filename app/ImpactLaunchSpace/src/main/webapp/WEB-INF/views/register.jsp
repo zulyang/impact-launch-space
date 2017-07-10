@@ -107,8 +107,8 @@
 				</div>
 
 
-				<input type="hidden" id="registerCheck" name="registerCheck"
-					value="${registerCheck}"> 
+				<input type="hidden" id="registerSuccess" name="registerSuccess"
+					value="${registerSuccess}"> 
 			</div> 
 		</div>
 
@@ -117,7 +117,7 @@
 </body>
 <script type="text/javascript">
 	window.onload = function() {
-		var registerCheckStatus = document.getElementById("registerCheck").value;
+		var registerCheckStatus = document.getElementById("registerSuccess").value;
 
 		console.log(registerCheckStatus);
 

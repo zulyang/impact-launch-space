@@ -142,17 +142,21 @@ public class LoginController {
 
 		boolean usernameExists = loginService.userExists(username);
 		boolean emailExists = loginService.userExists(email);
-
+		System.out.println(usernameExists);
+		System.out.println(emailExists);
 		// FRONT END TO PRINT ERROR THAT USERNAME AND EMAIL HAS ALR BEEN USED
 		if (usernameExists && emailExists) {
+			System.out.println("u and email alr in use");
 			model.addAttribute("registerCheck", "The username and email is already in use.");
 			return "register";
 		} else if (usernameExists && !emailExists) {
 			// FRONT END TO PRINT ERROR THAT USERNAME HAS ALR BEEN USED
+			System.out.println("username in use");
 			model.addAttribute("registerCheck", "The username is already in use.");
 			return "register";
 		} else if (!usernameExists && emailExists) {
 			// FRONT END TO PRINT ERROR THAT EMAIL HAS ALR BEEN USED
+			System.out.println("email alr in use");
 			model.addAttribute("registerCheck", "The email is already in use.");
 			return "register";
 		}
@@ -163,10 +167,12 @@ public class LoginController {
 			String verificationCode = vtService.retrieveVerificationCode(username);
 			vtService.sendVerificationEmail(verificationCode, email);
 			// below is for resending verification
-			model.addAttribute("registerCheck", "success");
+			System.out.println("success registration");
+			model.addAttribute("registerSuccess", "success");
 			return "register";
 		} else {
 			// FRONT END TO PRINT GENERIC ERROR, ERROR REGISTERING
+			System.out.println("error register");
 			model.addAttribute("registerCheck", "An error has occurred during registration.");
 			return "register";
 		}
