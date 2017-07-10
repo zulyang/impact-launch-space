@@ -529,10 +529,5 @@ public class LoginController {
 		return "false";
 
 	}
-	
-	@RequestMapping(value = "/testcookie", method = RequestMethod.GET)
-	public String test(){
-		return "testcookie";
-	}
 
 }
