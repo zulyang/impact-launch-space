@@ -269,11 +269,102 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br>
+							<br> I have expertise in these Job Sectors: <br> <select
+								class="js-example-basic-single-jobsectorindividual-required"
+								name="selected_jobsector1" required>
+								<c:forEach items="${job_sector_list}" var="item">
+									<c:choose>
+										<c:when
+											test="${jobSectorIndividual1_string.equals(item.getJob_sector())}">
+											<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select> <input type="number" placeholder="Years of Experience"
+								name="selected_jobsector1_years"
+								value="${jobSectorIndividual1.getYearsOfExperience()}">
 
-							<c:forEach items="${jobSectorsIndividual}" var="item">
-      ${item.getJob_sector()} : ${item.getYearsOfExperience()} Years Of Experience<br>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${jobSectorIndividual2 != null }">
+									<select
+										class="js-example-basic-single-jobsectorindividual-optional"
+										name="selected_jobsector2">
+										<option value=""></option>
+										<c:forEach items="${job_sector_list}" var="item">
+											<c:choose>
+												<c:when
+													test="${jobSectorIndividual2_string.equals(item.getJob_sector())}">
+													<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select>
+
+									<input type="number" placeholder="Years of Experience"
+										name="selected_jobsector2_years"
+										value="${jobSectorIndividual2.getYearsOfExperience()}">
+								</c:when>
+								<c:otherwise>
+									<select
+										class="js-example-basic-single-jobsectorindividual-optional"
+										name="selected_jobsector2">
+										<option value=""></option>
+										<c:forEach items="${job_sector_list}" var="item">
+
+											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+
+										</c:forEach>
+									</select>
+									<input type="number" placeholder="Years of Experience"
+										name="selected_jobsector2_years">
+								</c:otherwise>
+							</c:choose>
+
+							<c:choose>
+								<c:when test="${jobSectorIndividual3 != null }">
+									<select
+										class="js-example-basic-single-jobsectorindividual-optional"
+										name="selected_jobsector3">
+										<option value=""></option>
+										<c:forEach items="${job_sector_list}" var="item">
+											<c:choose>
+												<c:when
+													test="${jobSectorIndividual3_string.equals(item.getJob_sector())}">
+													<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select>
+
+									<input type="number" placeholder="Years of Experience"
+										name="selected_jobsector3_years"
+										value="${jobSectorIndividual3.getYearsOfExperience()}">
+								</c:when>
+								<c:otherwise>
+									<select
+										class="js-example-basic-single-jobsectorindividual-optional"
+										name="selected_jobsector3">
+										<option value=""></option>
+										<c:forEach items="${job_sector_list}" var="item">
+
+											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+
+										</c:forEach>
+									</select>
+									<input type="number" placeholder="Years of Experience"
+										name="selected_jobsector3_years">
+								</c:otherwise>
+							</c:choose>
+
 						</div>
 					</div>
 					<br> <br>
@@ -380,11 +471,23 @@
 		});
 	</script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".js-example-basic-single-jobsectorindividual").select2({
-				placeholder : "Primary Job Sector: "
-			});
-		});
+		$(document).ready(
+				function() {
+					$(".js-example-basic-single-jobsectorindividual-required")
+							.select2({
+								placeholder : "Job Sector 1"
+							});
+				});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$(".js-example-basic-single-jobsectorindividual-optional")
+							.select2({
+								placeholder : "Additional Job Sectors",
+								allowClear : true
+							});
+				});
 	</script>
 </body>
 </html>

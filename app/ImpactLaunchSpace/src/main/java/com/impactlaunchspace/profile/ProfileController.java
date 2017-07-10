@@ -334,22 +334,40 @@ public class ProfileController {
 		for (PreferredJobSector preferredJobSector : preferredJobSectors) {
 			individual_preferredjobsector_list.add(preferredJobSector.getJob_sector());
 		}
-		
+
 		//sets up individual user's current expertise in job sectors to be shown in edit page
 		ArrayList<JobSectorIndividual> jobSectorsIndividual = profileService.retrieveIndividualJobSectors(((String) request.getSession().getAttribute("username")));
-		ArrayList<String> individual_jobsectorsindividual_list = new ArrayList<String>();
-		ArrayList<Integer> individual_jobsectorsindividual_yoe_list = new ArrayList<Integer>();
-		for (JobSectorIndividual jobSectorIndividual : jobSectorsIndividual) {
-			individual_jobsectorsindividual_list.add(jobSectorIndividual.getJob_sector());
-			individual_jobsectorsindividual_yoe_list.add(jobSectorIndividual.getYearsOfExperience());
+		
+		for(int i = 0; i < 3; i++){
+			if(i == 0){
+				if(jobSectorsIndividual.get(0)!=null){
+					request.getSession().setAttribute("jobSectorIndividual1", jobSectorsIndividual.get(0));
+					request.getSession().setAttribute("jobSectorIndividual1_string", jobSectorsIndividual.get(0).getJob_sector());
+				}
+				
+			}
+			
+			if(i == 1){
+				if(jobSectorsIndividual.size() > 1){
+					request.getSession().setAttribute("jobSectorIndividual2", jobSectorsIndividual.get(1));
+					request.getSession().setAttribute("jobSectorIndividual2_string", jobSectorsIndividual.get(1).getJob_sector());
+				}
+			}
+			
+			if(i == 2){
+				if(jobSectorsIndividual.size() > 2){
+					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividual.get(2));
+					request.getSession().setAttribute("jobSectorIndividual3_string", jobSectorsIndividual.get(2).getJob_sector());
+
+				}
+			}
 		}
 
 		request.getSession().setAttribute("individual_preferredjobsector_list", individual_preferredjobsector_list);
 		request.getSession().setAttribute("individual_preferredprojectarea_list",individual_preferredprojectarea_list);
 		request.getSession().setAttribute("individual_preferredcountry_list", individual_preferredcountry_list);
 		request.getSession().setAttribute("individual_userskill_list", individual_userskill_list);
-		request.getSession().setAttribute("individual_jobsectorsindividual_list", individual_jobsectorsindividual_list);
-		request.getSession().setAttribute("individual_jobsectorsindividual_yoe_list", individual_jobsectorsindividual_yoe_list);
+		
 		
 		request.getSession().setAttribute("jobSectorsIndividual", profileService.retrieveIndividualJobSectors(individual.getUsername()));
 		return "/editIndiProfileForm";
@@ -361,7 +379,9 @@ public class ProfileController {
 			@RequestParam String contactDetails, @RequestParam String personalBio, @RequestParam Date dateOfBirth,
 			@RequestParam int minimumVolunteerHours, @RequestParam int maximumVolunteerHours, @RequestParam ArrayList<String> selected_skillsets,
 			@RequestParam ArrayList<String> selected_preferredcountries,@RequestParam ArrayList<String> selected_preferredprojectareas,
-			@RequestParam ArrayList<String> selected_preferredjobsectors, HttpServletRequest request) {
+			@RequestParam ArrayList<String> selected_preferredjobsectors, @RequestParam String selected_jobsector1,@RequestParam String selected_jobsector1_years,
+			@RequestParam String selected_jobsector2,@RequestParam String selected_jobsector2_years,
+			@RequestParam String selected_jobsector3,@RequestParam String selected_jobsector3_years, HttpServletRequest request) {
 		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
 		String username = individual.getUsername();
 		String email = individual.getEmail();
@@ -397,10 +417,72 @@ public class ProfileController {
 		for (String userSkill : selected_skillsets) {
 			updated_skillsets_individual.add(new UserSkill(userSkill, username));
 		}
+		
+		ArrayList<JobSectorIndividual> jobSectorsIndividual = profileService.retrieveIndividualJobSectors(username);
+		
+		JobSectorIndividual jobSectorIndividual1 = null;
+		JobSectorIndividual jobSectorIndividual2 = null;
+		JobSectorIndividual jobSectorIndividual3 = null;
+		
+		if(selected_jobsector1!=null && !selected_jobsector1.isEmpty()){
+			jobSectorIndividual1 = new JobSectorIndividual(selected_jobsector1, username, Integer.parseInt(selected_jobsector1_years));
+		}
+		
+		if(selected_jobsector2!=null && !selected_jobsector2.isEmpty()){
+			jobSectorIndividual2 = new JobSectorIndividual(selected_jobsector2, username, Integer.parseInt(selected_jobsector2_years));
+		}
+		
+		if(selected_jobsector3!=null && !selected_jobsector3.isEmpty()){
+			jobSectorIndividual3 = new JobSectorIndividual(selected_jobsector3, username, Integer.parseInt(selected_jobsector3_years));
+		}
 
-		profileService.updateMultipleFieldsIndividual(username, new JobSectorIndividual("Computer and hardware",username,11), null, null, updated_preferredcountries_individual, updated_preferredjobsector_individual, updated_preferredprojectarea_individual, updated_skillsets_individual);
+		
+		profileService.updateMultipleFieldsIndividual(username, jobSectorIndividual1, jobSectorIndividual2, jobSectorIndividual3, updated_preferredcountries_individual, updated_preferredjobsector_individual, updated_preferredprojectarea_individual, updated_skillsets_individual);
 		
 		// change the session attributes
+		ArrayList<JobSectorIndividual> jobSectorsIndividualSession = profileService.retrieveIndividualJobSectors(((String) request.getSession().getAttribute("username")));
+		
+		for(int i = 0; i < 3; i++){
+			if(i == 0){
+				if(jobSectorsIndividualSession.get(0)!=null){
+					request.getSession().setAttribute("jobSectorIndividual1", jobSectorsIndividualSession.get(0));
+					request.getSession().setAttribute("jobSectorIndividual1_string", jobSectorsIndividualSession.get(0).getJob_sector());
+
+				}
+				
+			}
+			
+			if(i == 1){
+				if(jobSectorsIndividualSession.size() > 1){
+					request.getSession().setAttribute("jobSectorIndividual2", jobSectorsIndividualSession.get(1));
+					request.getSession().setAttribute("jobSectorIndividual2_string", jobSectorsIndividualSession.get(1).getJob_sector());
+
+				}
+			}
+			
+			if(i == 2){
+				if(jobSectorsIndividualSession.size() > 2){
+					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividualSession.get(2));
+					request.getSession().setAttribute("jobSectorIndividual3_string", jobSectorsIndividualSession.get(2).getJob_sector());
+					
+				}
+			}
+			
+			if(jobSectorsIndividualSession.size() == 1){
+				request.getSession().removeAttribute("jobSectorIndividual2");
+				request.getSession().removeAttribute("jobSectorIndividual2_string");
+				request.getSession().removeAttribute("jobSectorIndividual3");
+				request.getSession().removeAttribute("jobSectorIndividual3_string");
+				
+			}
+			
+			if(jobSectorsIndividualSession.size() == 2){
+				request.getSession().removeAttribute("jobSectorIndividual3");
+				request.getSession().removeAttribute("jobSectorIndividual3_string");
+				
+			}
+
+		}
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
 		request.getSession().setAttribute("jobSectorsIndividual",profileService.retrieveIndividualJobSectors(username));
 		request.getSession().setAttribute("preferredProjectArea",profileService.retrievePreferredProjectArea(username));
