@@ -175,7 +175,7 @@ html, body {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 1rem;
-	width: 20rem;
+	width: 15rem;
 }
 
 .edit_org_profile_save {
@@ -204,14 +204,8 @@ html, body {
 	position: absolute;
 }
 
-.profile_save {
-	justify-content: center;
-	display: flex;
-	align-items: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 1rem;
-	width: 10rem;
+.form-horizontal-edit {
+	position: relative;
 }
 
 .forgot_form {
@@ -380,10 +374,9 @@ html, body {
 }
 
 .edit_ind_profile_display_container {
-	margin-top: 85rem;
+	margin-top: 115rem;
 	margin-bottom: 5rem;
 	width: 85rem;
-
 }
 
 .circle_org_profile_image {
@@ -423,6 +416,7 @@ html, body {
 }
 
 .edit_ind_profile_container {
+	position: relative;
 	display: inline-block;
 	width: 40rem;
 	margin-left: 10rem;
@@ -465,11 +459,11 @@ html, body {
 	text-align: center;
 }
 
-.panel{
+.panel {
 	height: 100%;
 }
 
-.panel-body{
+.panel-body {
 	height: 100%;
 }
 
