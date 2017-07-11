@@ -105,7 +105,7 @@
 								<button type="submit" class="btn btn-success field">CONFIRM</button>
 							</div>
 						</div>
-						<p id="passwordUnmatchMsg">${passwordUnmatch}</p>
+						<p id="passwordUnmatchMsg">${passwordError}</p>
 					</form>
 				</div>
 
@@ -118,7 +118,7 @@
 					<input type="hidden" id="correctPin" name="correctPin"
 						value="${correctPin}"> 
 					<input type="hidden" id="passwordUnmatch" name="passwordUnmatch"
-						value="${passwordUnmatch}"> 
+						value="${passwordError}"> 
 
 			</div>
 		</div>
@@ -133,9 +133,9 @@
 		var pinValue = document.getElementById("pinValue").value;
 		var passwordUnmatch = document.getElementById("passwordUnmatch").value;
 		
-		console.log(pinValue);
 		console.log(forgotPWvalidation.length);
 		console.log(emailValue.length);
+		console.log(pinValue);
 		
 		if ((forgotPWvalidation.length === 0 && emailValue.length > 0) || pinValue.length > 0) {
 			if ($('#email_sent_prompt').css('display') == 'none' && $('#wait_prompt').css('display') == 'none') {
@@ -154,7 +154,6 @@
 				if ($('#verify_pin').css('display') == 'none') {
 					$('#wait_prompt').hide();
 					$('#verify_pin').show();
-					event.preventDefault();
 				}
 			}
 		};

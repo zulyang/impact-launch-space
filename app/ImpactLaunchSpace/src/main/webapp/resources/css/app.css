@@ -277,7 +277,7 @@ html, body {
 	outline: none;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 5em;
+	margin-top: 10em;
 }
 
 .returnHome {
@@ -313,6 +313,12 @@ html, body {
 }
 
 .registerError {
+	color: red;
+	width: 30rem;
+	text-align: center;
+}
+
+#passwordUnmatchMsg, #forgotPasswordCheck, #pinWrongMessage  {
 	color: red;
 	width: 30rem;
 	text-align: center;

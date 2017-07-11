@@ -130,7 +130,8 @@ public class LoginController {
 		}
 
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
-			model.addAttribute("passwordCheck", "Password must contain letters, digits, symbols and have at least 6 characters.");
+			model.addAttribute("passwordCheck",
+					"Password must contain letters, digits, symbols and have at least 6 characters.");
 			return "register";
 		}
 
@@ -338,45 +339,46 @@ public class LoginController {
 				Cookie c = null;
 
 				// Only if remember me is checked,generate the cookie.
-				if (request.getParameter("rememberMe") != null &&
-						request.getParameter("rememberMe").equals("true")) {
+				if (request.getParameter("rememberMe") != null && request.getParameter("rememberMe").equals("true")) {
 
-					 /*Check if there is a record in the database.
-					 Same user might log in from a different machine. If so, need to update the cookie
-					 database.*/
+					/*
+					 * Check if there is a record in the database. Same user
+					 * might log in from a different machine. If so, need to
+					 * update the cookie database.
+					 */
 
 					boolean check = loginService.checkCookie(username);
-					if(check == false){
-						//No cookie in database
+					if (check == false) {
+						// No cookie in database
 						System.out.print("LOLOL1");
 						UUID s = loginService.generateCookieSecret(username);
 						c = new Cookie("rememberMeCookie", s.toString());
 						c.setMaxAge(365 * 24 * 60 * 60); // one year
-					}else{
-						//Have cookie in database, update cookie.
-						//Remove cookie from browser first.
+					} else {
+						// Have cookie in database, update cookie.
+						// Remove cookie from browser first.
 						System.out.print("LOLOL2");
-					    Cookie[] cookies = request.getCookies();
-					    if (cookies != null)
-					        for (Cookie cookie : cookies) {
-					        	if(cookie.getValue().equals("rememberMe")){
-					            cookie.setValue("");
-					            cookie.setPath("/");
-					            cookie.setMaxAge(0);
-					            response.addCookie(cookie);
-					        	}
-					        }
+						Cookie[] cookies = request.getCookies();
+						if (cookies != null)
+							for (Cookie cookie : cookies) {
+								if (cookie.getValue().equals("rememberMe")) {
+									cookie.setValue("");
+									cookie.setPath("/");
+									cookie.setMaxAge(0);
+									response.addCookie(cookie);
+								}
+							}
 						String s = UUID.randomUUID().toString();
 						c = new Cookie("rememberMeCookie", s);
-						loginService.updateCookie(username,s);
+						loginService.updateCookie(username, s);
 					}
 				}
 
 				if (isFirstTimeLogin == false) {
 					if (userType.equals("organization")) {
 						// add a cookie to the response.
-						if(c!=null){
-						response.addCookie(c);
+						if (c != null) {
+							response.addCookie(c);
 						}
 						request.getSession().setAttribute("organization",
 								profileService.getOrganizationAccountDetails(username));
@@ -387,8 +389,8 @@ public class LoginController {
 						return "organizationProfileDisplay";
 					} else if (userType.equals("individual")) {
 						// add a cookie to the response.
-						if(c!=null){
-						response.addCookie(c);
+						if (c != null) {
+							response.addCookie(c);
 						}
 						request.getSession().setAttribute("individual",
 								profileService.getIndividualAccountDetails(username));
@@ -408,20 +410,20 @@ public class LoginController {
 				} else {
 					// userservice to determine if indiv/organ and redirect to
 					// page
-					
-					//puts the necessary lists into model for setup pages to obtain
+
+					// puts the necessary lists into model for setup pages to
+					// obtain
 					model.addAttribute("country_list", profileService.retrieveCountryList());
 					model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
-					
-					
+
 					if (userType.equals("organization")) {
-						if(c!=null){
-						response.addCookie(c);
+						if (c != null) {
+							response.addCookie(c);
 						}
 						return "orgProfileForm";
 					} else if (userType.equals("individual")) {
-						if(c!=null){
-						response.addCookie(c);
+						if (c != null) {
+							response.addCookie(c);
 						}
 						model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 						model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
@@ -488,15 +490,37 @@ public class LoginController {
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
 	public String setNewPassword(@RequestParam String password1, @RequestParam String password2,
 			@RequestParam String username, ModelMap model) {
+		int passLength = password1.length();
+		boolean hasLetters = false;
+		boolean hasDigits = false;
+		boolean hasSomethingElse = false;
+
+		for (int i = 0; i < passLength; i++) {
+			char c = password1.charAt(i);
+			if (Character.isLetter(c))
+				hasLetters = true;
+			else if (Character.isDigit(c))
+				hasDigits = true;
+			else
+				hasSomethingElse = true;
+		}
+
+		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
+			model.addAttribute("passwordError",
+					"Password must contain letters, digits, symbols and have at least 6 characters.");
+			return "forgotpassword";
+		}
+
 		if (password1.equals(password2)) {
 			loginService.unlockAccount(username);
 			rtService.setNewPassword(password1, username);
 			model.addAttribute("username", username);
 			model.addAttribute("passwordMatch", "passwordMatch");
-			return "loginsuccessful";
+			model.addAttribute("loginValidation", "You have successfully reset your password.");
+			return "login1";
 		}
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
-		model.addAttribute("passwordUnmatch", "Your passwords do not match.");
+		model.addAttribute("passwordError", "Your passwords do not match.");
 		return "forgotpassword";
 	}
 
@@ -510,11 +534,12 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		// terminate authentication
-		request.getSession().invalidate(); //invalidate session.
+		request.getSession().invalidate(); // invalidate session.
 		String cookieValue = "";
 		Cookie cookies[] = request.getCookies();
 		Cookie myCookie = null;
-		// Goes through all the cookies and checks if there is the remember me cookie.
+		// Goes through all the cookies and checks if there is the remember me
+		// cookie.
 		if (cookies != null) {
 			for (int i = 0; i < cookies.length; i++) {
 				if (cookies[i].getName().equals("rememberMeCookie")) {
