@@ -32,14 +32,13 @@ public class JdbcProjectDAO implements ProjectDAO {
 			ps.setString(3, project.getPurpose());
 			ps.setInt(4, project.getDuration());
 			ps.setString(5, project.getLocation());
-			ps.setString(6, project.getProject_type());
-			ps.setString(7, project.getProject_proposer());
-			ps.setString(8, project.getOrganization());
-			ps.setBoolean(9, project.isPublic());
-			ps.setBoolean(10, project.isHiddenToOutsiders());
-			ps.setBoolean(11, project.isHiddenToAll());
-			ps.setString(12, project.getProject_status());
-			ps.setDate(13, project.getStart_date());
+			ps.setString(6, project.getProject_proposer());
+			ps.setString(7, project.getOrganization());
+			ps.setBoolean(8, project.isPublic());
+			ps.setBoolean(9, project.isHiddenToOutsiders());
+			ps.setBoolean(10, project.isHiddenToAll());
+			ps.setString(11, project.getProject_status());
+			ps.setDate(12, project.getStart_date());
 
 			ps.executeUpdate();
 			ps.close();
@@ -69,7 +68,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 			if (rs.next()) {
 				project = new Project(rs.getString("project_name"), rs.getString("description"),
 						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
-						rs.getString("project_type"), rs.getString("project_proposer"), rs.getString("organization"),
+						rs.getString("project_proposer"), rs.getString("organization"),
 						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getDate("start_date"));
 			}
@@ -102,7 +101,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 			while (rs.next()) {
 				project = new Project(rs.getString("project_name"), rs.getString("description"),
 						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
-						rs.getString("project_type"), rs.getString("project_proposer"), rs.getString("organization"),
+						rs.getString("project_proposer"), rs.getString("organization"),
 						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getDate("start_date"));
 				output.add(project);
@@ -136,7 +135,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 			while (rs.next()) {
 				project = new Project(rs.getString("project_name"), rs.getString("description"),
 						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
-						rs.getString("project_type"), rs.getString("project_proposer"), rs.getString("organization"),
+						rs.getString("project_proposer"), rs.getString("organization"),
 						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getDate("start_date"));
 				output.add(project);
