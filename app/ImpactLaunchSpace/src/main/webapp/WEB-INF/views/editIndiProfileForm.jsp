@@ -129,7 +129,8 @@
 								</form>
 							</div>
 
-							<form class="form-horizontal edit_ind_profile_container"
+							<form onsubmit="checkFields3()"
+								class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
 									<label for="editIndFirstName" class="col-sm-3 control-label">First
@@ -269,21 +270,26 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> <select
+							<br> I have expertise in these Job Sectors: <br> 
+							<select
 								class="js-example-basic-single-jobsectorindividual-required"
 								name="selected_jobsector1" required>
+								<option value = ""></option>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
 										<c:when
 											test="${jobSectorIndividual1_string.equals(item.getJob_sector())}">
-											<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+											<option value="${item.getJob_sector()}"
+												selected="selected">${item.getJob_sector()}</option>
 										</c:when>
 										<c:otherwise>
 											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-							</select> <input type="number" placeholder="Years of Experience"
+							</select> 
+							<input id="js1experienceA" type="number"
+								placeholder="Years of Experience" required
 								name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}">
 
@@ -291,13 +297,14 @@
 								<c:when test="${jobSectorIndividual2 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector2">
+										name="selected_jobsector2" id="jsIndi2aValue">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
 												<c:when
 													test="${jobSectorIndividual2_string.equals(item.getJob_sector())}">
-													<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+													<option value="${item.getJob_sector()}"
+														selected="selected">${item.getJob_sector()}</option>
 												</c:when>
 												<c:otherwise>
 													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
@@ -306,14 +313,15 @@
 										</c:forEach>
 									</select>
 
-									<input type="number" placeholder="Years of Experience"
+									<input type="number" id="js2experienceA"
+										placeholder="Years of Experience"
 										name="selected_jobsector2_years"
 										value="${jobSectorIndividual2.getYearsOfExperience()}">
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector2">
+										name="selected_jobsector2" id="jsIndi2bValue">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -321,7 +329,8 @@
 
 										</c:forEach>
 									</select>
-									<input type="number" placeholder="Years of Experience"
+									<input type="number" id="js2experienceB"
+										placeholder="Years of Experience"
 										name="selected_jobsector2_years">
 								</c:otherwise>
 							</c:choose>
@@ -330,37 +339,40 @@
 								<c:when test="${jobSectorIndividual3 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector3">
+										name="selected_jobsector3" id="jsIndi3aValue">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
 												<c:when
 													test="${jobSectorIndividual3_string.equals(item.getJob_sector())}">
-													<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
+													<option id="jsIndi3AValue" value="${item.getJob_sector()}"
+														selected="selected">${item.getJob_sector()}</option>
 												</c:when>
 												<c:otherwise>
-													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+													<option id="jsIndi3BValue" value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 									</select>
 
-									<input type="number" placeholder="Years of Experience"
+									<input type="number" id="js3experienceA"
+										placeholder="Years of Experience"
 										name="selected_jobsector3_years"
 										value="${jobSectorIndividual3.getYearsOfExperience()}">
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector3">
+										name="selected_jobsector3" id="jsIndi3bValue">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
-											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+											<option id="jsIndi3CValue" value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 
 										</c:forEach>
 									</select>
-									<input type="number" placeholder="Years of Experience"
+									<input type="number" id="js3experienceB"
+										placeholder="Years of Experience"
 										name="selected_jobsector3_years">
 								</c:otherwise>
 							</c:choose>
@@ -424,10 +436,10 @@
 
 						</div>
 					</div>
-					<br> <br>
+					<br> <br> 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input class="btn btn-success edit_org_profile_save"
+							<input onclick="checkFields()" class="btn btn-success edit_org_profile_save"
 								type="submit" value="Update details" />
 						</div>
 					</div>
@@ -443,6 +455,44 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function checkFields() {			
+			var jsIndi2A = document.getElementById("jsIndi2aValue");
+			if(jsIndi2A !== null){
+				console.log("2a: " + jsIndi2A.value);
+				var jsIndiEx2A = document.getElementById("js2experienceA");
+				console.log("js indi xperience value 2A: " + jsIndiEx2A);
+				change('js2experienceA', 'required');
+			} else {
+				var jsIndiEx2B = document.getElementById("js2experienceB");
+				console.log("js indi xperience value 2B: " + jsIndiEx2B);
+				change('js2experienceB', 'required');
+			}
+			
+			console.log("BREAK -------------------");
+
+			var jsIndi3A = document.getElementById("jsIndi3aValue");
+			if(jsIndi3A !== null){
+				console.log("3a: " + jsIndi3A.value);
+				var jsIndiEx3A = document.getElementById("js3experienceA");
+				console.log("js indi xperience value 3A: " + jsIndiEx3A);
+				change('js3experienceA', 'required');
+			} else {
+				var jsIndiEx3B = document.getElementById("js3experienceB");
+				console.log("js indi xperience value 3B: " + jsIndiEx3B);
+				change('js3experienceB', 'required');
+			}
+		
+			return false;
+		}
+
+		function change(id, newClass) {
+			console.log("in change function");
+			identity = document.getElementById(id);
+			identity.required = true;
+		}
+	</script>
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple3").select2({
