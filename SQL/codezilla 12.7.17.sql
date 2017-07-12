@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2017 at 01:04 PM
+-- Generation Time: Jul 12, 2017 at 03:20 PM
 -- Server version: 5.7.11
 -- PHP Version: 5.6.16
 
@@ -536,14 +536,13 @@ CREATE TABLE `projects` (
   `purpose` varchar(255) NOT NULL,
   `duration` int(11) NOT NULL,
   `location` varchar(100) NOT NULL,
-  `project_type` varchar(100) NOT NULL,
   `project_proposer` varchar(100) NOT NULL,
   `organization` varchar(100) DEFAULT NULL,
   `isPublic` tinyint(1) NOT NULL,
   `hiddenToOutsiders` tinyint(1) NOT NULL,
   `hiddenToAll` tinyint(1) NOT NULL,
   `project_status` varchar(20) NOT NULL,
-  `start_date` date DEFAULT NULL
+  `created_date` date DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
