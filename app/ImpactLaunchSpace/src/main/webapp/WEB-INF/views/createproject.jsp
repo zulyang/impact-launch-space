@@ -26,6 +26,12 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
+<!--for multiple select (Select2)-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script>
 	$(function() {
@@ -120,7 +126,8 @@
 					<div id="accordion">
 						<h3>Basic Info</h3>
 						<div>
-							<form action="create-project" onsubmit="return checkResourceFields();" method="post">
+							<form action="create-project"
+								onsubmit="return checkResourceFields();" method="post">
 								<div class="form-group row">
 									<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
 									<div class="col-sm-9">
@@ -142,8 +149,15 @@
 									<label for="socialImpactType" class="col-sm-3 col-form-label">Social
 										Impact Type</label>
 									<div class="col-sm-9">
-										<input type="text" id="socialImpactType" value=""
-											name="socialImpactType" class="form-control">
+										<select class="js-example-basic-multiple-targetprojectareas"
+											multiple="multiple" name="selected_projectareas" required>
+											<c:forEach items="${project_area_list}" var="item">
+												<option value="${item.getProject_area()}">${item.getProject_area()}</option>
+											</c:forEach>
+										</select>
+
+
+
 									</div>
 								</div>
 
@@ -162,8 +176,13 @@
 									<label for="projectLocation" class="col-sm-3 col-form-label">Project
 										Location</label>
 									<div class="col-sm-9">
-										<input type="text" id="projectLocation" value=""
-											name="projectLocation" class="form-control">
+										<select class="js-example-basic-single-projectlocation"
+											name="projectLocation" required>
+											<option></option>
+											<c:forEach items="${country_list}" var="item">
+												<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+											</c:forEach>
+										</select> 
 									</div>
 								</div>
 
@@ -238,8 +257,8 @@
 								<div style="display: inline-block" id="results" class="col-sm-9"></div>
 								<br> <br> <br>
 								<div style="display: inline-block" class="col-sm-9">
-									<input id="buttonclck" onclick="checkResourceFields()" class="btn btn-info" type="button"
-										value="Add more resources" />
+									<input id="buttonclck" onclick="checkResourceFields()"
+										class="btn btn-info" type="button" value="Add more resources" />
 								</div>
 							</div>
 						</div>
@@ -283,7 +302,7 @@
 				}
 			}
 		});
-		
+
 		$('#buttonclck').on(
 				'click',
 				function() {
@@ -315,25 +334,38 @@
 					cloned.find("input[type='text']").val('');
 					cloned.insertAfter(lastRow);
 				});
-		
-		function checkResourceFields() {			
+
+		function checkResourceFields() {
 			var category = document.getElementById("Phonenumberdd1");
 			var resource = document.getElementById("to1");
 			console.log(category.value);
 			console.log(resource.value);
-			
-			if(category.value === "" || resource.value === "") {
+
+			if (category.value === "" || resource.value === "") {
 				console.log("blank");
 				alert("Please fill in all resource fields!");
 				return false;
 			}
-			
+
 			return true;
 		}
-
-
 	</script>
 
+
+	<script type="text/javascript">
+		$(".js-example-basic-multiple-targetprojectareas").select2({
+			maximumSelectionLength : 3,
+			placeholder : "Where do you want to make a difference?"
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-projectlocation").select2({
+				placeholder : "Select a country:"
+			});
+		});
+	</script>
 </body>
 
 

@@ -17,7 +17,7 @@ public class ProjectService {
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
 		
 		Project project = new Project(project_name, description, purpose, duration, location,
-				project_proposer, organization, isPublic,hiddenToOutsiders, hiddenToAll, project_status,null);
+				project_proposer, organization, isPublic,hiddenToOutsiders, hiddenToAll, project_status, null);
 		
 		projectDAO.insert(project);
 	}

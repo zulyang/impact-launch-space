@@ -1,10 +1,16 @@
 package com.impactlaunchspace.project;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.impactlaunchspace.profile.ProfileService;
 
 @Controller
 public class ProjectController {
@@ -12,16 +18,24 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 	
+	@Autowired
+	ProfileService profileService;
 	//Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
-	public String showCreateProjectPage() {
+	public String showCreateProjectPage(HttpServletRequest request) {
+		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
+		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
+				
+		profileService.retrieveJobSectorList();
+		profileService.retrieveSkillsetList();
+		
 		return "createproject";
 	}
 	
 	//Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.POST)
 	public String processCreateProject(@RequestParam String projectTitle, @RequestParam String projectPurpose,
-			@RequestParam String socialImpactType, @RequestParam String projectOwner, 
+			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner, 
 			@RequestParam String projectLocation, @RequestParam String projectDescription
 			,@RequestParam String projectPrivacy, @RequestParam int projectDuration) {
 		
@@ -45,9 +59,9 @@ public class ProjectController {
 			hiddenToAll= true;
 		}
 		
-		if(project_proposer.equals("individual")){
+		if(projectOwner.equals("individual")){
 			project_proposer = "edwardo"; //replace it
-		}else if(project_proposer.equals("organization")){
+		}else if(projectOwner.equals("organization")){
 			project_proposer = "edwardo"; //replace it
 			organization = "Edward Pte Ltd"; //replace this too
 		}

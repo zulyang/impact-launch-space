@@ -31,7 +31,7 @@ public class Project {
 		this.hiddenToOutsiders = hiddenToOutsiders;
 		this.hiddenToAll = hiddenToAll;
 		this.project_status = project_status;
-		this.start_date = start_date;
+		this.start_date = null;
 	}
 
 	public String getProject_name() {

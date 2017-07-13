@@ -21,7 +21,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 
 	public void insert(Project project) {
 		String sql = "INSERT INTO PROJECTS "
-				+ "(project_name, description, purpose, duration, location, project_type, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
