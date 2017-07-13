@@ -17,23 +17,24 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
-	
-	<script>
-  $( function() {
-    $( "#accordion" ).accordion({
-      collapsible: true,
-      heightStyle: "content"
-    });
-  } );
-  </script>
+
+<script>
+	$(function() {
+		$("#accordion").accordion({
+			collapsible : true,
+			heightStyle : "content"
+		});
+	});
+</script>
 </head>
 <body class="project">
 
@@ -116,113 +117,225 @@
 				<!-- /.container-fluid --> </nav>
 
 				<div class="create-project-container">
-				   <div id="accordion">
-  						<h3>Basic Info</h3>
-  						<div>
-    <form action="create-project" method="post"> 
-							<div class="form-group row">
-								<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
-								<div class="col-sm-9">
-									<input type="text" id="projectTitle" value=""
-										name="projectTitle" class="form-control">
+					<div id="accordion">
+						<h3>Basic Info</h3>
+						<div>
+							<form action="create-project" onsubmit="return checkResourceFields();" method="post">
+								<div class="form-group row">
+									<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
+									<div class="col-sm-9">
+										<input type="text" id="projectTitle" value=""
+											name="projectTitle" class="form-control">
+									</div>
 								</div>
-							</div>
-							
-							<div class="form-group row">
-								<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
-								<div class="col-sm-9">
-									<input type="text" id="projectPurpose" value=""
-										name="projectPurpose" class="form-control" placeholder="Your project purpose in one line">
-								</div>
-							</div>
-							
-							<div class="form-group row">
-							<label for="socialImpactType" class="col-sm-3 col-form-label">Social Impact Type</label>
-							<div class="col-sm-9">
-							<input type="text" id="socialImpactType" value="" name="socialImpactType" class="form-control">
-							</div></div>
-							
-							<div class="form-group row">
-							<label for="projectOwner" class="col-sm-3 col-form-label">Project Owner</label>
-							<div class="col-sm-9" style="display:block; height: 34px;">
-							<input type="radio" id="projectOwner" value="individual" name="projectOwner"/> Myself
-							<input type="radio" id="projectOwner" value="organization" name="projectOwner"/> Organization
-							</div></div>
-							
-							<div class="form-group row">
-							<label for="projectLocation" class="col-sm-3 col-form-label">Project Location</label>
-							<div class="col-sm-9">
-							<input type="text" id="projectLocation" value="" name="projectLocation" class="form-control">
-							</div></div>
-							
-							<div class="form-group row">
-							<label for="projectDescription" class="col-sm-3 col-form-label">Project Description</label>
-							<div class="col-sm-9">
-							<input type="text" id="projectDescription" value="" name="projectDescription" class="form-control" placeholder="A short summary of project">
-							</div></div>
-							
-							<div class="form-group row">
-							<label for="projectPrivacy" class="col-sm-3 col-form-label">Project Privacy</label>
-							<div class="col-sm-9" style="display:block; height: 34px;">
-							<input type="radio" id="projectPrivacy" value="public" name="projectPrivacy"/> Public
-							<input type="radio" id="projectPrivacy" value="hidden" name="projectPrivacy"/> Hide from All
-							<input type="radio" id="projectPrivacy" value="private" name="projectPrivacy"/> Hide from Outsiders
-							</div></div>
-							
-							<div class="form-group row">
-							<label for="projectDuration" class="col-sm-3 col-form-label">Estimated Duration</label>
-							<div class="col-sm-9">
-							<input type="number" id="projectDuration" value="" name="projectDuration" class="form-control" placeholder="Number of days">
-							</div></div>
-							
-							
-							<div class="form-group row">
-							<label for="projectBanList" class="col-sm-3 col-form-label">Ban List</label>
-							<div class="col-sm-9">
-							<input type="text" id="projectBanList" value="" name="projectBanList" class="form-control" placeholder="Search for username">
-							</div></div>
-							
-							<br><br>
-						
-  					</div>
-  				<h3>Story</h3>
-  					<div>
-    					<div class="form-group row">
-						<label for="projectVideo" class="col-sm-3 control-label">Project Video</label>
-						<div class="col-sm-9">
-						<button type="btn" class="btn btn-info" value="submit">Upload a video</button>
-						</div>
-						</div>
-						
-						<div class="form-group row ">
-						<label for="projectDocuments" class="col-sm-3 col-form-label">Project Documents</label>
-						<div class="col-sm-9">
-						<button type="btn" class="btn btn-info" value="submit">Upload documents</button>
-						</div>
-						</div>
-  						</div>
-  						<h3>What I Need</h3>
-  							<div>
-   								 <div class="form-group row">
-							<label for="projectNeed" class="col-sm-3 col-form-label">Categories</label>
-							<div class="col-sm-9">
-							<input type="text" id="projectNeed" value="" name="projectNeed" class="form-control" placeholder="A list of resources you need">
-							
-							</div>
-  							</div>
-  </div>
-  
 
-  
-  </div>
-					
+								<div class="form-group row">
+									<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
+									<div class="col-sm-9">
+										<input type="text" id="projectPurpose" value=""
+											name="projectPurpose" class="form-control"
+											placeholder="Your project purpose in one line">
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="socialImpactType" class="col-sm-3 col-form-label">Social
+										Impact Type</label>
+									<div class="col-sm-9">
+										<input type="text" id="socialImpactType" value=""
+											name="socialImpactType" class="form-control">
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="projectOwner" class="col-sm-3 col-form-label">Project
+										Owner</label>
+									<div class="col-sm-9" style="display: block; height: 34px;">
+										<input type="radio" id="projectOwner" value="individual"
+											name="projectOwner" /> Myself <input type="radio"
+											id="projectOwner" value="organization" name="projectOwner" />
+										Organization
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="projectLocation" class="col-sm-3 col-form-label">Project
+										Location</label>
+									<div class="col-sm-9">
+										<input type="text" id="projectLocation" value=""
+											name="projectLocation" class="form-control">
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="projectDescription" class="col-sm-3 col-form-label">Project
+										Description</label>
+									<div class="col-sm-9">
+										<input type="text" id="projectDescription" value=""
+											name="projectDescription" class="form-control"
+											placeholder="A short summary of project">
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
+										Privacy</label>
+									<div class="col-sm-9" style="display: block; height: 34px;">
+										<input type="radio" id="projectPrivacy" value="public"
+											name="projectPrivacy" /> Public <input type="radio"
+											id="projectPrivacy" value="hidden" name="projectPrivacy" />
+										Hide from All <input type="radio" id="projectPrivacy"
+											value="private" name="projectPrivacy" /> Hide from Outsiders
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
+										Duration</label>
+									<div class="col-sm-9">
+										<input type="number" id="projectDuration" value=""
+											name="projectDuration" class="form-control"
+											placeholder="Number of days">
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<label for="projectBanList" class="col-sm-3 col-form-label">Ban
+										List</label>
+									<div class="col-sm-9">
+										<input type="text" id="projectBanList" value=""
+											name="projectBanList" class="form-control"
+											placeholder="Search for username">
+									</div>
+								</div>
+
+								<br> <br>
+						</div>
+						<h3>Story</h3>
+						<div>
+							<div class="form-group row">
+								<label for="projectVideo" class="col-sm-3 control-label">Project
+									Video</label>
+								<div class="col-sm-9">
+									<button type="btn" class="btn btn-info" value="submit">Upload
+										a video</button>
+								</div>
+							</div>
+
+							<div class="form-group row ">
+								<label for="projectDocuments" class="col-sm-3 col-form-label">Project
+									Documents</label>
+								<div class="col-sm-9">
+									<button type="btn" class="btn btn-info" value="submit">Upload
+										documents</button>
+								</div>
+							</div>
+						</div>
+						<h3>What I Need</h3>
+						<div>
+							<div class="form-group row">
+								<div style="display: inline-block" id="results" class="col-sm-9"></div>
+								<br> <br> <br>
+								<div style="display: inline-block" class="col-sm-9">
+									<input id="buttonclck" onclick="checkResourceFields()" class="btn btn-info" type="button"
+										value="Add more resources" />
+								</div>
+							</div>
+						</div>
+					</div>
 					<hr>
-					<button type="btn" class="btn btn-block btn-success" type="submit">Create Project</button>
+					<button class="btn btn-block btn-success" type="submit">Create
+						Project</button>
 				</div>
-  </form>
+				</form>
 			</div>
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		$('#results')
+				.append(
+						'<form><table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="border"><tr><th>Category</th><th>Resource Needed</th></tr> <tr> <td> <select required class="dd" name="Phonenumberdd1" id="Phonenumberdd1"> <option value=""></option><option value="test1">test 1</option><option value="test2">test 2</option></select></td> <td> <input required type="text" name="to1" id="to1" value="" /> </td></TR></TABLE></form>	');
+
+		$('#results').on('focus', ':input', function() {
+			$(this).closest('tr').filter(function() {
+				return !$(this).data('saved');
+			}).find(':input').each(function() {
+				$(this).data('value', this.value);
+				$(this).closest('tr').data('saved', true);
+			});
+		}).on('input change', ':input', function() {
+			$(this).data('filled', this.value != $(this).data('value'))
+			var tr = $(this).closest('tr');
+			all = tr.find(':input'), fld = all.filter(function() {
+				return $(this).data('filled');
+			});
+			if (all.length == fld.length) {
+				if (!tr.data('done')) {
+					$('#buttonclck')[0].click();
+					tr.data('done', true);
+				}
+			} else {
+				if (tr.data('done')) {
+
+					tr.data('done', false);
+				}
+			}
+		});
+		
+		$('#buttonclck').on(
+				'click',
+				function() {
+					var lastRow = $('#resourcesNeeded').closest(
+							'#resourcesNeeded').find("tr:last-child");
+					var lastRowInputs = lastRow.find('input');
+					var isClone = false;
+					lastRowInputs.each(function() {
+						if ($(this).val().length) {
+							isClone = true;
+						}
+					});
+					if (!isClone)
+						return false;
+					var cloned = lastRow.clone();
+					cloned.find('input, select').each(
+							function() {
+								var id = $(this).attr('id');
+
+								var regIdMatch = /^(.+)(\d+)$/;
+								var aIdParts = id.match(regIdMatch);
+								var newId = aIdParts[1]
+										+ (parseInt(aIdParts[2], 10) + 1);
+
+								$(this).attr('id', newId);
+								$(this).attr('name', newId);
+							});
+
+					cloned.find("input[type='text']").val('');
+					cloned.insertAfter(lastRow);
+				});
+		
+		function checkResourceFields() {			
+			var category = document.getElementById("Phonenumberdd1");
+			var resource = document.getElementById("to1");
+			console.log(category.value);
+			console.log(resource.value);
+			
+			if(category.value === "" || resource.value === "") {
+				console.log("blank");
+				alert("Please fill in all resource fields!");
+				return false;
+			}
+			
+			return true;
+		}
+
+
+	</script>
+
 </body>
+
+
+
 </html>
