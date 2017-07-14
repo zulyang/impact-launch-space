@@ -229,7 +229,7 @@
 												<c:if test="${item.equals(username) == false}">
 													<option value="${item}">${item}</option>
 												</c:if>
-																							</c:forEach>
+											</c:forEach>
 										</select> <br>
 									</div>
 								</div>
@@ -258,7 +258,7 @@
 						</div>
 						<h3>What I Need</h3>
 						<div>
-						<!-- Hi nigel the resource cat thing is here: -->
+							<!-- Hi nigel the resource cat thing is here: -->
 							<select class="js-example-basic-single-resourcecategory"
 								name="selected_resourcecategory1">
 								<option></option>
@@ -266,7 +266,7 @@
 									<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 								</c:forEach>
 							</select>
-						<!-- end comment -->
+							<!-- end comment -->
 							<div class="form-group row">
 								<div style="display: inline-block" id="results" class="col-sm-9"></div>
 								<br> <br> <br>
@@ -396,7 +396,7 @@
 			});
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".js-example-basic-single-resourcecategory").select2({

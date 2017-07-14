@@ -166,7 +166,8 @@
 									<label for="editOrg" class="col-sm-3 control-label">Organization</label>
 									<div class="col-sm-9">
 										<select class="js-example-basic-single-organization"
-											name="organization" id="editOrg" required>
+											name="organization" id="editOrg">
+											<option></option>
 											<c:forEach items="${organization_list}" var="item">
 												<option value="${item}">${item}</option>
 											</c:forEach>

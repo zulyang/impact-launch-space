@@ -50,8 +50,9 @@
 									class="icon-bar"></span> <span class="icon-bar"></span> <span
 									class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="index.jsp"> 
-								<img alt="ImpactLaunch.Space" id="logoLoggedIn" src="<%=request.getContextPath()%>/resources/img/logo2.png">
+							<a class="navbar-brand" href="index.jsp"> <img
+								alt="ImpactLaunch.Space" id="logoLoggedIn"
+								src="<%=request.getContextPath()%>/resources/img/logo2.png">
 							</a>
 						</div>
 
@@ -161,7 +162,8 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<select class="js-example-basic-single-country" name="country" required>
+								<select class="js-example-basic-single-country" name="country"
+									required>
 									<option></option>
 									<c:forEach items="${country_list}" var="item">
 										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
@@ -179,9 +181,15 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="organization" type="text"
-									class="form-control profileField"
-									placeholder="Current organisation">
+								<select class="js-example-basic-single-organization"
+									name="organization" id="editOrg">
+									<option></option>
+									<c:forEach items="${organization_list}" var="item">
+										<option value="${item}">${item}</option>
+									</c:forEach>
+								</select>
+
+
 							</div>
 						</div>
 
@@ -362,6 +370,14 @@
 			$(".js-example-basic-single-country").select2({
 				placeholder : "Country which you are based in: ",
 				allowClear : true
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-organization").select2({
+				placeholder : "Current Organization: "
 			});
 		});
 	</script>
