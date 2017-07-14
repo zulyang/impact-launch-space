@@ -21,7 +21,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 	
 	public void insert(ProjectRequestedResource projectRequestedResource){
 		String sql = "INSERT INTO PROJECT_REQUESTED_RESOURCES "
-				+ "(project_name, resource_category, resource_name, resource_description) VALUES (?, ?, ?, ?)";
+				+ "(project_name, resource_category, resource_name, resource_description, project_proposer) VALUES (?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -31,6 +31,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			ps.setString(2, projectRequestedResource.getResource_category());
 			ps.setString(3, projectRequestedResource.getResource_name());
 			ps.setString(4, projectRequestedResource.getRequest_description());
+			ps.setString(5, projectRequestedResource.getProject_proposer());
 
 			ps.executeUpdate();
 			ps.close();
@@ -61,7 +62,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				projectRequestedResource = new ProjectRequestedResource(rs.getString("project_name"), rs.getString("resource_category"),
-						rs.getString("resource_name"), rs.getString("request_description"));
+						rs.getString("resource_name"), rs.getString("request_description"), rs.getString("project_proposer"));
 				output.add(projectRequestedResource);
 			}
 			rs.close();

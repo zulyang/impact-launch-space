@@ -1,9 +1,12 @@
 package com.impactlaunchspace.users;
 
+import java.util.ArrayList;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.dao.UserDAO;
 import com.impactlaunchspace.entity.User;
 
@@ -25,6 +28,24 @@ public class UserService {
 		}
 		
 		return null;
+	}
+	
+	public ArrayList<String> retrieveUsernameList(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		UserDAO userDAO = (UserDAO) context.getBean("userDAO");
+		
+		ArrayList<String> output = new ArrayList<String>();
+		output = userDAO.retrieveUsernameList();
+		return output;
+	}
+	
+	public ArrayList<String> retrieveOrganizationNamelist(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
+		
+		ArrayList<String> output = new ArrayList<String>();
+		output = organizationAccountDAO.retrieveOrganizationNamelist();
+		return output;
 	}
 	
 }

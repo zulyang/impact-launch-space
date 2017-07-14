@@ -182,7 +182,7 @@
 											<c:forEach items="${country_list}" var="item">
 												<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
 											</c:forEach>
-										</select> 
+										</select>
 									</div>
 								</div>
 
@@ -223,9 +223,12 @@
 									<label for="projectBanList" class="col-sm-3 col-form-label">Ban
 										List</label>
 									<div class="col-sm-9">
-										<input type="text" id="projectBanList" value=""
-											name="projectBanList" class="form-control"
-											placeholder="Search for username">
+										<select class="js-example-basic-multiple-banlistusers"
+											multiple="multiple" name="selected_banlist" required>
+											<c:forEach items="${user_list}" var="item">
+												<option value="${item}">${item}</option>
+											</c:forEach>
+										</select> <br>
 									</div>
 								</div>
 
@@ -253,6 +256,15 @@
 						</div>
 						<h3>What I Need</h3>
 						<div>
+						<!-- Hi nigel the resource cat thing is here: -->
+							<select class="js-example-basic-single-resourcecategory"
+								name="selected_resourcecategory1">
+								<option></option>
+								<c:forEach items="${resource_category_list}" var="item">
+									<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+								</c:forEach>
+							</select>
+						<!-- end comment -->
 							<div class="form-group row">
 								<div style="display: inline-block" id="results" class="col-sm-9"></div>
 								<br> <br> <br>
@@ -268,6 +280,8 @@
 						Project</button>
 				</div>
 				</form>
+
+
 			</div>
 		</div>
 	</div>
@@ -358,11 +372,34 @@
 			placeholder : "Where do you want to make a difference?"
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".js-example-basic-single-projectlocation").select2({
 				placeholder : "Select a country:"
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(".js-example-basic-multiple-banlistusers").select2({
+			placeholder : "Search for username : "
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-organization").select2({
+				placeholder : "Select an organization: "
+			});
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-resourcecategory").select2({
+				placeholder : "Select an expertise/category: ",
+				allowClear : true
 			});
 		});
 	</script>

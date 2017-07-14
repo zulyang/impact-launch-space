@@ -20,7 +20,7 @@ public class JdbcProjectTargetAreaDAO implements ProjectTargetAreaDAO {
 	}
 
 	public void insert(ProjectTargetArea projectTargetArea) {
-		String sql = "INSERT INTO PROJECT_TARGET_AREAS " + "(project_name, project_area) VALUES (?, ?)";
+		String sql = "INSERT INTO PROJECT_TARGET_AREAS " + "(project_name, project_area, project_proposer) VALUES (?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -28,6 +28,7 @@ public class JdbcProjectTargetAreaDAO implements ProjectTargetAreaDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, projectTargetArea.getProject_name());
 			ps.setString(2, projectTargetArea.getProject_area());
+			ps.setString(3, projectTargetArea.getProject_proposer());
 
 			ps.executeUpdate();
 			ps.close();
@@ -57,7 +58,7 @@ public class JdbcProjectTargetAreaDAO implements ProjectTargetAreaDAO {
 			ProjectTargetArea projectTargetArea = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				projectTargetArea = new ProjectTargetArea(rs.getString("project_name"), rs.getString("project_area"));
+				projectTargetArea = new ProjectTargetArea(rs.getString("project_name"), rs.getString("project_area"), rs.getString("project_proposer"));
 				output.add(projectTargetArea);
 			}
 			rs.close();

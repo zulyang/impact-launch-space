@@ -1,5 +1,7 @@
 package com.impactlaunchspace.dao;
 
+import java.util.ArrayList;
+
 import com.impactlaunchspace.entity.User;
 
 public interface UserDAO {
@@ -12,4 +14,5 @@ public interface UserDAO {
 		public int getLoginAttempts(String username);
 		public void increaseLoginAttempts(String username);
 		public void resetLoginAttempts(String username);
+		public ArrayList<String> retrieveUsernameList();
 }

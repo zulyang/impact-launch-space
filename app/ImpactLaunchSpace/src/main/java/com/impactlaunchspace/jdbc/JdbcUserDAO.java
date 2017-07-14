@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.impactlaunchspace.dao.UserDAO;
+import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.User;
 
 public class JdbcUserDAO implements UserDAO{
@@ -275,6 +277,35 @@ public class JdbcUserDAO implements UserDAO{
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	public ArrayList<String> retrieveUsernameList(){
+		ArrayList<String> output = new ArrayList<String>();
+		
+		String sql = "SELECT * FROM users";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			String username = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				username = rs.getString("username");
+				output.add(username);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		} finally {
 			if (conn != null) {
 				try {

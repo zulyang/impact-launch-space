@@ -165,9 +165,13 @@
 								<div class="form-group">
 									<label for="editOrg" class="col-sm-3 control-label">Organization</label>
 									<div class="col-sm-9">
-										<input type="text" value="${individual.getOrganization()}"
-											name="organization" class="form-control edit_profileField"
-											id="editOrg" />
+										<select class="js-example-basic-single-organization"
+											name="organization" id="editOrg" required>
+											<c:forEach items="${organization_list}" var="item">
+												<option value="${item}">${item}</option>
+											</c:forEach>
+										</select>
+
 									</div>
 								</div>
 
@@ -270,25 +274,22 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> 
-							<select
+							<br> I have expertise in these Job Sectors: <br> <select
 								class="js-example-basic-single-jobsectorindividual-required"
 								name="selected_jobsector1" required>
-								<option value = ""></option>
+								<option value=""></option>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
 										<c:when
 											test="${jobSectorIndividual1_string.equals(item.getJob_sector())}">
-											<option value="${item.getJob_sector()}"
-												selected="selected">${item.getJob_sector()}</option>
+											<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
 										</c:when>
 										<c:otherwise>
 											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-							</select> 
-							<input id="js1experienceA" type="number"
+							</select> <input id="js1experienceA" type="number"
 								placeholder="Years of Experience" required
 								name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}">
@@ -303,8 +304,7 @@
 											<c:choose>
 												<c:when
 													test="${jobSectorIndividual2_string.equals(item.getJob_sector())}">
-													<option value="${item.getJob_sector()}"
-														selected="selected">${item.getJob_sector()}</option>
+													<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
 												</c:when>
 												<c:otherwise>
 													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
@@ -436,11 +436,12 @@
 
 						</div>
 					</div>
-					<br> <br> 
+					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input onclick="checkFields()" class="btn btn-success edit_org_profile_save"
-								type="submit" value="Update details" />
+							<input onclick="checkFields()"
+								class="btn btn-success edit_org_profile_save" type="submit"
+								value="Update details" />
 						</div>
 					</div>
 					<br>
@@ -457,9 +458,9 @@
 	</div>
 
 	<script type="text/javascript">
-		function checkFields() {			
+		function checkFields() {
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
-			if(jsIndi2A !== null){
+			if (jsIndi2A !== null) {
 				console.log("2a: " + jsIndi2A.value);
 				var jsIndiEx2A = document.getElementById("js2experienceA");
 				console.log("js indi xperience value 2A: " + jsIndiEx2A);
@@ -469,11 +470,11 @@
 				console.log("js indi xperience value 2B: " + jsIndiEx2B);
 				change('js2experienceB', 'required');
 			}
-			
+
 			console.log("BREAK -------------------");
 
 			var jsIndi3A = document.getElementById("jsIndi3aValue");
-			if(jsIndi3A !== null){
+			if (jsIndi3A !== null) {
 				console.log("3a: " + jsIndi3A.value);
 				var jsIndiEx3A = document.getElementById("js3experienceA");
 				console.log("js indi xperience value 3A: " + jsIndiEx3A);
@@ -483,7 +484,7 @@
 				console.log("js indi xperience value 3B: " + jsIndiEx3B);
 				change('js3experienceB', 'required');
 			}
-		
+
 			return false;
 		}
 
@@ -538,6 +539,14 @@
 								allowClear : true
 							});
 				});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-organization").select2({
+				placeholder : "Select an organization: "
+			});
+		});
 	</script>
 </body>
 </html>

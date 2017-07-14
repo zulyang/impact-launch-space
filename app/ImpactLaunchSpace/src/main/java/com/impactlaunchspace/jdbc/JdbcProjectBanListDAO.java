@@ -20,7 +20,7 @@ public class JdbcProjectBanListDAO implements ProjectBanListDAO {
 	}
 
 	public void insert(ProjectBanList projectBanList) {
-		String sql = "INSERT INTO PROJECT_BAN_LIST " + "(project_name, banned_username) VALUES (?, ?)";
+		String sql = "INSERT INTO PROJECT_BAN_LIST " + "(project_name, banned_username, project_proposer) VALUES (?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -28,6 +28,7 @@ public class JdbcProjectBanListDAO implements ProjectBanListDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, projectBanList.getProject_name());
 			ps.setString(2, projectBanList.getBanned_username());
+			ps.setString(3, projectBanList.getProject_proposer());
 
 			ps.executeUpdate();
 			ps.close();
@@ -57,7 +58,7 @@ public class JdbcProjectBanListDAO implements ProjectBanListDAO {
 			ProjectBanList projectBanList = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				projectBanList = new ProjectBanList(rs.getString("project_name"), rs.getString("banned_username"));
+				projectBanList = new ProjectBanList(rs.getString("project_name"), rs.getString("banned_username"), rs.getString("project_proposer"));
 				output.add(projectBanList);
 			}
 			rs.close();

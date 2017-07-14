@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.impactlaunchspace.profile.ProfileService;
+import com.impactlaunchspace.users.UserService;
 
 @Controller
 public class ProjectController {
@@ -20,14 +21,22 @@ public class ProjectController {
 	
 	@Autowired
 	ProfileService profileService;
+	
+	@Autowired
+	UserService userService;
+	
 	//Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
 	public String showCreateProjectPage(HttpServletRequest request) {
 		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
+		request.getSession().setAttribute("resource_category_list", profileService.retrieveSkillsetList());
+		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
+		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
 				
 		profileService.retrieveJobSectorList();
 		profileService.retrieveSkillsetList();
+		
 		
 		return "createproject";
 	}
@@ -37,7 +46,8 @@ public class ProjectController {
 	public String processCreateProject(@RequestParam String projectTitle, @RequestParam String projectPurpose,
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner, 
 			@RequestParam String projectLocation, @RequestParam String projectDescription
-			,@RequestParam String projectPrivacy, @RequestParam int projectDuration) {
+			, @RequestParam String projectPrivacy, @RequestParam int projectDuration,
+			@RequestParam ArrayList<String> selected_banlist) {
 		
 		String project_name = projectTitle;
 		String description = projectDescription; 
@@ -66,8 +76,9 @@ public class ProjectController {
 			organization = "Edward Pte Ltd"; //replace this too
 		}
 		
-		projectService.setupProject(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status);
+		projectService.setupProject(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, selected_banlist);
 		
+				
 		return "testSelect2";
 	}
 }

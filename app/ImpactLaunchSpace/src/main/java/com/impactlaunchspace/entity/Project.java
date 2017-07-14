@@ -14,11 +14,11 @@ public class Project {
 	private boolean hiddenToOutsiders;
 	private boolean hiddenToAll;
 	private String project_status;
-	private Date start_date;
+	private Date created_date;
 
 	public Project(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
-			boolean hiddenToAll, String project_status, Date start_date) {
+			boolean hiddenToAll, String project_status, Date created_date) {
 		super();
 		this.project_name = project_name;
 		this.description = description;
@@ -31,7 +31,7 @@ public class Project {
 		this.hiddenToOutsiders = hiddenToOutsiders;
 		this.hiddenToAll = hiddenToAll;
 		this.project_status = project_status;
-		this.start_date = null;
+		this.created_date = created_date;
 	}
 
 	public String getProject_name() {
@@ -78,8 +78,8 @@ public class Project {
 		return project_status;
 	}
 
-	public Date getStart_date() {
-		return start_date;
+	public Date getCreated_date() {
+		return created_date;
 	}
 
 }

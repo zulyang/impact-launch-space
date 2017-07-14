@@ -346,4 +346,33 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			}
 		}
 	}
+	
+	public ArrayList<String> retrieveOrganizationNamelist(){
+		ArrayList<String> output = new ArrayList<String>();
+		
+		String sql = "SELECT * FROM organization_accounts";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			String username = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				username = rs.getString("companyName");
+				output.add(username);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

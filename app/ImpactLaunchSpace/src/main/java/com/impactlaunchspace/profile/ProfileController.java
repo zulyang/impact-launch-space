@@ -109,6 +109,7 @@ public class ProfileController {
 		// editing
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
+		
 
 		ArrayList<CountryOfOperation> coos = profileService
 				.retrieveCountriesOfOperations((String) request.getSession().getAttribute("username"));
@@ -306,6 +307,8 @@ public class ProfileController {
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
 		request.getSession().setAttribute("skillset_list", profileService.retrieveSkillsetList());
 		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
+		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
+		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());		
 		
 		//sets up individual user's current skills to be shown in edit page
 		ArrayList<UserSkill> userskills = profileService.retrieveAllSkillsOfUser(((String) request.getSession().getAttribute("username")));

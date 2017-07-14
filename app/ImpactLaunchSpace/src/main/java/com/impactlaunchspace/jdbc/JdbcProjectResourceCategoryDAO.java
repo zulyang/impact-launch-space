@@ -20,7 +20,7 @@ public class JdbcProjectResourceCategoryDAO implements ProjectResourceCategoryDA
 	}
 
 	public void insert(ProjectResourceCategory projectResourceCategory) {
-		String sql = "INSERT INTO PROJECT_RESOURCE_CATEGORIES " + "(project_name, resource_category) VALUES (?, ?)";
+		String sql = "INSERT INTO PROJECT_RESOURCE_CATEGORIES " + "(project_name, resource_category, project_proposer) VALUES (?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -28,6 +28,7 @@ public class JdbcProjectResourceCategoryDAO implements ProjectResourceCategoryDA
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, projectResourceCategory.getProject_name());
 			ps.setString(2, projectResourceCategory.getResource_category());
+			ps.setString(3, projectResourceCategory.getProject_proposer());
 
 			ps.executeUpdate();
 			ps.close();
@@ -58,7 +59,7 @@ public class JdbcProjectResourceCategoryDAO implements ProjectResourceCategoryDA
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				projectResourceCategory = new ProjectResourceCategory(rs.getString("project_name"),
-						rs.getString("resource_category"));
+						rs.getString("resource_category"), rs.getString("project_proposer"));
 				output.add(projectResourceCategory);
 			}
 			rs.close();

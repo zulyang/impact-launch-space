@@ -11,4 +11,5 @@ public interface OrganizationAccountDAO {
 	public ArrayList<OrganizationAccount> retrieveOrganizationsNeedingSupport();
 	public ArrayList<OrganizationAccount> retrieveOrganizationsOfferingSupport();
 	public void update(OrganizationAccount updatedOrganizationAccount, String username);
+	public ArrayList<String> retrieveOrganizationNamelist();
 }
