@@ -47,7 +47,7 @@ public class ProjectController {
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner, 
 			@RequestParam String projectLocation, @RequestParam String projectDescription
 			, @RequestParam String projectPrivacy, @RequestParam int projectDuration,
-			@RequestParam ArrayList<String> selected_banlist) {
+			@RequestParam ArrayList<String> selected_banlist, HttpServletRequest request) {
 		
 		String project_name = projectTitle;
 		String description = projectDescription; 
@@ -69,11 +69,16 @@ public class ProjectController {
 			hiddenToAll= true;
 		}
 		
+		String username = (String)request.getSession().getAttribute("username");
+		
 		if(projectOwner.equals("individual")){
-			project_proposer = "edwardo"; //replace it
+			project_proposer = username;
 		}else if(projectOwner.equals("organization")){
-			project_proposer = "edwardo"; //replace it
-			organization = "Edward Pte Ltd"; //replace this too
+			project_proposer = username;
+			if(profileService.getIndividualAccountDetails(username).getOrganization() != null ||
+					profileService.getIndividualAccountDetails(username).getOrganization().length() > 0){
+				organization = profileService.getIndividualAccountDetails(username).getOrganization(); //replace this too
+			}
 		}
 		
 		projectService.setupProject(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, selected_banlist);

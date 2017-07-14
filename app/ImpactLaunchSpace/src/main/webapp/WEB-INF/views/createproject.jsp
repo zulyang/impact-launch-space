@@ -224,10 +224,12 @@
 										List</label>
 									<div class="col-sm-9">
 										<select class="js-example-basic-multiple-banlistusers"
-											multiple="multiple" name="selected_banlist" required>
+											multiple="multiple" name="selected_banlist">
 											<c:forEach items="${user_list}" var="item">
-												<option value="${item}">${item}</option>
-											</c:forEach>
+												<c:if test="${item.equals(username) == false}">
+													<option value="${item}">${item}</option>
+												</c:if>
+																							</c:forEach>
 										</select> <br>
 									</div>
 								</div>

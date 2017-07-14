@@ -375,6 +375,8 @@ public class LoginController {
 				}
 
 				if (isFirstTimeLogin == false) {
+					
+					request.getSession().setAttribute("username", username);
 					if (userType.equals("organization")) {
 						// add a cookie to the response.
 						if (c != null) {
@@ -415,6 +417,8 @@ public class LoginController {
 					// obtain
 					model.addAttribute("country_list", profileService.retrieveCountryList());
 					model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
+					request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
+					request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());		
 
 					if (userType.equals("organization")) {
 						if (c != null) {
