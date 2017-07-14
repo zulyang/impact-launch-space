@@ -1,15 +1,92 @@
-<nav role="navigation" class="navbar navbar-default">
-	<div class="">
-		<a href="http://www.in28minutes.com" class="navbar-brand">in28Minutes</a>
-	</div>
-	<div class="navbar-collapse">
-		<ul class="nav navbar-nav">
-			<li><a href="/">Home</a></li>
-			<li class="active"><a href="/list-todos">Todos</a></li>
-			
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="/logout">Logout</a></li>
-		</ul>
-	</div>
-</nav>
+				<nav class="navbar navbar-default navbar-fixed-top profileNav">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#"> <img
+							alt="ImpactLaunch.Space" id="logoLoggedIn"
+							src="<%=request.getContextPath()%>/resources/img/logo2.png">
+						</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse"
+						id="bs-example-navbar-collapse-1">
+						<form class="navbar-form navbar-left">
+							<div class="input-group">
+  								  <input type="text" class="form-control" placeholder="Search">
+  								  <div class="input-group-btn">
+   									   <button class="btn btn-default" type="submit">Search</button>
+  								  </div>
+  							</div>
+						</form>
+
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Projects <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">One more separated link</a></li>
+								</ul></li>
+								
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Resources <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">One more separated link</a></li>
+								</ul></li>
+								</ul>
+								<ul class="nav navbar-nav navbar-right">
+							<li class=""><a class="navbar-brand" href="#">
+									<i class="fa fa-home homeIcon"></i>
+							</a></li>
+							
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/alerts"> 
+									<i class="fa fa-bell alertsIcon"></i>
+							</a></li>
+							
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/chat">
+									<i class="fa fa-comments chatIcon"></i>
+							</a></li>
+							
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/profile"> <img alt="profilePicture"
+									class="profilePictureIcon"
+									src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
+							</a></li>
+							
+							<li class="profileIcons"><a class="navbar-brand"
+								href="/profile">Username</a></li>
+							
+							<li class="dropdown"><a href="#" class="navbar-brand"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+							<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Manage my Account</a></li>
+									<li><a href="#">FAQ</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="/out">Log Out</a></li>
+								</ul></li>
+								
+								
+
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid --> </nav>

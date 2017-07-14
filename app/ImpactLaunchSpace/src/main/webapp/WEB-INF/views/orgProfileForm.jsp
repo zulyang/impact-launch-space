@@ -14,6 +14,7 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
 	rel="stylesheet" />
@@ -37,7 +38,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-				<nav class="navbar navbar-default navbar-fixed-top profileNav">
+<%@include file="common/navigation.jspf" %>
 					<div class="container-fluid">
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">

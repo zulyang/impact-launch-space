@@ -25,21 +25,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-				<nav class="navbar navbar-default navbar-fixed-top landing-nav">
-					<div class="container-fluid">
-						<div class="navbar-header">
-							<a class="navbar-brand" href="/"> <img
-								alt="ImpactLaunch.Space" id="logo"
-								src="<%=request.getContextPath()%>/resources/img/logo2.png"></a>
-						</div>
-
-						<ul class="nav navbar-nav navbar-right nav_elements">
-							<li><a href="/">Home</a></li>
-							<li><a href="/login1">Sign In</a></li>
-							<li><a href="/register">Sign Up</a></li>
-						</ul>
-					</div>
-				</nav>
+<%@include file="common/navigationLogin.jspf" %>
 
 				<div class="col-lg-12 form_container">
 					<h4 class="unlockAccountMessage">Enter your verification
