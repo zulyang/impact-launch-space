@@ -6,10 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.impactlaunchspace.entity.IndividualAccount;
+import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
 
@@ -27,7 +30,7 @@ public class ProjectController {
 	
 	//Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
-	public String showCreateProjectPage(HttpServletRequest request) {
+	public String showCreateProjectPage(HttpServletRequest request, ModelMap model) {
 		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("resource_category_list", profileService.retrieveSkillsetList());
@@ -37,6 +40,24 @@ public class ProjectController {
 		profileService.retrieveJobSectorList();
 		profileService.retrieveSkillsetList();
 		
+		IndividualAccount indi = (IndividualAccount)request.getSession().getAttribute("individual");
+		IndividualAccount org = (IndividualAccount)request.getSession().getAttribute("organization");
+		
+		String indi_org = ""; 
+		
+		String user_type = "";
+		if(indi == null) {
+			user_type = "org";
+		} else {
+			user_type = "indi";
+			indi_org = indi.getOrganization();
+		}
+		
+		model.addAttribute("user_type", user_type);
+		System.out.println("indi: " + indi);
+		System.out.println("indi_org: " + indi_org);
+		System.out.println("org: " + org);
+		System.out.println("usertype: " + user_type);
 		
 		return "createproject";
 	}

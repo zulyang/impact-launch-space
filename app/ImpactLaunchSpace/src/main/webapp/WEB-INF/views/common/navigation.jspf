@@ -69,7 +69,7 @@
 							</a></li>
 							
 							<li class="profileIcons"><a class="navbar-brand"
-								href="/profile">Username</a></li>
+								href="/profile">${username}</a></li>
 							
 							<li class="dropdown"><a href="#" class="navbar-brand"
 								data-toggle="dropdown" aria-haspopup="true"
@@ -80,7 +80,7 @@
 									<li><a href="#">Manage my Account</a></li>
 									<li><a href="#">FAQ</a></li>
 									<li role="separator" class="divider"></li>
-									<li><a href="/out">Log Out</a></li>
+									<li><a href="/logout">Log Out</a></li>
 								</ul></li>
 								
 								
