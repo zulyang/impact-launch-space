@@ -131,7 +131,7 @@
 								</form>
 							</div>
 
-							<form onsubmit="checkFields3()"
+							<form onsubmit="return checkFields();"
 								class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
@@ -348,11 +348,11 @@
 											<c:choose>
 												<c:when
 													test="${jobSectorIndividual3_string.equals(item.getJob_sector())}">
-													<option id="jsIndi3AValue" value="${item.getJob_sector()}"
+													<option value="${item.getJob_sector()}"
 														selected="selected">${item.getJob_sector()}</option>
 												</c:when>
 												<c:otherwise>
-													<option id="jsIndi3BValue" value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -370,7 +370,7 @@
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
-											<option id="jsIndi3CValue" value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+											<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 
 										</c:forEach>
 									</select>
@@ -442,11 +442,11 @@
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input onclick="checkFields()"
-								class="btn btn-success edit_org_profile_save" type="submit"
+							<input class="btn btn-success edit_org_profile_save" type="submit"
 								value="Update details" />
 						</div>
 					</div>
+			
 					<br>
 					</form>
 					<h4>
@@ -463,36 +463,53 @@
 	<script type="text/javascript">
 		function checkFields() {
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
-			if (jsIndi2A !== null) {
+			console.log("2A: " + jsIndi2A);
+			if(jsIndi2A !== null) {
 				console.log("2a: " + jsIndi2A.value);
-				var jsIndiEx2A = document.getElementById("js2experienceA");
-				console.log("js indi xperience value 2A: " + jsIndiEx2A);
-				change('js2experienceA', 'required');
-			} else {
-				var jsIndiEx2B = document.getElementById("js2experienceB");
-				console.log("js indi xperience value 2B: " + jsIndiEx2B);
-				change('js2experienceB', 'required');
+			}
+			
+			var jsIndi2B = document.getElementById("jsIndi2bValue");
+			console.log("2B: " + jsIndi2B);
+			
+			var jsIndiEx2B = document.getElementById("js2experienceB");
+			
+			if (jsIndi2B !== null) {
+				console.log("2b: " + jsIndi2B.value);
+				if(jsIndi2B.value !== "" && jsIndiEx2B.value === "") {
+					console.log("js indi xperience value 2B: " + jsIndiEx2B.value);
+					change('js2experienceB', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
 			}
 
 			console.log("BREAK -------------------");
-
+			
 			var jsIndi3A = document.getElementById("jsIndi3aValue");
-			if (jsIndi3A !== null) {
+			console.log("3A: " + jsIndi3A);
+			if(jsIndi3A !== null) {
 				console.log("3a: " + jsIndi3A.value);
-				var jsIndiEx3A = document.getElementById("js3experienceA");
-				console.log("js indi xperience value 3A: " + jsIndiEx3A);
-				change('js3experienceA', 'required');
-			} else {
-				var jsIndiEx3B = document.getElementById("js3experienceB");
-				console.log("js indi xperience value 3B: " + jsIndiEx3B);
-				change('js3experienceB', 'required');
+			}
+			
+			var jsIndi3B = document.getElementById("jsIndi3bValue");
+			console.log("3B: " + jsIndi3B);
+				
+			var jsIndiEx3B = document.getElementById("js3experienceB");
+			
+			if (jsIndi3B !== null) {
+				console.log("3b: " + jsIndi3B.value);
+				if(jsIndi3B.value !== "" && jsIndiEx3B.value === "") {
+					console.log("js indi xperience value 3B: " + jsIndiEx3B.value);
+					change('js3experienceB', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
 			}
 
-			return false;
+			return true;
 		}
 
 		function change(id, newClass) {
-			console.log("in change function");
 			identity = document.getElementById(id);
 			identity.required = true;
 		}
