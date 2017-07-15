@@ -46,15 +46,16 @@ public class JdbcProjectTargetAreaDAO implements ProjectTargetAreaDAO {
 		}
 	}
 
-	public ArrayList<ProjectTargetArea> retrieveProjectTargetAreas(String project_name){
+	public ArrayList<ProjectTargetArea> retrieveProjectTargetAreas(String project_name, String project_proposer){
 		ArrayList<ProjectTargetArea> output = new ArrayList<ProjectTargetArea>();
 
-		String sql = "SELECT * FROM PROJECT_TARGET_AREAS WHERE project_name = ?";
+		String sql = "SELECT * FROM PROJECT_TARGET_AREAS WHERE project_name = ? AND project_proposer = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
 			ProjectTargetArea projectTargetArea = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {

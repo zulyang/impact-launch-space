@@ -56,13 +56,14 @@ public class JdbcProjectDAO implements ProjectDAO {
 		}
 	}
 
-	public Project retrieveProject(String project_name) {
-		String sql = "SELECT * FROM PROJECTS WHERE PROJECT_NAME = ?";
+	public Project retrieveProject(String project_name, String project_proposer) {
+		String sql = "SELECT * FROM PROJECTS WHERE PROJECT_NAME = ? AND PROJECT_PROPOSER = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
 			Project project = null;
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {

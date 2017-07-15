@@ -10,18 +10,21 @@ import org.springframework.stereotype.Service;
 
 import com.impactlaunchspace.dao.ProjectBanListDAO;
 import com.impactlaunchspace.dao.ProjectDAO;
+import com.impactlaunchspace.dao.ProjectTargetAreaDAO;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectBanList;
+import com.impactlaunchspace.entity.ProjectTargetArea;
 
 @Service
 public class ProjectService {
 
 	public void setupProject(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
-			boolean hiddenToAll, String project_status, ArrayList<String> project_banlist) {
+			boolean hiddenToAll, String project_status, ArrayList<String> project_banlist,ArrayList<String> selected_projectareas) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
 		ProjectBanListDAO projectBanListDAO = (ProjectBanListDAO) context.getBean("projectBanListDAO");
+		ProjectTargetAreaDAO projectTargetAreaDAO = (ProjectTargetAreaDAO) context.getBean("projectTargetAreaDAO");
 
 		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
@@ -33,6 +36,22 @@ public class ProjectService {
 			projectBanListDAO.insert(new ProjectBanList(project_name, ban_username, project_proposer));
 		}
 		
+		for (String target_area : selected_projectareas) {
+			projectTargetAreaDAO.insert(new ProjectTargetArea(project_name, target_area, project_proposer));
+		}
+		
+	}
+	
+	public Project retrieveProject(String project_name, String project_proposer) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
+		return projectDAO.retrieveProject(project_name, project_proposer);
+	}
+	
+	public ArrayList<ProjectTargetArea> retrieveTargetProjectAreas(String project_name, String project_proposer) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectTargetAreaDAO projectTargetAreaDAO = (ProjectTargetAreaDAO) context.getBean("projectTargetAreaDAO");
+		return projectTargetAreaDAO.retrieveProjectTargetAreas(project_name, project_proposer);
 	}
 
 }
