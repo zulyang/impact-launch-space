@@ -56,6 +56,7 @@ public class ProjectController {
 		}
 
 		model.addAttribute("user_type", user_type);
+		model.addAttribute("indi_org", indi_org);
 		System.out.println("indi: " + indi);
 		System.out.println("indi_org: " + indi_org);
 		System.out.println("org: " + org);
