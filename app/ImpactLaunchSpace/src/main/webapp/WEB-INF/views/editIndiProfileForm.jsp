@@ -14,7 +14,8 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script
@@ -34,81 +35,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
-
-<!--navigation bar  -->
-<%@include file="common/navigation.jspf" %>
-				<div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-						<a class="navbar-brand" href="index.jsp"> <img
-							alt="ImpactLaunch.Space" id="logoLoggedIn"
-							src="<%=request.getContextPath()%>/resources/img/logo2.png">
-						</a>
-					</div>
-
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse"
-						id="bs-example-navbar-collapse-1">
-						<form class="navbar-form navbar-left">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Search">
-							</div>
-						</form>
-						<ul class="nav navbar-nav">
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Projects <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">One more separated link</a></li>
-								</ul></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Resources <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">One more separated link</a></li>
-								</ul></li>
-							<li class=""><a class="navbar-brand" href="/index"> <img
-									alt="home" class="homeIcon"
-									src="<%=request.getContextPath()%>/resources/img/homeIcon.png">
-							</a></li>
-							<li class="profileIcons"><a class="navbar-brand"
-								href="/alerts"> <img alt="alerts" class="alertsIcon"
-									src="<%=request.getContextPath()%>/resources/img/bellIcon.png">
-							</a></li>
-							<li class="profileIcons"><a class="navbar-brand"
-								href="/chat"> <img alt="chat" class="chatIcon"
-									src="<%=request.getContextPath()%>/resources/img/chatIcon.png">
-							</a></li>
-							<li class="profileIcons"><a class="navbar-brand"
-								href="/profile"> <img alt="profilePicture"
-									class="profilePictureIcon"
-									src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
-							</a></li>
-							<li class="profileIcons"><a class="navbar-brand"
-								href="/profile">Username</a></li>
-							<li class="profileIcons"><a class="navbar-brand"
-								href="/options"> <img alt="moreOptions"
-									class="moreOptionsIcon"
-									src="<%=request.getContextPath()%>/resources/img/3dotsIcon.png">
-							</a></li>
-
-						</ul>
-					</div>
-					<!-- /.navbar-collapse -->
-				</div>
-				<!-- /.container-fluid --> </nav>
+				<!--navigation bar  -->
+				<%@include file="common/navigation.jspf"%>
 				<div class="edit_ind_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit Individual Profile Form</div>
@@ -348,8 +276,7 @@
 											<c:choose>
 												<c:when
 													test="${jobSectorIndividual3_string.equals(item.getJob_sector())}">
-													<option value="${item.getJob_sector()}"
-														selected="selected">${item.getJob_sector()}</option>
+													<option value="${item.getJob_sector()}" selected="selected">${item.getJob_sector()}</option>
 												</c:when>
 												<c:otherwise>
 													<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
@@ -442,11 +369,11 @@
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input class="btn btn-success edit_org_profile_save" type="submit"
-								value="Update details" />
+							<input class="btn btn-success edit_org_profile_save"
+								type="submit" value="Update details" />
 						</div>
 					</div>
-			
+<input class="btn btn-success edit_org_profile_save" value="check values" onclick="return checkFields();s"/>
 					<br>
 					</form>
 					<h4>
@@ -464,44 +391,100 @@
 		function checkFields() {
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
 			console.log("2A: " + jsIndi2A);
-			if(jsIndi2A !== null) {
-				console.log("2a: " + jsIndi2A.value);
-			}
 			
+			var jsIndiEx2A = document.getElementById("js2experienceA");
+			
+			if (jsIndi2A !== null) {
+				console.log("2a: " + jsIndi2A.value);
+				
+				if(jsIndi2A.value !== "" && jsIndiEx2A.value === ""){
+					console.log("js indi xperience value 2A: "
+							+ jsIndiEx2A.value);
+					change('js2experienceA', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+				
+				if (jsIndi2A.value === "" && jsIndiEx2A.value !== "") {
+					console.log("js indi xperience value 2A: "
+							+ jsIndiEx2A.value);
+					change('jsIndi2aValue', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
+					return false;
+				}
+			}
+
 			var jsIndi2B = document.getElementById("jsIndi2bValue");
 			console.log("2B: " + jsIndi2B);
-			
+
 			var jsIndiEx2B = document.getElementById("js2experienceB");
-			
+
 			if (jsIndi2B !== null) {
 				console.log("2b: " + jsIndi2B.value);
-				if(jsIndi2B.value !== "" && jsIndiEx2B.value === "") {
-					console.log("js indi xperience value 2B: " + jsIndiEx2B.value);
+				if (jsIndi2B.value !== "" && jsIndiEx2B.value === "") {
+					console.log("js indi xperience value 2B: "
+							+ jsIndiEx2B.value);
 					change('js2experienceB', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+				
+				if (jsIndi2B.value === "" && jsIndiEx2B.value !== "") {
+					console.log("js indi xperience value 2B: "
+							+ jsIndiEx2B.value);
+					change('jsIndi2bValue', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 			}
 
 			console.log("BREAK -------------------");
-			
+
 			var jsIndi3A = document.getElementById("jsIndi3aValue");
 			console.log("3A: " + jsIndi3A);
-			if(jsIndi3A !== null) {
-				console.log("3a: " + jsIndi3A.value);
-			}
 			
+			var jsIndiEx3A = document.getElementById("js3experienceA");
+			
+			if (jsIndi3A !== null) {
+				console.log("3a: " + jsIndi3A.value);
+				
+				if(jsIndi3A.value !== "" && jsIndiEx3A.value === ""){
+					console.log("js indi xperience value 3A: "
+							+ jsIndiEx3A.value);
+					change('js3experienceA', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
+					return false;
+				}
+				
+				if (jsIndi3A.value === "" && jsIndiEx3A.value !== "") {
+					console.log("js indi xperience value 3A: "
+							+ jsIndiEx3A.value);
+					change('jsIndi3aValue', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+			}
+
 			var jsIndi3B = document.getElementById("jsIndi3bValue");
 			console.log("3B: " + jsIndi3B);
-				
+
 			var jsIndiEx3B = document.getElementById("js3experienceB");
-			
+
 			if (jsIndi3B !== null) {
 				console.log("3b: " + jsIndi3B.value);
-				if(jsIndi3B.value !== "" && jsIndiEx3B.value === "") {
-					console.log("js indi xperience value 3B: " + jsIndiEx3B.value);
+				if (jsIndi3B.value !== "" && jsIndiEx3B.value === "") {
+					console.log("js indi xperience value 3B: "
+							+ jsIndiEx3B.value);
 					change('js3experienceB', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+				
+				if (jsIndi3B.value === "" && jsIndiEx3B.value !== "") {
+					console.log("js indi xperience value 3B: "
+							+ jsIndiEx3B.value);
+					change('jsIndi3bValue', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 			}
