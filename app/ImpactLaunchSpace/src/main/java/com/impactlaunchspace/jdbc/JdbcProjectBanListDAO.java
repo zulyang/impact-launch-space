@@ -46,15 +46,16 @@ public class JdbcProjectBanListDAO implements ProjectBanListDAO {
 		}
 	}
 
-	public ArrayList<ProjectBanList> retrieveProjectBanList(String project_name) {
+	public ArrayList<ProjectBanList> retrieveProjectBanList(String project_name, String project_proposer) {
 		ArrayList<ProjectBanList> output = new ArrayList<ProjectBanList>();
 
-		String sql = "SELECT * FROM PROJECT_BAN_LIST WHERE project_name = ?";
+		String sql = "SELECT * FROM PROJECT_BAN_LIST WHERE project_name = ? and project_proposer = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
 			ProjectBanList projectBanList = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -66,6 +67,31 @@ public class JdbcProjectBanListDAO implements ProjectBanListDAO {
 			return output;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	public void deleteProjectBanList(String project_name, String project_proposer){
+		String sql = "DELETE FROM PROJECT_BAN_LIST WHERE project_name = ? AND project_proposer = ?";
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
 		} finally {
 			if (conn != null) {
 				try {

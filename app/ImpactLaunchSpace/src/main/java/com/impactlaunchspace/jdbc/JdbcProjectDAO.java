@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.impactlaunchspace.dao.ProjectDAO;
-import com.impactlaunchspace.entity.Country;
 import com.impactlaunchspace.entity.Project;
 
 public class JdbcProjectDAO implements ProjectDAO {
@@ -155,4 +157,43 @@ public class JdbcProjectDAO implements ProjectDAO {
 			}
 		}
 	}
+	
+	public void updateProject(String project_name, String description, String purpose, int duration,
+			String location, boolean isPublic, boolean hiddenToOutsiders, boolean hiddenToAll,
+			String old_project_name, String project_proposer){
+		String sql = "UPDATE PROJECTS SET "
+				+ "project_name = ?,  description = ?, purpose = ?, duration = ?, location = ?, isPublic = ?, hiddenToOutsiders = ?, hiddenToAll = ? WHERE project_name = ? AND project_proposer = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, description);
+			ps.setString(3, purpose);
+			ps.setInt(4, duration);
+			ps.setString(5, location);
+			ps.setBoolean(6, isPublic);
+			ps.setBoolean(7, hiddenToOutsiders);
+			ps.setBoolean(8, hiddenToAll);
+			ps.setString(9, old_project_name);
+			ps.setString(10, project_proposer);
+			ps.executeUpdate();
+			ps.close();
+
+			// update documents table
+			ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	
 }

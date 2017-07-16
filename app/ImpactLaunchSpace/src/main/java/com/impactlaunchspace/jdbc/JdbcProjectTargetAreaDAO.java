@@ -76,4 +76,30 @@ public class JdbcProjectTargetAreaDAO implements ProjectTargetAreaDAO {
 			}
 		}
 	}
+	
+	public void deleteProjectTargetAreas(String project_name, String project_proposer){
+		String sql = "DELETE FROM PROJECT_TARGET_AREAS WHERE project_name = ? AND project_proposer = ?";
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
 }

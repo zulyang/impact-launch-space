@@ -109,7 +109,6 @@ public class ProfileController {
 		// editing
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
-		
 
 		ArrayList<CountryOfOperation> coos = profileService
 				.retrieveCountriesOfOperations((String) request.getSession().getAttribute("username"));
@@ -149,8 +148,9 @@ public class ProfileController {
 			@RequestParam String firstName, @RequestParam String lastName, @RequestParam String country,
 			@RequestParam String organization, @RequestParam String jobSector1, @RequestParam int js1Years,
 			@RequestParam Date dateOfBirth, @RequestParam String jobTitle, @RequestParam boolean isPublicProfile,
-			@RequestParam String jobSector2, @RequestParam String js2Years, @RequestParam String jobSector3,
-			@RequestParam String js3Years, @RequestParam ArrayList<String> selected_skillsets,
+			@RequestParam(required = false) String jobSector2, @RequestParam(required = false) String js2Years,
+			@RequestParam(required = false) String jobSector3, @RequestParam(required = false) String js3Years,
+			@RequestParam ArrayList<String> selected_skillsets,
 			@RequestParam ArrayList<String> selected_preferredjobsectors,
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam int minimumHours,
 			@RequestParam int maximumHours, @RequestParam ArrayList<String> selected_preferredcountries,
@@ -308,71 +308,83 @@ public class ProfileController {
 		request.getSession().setAttribute("skillset_list", profileService.retrieveSkillsetList());
 		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
-		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());		
-		
-		//sets up individual user's current skills to be shown in edit page
-		ArrayList<UserSkill> userskills = profileService.retrieveAllSkillsOfUser(((String) request.getSession().getAttribute("username")));
+		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
+
+		// sets up individual user's current skills to be shown in edit page
+		ArrayList<UserSkill> userskills = profileService
+				.retrieveAllSkillsOfUser(((String) request.getSession().getAttribute("username")));
 		ArrayList<String> individual_userskill_list = new ArrayList<String>();
 		for (UserSkill userskill : userskills) {
 			individual_userskill_list.add(userskill.getSkillset());
 		}
-		
-		//sets up individual user's current preferred countries to be shown in edit page
-		ArrayList<PreferredCountry> preferredCountries = profileService.retrievePreferredCountries(((String) request.getSession().getAttribute("username")));
+
+		// sets up individual user's current preferred countries to be shown in
+		// edit page
+		ArrayList<PreferredCountry> preferredCountries = profileService
+				.retrievePreferredCountries(((String) request.getSession().getAttribute("username")));
 		ArrayList<String> individual_preferredcountry_list = new ArrayList<String>();
 		for (PreferredCountry preferredCountry : preferredCountries) {
 			individual_preferredcountry_list.add(preferredCountry.getCountry_name());
 		}
-		
-		//sets up individual user's current preferred project areas to be shown in edit page
-		ArrayList<PreferredProjectArea> preferredProjectAreas = profileService.retrievePreferredProjectArea(((String) request.getSession().getAttribute("username")));
+
+		// sets up individual user's current preferred project areas to be shown
+		// in edit page
+		ArrayList<PreferredProjectArea> preferredProjectAreas = profileService
+				.retrievePreferredProjectArea(((String) request.getSession().getAttribute("username")));
 		ArrayList<String> individual_preferredprojectarea_list = new ArrayList<String>();
 		for (PreferredProjectArea preferredProjectArea : preferredProjectAreas) {
 			individual_preferredprojectarea_list.add(preferredProjectArea.getProject_area());
 		}
-		
-		//sets up individual user's current preferred job sectors to be shown in edit page
-		ArrayList<PreferredJobSector> preferredJobSectors = profileService.retrievePreferredJobSectors(((String) request.getSession().getAttribute("username")));
+
+		// sets up individual user's current preferred job sectors to be shown
+		// in edit page
+		ArrayList<PreferredJobSector> preferredJobSectors = profileService
+				.retrievePreferredJobSectors(((String) request.getSession().getAttribute("username")));
 		ArrayList<String> individual_preferredjobsector_list = new ArrayList<String>();
 		for (PreferredJobSector preferredJobSector : preferredJobSectors) {
 			individual_preferredjobsector_list.add(preferredJobSector.getJob_sector());
 		}
 
-		//sets up individual user's current expertise in job sectors to be shown in edit page
-		ArrayList<JobSectorIndividual> jobSectorsIndividual = profileService.retrieveIndividualJobSectors(((String) request.getSession().getAttribute("username")));
-		
-		for(int i = 0; i < 3; i++){
-			if(i == 0){
-				if(jobSectorsIndividual.get(0)!=null){
+		// sets up individual user's current expertise in job sectors to be
+		// shown in edit page
+		ArrayList<JobSectorIndividual> jobSectorsIndividual = profileService
+				.retrieveIndividualJobSectors(((String) request.getSession().getAttribute("username")));
+
+		for (int i = 0; i < 3; i++) {
+			if (i == 0) {
+				if (jobSectorsIndividual.get(0) != null) {
 					request.getSession().setAttribute("jobSectorIndividual1", jobSectorsIndividual.get(0));
-					request.getSession().setAttribute("jobSectorIndividual1_string", jobSectorsIndividual.get(0).getJob_sector());
+					request.getSession().setAttribute("jobSectorIndividual1_string",
+							jobSectorsIndividual.get(0).getJob_sector());
 				}
-				
+
 			}
-			
-			if(i == 1){
-				if(jobSectorsIndividual.size() > 1){
+
+			if (i == 1) {
+				if (jobSectorsIndividual.size() > 1) {
 					request.getSession().setAttribute("jobSectorIndividual2", jobSectorsIndividual.get(1));
-					request.getSession().setAttribute("jobSectorIndividual2_string", jobSectorsIndividual.get(1).getJob_sector());
+					request.getSession().setAttribute("jobSectorIndividual2_string",
+							jobSectorsIndividual.get(1).getJob_sector());
 				}
 			}
-			
-			if(i == 2){
-				if(jobSectorsIndividual.size() > 2){
+
+			if (i == 2) {
+				if (jobSectorsIndividual.size() > 2) {
 					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividual.get(2));
-					request.getSession().setAttribute("jobSectorIndividual3_string", jobSectorsIndividual.get(2).getJob_sector());
+					request.getSession().setAttribute("jobSectorIndividual3_string",
+							jobSectorsIndividual.get(2).getJob_sector());
 
 				}
 			}
 		}
 
 		request.getSession().setAttribute("individual_preferredjobsector_list", individual_preferredjobsector_list);
-		request.getSession().setAttribute("individual_preferredprojectarea_list",individual_preferredprojectarea_list);
+		request.getSession().setAttribute("individual_preferredprojectarea_list", individual_preferredprojectarea_list);
 		request.getSession().setAttribute("individual_preferredcountry_list", individual_preferredcountry_list);
 		request.getSession().setAttribute("individual_userskill_list", individual_userskill_list);
-		
-		
-		request.getSession().setAttribute("jobSectorsIndividual", profileService.retrieveIndividualJobSectors(individual.getUsername()));
+
+		request.getSession().setAttribute("jobSectorsIndividual",
+				profileService.retrieveIndividualJobSectors(individual.getUsername()));
 		return "/editIndiProfileForm";
 	}
 
@@ -380,11 +392,15 @@ public class ProfileController {
 	public String processUpdateIndividualProfile(@RequestParam String firstName, @RequestParam String lastName,
 			@RequestParam String jobTitle, @RequestParam String organization, @RequestParam String country,
 			@RequestParam String contactDetails, @RequestParam String personalBio, @RequestParam Date dateOfBirth,
-			@RequestParam int minimumVolunteerHours, @RequestParam int maximumVolunteerHours, @RequestParam ArrayList<String> selected_skillsets,
-			@RequestParam ArrayList<String> selected_preferredcountries,@RequestParam ArrayList<String> selected_preferredprojectareas,
-			@RequestParam ArrayList<String> selected_preferredjobsectors, @RequestParam String selected_jobsector1,@RequestParam String selected_jobsector1_years,
-			@RequestParam String selected_jobsector2,@RequestParam String selected_jobsector2_years,
-			@RequestParam String selected_jobsector3,@RequestParam String selected_jobsector3_years, HttpServletRequest request) {
+			@RequestParam int minimumVolunteerHours, @RequestParam int maximumVolunteerHours,
+			@RequestParam ArrayList<String> selected_skillsets,
+			@RequestParam ArrayList<String> selected_preferredcountries,
+			@RequestParam ArrayList<String> selected_preferredprojectareas,
+			@RequestParam ArrayList<String> selected_preferredjobsectors, @RequestParam String selected_jobsector1,
+			@RequestParam String selected_jobsector1_years, @RequestParam(required = false) String selected_jobsector2,
+			@RequestParam(required = false) String selected_jobsector2_years,
+			@RequestParam(required = false) String selected_jobsector3,
+			@RequestParam(required = false) String selected_jobsector3_years, HttpServletRequest request) {
 		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
 		String username = individual.getUsername();
 		String email = individual.getEmail();
@@ -394,105 +410,114 @@ public class ProfileController {
 				maximumVolunteerHours, organization, individual.isPublicProfile(), individual.getProfilePicture(),
 				personalBio, contactDetails, individual.getDocumentList());
 		profileService.updateIndividualAccount(updatedIndividualAccount, username);
-		
-		
+
 		ArrayList<PreferredJobSector> updated_preferredjobsector_individual = new ArrayList<PreferredJobSector>();
 
 		for (String preferredJobSector : selected_preferredjobsectors) {
 			updated_preferredjobsector_individual.add(new PreferredJobSector(preferredJobSector, username));
 			System.out.println(preferredJobSector);
 		}
-		
+
 		ArrayList<PreferredProjectArea> updated_preferredprojectarea_individual = new ArrayList<PreferredProjectArea>();
 
 		for (String preferredProjectArea : selected_preferredprojectareas) {
 			updated_preferredprojectarea_individual.add(new PreferredProjectArea(preferredProjectArea, username));
 		}
-		
+
 		ArrayList<PreferredCountry> updated_preferredcountries_individual = new ArrayList<PreferredCountry>();
 
 		for (String preferredCountry : selected_preferredcountries) {
 			updated_preferredcountries_individual.add(new PreferredCountry(preferredCountry, username));
 		}
-		
+
 		ArrayList<UserSkill> updated_skillsets_individual = new ArrayList<UserSkill>();
 
 		for (String userSkill : selected_skillsets) {
 			updated_skillsets_individual.add(new UserSkill(userSkill, username));
 		}
-		
+
 		ArrayList<JobSectorIndividual> jobSectorsIndividual = profileService.retrieveIndividualJobSectors(username);
-		
+
 		JobSectorIndividual jobSectorIndividual1 = null;
 		JobSectorIndividual jobSectorIndividual2 = null;
 		JobSectorIndividual jobSectorIndividual3 = null;
-		
-		if(selected_jobsector1!=null && !selected_jobsector1.isEmpty()){
-			jobSectorIndividual1 = new JobSectorIndividual(selected_jobsector1, username, Integer.parseInt(selected_jobsector1_years));
-		}
-		
-		if(selected_jobsector2!=null && !selected_jobsector2.isEmpty()){
-			jobSectorIndividual2 = new JobSectorIndividual(selected_jobsector2, username, Integer.parseInt(selected_jobsector2_years));
-		}
-		
-		if(selected_jobsector3!=null && !selected_jobsector3.isEmpty()){
-			jobSectorIndividual3 = new JobSectorIndividual(selected_jobsector3, username, Integer.parseInt(selected_jobsector3_years));
+
+		if (selected_jobsector1 != null && !selected_jobsector1.isEmpty()) {
+			jobSectorIndividual1 = new JobSectorIndividual(selected_jobsector1, username,
+					Integer.parseInt(selected_jobsector1_years));
 		}
 
-		
-		profileService.updateMultipleFieldsIndividual(username, jobSectorIndividual1, jobSectorIndividual2, jobSectorIndividual3, updated_preferredcountries_individual, updated_preferredjobsector_individual, updated_preferredprojectarea_individual, updated_skillsets_individual);
-		
+		if (selected_jobsector2 != null && !selected_jobsector2.isEmpty()) {
+			jobSectorIndividual2 = new JobSectorIndividual(selected_jobsector2, username,
+					Integer.parseInt(selected_jobsector2_years));
+		}
+
+		if (selected_jobsector3 != null && !selected_jobsector3.isEmpty()) {
+			jobSectorIndividual3 = new JobSectorIndividual(selected_jobsector3, username,
+					Integer.parseInt(selected_jobsector3_years));
+		}
+
+		profileService.updateMultipleFieldsIndividual(username, jobSectorIndividual1, jobSectorIndividual2,
+				jobSectorIndividual3, updated_preferredcountries_individual, updated_preferredjobsector_individual,
+				updated_preferredprojectarea_individual, updated_skillsets_individual);
+
 		// change the session attributes
-		ArrayList<JobSectorIndividual> jobSectorsIndividualSession = profileService.retrieveIndividualJobSectors(((String) request.getSession().getAttribute("username")));
-		
-		for(int i = 0; i < 3; i++){
-			if(i == 0){
-				if(jobSectorsIndividualSession.get(0)!=null){
+		ArrayList<JobSectorIndividual> jobSectorsIndividualSession = profileService
+				.retrieveIndividualJobSectors(((String) request.getSession().getAttribute("username")));
+
+		for (int i = 0; i < 3; i++) {
+			if (i == 0) {
+				if (jobSectorsIndividualSession.get(0) != null) {
 					request.getSession().setAttribute("jobSectorIndividual1", jobSectorsIndividualSession.get(0));
-					request.getSession().setAttribute("jobSectorIndividual1_string", jobSectorsIndividualSession.get(0).getJob_sector());
+					request.getSession().setAttribute("jobSectorIndividual1_string",
+							jobSectorsIndividualSession.get(0).getJob_sector());
 
 				}
-				
+
 			}
-			
-			if(i == 1){
-				if(jobSectorsIndividualSession.size() > 1){
+
+			if (i == 1) {
+				if (jobSectorsIndividualSession.size() > 1) {
 					request.getSession().setAttribute("jobSectorIndividual2", jobSectorsIndividualSession.get(1));
-					request.getSession().setAttribute("jobSectorIndividual2_string", jobSectorsIndividualSession.get(1).getJob_sector());
+					request.getSession().setAttribute("jobSectorIndividual2_string",
+							jobSectorsIndividualSession.get(1).getJob_sector());
 
 				}
 			}
-			
-			if(i == 2){
-				if(jobSectorsIndividualSession.size() > 2){
+
+			if (i == 2) {
+				if (jobSectorsIndividualSession.size() > 2) {
 					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividualSession.get(2));
-					request.getSession().setAttribute("jobSectorIndividual3_string", jobSectorsIndividualSession.get(2).getJob_sector());
-					
+					request.getSession().setAttribute("jobSectorIndividual3_string",
+							jobSectorsIndividualSession.get(2).getJob_sector());
+
 				}
 			}
-			
-			if(jobSectorsIndividualSession.size() == 1){
+
+			if (jobSectorsIndividualSession.size() == 1) {
 				request.getSession().removeAttribute("jobSectorIndividual2");
 				request.getSession().removeAttribute("jobSectorIndividual2_string");
 				request.getSession().removeAttribute("jobSectorIndividual3");
 				request.getSession().removeAttribute("jobSectorIndividual3_string");
-				
+
 			}
-			
-			if(jobSectorsIndividualSession.size() == 2){
+
+			if (jobSectorsIndividualSession.size() == 2) {
 				request.getSession().removeAttribute("jobSectorIndividual3");
 				request.getSession().removeAttribute("jobSectorIndividual3_string");
-				
+
 			}
 
 		}
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		request.getSession().setAttribute("jobSectorsIndividual",profileService.retrieveIndividualJobSectors(username));
-		request.getSession().setAttribute("preferredProjectArea",profileService.retrievePreferredProjectArea(username));
-		request.getSession().setAttribute("preferredCountries",profileService.retrievePreferredCountries(username));
-		request.getSession().setAttribute("preferredJobSectors",profileService.retrievePreferredJobSectors(username));
-		request.getSession().setAttribute("userSkills",profileService.retrieveAllSkillsOfUser(username));
-		
+		request.getSession().setAttribute("jobSectorsIndividual",
+				profileService.retrieveIndividualJobSectors(username));
+		request.getSession().setAttribute("preferredProjectArea",
+				profileService.retrievePreferredProjectArea(username));
+		request.getSession().setAttribute("preferredCountries", profileService.retrievePreferredCountries(username));
+		request.getSession().setAttribute("preferredJobSectors", profileService.retrievePreferredJobSectors(username));
+		request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username));
+
 		return "individualProfileDisplay";
 	}
 

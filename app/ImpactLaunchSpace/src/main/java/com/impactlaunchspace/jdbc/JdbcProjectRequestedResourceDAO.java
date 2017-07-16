@@ -49,15 +49,17 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 		}
 	}
 	
-	public ArrayList<ProjectRequestedResource> retrieveProjectRequestedResource(String project_name, String resource_category){
+	public ArrayList<ProjectRequestedResource> retrieveProjectRequestedResource(String project_name, String resource_category, String project_proposer){
 		ArrayList<ProjectRequestedResource> output = new ArrayList<ProjectRequestedResource>();
 
-		String sql = "SELECT * FROM PROJECT_REQUESTED_RESOURCES WHERE project_name = ? and resource_category = ?";
+		String sql = "SELECT * FROM PROJECT_REQUESTED_RESOURCES WHERE project_name = ? and resource_category = ? and project_proposer = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, project_name);
+			ps.setString(2, resource_category);
+			ps.setString(3, project_proposer);
 			ProjectRequestedResource projectRequestedResource = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -79,4 +81,5 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			}
 		}
 	}
+	
 }

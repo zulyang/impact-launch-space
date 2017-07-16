@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create New Project</title>
+<title>Edit Your Project</title>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -60,6 +60,10 @@
 						<div>
 							<form action="edit-project"
 								onsubmit="return checkResourceFields();" method="post">
+								<input type="hidden" id="oldProjectTitle"
+											value="${sample_project.getProject_name()}"
+											name="oldProjectTitle" class="form-control">
+								
 								<div class="form-group row">
 									<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
 									<div class="col-sm-9">
@@ -99,9 +103,6 @@
 
 											</c:forEach>
 										</select>
-
-
-
 									</div>
 								</div>
 
@@ -165,7 +166,8 @@
 									<label for="projectDescription" class="col-sm-3 col-form-label">Project
 										Description</label>
 									<div class="col-sm-9">
-										<input type="text" id="projectDescription" value="${ sample_project.getDescription()}"
+										<input type="text" id="projectDescription"
+											value="${ sample_project.getDescription()}"
 											name="projectDescription" class="form-control"
 											placeholder="A short summary of project">
 									</div>
@@ -175,11 +177,39 @@
 									<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
 										Privacy</label>
 									<div class="col-sm-9" style="display: block; height: 34px;">
-										<input type="radio" id="projectPrivacy" value="public"
-											name="projectPrivacy" /> Public <input type="radio"
-											id="projectPrivacy" value="hidden" name="projectPrivacy" />
-										Hide from All <input type="radio" id="projectPrivacy"
-											value="private" name="projectPrivacy" /> Hide from Outsiders
+										<c:choose>
+											<c:when test="${sample_project.isPublic() }">
+												<input type="radio" id="projectPrivacy" value="public"
+													checked name="projectPrivacy" />Public
+										</c:when>
+											<c:otherwise>
+												<input type="radio" id="projectPrivacy" value="public"
+													name="projectPrivacy" />Public
+										</c:otherwise>
+										</c:choose>
+
+										<c:choose>
+											<c:when test="${sample_project.isHiddenToAll() }">
+												<input type="radio" id="projectPrivacy" value="hidden"
+													checked name="projectPrivacy" /> Hide from All
+										</c:when>
+											<c:otherwise>
+												<input type="radio" id="projectPrivacy" value="hidden"
+													name="projectPrivacy" /> Hide from All
+										</c:otherwise>
+										</c:choose>
+
+										<c:choose>
+											<c:when test="${sample_project.isHiddenToOutsiders() }">
+												<input type="radio" id="projectPrivacy" value="private"
+													name="projectPrivacy" checked /> Hide from Outsiders
+										</c:when>
+											<c:otherwise>
+												<input type="radio" id="projectPrivacy" value="private"
+													name="projectPrivacy" /> Hide from Outsiders
+										</c:otherwise>
+										</c:choose>
+
 									</div>
 								</div>
 
@@ -187,7 +217,8 @@
 									<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
 										Duration</label>
 									<div class="col-sm-9">
-										<input type="number" id="projectDuration" value="${sample_project.getDuration() }"
+										<input type="number" id="projectDuration"
+											value="${sample_project.getDuration() }"
 											name="projectDuration" class="form-control"
 											placeholder="Number of days">
 									</div>
@@ -200,12 +231,23 @@
 									<div class="col-sm-9">
 										<select class="js-example-basic-multiple-banlistusers"
 											multiple="multiple" name="selected_banlist">
+											<option value=""></option>
 											<c:forEach items="${user_list}" var="item">
-												<c:if test="${item.equals(username) == false}">
-													<option value="${item}">${item}</option>
-												</c:if>
+												<c:choose>
+													<c:when
+														test="${project_ban_list.contains(item)}">
+														<option value="${item}"
+															selected="selected">${item}</option>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${item.equals(username) == false}">
+															<option value="${item}">${item}</option>
+														</c:if>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
-										</select> <br>
+										</select><br>
 									</div>
 								</div>
 
@@ -245,7 +287,7 @@
 
 					</div>
 					<hr>
-					<button class="btn btn-block btn-success" type="submit">Create
+					<button class="btn btn-block btn-success" type="submit">Update
 						Project</button>
 				</div>
 				</form>

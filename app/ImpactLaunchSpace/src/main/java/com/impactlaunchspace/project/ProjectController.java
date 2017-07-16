@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.impactlaunchspace.entity.IndividualAccount;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
+import com.impactlaunchspace.entity.ProjectBanList;
+import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
@@ -71,7 +73,7 @@ public class ProjectController {
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner,
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
 			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
-			@RequestParam ArrayList<String> selected_banlist, HttpServletRequest request) {
+			@RequestParam(required = false) ArrayList<String> selected_banlist, HttpServletRequest request) {
 
 		String project_name = projectTitle;
 		String description = projectDescription;
@@ -121,17 +123,20 @@ public class ProjectController {
 		request.getSession().setAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
 		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
-
+		request.getSession().setAttribute("username", "edward");
+		
 		profileService.retrieveJobSectorList();
 		profileService.retrieveSkillsetList();
 
 		IndividualAccount indi = (IndividualAccount) request.getSession().getAttribute("individual");
 		OrganizationAccount org = (OrganizationAccount) request.getSession().getAttribute("organization");
 
-		// insert dummy project to test functionality
+		// insert dummy project and username to test functionality
 		Project sampleProject = projectService.retrieveProject("Water the kids", "edward");
 		model.addAttribute("sample_project", sampleProject);
-
+		model.addAttribute("username", "edward");
+		
+		//populates the edit profile page with project areas its project areas in the DB
 		ArrayList<ProjectTargetArea> project_target_areas_objs = projectService.retrieveTargetProjectAreas("Water the kids",
 				"edward");
 		ArrayList<String> project_target_areas = new ArrayList<String>();
@@ -141,8 +146,94 @@ public class ProjectController {
 		}
 		
 		model.addAttribute("project_target_areas", project_target_areas);
-
+		
+		//populates the edit profile page with the list of banned users its banned user in the DB
+		ArrayList<ProjectBanList> project_ban_list_objs = projectService.retrieveProjectBanList("Water the kids",
+				"edward");
+		ArrayList<String> project_ban_list = new ArrayList<String>();
+		
+		for(ProjectBanList project_ban_username : project_ban_list_objs){
+			project_ban_list.add(project_ban_username.getBanned_username());
+			System.out.print(project_ban_username.getBanned_username());
+		}
+		
+	
+		model.addAttribute("project_ban_list", project_ban_list);
+		
 		return "edit-project";
 	}
+	
+	@RequestMapping(value = "/edit-project", method = RequestMethod.POST)
+	public String processEditProject(@RequestParam String oldProjectTitle, @RequestParam String projectTitle, @RequestParam String projectPurpose,
+			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectLocation, 
+			@RequestParam String projectDescription, @RequestParam String projectPrivacy, 
+			@RequestParam int projectDuration, @RequestParam(required = false) ArrayList<String> selected_banlist, 
+			HttpServletRequest request, ModelMap model) {
+		
+		String project_proposer = (String)request.getSession().getAttribute("username");
+		
+		boolean isPublic = false;
+		boolean hiddenToOutsiders = false;
+		boolean hiddenToAll = false;
+		
+		if(projectPrivacy.equals("public")){
+			isPublic = true;
+		}else if(projectPrivacy.equals("private")){
+			hiddenToOutsiders = true;
+		}else if(projectPrivacy.equals("hidden")){
+			hiddenToAll = true;
+		}
+		
+		ArrayList<ProjectBanList> updated_projectBanList = new ArrayList<ProjectBanList>();
+		if(selected_banlist != null){
+			for(String banned_username : selected_banlist){
+				updated_projectBanList.add(new ProjectBanList(projectTitle,banned_username,project_proposer));
+			}
+		}
+		
+		ArrayList<ProjectTargetArea> updated_targetAreas = new ArrayList<ProjectTargetArea>();
+		for(String project_area : selected_projectareas){
+			updated_targetAreas.add(new ProjectTargetArea(projectTitle,project_area,project_proposer));
+		}
+		
+		projectService.updateProjectDetails(projectTitle, projectDescription, projectPurpose, projectDuration, projectLocation, isPublic, hiddenToOutsiders,
+				hiddenToAll, oldProjectTitle, project_proposer, updated_projectBanList, updated_targetAreas);
+		
+		return "testSelect2";
+	}
+	
 
+	@RequestMapping(value = "/view-project", method = RequestMethod.GET)
+	public String showProjectViewPage(@RequestParam("project-name") String project_name, @RequestParam("project-proposer") String project_proposer,
+			HttpServletRequest request, ModelMap model) {
+		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
+		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
+		request.getSession().setAttribute("resource_category_list", profileService.retrieveSkillsetList());
+		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
+		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
+		request.getSession().setAttribute("username", "edward");
+		
+		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
+		ArrayList<ProjectTargetArea> projectTargetAreasObj = projectService.retrieveTargetProjectAreas(project_name, project_proposer);
+		ArrayList<String> projectTargetAreas = new ArrayList<String>();
+		
+		for(ProjectTargetArea projectTargetAreaObj : projectTargetAreasObj){
+			projectTargetAreas.add(projectTargetAreaObj.getProject_area());
+		}
+		
+		ArrayList<ProjectResourceCategory> projectResourceCategoriesObj = projectService.retrieveProjectResourceCategories(project_name, project_proposer);
+		ArrayList<String> projectResourceCategories = new ArrayList<String>();
+		ArrayList<String> projectRequestedResources = new ArrayList<String>();
+		for(ProjectResourceCategory projectResourceCategoryObj : projectResourceCategoriesObj){
+			projectResourceCategories.add(projectResourceCategoryObj.getResource_category());
+		}
+		
+		
+		
+		model.addAttribute("project_target_areas", projectTargetAreas);
+		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
+		model.addAttribute("selected_project", selected_project);
+		model.addAttribute("project_resource_categories", projectResourceCategories);
+		return "viewProject";
+	}
 }
