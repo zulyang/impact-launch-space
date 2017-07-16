@@ -1,0 +1,558 @@
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+.signin, .unlockaccount {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-image: url("../img/rocketGirl.jpeg");
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
+}
+
+.signup {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-image: url("../img/signup.jpeg");
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-color: white;
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
+	overflow: scroll;
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+.profileNav {
+	background-color: white;
+}
+
+.learn {
+	color: white;
+	font-size: large;
+	margin-top: 55rem;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0.4rem solid white;
+	border-radius: 0;
+	padding: 1.2rem 10rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.landing {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background-image: url("../img/landingpage.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100vh;
+}
+
+.landing-nav {
+	background-color: transparent;
+	border: none;
+}
+
+#logo {
+	height: auto;
+	width: auto;
+	max-width: 70%;
+	max-height: 10rem;
+	background-size: contain;
+	margin-left: 3rem;
+}
+
+#logoLoggedIn {
+	height: auto;
+	width: auto;
+	max-width: 70%;
+	max-height: 10rem;
+	background-size: contain;
+	margin-top: -3rem;
+	margin-left: 3rem;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: white;
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.nav_elements {
+	margin-top: 1.5rem;
+	margin-right: 6rem;
+	padding: 1.5rem;
+}
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.form_container, .register_success, .verify_container {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	height: 45rem;
+	width: 60rem;
+	position: relative;
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.org_profile_container {
+	margin-top: 85rem;
+	margin-bottom: 5rem;
+	height: 100rem;
+	width: 75rem;
+	border: 0.125rem solid black;
+}
+
+.indi_profile_container {
+	margin-top: 128rem;
+	margin-bottom: 5rem;
+	height: 170rem;
+	width: 75rem;
+	border: 0.125rem solid black;
+}
+
+.org_profile_form {
+	margin-top: -10rem;
+}
+
+.indi_profile_form {
+	margin-top: -2rem;
+}
+
+.profileField {
+	margin-top: 1rem;
+	width: 40rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.edit_profileField {
+	width: 20rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.companyBio, .personalBio {
+	margin-top: 1rem;
+	width: 40rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.circle_profile_image {
+	margin-top: 20rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.profile_save {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 15rem;
+}
+
+.edit_org_profile_save {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 20rem;
+}
+
+.verify_success {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	height: 30rem;
+	width: 60rem;
+	position: relative;
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.form-horizontal {
+	position: absolute;
+}
+
+.form-horizontal-edit {
+	position: relative;
+}
+
+.forgot_form {
+	margin-top: -10rem;
+}
+
+.welcome, .createAccount, .register_success_message,
+	.verifyAccountMessage, .unlockAccountMessage, .unlockAccountPinMessage
+	{
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: absolute;
+	margin-top: -16rem;
+	padding-bottom: 5rem;
+}
+
+.verify_success_message {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: absolute;
+	margin-top: -12rem;
+}
+
+.forget {
+	text-align: center;
+	font-style: italic;
+}
+
+.field {
+	width: 30rem;
+}
+
+.signInNowBox {
+	position: absolute;
+	width: 20rem;
+	height: 4rem;
+	margin-top: 5rem;
+}
+
+.verify_account {
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 20rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 8rem;
+}
+
+.returnLogin {
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	height: 4rem;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10em;
+}
+
+.returnHome {
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12rem;
+}
+
+.redirectUnlockAccount {
+	position: absolute;
+	color: black;
+	border: 0.125rem solid grey;
+	border-radius: 0;
+	width: 15rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12rem;
+}
+
+.finePrint {
+	width: 30rem;
+}
+
+.registerError {
+	color: red;
+	width: 30rem;
+	text-align: center;
+}
+
+#passwordUnmatchMsg, #forgotPasswordCheck, #pinWrongMessage  {
+	color: red;
+	width: 30rem;
+	text-align: center;
+}
+
+.radio_indi, .radio_org, .offerSupport, .needSupport, .bothSupport {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.profileNav {
+	background-color: #091743;
+	border-color: #091743;
+}
+
+.homeIcon, .alertsIcon, .bellIcon, .chatIcon, .profilePictureIcon,
+	.moreOptionsIcon {
+	max-width: 130%;
+	max-height: 130%;
+	margin-left: 2rem;
+}
+
+#resetcode {
+	float: left;
+	width: 15rem;
+	margin-right: 2rem;
+}
+
+#submitPIN {
+	float: left;
+	width: 12rem;
+	margin-left: 1rem;
+}
+
+#verify_pin {
+	margin-top: 8rem;
+}
+
+#email_sent_prompt {
+	width: 30rem;
+	position: absolute;
+}
+
+#wait_prompt {
+	margin-top: 8rem;
+	position: absolute;
+}
+
+.org_profile_display_container {
+	margin-top: 15rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+}
+
+.edit_org_profile_display_container {
+	margin-top: 35rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+}
+
+.edit_ind_profile_display_container {
+	margin-top: 115rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+}
+
+.circle_org_profile_image {
+	margin-top: -16rem;
+	margin-right: 1rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.circle_edit_org_profile_image {
+	margin-right: 1rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.circle_edit_ind_profile_image {
+	margin-right: 1rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.edit_org_pic, .org_profile_display_countries {
+	margin: 1rem;
+}
+
+.edit_org_profile_container {
+	display: inline-block;
+	width: 40rem;
+	margin-left: 10rem;
+	margin-top: 3rem;
+}
+
+.edit_ind_profile_container {
+	position: relative;
+	display: inline-block;
+	width: 40rem;
+	margin-left: 10rem;
+	margin-top: 3rem;
+}
+
+.org_countries {
+	display: inline-block;
+	background-color: #ec0faa;
+	border-radius: 25px;
+	border: 0.1rem solid #ec0faa;
+	width: 120px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.org_job_sectors {
+	display: inline-block;
+	background-color: #eba410;
+	border-radius: 25px;
+	border: 0.1rem solid #eba410;
+	width: 220px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_bio, .org_bio {
+	width: 45rem;
+}
+
+.indi_profile_display_container {
+	margin-top: 75rem;
+	margin-bottom: 5rem;
+	width: 75rem;
+}
+
+.panel-heading {
+	text-align: center;
+}
+
+.panel {
+	height: 100%;
+}
+
+.panel-body {
+	height: 100%;
+}
+
+.circle_indi_profile_image {
+	margin-top: -36rem;
+	margin-right: 1rem;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.indi_bio {
+	width: 45rem;
+}
+
+.indi_skills {
+	display: inline-block;
+	background-color: #4CAF50;
+	border-radius: 25px;
+	border: 0.1rem solid #4CAF50;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_project_area {
+	display: inline-block;
+	background-color: #24b8d7;
+	border-radius: 25px;
+	border: 0.1rem solid #24b8d7;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_job_sector {
+	display: inline-block;
+	background-color: #eba410;
+	border-radius: 25px;
+	border: 0.1rem solid #eba410;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.indi_preferred_countries {
+	display: inline-block;
+	background-color: #ec0faa;
+	border-radius: 25px;
+	border: 0.1rem solid #ec0faa;
+	width: 200px;
+	color: white;
+	text-align: center;
+	font-size: large;
+}
+
+.create-project-container{
+  margin-top: 15rem;
+  margin-bottom: 5rem;
+  width: 85rem;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.ui-state-active{
+  background-color: #091743 !important;
+  border: 1px solid #091743 !important;
+}
+
+.dropdown:hover{
+	background-color: #1f2d5d;
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
+	color: white;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+	color: #1f2d5d;
+	background-color:white; 
+}

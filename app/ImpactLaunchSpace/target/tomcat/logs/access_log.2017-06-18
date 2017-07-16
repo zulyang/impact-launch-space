@@ -1,0 +1,6 @@
+0:0:0:0:0:0:0:1 - - [18/Jun/2017:00:12:49 +0800] "POST /registernewuser HTTP/1.1" 200 448 http-bio-8080-exec-3 520
+0:0:0:0:0:0:0:1 - - [18/Jun/2017:00:32:41 +0800] "POST /registernewuser HTTP/1.1" 200 1039 http-bio-8080-exec-5 105
+0:0:0:0:0:0:0:1 - - [18/Jun/2017:00:32:45 +0800] "POST /registernewuser HTTP/1.1" 200 448 http-bio-8080-exec-5 322
+0:0:0:0:0:0:0:1 - - [18/Jun/2017:00:51:53 +0800] "POST /registernewuser HTTP/1.1" 200 1039 http-bio-8080-exec-1 452
+0:0:0:0:0:0:0:1 - - [18/Jun/2017:00:51:59 +0800] "POST /registernewuser HTTP/1.1" 200 448 http-bio-8080-exec-2 939
+0:0:0:0:0:0:0:1 - - [18/Jun/2017:00:52:31 +0800] "POST /registernewuser HTTP/1.1" 200 448 http-bio-8080-exec-4 244
