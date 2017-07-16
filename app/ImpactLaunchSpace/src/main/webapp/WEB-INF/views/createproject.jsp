@@ -35,6 +35,8 @@
 	rel="stylesheet" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
 
 <script>
 	$(function() {
@@ -192,15 +194,34 @@
 						</div>
 						<h3>What I Need</h3>
 						<div>
-							<div class="form-group row">
-								<div id="results" class="col-sm-9"></div>
-								<br> <br> <br>
+							<div id="resourcesNeeded" class="form-group row">
 								<div class="col-sm-9">
-									<input id="buttonclck" class="btn btn-info" type="button"
-										value="Add more resources" />
+									<select id="cat1"
+										class="js-example-basic-single-resourcecategory" name="cat1">
+										<option></option>
+										<c:forEach items="${resource_category_list}" var="item">
+											<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+										</c:forEach>
+									</select>
 								</div>
+								<div class="bs-example col-sm-9">
+									<div class="bootstrap-tagsinput">
+										<input id="resourceTags1" onChange="checkInput();"
+											name="resourceTags1" type="text" data-role="tagsinput"
+											style="display: none;" />
+									</div>
+								</div>
+								<br> <br> <br>
+
 							</div>
-						</div>	
+
+							<div class="col-sm-9">
+								<input id="buttonclck" class="btn btn-info" type="button"
+									value="Add more categories" />
+							</div>
+						</div>
+
+
 
 					</div>
 					<hr>
@@ -215,61 +236,64 @@
 	</div>
 
 	<script type="text/javascript">
-	$(document).ready(function() {
-		
-		$('#results')
-				.append(
-						'<table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="border"><tr><th>Category</th><th>Resource Needed</th></tr> <tr> <td><select id="category1" class="js-example-basic-single-resourcecategory" name="selected_resourcecategory1"> <option></option><c:forEach items="${resource_category_list}" var="item"><option value="${item.getSkillset()}">${item.getSkillset()}</option></c:forEach></select></td> <td> <input type="text" name="resource1" id="resource1" value="" /> </td></tr></table>');
-
-		$('#buttonclck').on(
-				'click',
-				function() {
-					var lastRow = $('#resourcesNeeded').closest(
-							'#resourcesNeeded').find("tr:last-child");
-					var lastRowInputs = lastRow.find('input');
-					var isClone = false;
-					lastRowInputs.each(function() {
-						if ($(this).val().length) {
-							isClone = true;
-						}
-					});
-					if (!isClone)
-						return false;
-					var cloned = lastRow.clone();
-					cloned.find('input, select').each(
-							function() {
-								var id = $(this).attr('id');
-
-								var regIdMatch = /^(.+)(\d+)$/;
-								var aIdParts = id.match(regIdMatch);
-								var newId = aIdParts[1]
-										+ (parseInt(aIdParts[2], 10) + 1);
-
-								$(this).attr('id', newId);
-								$(this).attr('name', newId);
-							});
-
-					cloned.find("input[type='text']").val('');
-					cloned.insertAfter(lastRow);
-				});
-
-		
-	});
+		function checkInput() {
+			var info = $("#resourceTags1").val();
+			console.log("info: " + info);
+		}
 	</script>
-	
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#buttonclck').on('click', function() {
+				var lastRow = $('#resourcesNeeded');
+				var lastRowInputs = lastRow.find('input');
+				var isClone = false;
+				lastRowInputs.each(function() {
+					if ($(this).val().length) {
+						isClone = true;
+					}
+				});
+				if (!isClone)
+					return false;
+
+				$('#resourcesNeeded').find("select").val('');
+				$('#resourcesNeeded').find("input").val('');
+				//var cloned = $('#resourcesNeeded').clone();
+
+				//var id = cloned.attr('id');
+				//console.log("id: " + id);
+
+				//var regIdMatch = /^(.+)(\d+)$/;
+
+				//var aIdParts = id.match(regIdMatch);
+				//console.log("aIdParts: " + aIdParts);
+
+				//var newId = aIdParts[1] + (parseInt(aIdParts[2], 10) + 1);
+				//console.log("newId: " + newId);
+
+				//cloned.attr('id', newId);
+				//cloned.attr('name', newId);
+
+				//cloned.find("select").val('');
+
+				$('#resourcesNeeded').clone().insertAfter(lastRow);
+			});
+		});
+	</script>
+
 	<script>
 		function checkResourceFields() {
 			var category = document.getElementById("category1");
 			var resource = document.getElementById("resource1");
 			console.log(category.value);
 			console.log(resource.value);
-	
+
 			if (category.value === "" || resource.value === "") {
 				console.log("blank");
 				alert("Please fill in all resource fields!");
 				return false;
 			}
-	
+
 			return true;
 		}
 	</script>
