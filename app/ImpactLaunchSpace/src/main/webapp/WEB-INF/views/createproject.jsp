@@ -19,16 +19,19 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <!--for multiple select (Select2)-->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
@@ -60,8 +63,7 @@
 					<div id="accordion">
 						<h3>Basic Info</h3>
 						<div>
-							<form action="create-project"
-								onsubmit="return checkResourceFields();" method="post">
+							<form action="create-project" method="post">
 								<div class="form-group row">
 									<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
 									<div class="col-sm-9">
@@ -204,20 +206,17 @@
 										</c:forEach>
 									</select>
 								</div>
-								<div class="bs-example col-sm-9">
-									<div class="bootstrap-tagsinput">
-										<input id="resourceTags1" onChange="checkInput();"
-											name="resourceTags1" type="text" data-role="tagsinput"
-											style="display: none;" />
-									</div>
+								<div class="bs-example">
+									<input id="resourceTags1" onChange="checkInput();"
+										name="resourceTags1" type="text" data-role="tagsinput" />
 								</div>
 								<br> <br> <br>
-
+								
 							</div>
 
 							<div class="col-sm-9">
-								<input id="buttonclck" class="btn btn-info" type="button"
-									value="Add more categories" />
+								<input id="addResource" class="btn btn-info" type="button"
+									value="Add Resource" />
 							</div>
 						</div>
 
@@ -238,48 +237,14 @@
 	<script type="text/javascript">
 		function checkInput() {
 			var info = $("#resourceTags1").val();
+			if (info === "") {
+				console.log("info is blank");
+			}
 			console.log("info: " + info);
 		}
 	</script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#buttonclck').on('click', function() {
-				var lastRow = $('#resourcesNeeded');
-				var lastRowInputs = lastRow.find('input');
-				var isClone = false;
-				lastRowInputs.each(function() {
-					if ($(this).val().length) {
-						isClone = true;
-					}
-				});
-				if (!isClone)
-					return false;
-
-				$('#resourcesNeeded').find("select").val('');
-				$('#resourcesNeeded').find("input").val('');
-				//var cloned = $('#resourcesNeeded').clone();
-
-				//var id = cloned.attr('id');
-				//console.log("id: " + id);
-
-				//var regIdMatch = /^(.+)(\d+)$/;
-
-				//var aIdParts = id.match(regIdMatch);
-				//console.log("aIdParts: " + aIdParts);
-
-				//var newId = aIdParts[1] + (parseInt(aIdParts[2], 10) + 1);
-				//console.log("newId: " + newId);
-
-				//cloned.attr('id', newId);
-				//cloned.attr('name', newId);
-
-				//cloned.find("select").val('');
-
-				$('#resourcesNeeded').clone().insertAfter(lastRow);
-			});
-		});
-	</script>
+	
 
 	<script>
 		function checkResourceFields() {
@@ -352,6 +317,19 @@
 				allowClear : true
 			});
 		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$('#addResource').on(
+							'click',
+							function() {
+								$('#resourcesNeeded').clone(true).insertAfter(
+										'#resourcesNeeded');
+								return false;
+							});
+				});
 	</script>
 </body>
 
