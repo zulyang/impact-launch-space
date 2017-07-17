@@ -99,9 +99,11 @@ public class ProjectService {
 		return projectResourceCategoryDAO.retrieveProjectResourceCategories(project_name, project_proposer);
 	}
 	
-	public ArrayList<ProjectRequestedResource> retrieve(String project_name, String resource_category, String project_proposer) {
+	public ArrayList<ProjectRequestedResource> retrieveRequestedResources(String project_name, String resource_category, String project_proposer) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
 		return projectRequestedResourceDAO.retrieveProjectRequestedResource(project_name, resource_category, project_proposer);
 	}
+	
+	
 }

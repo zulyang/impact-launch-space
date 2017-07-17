@@ -1,6 +1,7 @@
 package com.impactlaunchspace.project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import com.impactlaunchspace.entity.IndividualAccount;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectBanList;
+import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
 import com.impactlaunchspace.profile.ProfileService;
@@ -223,17 +225,38 @@ public class ProjectController {
 		
 		ArrayList<ProjectResourceCategory> projectResourceCategoriesObj = projectService.retrieveProjectResourceCategories(project_name, project_proposer);
 		ArrayList<String> projectResourceCategories = new ArrayList<String>();
-		ArrayList<String> projectRequestedResources = new ArrayList<String>();
+		System.out.print("category size: " + projectResourceCategoriesObj.size());
+		HashMap<String, ArrayList<ArrayList<String>>> projectRequestedResources = new HashMap<String, ArrayList<ArrayList<String>>>();
+		
 		for(ProjectResourceCategory projectResourceCategoryObj : projectResourceCategoriesObj){
 			projectResourceCategories.add(projectResourceCategoryObj.getResource_category());
+			ArrayList<ProjectRequestedResource> requestedResourceObjs = projectService.retrieveRequestedResources(project_name, projectResourceCategoryObj.getResource_category(), project_proposer);
+			System.out.println("requested resource size: " + requestedResourceObjs.size());
+			
+			ArrayList<ArrayList<String>> resourcenames = new ArrayList<ArrayList<String>>();
+			
+			
+			for(ProjectRequestedResource requestedResource : requestedResourceObjs){
+				ArrayList<String> resourceDetails = new ArrayList<String>();
+				resourceDetails.add(requestedResource.getResource_name());
+				System.out.println(requestedResource.getResource_name());
+				resourceDetails.add(requestedResource.getRequest_description());
+				System.out.println(requestedResource.getRequest_description());
+				
+				resourcenames.add(resourceDetails);
+								
+			}
+			projectRequestedResources.put(projectResourceCategoryObj.getResource_category(), resourcenames );
+			
+
 		}
-		
-		
 		
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);
 		model.addAttribute("project_resource_categories", projectResourceCategories);
+		model.addAttribute("project_requested_resources", projectRequestedResources);
+		
 		return "viewProject";
 	}
 }

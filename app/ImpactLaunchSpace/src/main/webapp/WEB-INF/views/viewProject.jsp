@@ -18,7 +18,7 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project.css" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -173,16 +173,27 @@
 					<div class="section-block">
 						<h1 class="section-title">WHAT WE NEED</h1>
 						<!--resources-->
-						<c:forEach items="${project_resource_categories}" var="item" varStatus = "loop">
+						<c:forEach items="${project_resource_categories}" var="item"
+							varStatus="loop">
+
+
 							<div class="reward-block">
 								<h3>Category ${loop.index + 1}: ${item}</h3>
-								<h2>Proficient in JAVA</h2>
-								<p>Curabitur accumsan sem sed velit ultrices fermentum.
-									Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id
-									vestibulum eros. Nullam nunc velit, viverra sed consequat ac,
-									pulvinar in metus.</p>
-								<span><i class="fa fa-users"></i> 180 backers</span> <a href=""
+								<c:forEach var="type" items="${project_requested_resources}">
+									<c:if test="${type.key.equals(item) }">
+									
+									<c:forEach var="item" items="${type.value}">
+										<h2>${item.get(0)}</h2>
+										<p>${item.get(1)}
+										<p>
+										<br>
+										<span><i class="fa fa-users"></i> 180 backers</span> <a href=""
 									class="btn btn-reward">APPLY</a>
+									</c:forEach>
+									</c:if>
+								</c:forEach>
+
+								
 							</div>
 
 						</c:forEach>

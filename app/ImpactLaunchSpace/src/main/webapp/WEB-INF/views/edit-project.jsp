@@ -61,9 +61,9 @@
 							<form action="edit-project"
 								onsubmit="return checkResourceFields();" method="post">
 								<input type="hidden" id="oldProjectTitle"
-											value="${sample_project.getProject_name()}"
-											name="oldProjectTitle" class="form-control">
-								
+									value="${sample_project.getProject_name()}"
+									name="oldProjectTitle" class="form-control">
+
 								<div class="form-group row">
 									<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
 									<div class="col-sm-9">
@@ -234,10 +234,8 @@
 											<option value=""></option>
 											<c:forEach items="${user_list}" var="item">
 												<c:choose>
-													<c:when
-														test="${project_ban_list.contains(item)}">
-														<option value="${item}"
-															selected="selected">${item}</option>
+													<c:when test="${project_ban_list.contains(item)}">
+														<option value="${item}" selected="selected">${item}</option>
 													</c:when>
 													<c:otherwise>
 														<c:if test="${item.equals(username) == false}">
