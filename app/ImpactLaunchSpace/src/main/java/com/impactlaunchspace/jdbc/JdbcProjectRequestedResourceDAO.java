@@ -82,4 +82,32 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 		}
 	}
 	
+	public void remove(String project_name, String project_proposer,
+			String resource_category, String resource_name){
+		String sql = "DELETE FROM PROJECT_REQUESTED_RESOURCES WHERE project_name = ? AND project_proposer = ? AND resource_category = ? AND resource_name = ?";
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.setString(3, resource_category);
+			ps.setString(4, resource_name);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
 }

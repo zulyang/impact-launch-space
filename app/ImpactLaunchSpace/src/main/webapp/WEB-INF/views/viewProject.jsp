@@ -156,7 +156,7 @@
 						<h1 class="section-title">OWNER</h1>
 						<div class="profile-contents">
 							<h2 class="position">${creator_name }</h2>
-							<img src="/imageDisplay?username=${username}"
+							<img src="/imageDisplay?username=${selected_project.getProject_proposer()}"
 								class="profile-image img responsive"
 								alt="John Smith Profile Photo">
 							<!--social links-->

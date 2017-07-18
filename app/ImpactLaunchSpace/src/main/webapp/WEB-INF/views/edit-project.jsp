@@ -238,7 +238,7 @@
 														<option value="${item}" selected="selected">${item}</option>
 													</c:when>
 													<c:otherwise>
-														<c:if test="${item.equals(username) == false}">
+														<c:if test="${item.equals(project_proposer) == false}">
 															<option value="${item}">${item}</option>
 														</c:if>
 													</c:otherwise>
