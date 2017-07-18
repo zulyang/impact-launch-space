@@ -10,6 +10,7 @@
 	<import resource="organizationaccount/Spring-OrganizationAccount.xml" />
 	<import resource="individualaccount/Spring-IndividualAccount.xml" />
 	<import resource="individualaccount/Spring-DocumentsIndividual.xml" />
+	<import resource="individualaccount/Spring-UserOfferedResource.xml" />
 	<import resource="countries/Spring-Countries.xml" />
 	<import resource="countries/Spring-CountriesOfOperation.xml" />
 	<import resource="countries/Spring-PreferredCountries.xml" />
@@ -27,4 +28,5 @@
 	<import resource="project/Spring-ProjectRequestedResource.xml" />
 	<import resource="project/Spring-ProjectTargetArea.xml" />
 	<import resource="project/Spring-ProjectResourceCategory.xml" />
+	<import resource="project/Spring-DocumentsProject.xml" />
 </beans>
