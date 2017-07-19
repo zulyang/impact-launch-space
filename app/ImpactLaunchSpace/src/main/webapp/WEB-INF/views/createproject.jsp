@@ -196,22 +196,18 @@
 						</div>
 						<h3>What I Need</h3>
 						<div>
-							<div id="resourcesNeeded" class="form-group row">
-								<div class="col-sm-9">
-									<select id="cat1"
-										class="js-example-basic-single-resourcecategory" name="cat1">
+							<div id="resourcesNeeded" class="form-group row col-sm-9">
+								<div>
+									<select id="cat1" name="cat1">
 										<option></option>
 										<c:forEach items="${resource_category_list}" var="item">
 											<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 										</c:forEach>
-									</select>
+									</select> <input id="resource1" name="resource1"
+										placeholder="What resources do you need?" type="text" />
+									<textarea id="description1" name="description1"
+										placeholder="Describe your resource here..."></textarea>
 								</div>
-								<div class="bs-example">
-									<input id="resourceTags1" onChange="checkInput();"
-										name="resourceTags1" type="text" data-role="tagsinput" />
-								</div>
-								<br> <br> <br>
-								
 							</div>
 
 							<div class="col-sm-9">
@@ -219,19 +215,15 @@
 									value="Add Resource" />
 							</div>
 						</div>
-
-
-
 					</div>
-					<hr>
-					<button class="btn btn-block btn-success" type="submit">Create
-						Project</button>
+
 				</div>
-				</form>
-
-
+				<button class="btn btn-block btn-success" type="submit">Create
+					Project</button>
 			</div>
+			</form>
 		</div>
+	</div>
 	</div>
 
 	<script type="text/javascript">
@@ -242,9 +234,43 @@
 			}
 			console.log("info: " + info);
 		}
-	</script>
 
-	
+		$('#addResource').on(
+				'click',
+				function() {
+					var lastRow = $('#resourcesNeeded').closest(
+							'#resourcesNeeded').find("div:last-child");
+					console.log("lastRow: " + lastRow);
+					var lastRowInputs = lastRow.find('input');
+					var isClone = false;
+					lastRowInputs.each(function() {
+						if ($(this).val().length) {
+							isClone = true;
+						}
+					});
+					if (!isClone)
+						return false;
+					console.log("isClone is true");
+					var cloned = lastRow.clone();
+					cloned.find('input, select, textarea').each(
+							function() {
+								var id = $(this).attr('id');
+								console.log("id: " + id);
+								var regIdMatch = /^(.+)(\d+)$/;
+								var aIdParts = id.match(regIdMatch);
+								var newId = aIdParts[1]
+										+ (parseInt(aIdParts[2], 10) + 1);
+
+								$(this).attr('id', newId);
+								$(this).attr('name', newId);
+							});
+
+					cloned.find("input[type='text']").val('');
+					cloned.find("select").val('');
+					cloned.find("textarea").val('');
+					cloned.insertAfter(lastRow);
+				});
+	</script>
 
 	<script>
 		function checkResourceFields() {
@@ -317,19 +343,6 @@
 				allowClear : true
 			});
 		});
-	</script>
-	
-	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$('#addResource').on(
-							'click',
-							function() {
-								$('#resourcesNeeded').clone(true).insertAfter(
-										'#resourcesNeeded');
-								return false;
-							});
-				});
 	</script>
 </body>
 
