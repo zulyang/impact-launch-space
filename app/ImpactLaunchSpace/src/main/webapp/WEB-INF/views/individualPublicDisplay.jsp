@@ -105,49 +105,102 @@
 					<!-- /.container-fluid -->
 				</nav>
 
-				<div class="org_profile_display_container">
+				<div class="indi_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div style="display: inline-block">
-								<img src="/imageDisplay?username=${organization.getUsername()}"
-									class="circle_org_profile_image">
+								<img src="/imageDisplay?username=${individual.getUsername()}"
+									class="circle_indi_profile_image">
 							</div>
 
 							<div style="display: inline-block">
-								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>
+								<h1 style="display: inline-block">${individual.getFirst_name()}
+									${individual.getLast_name()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<a href="editOrgProfileForm" class="btn btn-default">
-										Edit Profile </a> 
-									<a href="" class="btn btn-default"> Leave A
+								 <a href="" class="btn btn-default"> Leave A
 										Message </a>
 								</div>
 
 								<hr>
-								<p class="org_bio">${organization.getCompanyBio()}</p>
+								<p class="indi_bio">${individual.getPersonalBio()}</p>
+								<hr>
+								<p>${individual.getJobTitle()}</p>
+								<p>${individual.getOrganization()}</p>
 								<hr>
 								<p style="display: inline-block">${user.getEmail()}</p>
-								<p style="display: inline-block">${organization.getContactDetails()}</p>
-								<hr>
-								<div class="org_profile_display_countries">
-									<c:forEach items="${countriesOfOperation}" var="item">
-										<p class="org_countries">${item.getCountry_name()}</p>
-									</c:forEach>
-								</div>
+								<p style="display: inline-block">${individual.getContactDetails()}</p>
+								<p>${individual.getCountry()}</p>
 							</div>
 						</div>
 					</div>
 
 					<div class="panel panel-default">
-						<div class="panel-heading">Job Sectors</div>
+						<div class="panel-heading">Skills</div>
 						<div class="panel-body">
-							<div class="org_profile_display_jobSectors">
-								<c:forEach items="${jobSectorsOrganization}" var="item">
-									<p class="org_job_sectors">${item.getJob_sector()}</p>
-								</c:forEach>
-							</div>
+							<c:forEach items="${userSkills}" var="item">
+								<p class="indi_skills">${item.getSkillset()}</p>
+							</c:forEach>
 						</div>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Experience</div>
+						<div class="panel-body">
+							<c:forEach items="${jobSectorsIndividual}" var="item">
+								<p>
+									<strong>${item.getYearsOfExperience()}</strong> years of
+									experience in <strong>${item.getJob_sector()}</strong>.
+								</p>
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Interest</div>
+						<div class="panel-body">
+
+							<p>I want to make a difference in:</p>
+							<c:forEach items="${preferredProjectArea}" var="item">
+								<p class="indi_project_area">${item.getProject_area()}</p>
+							</c:forEach>
+
+							<p>Sectors that are important to me:</p>
+							<c:forEach items="${preferredJobSectors}" var="item">
+								<p class="indi_job_sector">${item.getJob_sector()}</p>
+							</c:forEach>
+
+							<p>
+								I can dedicate an average of <strong>${individual.getMinimumVolunteerHours()}</strong>
+								to <strong>${individual.getMaximumVolunteerHours()}</strong>
+								hours in a week.
+							</p>
+
+							<p>I am interested to work in:</p>
+							<c:forEach items="${preferredCountries}" var="item">
+								<p class="indi_preferred_countries">${item.getCountry_name()}</p>
+							</c:forEach>
+
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Documents</div>
+						<div class="panel-body">
+							<table>
+								<c:forEach items="${individual.getDocumentList()}"
+									var="document">
+									<tr>
+										<td>${document.getName()}</td>
+										<td><a href="/downloadFile?file=${document}">Download</a></td>
+										<td><a
+											href="/deleteFile?username=${individual.getUsername()}&file=${document}">Delete</a></td>
+									<tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>

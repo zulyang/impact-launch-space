@@ -117,8 +117,6 @@
 								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<a href="editOrgProfileForm" class="btn btn-default">
-										Edit Profile </a> 
 									<a href="" class="btn btn-default"> Leave A
 										Message </a>
 								</div>
@@ -126,7 +124,7 @@
 								<hr>
 								<p class="org_bio">${organization.getCompanyBio()}</p>
 								<hr>
-								<p style="display: inline-block">${user.getEmail()}</p>
+								<p style="display: inline-block">${profileemail}</p>
 								<p style="display: inline-block">${organization.getContactDetails()}</p>
 								<hr>
 								<div class="org_profile_display_countries">

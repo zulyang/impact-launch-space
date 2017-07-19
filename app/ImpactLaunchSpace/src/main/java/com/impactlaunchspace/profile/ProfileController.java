@@ -296,10 +296,59 @@ public class ProfileController {
 	public String showIndividualProfilePage(HttpServletRequest request, ModelMap model) {
 		return "individualProfileDisplay";
 	}
+	
+	@RequestMapping(value = "/view-profile", method = RequestMethod.GET)
+	public String showMyProfilePage(@RequestParam("username") String username, HttpServletRequest request, ModelMap model) {
+		User user = userService.retrieveUser(username);
+		if(user != null){
+			String userType = user.getUser_type();
+			
+			if(userType.equals("organization")){
+				OrganizationAccount organization = profileService.getOrganizationAccountDetails(username);
+				
+				request.getSession().setAttribute("profileemail", user.getEmail());
+				request.getSession().setAttribute("organization",organization);
+				request.getSession().setAttribute("countriesOfOperation",
+						profileService.retrieveCountriesOfOperations(username));
+				request.getSession().setAttribute("jobSectorsOrganization",
+						profileService.retrieveOrganizationJobSectors(username));
+				return "organizationPublicDisplay";
+			}else if(userType.equals("individual")){
+				IndividualAccount individual = profileService.getIndividualAccountDetails(username);
+				boolean isPublic = individual.isPublicProfile();
+				
+				request.getSession().setAttribute("individual",
+						individual);
+				
+				request.getSession().setAttribute("jobSectorsIndividual",
+						profileService.retrieveIndividualJobSectors(username));
+
+				request.getSession().setAttribute("preferredCountries",
+						profileService.retrievePreferredCountries(username));
+				request.getSession().setAttribute("preferredJobSectors",
+						profileService.retrievePreferredJobSectors(username));
+				request.getSession().setAttribute("preferredProjectArea",
+						profileService.retrievePreferredProjectArea(username));
+				request.getSession().setAttribute("userSkills",
+						profileService.retrieveAllSkillsOfUser(username));
+				
+				if(isPublic){
+					return "individualPublicDisplay";
+				}else{
+					return "individualProfileDisplayPrivate";
+				}
+				
+			}
+			
+			
+			
+		}
+		return "individualProfileDisplay";
+	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
 	public String showEditProfilePageIndividual(HttpServletRequest request, ModelMap model) {
-		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
+		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("myacccount-individual");
 
 		// Populate the Multiple-value fields the individual has chosen for
 		// editing
@@ -401,7 +450,7 @@ public class ProfileController {
 			@RequestParam(required = false) String selected_jobsector2_years,
 			@RequestParam(required = false) String selected_jobsector3,
 			@RequestParam(required = false) String selected_jobsector3_years, HttpServletRequest request) {
-		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
+		IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("myacccount-individual");
 		String username = individual.getUsername();
 		String email = individual.getEmail();
 		// to-do
@@ -510,6 +559,7 @@ public class ProfileController {
 
 		}
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
+		request.getSession().setAttribute("myacccount-individual", profileService.getIndividualAccountDetails(username));
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(username));
 		request.getSession().setAttribute("preferredProjectArea",
@@ -537,7 +587,7 @@ public class ProfileController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("individual");
+			IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("myacccount-individual");
 			IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
 					individual.getEmail(), individual.getDateOfBirth(), individual.getFirst_name(),
 					individual.getLast_name(), individual.getCountry(), individual.getJobTitle(),
@@ -550,6 +600,8 @@ public class ProfileController {
 
 			// change the session attributes
 			request.getSession().setAttribute("individual",
+					profileService.getIndividualAccountDetails(individual.getUsername()));
+			request.getSession().setAttribute("myacccount-individual",
 					profileService.getIndividualAccountDetails(individual.getUsername()));
 
 			return "editprofile-individual";

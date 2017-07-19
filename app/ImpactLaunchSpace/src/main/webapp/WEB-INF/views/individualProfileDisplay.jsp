@@ -195,7 +195,7 @@
 										<td>${document.getName()}</td>
 										<td><a href="/downloadFile?file=${document}">Download</a></td>
 										<td><a
-											href="/deleteFile?username=${username}&file=${document}">Delete</a></td>
+											href="/deleteFile?username=${individual.getUsername()}&file=${document}">Delete</a></td>
 									<tr>
 								</c:forEach>
 							</table>

@@ -382,7 +382,10 @@ public class LoginController {
 						if (c != null) {
 							response.addCookie(c);
 						}
+						
 						request.getSession().setAttribute("organization",
+								profileService.getOrganizationAccountDetails(username));
+						request.getSession().setAttribute("myacccount-organization",
 								profileService.getOrganizationAccountDetails(username));
 						request.getSession().setAttribute("countriesOfOperation",
 								profileService.retrieveCountriesOfOperations(username));
@@ -395,6 +398,8 @@ public class LoginController {
 							response.addCookie(c);
 						}
 						request.getSession().setAttribute("individual",
+								profileService.getIndividualAccountDetails(username));
+						request.getSession().setAttribute("myacccount-individual",
 								profileService.getIndividualAccountDetails(username));
 						request.getSession().setAttribute("jobSectorsIndividual",
 								profileService.retrieveIndividualJobSectors(username));
