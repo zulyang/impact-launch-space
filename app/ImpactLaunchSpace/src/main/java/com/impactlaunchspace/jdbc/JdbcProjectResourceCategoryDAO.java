@@ -77,4 +77,30 @@ public class JdbcProjectResourceCategoryDAO implements ProjectResourceCategoryDA
 			}
 		}
 	}
+	
+	public void closeResourceCategory(String project_name, String project_proposer, String resource_category) {
+		String sql = "DELETE FROM PROJECT_RESOURCE_CATEGORIES WHERE resource_category = ? AND project_proposer = ? AND project_name = ?";
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, resource_category);
+			ps.setString(2, project_proposer);
+			ps.setString(3, project_name);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }

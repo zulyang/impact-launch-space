@@ -16,13 +16,9 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import org.apache.tika.io.IOUtils;
+import com.impactlaunchspace.dao.DocumentsProjectDAO;
 
-import com.impactlaunchspace.dao.DocumentsIndividualDAO;
-import com.impactlaunchspace.exception.ContentTypeException;
-import com.impactlaunchspace.utility.FileTypeUtils;
-
-public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
+public class JdbcDocumentsProjectDAO implements DocumentsProjectDAO{
 	private DataSource dataSource;
 
 	public void setDataSource(DataSource dataSource) {
@@ -30,16 +26,17 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 	}
 
 	@Override
-	public void insert(String username, File document) {
-		String sql = "INSERT INTO DOCUMENTS_INDIVIDUAL (username, document, document_name) VALUES (?, ?, ?)";
+	public void insert(String projectName, String projectProposer, File document) {
+		String sql = "INSERT INTO DOCUMENTS_PROJECT (project_name, project_proposer, document, document_name) VALUES (?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			ps.setBlob(2, new FileInputStream(document));
-			ps.setString(3, document.getName());
+			ps.setString(1, projectName);
+			ps.setString(1, projectProposer);
+			ps.setBlob(3, new FileInputStream(document));
+			ps.setString(4, document.getName());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -59,14 +56,15 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 	}
 
 	@Override
-	public void delete(String username, File document) {
-		String sql = "DELETE FROM documents_individual WHERE username = ? and document_name = ?";
+	public void delete(String projectName, String projectProposer, File document) {
+		String sql = "DELETE FROM DOCUMENTS_PROJECT WHERE project_name = ? and project_proposer = ? and document_name = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			ps.setString(2, document.getName());
+			ps.setString(1, projectName);
+			ps.setString(2, projectProposer);
+			ps.setString(3, document.getName());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -82,8 +80,8 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 	}
 
 	@Override
-	public ArrayList<File> retrieveAll(String username) {
-		String sql = "SELECT * FROM DOCUMENTS_INDIVIDUAL WHERE username = ?";
+	public ArrayList<File> retrieveAll(String projectName, String projectProposer) {
+		String sql = "SELECT * FROM DOCUMENTS_PROJECT WHERE project_name = ? and project_proposer = ?";
 
 		Connection conn = null;
 		ArrayList<File> documentList = new ArrayList<>();
@@ -91,7 +89,8 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
+			ps.setString(1, projectName);
+			ps.setString(2, projectProposer);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Blob blob = rs.getBlob("document");
@@ -127,5 +126,4 @@ public class JdbcDocumentsIndividualDAO implements DocumentsIndividualDAO {
 		}
 		return documentList;
 	}
-
 }
