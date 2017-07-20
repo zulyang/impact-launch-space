@@ -368,6 +368,27 @@
 
 						</div>
 					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Documents</div>
+						<div class="panel-body">
+							<table>
+								<c:forEach items="${individual.getDocumentList()}"
+									var="document">
+									<tr>
+										<td><a href="/downloadFile?file=${document}"> <img
+												src="<%=request.getContextPath()%>/resources/img/file.png" />
+										</a></td>
+										<td><a href="/downloadFile?file=${document}">${document.getName()}</a></td>
+										<td><a href="/deleteFile?username=${individual.getUsername()}&file=${document}">
+											<img src="<%=request.getContextPath()%>/resources/img/cross.png" />
+										</a></td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
+
+
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">

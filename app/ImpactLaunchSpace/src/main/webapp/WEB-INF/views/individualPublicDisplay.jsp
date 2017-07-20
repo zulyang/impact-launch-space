@@ -191,11 +191,12 @@
 								<c:forEach items="${individual.getDocumentList()}"
 									var="document">
 									<tr>
-										<td>${document.getName()}</td>
-										<td><a href="/downloadFile?file=${document}">Download</a></td>
-										<td><a
-											href="/deleteFile?username=${individual.getUsername()}&file=${document}">Delete</a></td>
-									<tr>
+										<td><a href="/downloadFile?file=${document}"> 
+											<img src="<%=request.getContextPath()%>/resources/img/file.png"/>
+											</a>
+										</td>
+										<td><a href="/downloadFile?file=${document}">${document.getName()}</a></td>
+									</tr>
 								</c:forEach>
 							</table>
 						</div>

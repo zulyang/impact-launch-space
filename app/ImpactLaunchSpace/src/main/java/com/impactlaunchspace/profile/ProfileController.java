@@ -728,6 +728,6 @@ public class ProfileController {
 		profileService.deleteDocument(username, file);
 		// change the session attributes
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		return "individualProfileDisplay";
+		return "editIndiProfileForm";
 	}
 }
