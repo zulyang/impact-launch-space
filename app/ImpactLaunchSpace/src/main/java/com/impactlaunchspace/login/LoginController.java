@@ -198,7 +198,8 @@ public class LoginController {
 
 	@RequestMapping(value = "/verifyaccount", method = RequestMethod.POST)
 	public String verifyAccount(@RequestParam String usernameemail, @RequestParam String password,
-			@RequestParam String verificationcode, ModelMap model) {
+			@RequestParam String verificationcode, ModelMap model, 
+			HttpServletRequest request, HttpServletResponse response) {
 		boolean isUser = loginService.authenticate(usernameemail, password);
 		String username = loginService.returnUsernameFromEmail(usernameemail);
 		String email = loginService.returnEmailFromUsername(usernameemail);
@@ -218,10 +219,10 @@ public class LoginController {
 					// SENT TO UR INBOX
 					return "verifyaccount"; // tokenexpired
 				}
-				vtService.unlock(usernameemail);
+				vtService.unlock(username);
 				// FRONT END TO BRING TO SUCCESS PAGE
 				model.addAttribute("verifyNewAccountSuccess", "Your account has been verified.");
-				return "verifyaccount"; // verificationsuccessful
+				return authenticate(usernameemail, password, model, request, response); // verificationsuccessful
 			} else {
 				System.out.println("in verify account 5");
 				// FRONT END TO PRINT TOKEN IS INVALID
@@ -498,7 +499,8 @@ public class LoginController {
 
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
 	public String setNewPassword(@RequestParam String password1, @RequestParam String password2,
-			@RequestParam String username, ModelMap model) {
+			@RequestParam String username, ModelMap model,
+			HttpServletRequest request, HttpServletResponse response) {
 		int passLength = password1.length();
 		boolean hasLetters = false;
 		boolean hasDigits = false;
@@ -526,7 +528,7 @@ public class LoginController {
 			model.addAttribute("username", username);
 			model.addAttribute("passwordMatch", "passwordMatch");
 			model.addAttribute("loginValidation", "You have successfully reset your password.");
-			return "login1";
+			return authenticate(username, password1, model, request, response);//"login1";
 		}
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		model.addAttribute("passwordError", "Your passwords do not match.");
@@ -561,7 +563,55 @@ public class LoginController {
 			return "redirect:/login1";
 		}
 		return "false";
+	}
+	
+	// Register Users
+	@RequestMapping(value = "/changepassword", method = RequestMethod.GET)
+	public String showChangePWPage(ModelMap model) {
+		return "changepassword";
+	}
+	
+	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
+	public String changePassword(@RequestParam String username, @RequestParam String existingPassword, @RequestParam String password1,
+			@RequestParam String password2, ModelMap model) {
+		boolean isCorrectPW = loginService.authenticate(username, existingPassword);
+		int passLength = password1.length();
+		boolean hasLetters = false;
+		boolean hasDigits = false;
+		boolean hasSomethingElse = false;
 
+		if(!isCorrectPW){
+			model.addAttribute("passwordError",
+					"Existing Password is incorrect");
+			return "changepassword";
+		}
+		
+		for (int i = 0; i < passLength; i++) {
+			char c = password1.charAt(i);
+			if (Character.isLetter(c))
+				hasLetters = true;
+			else if (Character.isDigit(c))
+				hasDigits = true;
+			else
+				hasSomethingElse = true;
+		}
+
+		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
+			model.addAttribute("passwordError",
+					"Password must contain letters, digits, symbols and have at least 6 characters.");
+			return "changepassword";
+		}
+
+		if (password1.equals(password2)) {
+			rtService.setNewPassword(password1, username);
+			model.addAttribute("username", username);
+			model.addAttribute("passwordMatch", "passwordMatch");
+			model.addAttribute("passwordValidation", "You have successfully changed your password.");
+			return "changepassword";
+		}
+		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
+		model.addAttribute("passwordError", "Your passwords do not match.");
+		return "changepassword";
 	}
 
 }

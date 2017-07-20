@@ -368,6 +368,29 @@
 
 						</div>
 					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Documents</div>
+						<div class="panel-body">
+							<table>
+								<c:forEach items="${individual.getDocumentList()}"
+									var="document">
+									<tr>
+										<td><a href="/downloadFile?file=${document}"> <img
+												src="<%=request.getContextPath()%>/resources/img/file.png" />
+										</a></td>
+										<td><a href="/downloadFile?file=${document}">${document.getName()}</a></td>
+										<td><a
+											href="/deleteFile?username=${individual.getUsername()}&file=${document}">
+												<img
+												src="<%=request.getContextPath()%>/resources/img/cross.png" />
+										</a></td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
+
+
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
@@ -393,8 +416,27 @@
 		function checkFields() {
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
 			console.log("2A: " + jsIndi2A);
+
+			var jsIndiEx2A = document.getElementById("js2experienceA");
+
 			if (jsIndi2A !== null) {
 				console.log("2a: " + jsIndi2A.value);
+
+				if (jsIndi2A.value !== "" && jsIndiEx2A.value === "") {
+					console.log("js indi xperience value 2A: "
+							+ jsIndiEx2A.value);
+					change('js2experienceA', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+
+				if (jsIndi2A.value === "" && jsIndiEx2A.value !== "") {
+					console.log("js indi xperience value 2A: "
+							+ jsIndiEx2A.value);
+					change('jsIndi2aValue', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
+					return false;
+				}
 			}
 
 			var jsIndi2B = document.getElementById("jsIndi2bValue");
@@ -411,14 +453,40 @@
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
+
+				if (jsIndi2B.value === "" && jsIndiEx2B.value !== "") {
+					console.log("js indi xperience value 2B: "
+							+ jsIndiEx2B.value);
+					change('jsIndi2bValue', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
+					return false;
+				}
 			}
 
 			console.log("BREAK -------------------");
 
 			var jsIndi3A = document.getElementById("jsIndi3aValue");
 			console.log("3A: " + jsIndi3A);
+			var jsIndiEx3A = document.getElementById("js3experienceA");
+
 			if (jsIndi3A !== null) {
 				console.log("3a: " + jsIndi3A.value);
+
+				if (jsIndi3A.value !== "" && jsIndiEx3A.value === "") {
+					console.log("js indi xperience value 3A: "
+							+ jsIndiEx3A.value);
+					change('js3experienceA', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
+					return false;
+				}
+
+				if (jsIndi3A.value === "" && jsIndiEx3A.value !== "") {
+					console.log("js indi xperience value 3A: "
+							+ jsIndiEx3A.value);
+					change('jsIndi3aValue', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
 			}
 
 			var jsIndi3B = document.getElementById("jsIndi3bValue");
@@ -433,6 +501,14 @@
 							+ jsIndiEx3B.value);
 					change('js3experienceB', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+
+				if (jsIndi3B.value === "" && jsIndiEx3B.value !== "") {
+					console.log("js indi xperience value 3B: "
+							+ jsIndiEx3B.value);
+					change('jsIndi3bValue', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 			}

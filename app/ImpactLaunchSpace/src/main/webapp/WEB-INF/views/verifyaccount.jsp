@@ -54,7 +54,7 @@
 									class="btn btn-success field" id="verify_button">Submit</button>
 							</div>
 						</div>
-						<p class="verifyNewAccount">${verifyNewAccount}</p>
+						<p style="color:red;" class="verifyNewAccount">${verifyNewAccount}</p>
 					</form>
 				</div>
 

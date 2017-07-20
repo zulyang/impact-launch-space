@@ -23,7 +23,7 @@ public class JdbcUserDAO implements UserDAO{
 
 	public void insert(User user) {
 
-		String sql = "INSERT INTO USERS " + "(username, password, email, keep_me_signed_in, enabled, user_type, login_attempts, user_role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO USERS (username, password, email, keep_me_signed_in, enabled, user_type, login_attempts, user_role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
