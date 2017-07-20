@@ -219,7 +219,7 @@ public class LoginController {
 					// SENT TO UR INBOX
 					return "verifyaccount"; // tokenexpired
 				}
-				vtService.unlock(usernameemail);
+				vtService.unlock(username);
 				// FRONT END TO BRING TO SUCCESS PAGE
 				model.addAttribute("verifyNewAccountSuccess", "Your account has been verified.");
 				return authenticate(usernameemail, password, model, request, response); // verificationsuccessful
