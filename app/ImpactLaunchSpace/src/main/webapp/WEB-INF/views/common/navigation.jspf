@@ -1,3 +1,4 @@
+<div id="navigation">
 				<nav class="navbar navbar-default navbar-fixed-top profileNav">
 				<div class="container-fluid">
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -25,10 +26,10 @@
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Projects <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
+									<li><a href="/create-project">Create Project</a></li>
+									<li><a href="#">My Projects</a></li>
 									<li role="separator" class="divider"></li>
+									<li><a href="#">Explore Projects </a></li>
 									<li><a href="#">Separated link</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="#">One more separated link</a></li>
@@ -89,4 +90,4 @@
 					</div>
 					<!-- /.navbar-collapse -->
 				</div>
-				<!-- /.container-fluid --> </nav>
+				<!-- /.container-fluid --> </nav></div>

@@ -19,6 +19,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -31,6 +33,7 @@
 	crossorigin="anonymous"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/project.js"></script>
 
 <!--for multiple select (Select2)-->
 <link
@@ -41,14 +44,6 @@
 <script
 	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
 
-<script>
-	$(function() {
-		$("#accordion").accordion({
-			collapsible : true,
-			heightStyle : "content"
-		});
-	});
-</script>
 </head>
 <body class="project">
 
@@ -60,170 +55,245 @@
 				<%@include file="common/navigation.jspf"%>
 
 				<div class="create-project-container">
-					<div id="accordion">
-						<h3>Basic Info</h3>
-						<div>
-							<form action="create-project" method="post">
-								<div class="form-group row">
-									<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
-									<div class="col-sm-9">
-										<input type="text" id="projectTitle" value=""
-											name="projectTitle" class="form-control">
-									</div>
-								</div>
 
-								<div class="form-group row">
-									<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
-									<div class="col-sm-9">
-										<input type="text" id="projectPurpose" value=""
-											name="projectPurpose" class="form-control"
-											placeholder="Your project purpose in one line">
-									</div>
-								</div>
+					<div class="wizard">
+						<div class="wizard-inner">
+							<div class="connecting-line"></div>
+							<ul class="nav nav-tabs" role="tablist">
 
-								<div class="form-group row">
-									<label for="socialImpactType" class="col-sm-3 col-form-label">Social
-										Impact Type</label>
-									<div class="col-sm-9">
-										<select class="js-example-basic-multiple-targetprojectareas"
-											multiple="multiple" name="selected_projectareas" required>
-											<c:forEach items="${project_area_list}" var="item">
-												<option value="${item.getProject_area()}">${item.getProject_area()}</option>
-											</c:forEach>
-										</select>
+								<li role="presentation" class="active"><a href="#step1"
+									data-toggle="tab" aria-controls="step1" role="tab"
+									title="Basic Information"> <span class="round-tab">
+											<i class="glyphicon glyphicon-folder-open"></i>
+									</span>
+								</a></li>
 
+								<li role="presentation" class="disabled"><a href="#step2"
+									data-toggle="tab" aria-controls="step2" role="tab"
+									title="Story"> <span class="round-tab"> <i
+											class="glyphicon glyphicon-film	"></i>
+									</span>
+								</a></li>
+								<li role="presentation" class="disabled"><a href="#step3"
+									data-toggle="tab" aria-controls="step3" role="tab"
+									title="Resources"> <span class="round-tab"> <i
+											class="glyphicon glyphicon-user"></i>
+									</span>
+								</a></li>
 
-
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="projectOwner" class="col-sm-3 col-form-label">Project
-										Owner</label>
-									<div class="col-sm-9" style="display: block; height: 34px;">
-										<input type="radio" id="radio_indi" value="individual"
-											name="projectOwner" /> Myself <input type="radio"
-											id="radio_org" value="organization" name="projectOwner" />
-										Organization <input type="hidden" id="userType"
-											name="userType" value="${user_type}"> <input
-											type="hidden" id="indiOrg" name="indiOrg" value="${indi_org}">
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="projectLocation" class="col-sm-3 col-form-label">Project
-										Location</label>
-									<div class="col-sm-9">
-										<select class="js-example-basic-single-projectlocation"
-											name="projectLocation" required>
-											<option></option>
-											<c:forEach items="${country_list}" var="item">
-												<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="projectDescription" class="col-sm-3 col-form-label">Project
-										Description</label>
-									<div class="col-sm-9">
-										<input type="text" id="projectDescription" value=""
-											name="projectDescription" class="form-control"
-											placeholder="A short summary of project">
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
-										Privacy</label>
-									<div class="col-sm-9" style="display: block; height: 34px;">
-										<input type="radio" id="projectPrivacy" value="public"
-											name="projectPrivacy" /> Public <input type="radio"
-											id="projectPrivacy" value="hidden" name="projectPrivacy" />
-										Hide from All <input type="radio" id="projectPrivacy"
-											value="private" name="projectPrivacy" /> Hide from Outsiders
-									</div>
-								</div>
-
-								<div class="form-group row">
-									<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
-										Duration</label>
-									<div class="col-sm-9">
-										<input type="number" id="projectDuration" value=""
-											name="projectDuration" class="form-control"
-											placeholder="Number of days">
-									</div>
-								</div>
-
-
-								<div class="form-group row">
-									<label for="projectBanList" class="col-sm-3 col-form-label">Ban
-										List</label>
-									<div class="col-sm-9">
-										<select class="js-example-basic-multiple-banlistusers"
-											multiple="multiple" name="selected_banlist">
-											<c:forEach items="${user_list}" var="item">
-												<c:if test="${item.equals(username) == false}">
-													<option value="${item}">${item}</option>
-												</c:if>
-											</c:forEach>
-										</select> <br>
-									</div>
-								</div>
-
-								<br> <br>
+								<li role="presentation" class="disabled"><a
+									href="#complete" data-toggle="tab" aria-controls="complete"
+									role="tab" title="Complete"> <span class="round-tab">
+											<i class="glyphicon glyphicon-ok"></i>
+									</span>
+								</a></li>
+							</ul>
 						</div>
-						<h3>Story</h3>
-						<div>
-							<div class="form-group row">
-								<label for="projectVideo" class="col-sm-3 control-label">Project
-									Video</label>
-								<div class="col-sm-9">
-									<button type="btn" class="btn btn-info" value="submit">Upload
-										a video</button>
-								</div>
-							</div>
 
-							<div class="form-group row ">
-								<label for="projectDocuments" class="col-sm-3 col-form-label">Project
-									Documents</label>
-								<div class="col-sm-9">
-									<button type="btn" class="btn btn-info" value="submit">Upload
-										documents</button>
-								</div>
-							</div>
-						</div>
-						<h3>What I Need</h3>
-						<div>
-							<div id="resourcesNeeded" class="form-group row col-sm-9">
-								<div>
-									<select id="cat1" name="cat1">
-										<option></option>
-										<c:forEach items="${resource_category_list}" var="item">
-											<option value="${item.getSkillset()}">${item.getSkillset()}</option>
-										</c:forEach>
-									</select> <input id="resource1" name="resource1"
-										placeholder="What resources do you need?" type="text" />
-									<textarea id="description1" name="description1"
-										placeholder="Describe your resource here..."></textarea>
-								</div>
-							</div>
+						<form role="form">
+							<div class="tab-content">
+								<div class="tab-pane active" role="tabpanel" id="step1">
+									<h3>Step 1</h3>
+									<p>Fill in basic information of new project</p>
+									<form action="create-project" method="post">
+										<div class="form-group row">
+											<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
+											<div class="col-sm-9">
+												<input type="text" id="projectTitle" value=""
+													name="projectTitle" class="form-control">
+											</div>
+										</div>
 
-							<div class="col-sm-9">
-								<input id="addResource" class="btn btn-info" type="button"
-									value="Add Resource" />
+										<div class="form-group row">
+											<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
+											<div class="col-sm-9">
+												<input type="text" id="projectPurpose" value=""
+													name="projectPurpose" class="form-control"
+													placeholder="Your project purpose in one line">
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="socialImpactType" class="col-sm-3 col-form-label">Social
+												Impact Type</label>
+											<div class="col-sm-9">
+												<select class="js-example-basic-multiple-targetprojectareas create-new-project-select2 form-control"
+													multiple="multiple" name="selected_projectareas" required>
+													<c:forEach items="${project_area_list}" var="item">
+														<option value="${item.getProject_area()}">${item.getProject_area()}</option>
+													</c:forEach>
+												</select>
+
+
+
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="projectOwner" class="col-sm-3 col-form-label">Project
+												Owner</label>
+											<div class="col-sm-9" style="display: block; height: 34px;">
+												<input type="radio" id="radio_indi" value="individual"
+													name="projectOwner" /> Myself <input type="radio"
+													id="radio_org" value="organization" name="projectOwner" />
+												Organization <input type="hidden" id="userType"
+													name="userType" value="${user_type}"> <input
+													type="hidden" id="indiOrg" name="indiOrg"
+													value="${indi_org}">
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="projectLocation" class="col-sm-3 col-form-label">Project
+												Location</label>
+											<div class="col-sm-9">
+												<select class="js-example-basic-single-projectlocation"
+													name="projectLocation" required>
+													<option></option>
+													<c:forEach items="${country_list}" var="item">
+														<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="projectDescription"
+												class="col-sm-3 col-form-label">Project Description</label>
+											<div class="col-sm-9">
+												<input type="text" id="projectDescription" value=""
+													name="projectDescription" class="form-control"
+													placeholder="A short summary of project">
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
+												Privacy</label>
+											<div class="col-sm-9" style="display: block; height: 34px;">
+												<input type="radio" id="projectPrivacy" value="public"
+													name="projectPrivacy" /> Public <input type="radio"
+													id="projectPrivacy" value="hidden" name="projectPrivacy" />
+												Hide from All <input type="radio" id="projectPrivacy"
+													value="private" name="projectPrivacy" /> Hide from
+												Outsiders
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
+												Duration</label>
+											<div class="col-sm-9">
+												<input type="number" id="projectDuration" value=""
+													name="projectDuration" class="form-control"
+													placeholder="Number of days">
+											</div>
+										</div>
+
+
+										<div class="form-group row">
+											<label for="projectBanList" class="col-sm-3 col-form-label">Ban
+												List</label>
+											<div class="col-sm-9">
+												<select
+													class="js-example-basic-multiple-banlistusers create-new-project-select2 form-control"
+													multiple="multiple" name="selected_banlist">
+													<c:forEach items="${user_list}" var="item">
+														<c:if test="${item.equals(username) == false}">
+															<option value="${item}">${item}</option>
+														</c:if>
+													</c:forEach>
+												</select> <br>
+											</div>
+										</div>
+										<hr/>
+										<ul class="list-inline pull-right">
+											<li><button type="button"
+													class="btn btn-primary next-step">Save and
+													continue</button></li>
+										</ul>
+								</div>
+								<div class="tab-pane" role="tabpanel" id="step2">
+									<h3>Step 2</h3>
+									<p>Upload relevant materials for others to know more about your project</p>
+									<div class="form-group row">
+										<label for="projectVideo" class="col-sm-3 control-label">Project
+											Video</label>
+										<div class="col-sm-9">
+											<button type="btn" class="btn btn-info" value="submit">Upload
+												a video</button>
+										</div>
+										<br> <br>
+									</div>
+
+									<div class="form-group row ">
+										<label for="projectDocuments" class="col-sm-3 col-form-label">Project
+											Documents</label>
+										<div class="col-sm-9">
+											<button type="btn" class="btn btn-info" value="submit">Upload
+												documents</button>
+										</div>
+									</div>
+<hr/>
+									<ul class="list-inline pull-right">
+										<li><button type="button"
+												class="btn btn-default prev-step">Previous</button></li>
+										<li><button type="button"
+												class="btn btn-primary next-step">Save and continue</button></li>
+									</ul>
+								</div>
+								<div class="tab-pane" role="tabpanel" id="step3">
+									<h3>Step 3</h3>
+									<p>Indicate the resource(s) your project need</p>
+									
+									
+									
+									<div id="resourcesNeeded" class="form-group row col-sm-9">
+										<div class="col-md-12">
+												<select id="cat1" name="cat1" class="col-md-4">
+												<option></option>
+												<c:forEach items="${resource_category_list}" var="item">
+													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+												</c:forEach>
+											</select>  <input id="resource1" name="resource1" class="form-control col-md-4"
+												placeholder="What resources do you need?" type="text" />
+											<textarea id="description1" name="description1" class="form-control col-md-4"
+												placeholder="Describe your resource here..."></textarea>
+										</div>
+									</div>
+
+									<div class="col-sm-12">
+										<input id="addResource" class="btn btn-info" type="button"
+											value="Add Resource" />
+									<br/><br/><hr/></div>
+									
+									
+									<ul class="list-inline pull-right">
+										<li><button type="button"
+												class="btn btn-default prev-step">Previous</button></li>
+									<!-- 
+										<li><button type="button"
+												class="btn btn-primary btn-info-full next-step">Save
+												and continue</button></li> -->
+												<li><button type="button" class="btn btn-success next-step" type="submit">Create Project</button></li>
+										<!-- <hr />
+										<button class="btn btn-block btn-success" type="submit">Create
+											Project</button> -->
+									</ul>
+								</div>
+								<div class="tab-pane" role="tabpanel" id="complete">
+									<h3>Complete</h3>
+									<p>Your project has been successfully created!</p>
+									<button type="button" class="btn btn-default">Back To Home</button>
+								</div>
+								<div class="clearfix"></div>
 							</div>
-						</div>
+						</form>
 					</div>
-
 				</div>
-				<button class="btn btn-block btn-success" type="submit">Create
-					Project</button>
 			</div>
-			</form>
+
 		</div>
-	</div>
 	</div>
 
 	<script type="text/javascript">
@@ -243,6 +313,7 @@
 					console.log("lastRow: " + lastRow);
 					var lastRowInputs = lastRow.find('input');
 					var isClone = false;
+					
 					lastRowInputs.each(function() {
 						if ($(this).val().length) {
 							isClone = true;
@@ -269,6 +340,11 @@
 					cloned.find("select").val('');
 					cloned.find("textarea").val('');
 					cloned.insertAfter(lastRow);
+					
+					
+					
+				
+					
 				});
 	</script>
 

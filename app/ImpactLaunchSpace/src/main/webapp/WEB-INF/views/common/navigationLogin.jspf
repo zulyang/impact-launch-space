@@ -1,3 +1,4 @@
+<div id="navigationLogin">
             <nav class="navbar navbar-default navbar-fixed-top landing-nav">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -13,3 +14,4 @@
                     </ul>
                 </div>
             </nav> 
+            </div>

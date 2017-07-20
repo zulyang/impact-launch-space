@@ -1,0 +1,22 @@
+.manage-resource-container{
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.title {
+	background-color: #75abd9;
+	color: white;
+	font-weight: 700;
+	padding: 10px;
+	height: 40px;
+	width: 200px;
+	display: inline-block;
+	text-align: center;
+}
+
+.title-label{
+	font-weight:400;font-size:24px;	 	}
+.navbar-barnd{vertical-align : middle;line-height:45px;}
+.btn-success.create {margin-top:10px;}

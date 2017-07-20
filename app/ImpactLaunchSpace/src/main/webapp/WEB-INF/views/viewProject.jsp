@@ -156,7 +156,8 @@
 						<h1 class="section-title">OWNER</h1>
 						<div class="profile-contents">
 							<h2 class="position">${creator_name }</h2>
-							<img src="/imageDisplay?username=${selected_project.getProject_proposer()}"
+							<img
+								src="/imageDisplay?username=${selected_project.getProject_proposer()}"
 								class="profile-image img responsive"
 								alt="John Smith Profile Photo">
 							<!--social links-->
@@ -181,19 +182,18 @@
 								<h3>Category ${loop.index + 1}: ${item}</h3>
 								<c:forEach var="type" items="${project_requested_resources}">
 									<c:if test="${type.key.equals(item) }">
-									
-									<c:forEach var="item" items="${type.value}">
-										<h2>${item.get(0)}</h2>
-										<p>${item.get(1)}
-										<p>
-										<br>
-										<span><i class="fa fa-users"></i> 180 backers</span> <a href=""
-									class="btn btn-reward">APPLY</a>
-									</c:forEach>
+
+										<c:forEach var="item" items="${type.value}">
+											<h2>${item.get(0)}</h2>
+											<p>${item.get(1)}
+											<p>
+												<br> <span><i class="fa fa-users"></i> 180
+													backers</span> <a href="" class="btn btn-reward">APPLY</a>
+										</c:forEach>
 									</c:if>
 								</c:forEach>
 
-								
+
 							</div>
 
 						</c:forEach>

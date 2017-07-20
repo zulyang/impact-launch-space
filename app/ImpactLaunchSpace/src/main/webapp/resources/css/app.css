@@ -86,7 +86,7 @@ html, body {
 	margin-left: 3rem;
 }
 
-.navbar-default .navbar-nav>li>a {
+#navigation .navbar-default .navbar-nav>li>a {
 	color: white;
 	font-weight: bold;
 	font-size: 2rem;
@@ -531,7 +531,7 @@ html, body {
 }
 
 .create-project-container{
-  margin-top: 15rem;
+  margin-top: 10rem;
   margin-bottom: 5rem;
   width: 85rem;
   margin-left:auto;
@@ -548,11 +548,11 @@ html, body {
 	color: #FFFFFF;
 }
 
-.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
+#navigation .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
 	color: white;
 }
 
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
-	color: #1f2d5d;
+#navigation .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+	color: #1f2d5d !important;
 	background-color:white; 
 }
