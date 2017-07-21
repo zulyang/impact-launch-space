@@ -25,11 +25,14 @@ public class ProjectService {
 	public void setupProject(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
 			boolean hiddenToAll, String project_status, ArrayList<String> project_banlist,
-			ArrayList<String> selected_projectareas) {
+			ArrayList<String> selected_projectareas, ArrayList<ProjectResourceCategory> selected_resourceCategories,
+			ArrayList<ProjectRequestedResource> selected_requestedResources) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
 		ProjectBanListDAO projectBanListDAO = (ProjectBanListDAO) context.getBean("projectBanListDAO");
 		ProjectTargetAreaDAO projectTargetAreaDAO = (ProjectTargetAreaDAO) context.getBean("projectTargetAreaDAO");
+		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
 
 		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
@@ -43,6 +46,14 @@ public class ProjectService {
 
 		for (String target_area : selected_projectareas) {
 			projectTargetAreaDAO.insert(new ProjectTargetArea(project_name, target_area, project_proposer));
+		}
+		
+		for(ProjectResourceCategory project_resource_category : selected_resourceCategories){
+			projectResourceCategoryDAO.insert(project_resource_category);
+		}
+		
+		for(ProjectRequestedResource project_requested_resource : selected_requestedResources){
+			projectRequestedResourceDAO.insert(project_requested_resource);
 		}
 
 	}

@@ -91,8 +91,11 @@ public class ProjectController {
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
 			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
 			@RequestParam(required = false) ArrayList<String> selected_banlist, @RequestParam String resourceTags1,
+			@RequestParam(required=false) ArrayList<String> resourceCategory, 
+			@RequestParam(required=false) ArrayList<String> resourceName, 
+			@RequestParam(required=false)  ArrayList<String> resourceDescription,
 			HttpServletRequest request, RedirectAttributes redirectAttributes) {
-
+		
 		String project_name = projectTitle;
 		String description = projectDescription;
 		String purpose = projectPurpose;
@@ -126,10 +129,28 @@ public class ProjectController {
 																										// too
 			}
 		}
+		
+		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
+		ArrayList<ProjectRequestedResource> selected_requestedResources = new ArrayList<ProjectRequestedResource>();
+		
+		for(String resourceCategory_string : resourceCategory){
+			ProjectResourceCategory projectResourceCategoryObj = new ProjectResourceCategory(project_name, resourceCategory_string, project_proposer);
+			if(!resourceCategory.contains(projectResourceCategoryObj)){
+				selected_resourceCategories.add(projectResourceCategoryObj);
+			}
+	
+		}
+		
+		for(int i = 0; i < resourceName.size(); i++){
+			ProjectRequestedResource projectRequestedResourceObj = new ProjectRequestedResource(project_name, resourceCategory.get(i), resourceName.get(i),
+			resourceDescription.get(i) , project_proposer);
+			selected_requestedResources.add(projectRequestedResourceObj);
+		}
 
+		
 		projectService.setupProject(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, selected_banlist,
-				selected_projectareas);
+				selected_projectareas,selected_resourceCategories,selected_requestedResources);
 
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
@@ -320,6 +341,23 @@ public class ProjectController {
 			return "viewProject";
 		}
 		return "viewProject";
+	}
+	
+	@RequestMapping(value = "/testmultiple", method = RequestMethod.GET)
+	public String testtestest(HttpServletRequest request, ModelMap model) {
+
+		
+		return "testmultiple";
+	}
+	
+	@RequestMapping(value = "/testmultiple", method = RequestMethod.POST)
+	public String testtestest2(@RequestParam(required=false) ArrayList<String> resourceCategory, @RequestParam(required=false) ArrayList<String> resourceName, 
+			@RequestParam(required=false)  ArrayList<String> resourceDescription, HttpServletRequest request, ModelMap model) {
+		System.out.println(resourceCategory);
+		System.out.println(resourceName);
+		System.out.println(resourceDescription);
+		
+		return "testmultiple";
 	}
 	
 	@RequestMapping(value = "/view-privateproject", method = RequestMethod.GET)

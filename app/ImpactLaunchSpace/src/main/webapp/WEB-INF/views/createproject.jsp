@@ -90,7 +90,7 @@
 							</ul>
 						</div>
 
-						<form role="form">
+						<form action="create-project" method = "post" role="form">
 							<div class="tab-content">
 								<div class="tab-pane active" role="tabpanel" id="step1">
 									<h3>Step 1</h3>
@@ -275,7 +275,7 @@
 										<li><button type="button"
 												class="btn btn-primary btn-info-full next-step">Save
 												and continue</button></li> -->
-												<li><button type="button" class="btn btn-success next-step" type="submit">Create Project</button></li>
+												<li><button type="submit" class="btn btn-success next-step" >Create Project</button></li>
 										<!-- <hr />
 										<button class="btn btn-block btn-success" type="submit">Create
 											Project</button> -->
