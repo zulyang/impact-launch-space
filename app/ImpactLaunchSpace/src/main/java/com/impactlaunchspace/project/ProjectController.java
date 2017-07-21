@@ -90,7 +90,7 @@ public class ProjectController {
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner,
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
 			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
-			@RequestParam(required = false) ArrayList<String> selected_banlist, @RequestParam String resourceTags1,
+			@RequestParam(required = false) ArrayList<String> selected_banlist, 
 			@RequestParam(required=false) ArrayList<String> resourceCategory, 
 			@RequestParam(required=false) ArrayList<String> resourceName, 
 			@RequestParam(required=false)  ArrayList<String> resourceDescription,

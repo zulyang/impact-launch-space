@@ -21,7 +21,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 	
 	public void insert(ProjectRequestedResource projectRequestedResource){
 		String sql = "INSERT INTO PROJECT_REQUESTED_RESOURCES "
-				+ "(project_name, resource_category, resource_name, resource_description, project_proposer) VALUES (?, ?, ?, ?, ?)";
+				+ "(project_name, resource_category, resource_name, request_description, project_proposer) VALUES (?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {

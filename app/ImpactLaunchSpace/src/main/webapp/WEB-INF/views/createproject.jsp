@@ -250,14 +250,14 @@
 									
 									<div id="resourcesNeeded" class="form-group row col-sm-9">
 										<div class="col-md-12">
-												<select id="cat1" name="cat1" class="col-md-4">
+												<select id="resourceCategory" name="resourceCategory" class="col-md-4">
 												<option></option>
 												<c:forEach items="${resource_category_list}" var="item">
 													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 												</c:forEach>
-											</select>  <input id="resource1" name="resource1" class="form-control col-md-4"
+											</select>  <input id="resourceName" name="resourceName" class="form-control col-md-4"
 												placeholder="What resources do you need?" type="text" />
-											<textarea id="description1" name="description1" class="form-control col-md-4"
+											<textarea id="resourceDescription" name="resourceDescription" class="form-control col-md-4"
 												placeholder="Describe your resource here..."></textarea>
 										</div>
 									</div>
@@ -351,7 +351,7 @@
 	<script>
 		function checkResourceFields() {
 			var category = document.getElementById("category1");
-			var resource = document.getElementById("resource1");
+			var resource = document.getElementById("resourceName");
 			console.log(category.value);
 			console.log(resource.value);
 
