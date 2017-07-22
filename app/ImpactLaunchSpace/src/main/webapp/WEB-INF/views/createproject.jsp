@@ -250,14 +250,15 @@
 									
 									<div id="resourcesNeeded" class="form-group row col-sm-9">
 										<div class="col-md-12">
-												<select id="resourceCategory" name="resourceCategory" class="col-md-4">
-												<option></option>
-												<c:forEach items="${resource_category_list}" var="item">
-													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
-												</c:forEach>
-											</select>  <input id="resourceName" name="resourceName" class="form-control col-md-4"
+												<select id="resourceCategory1" name="resourceCategory" class="col-md-4">
+													<option></option>
+													<c:forEach items="${resource_category_list}" var="item">
+														<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+													</c:forEach>
+												</select>  
+											<input id="resourceName1" name="resourceName" class="form-control col-md-4"
 												placeholder="What resources do you need?" type="text" />
-											<textarea id="resourceDescription" name="resourceDescription" class="form-control col-md-4"
+											<textarea id="resourceDescription1" name="resourceDescription" class="form-control col-md-4"
 												placeholder="Describe your resource here..."></textarea>
 										</div>
 									</div>
@@ -339,30 +340,8 @@
 					cloned.find("input[type='text']").val('');
 					cloned.find("select").val('');
 					cloned.find("textarea").val('');
-					cloned.insertAfter(lastRow);
-					
-					
-					
-				
-					
+					cloned.insertAfter(lastRow);					
 				});
-	</script>
-
-	<script>
-		function checkResourceFields() {
-			var category = document.getElementById("category1");
-			var resource = document.getElementById("resourceName");
-			console.log(category.value);
-			console.log(resource.value);
-
-			if (category.value === "" || resource.value === "") {
-				console.log("blank");
-				alert("Please fill in all resource fields!");
-				return false;
-			}
-
-			return true;
-		}
 	</script>
 
 	<script>
