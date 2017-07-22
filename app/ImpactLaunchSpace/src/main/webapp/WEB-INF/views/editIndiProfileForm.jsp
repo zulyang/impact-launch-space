@@ -44,7 +44,7 @@
 						<div class="panel-heading">Edit Individual Profile Form</div>
 						<div class="panel-body">
 							<div class="edit_org_pic" style="display: inline-block">
-								<form action="editprofile-individual-profilepic" method="post"
+								<form onsubmit="return checkFields();" action="editprofile-individual-profilepic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${username}"
 										class="circle_edit_ind_profile_image" height="64" width="64">
@@ -77,9 +77,9 @@
 									<label for="editIndLastName" class="col-sm-3 control-label">Last
 										Name</label>
 									<div class="col-sm-9">
-										<input type="text" required value="${individual.getLast_name()}"
-											name="lastName" class="form-control edit_profileField"
-											id="editIndLastName" />
+										<input type="text" required
+											value="${individual.getLast_name()}" name="lastName"
+											class="form-control edit_profileField" id="editIndLastName" />
 									</div>
 								</div>
 
@@ -96,7 +96,7 @@
 								<div class="form-group">
 									<label for="editOrg" class="col-sm-3 control-label">Organization</label>
 									<div class="col-sm-9">
-										<select class="js-example-basic-single-organization"
+										<select class="js-example-basic-single-organization form-control edit_profileField"
 											name="organization" id="editOrg">
 											<option></option>
 											<c:forEach items="${organization_list}" var="item">
@@ -112,17 +112,30 @@
 										Of Birth</label>
 									<div class="col-sm-9">
 										<input type="date" value="${individual.getDateOfBirth()}"
-											name="dateOfBirth" required class="form-control edit_profileField"
-											id="editDob" />
+											name="dateOfBirth" required
+											class="form-control edit_profileField" id="editDob" />
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label for="editCountry" class="col-sm-3 control-label">Country</label>
 									<div class="col-sm-9">
-										<input type="text" required value="${individual.getCountry()}"
-											name="country" class="form-control edit_profileField"
-											id="editCountry" />
+										<select
+											class="js-example-basic-single-country form-control edit_profileField"
+											name="country" id="editCountry" required>
+											<c:forEach items="${country_list}" var="item">
+												<c:choose>
+													<c:when
+														test="${item.getCountry_name().equals(individual.getCountry())}">
+														<option value="${item.getCountry_name()}"
+															selected="selected">${item.getCountry_name()}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
 
@@ -185,7 +198,7 @@
 						<div class="panel-body">
 							My Skills: <br> <select
 								class="js-example-basic-multiple-skills" multiple="multiple"
-								name="selected_skillsets" required>
+								name="selected_skillsets" required id="skillsets">
 								<c:forEach items="${skillset_list}" var="item">
 									<c:choose>
 										<c:when
@@ -206,8 +219,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> 
-							<select
+							<br> I have expertise in these Job Sectors: <br> <select
 								class="js-example-basic-single-jobsectorindividual-required"
 								name="selected_jobsector1" id="jsIndi1Value">
 								<option value=""></option>
@@ -222,10 +234,8 @@
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-							</select> 
-							<input id="js1experienceA" type="number"
-								placeholder="Years of Experience" id="js1experience"
-								name="selected_jobsector1_years"
+							</select> <input type="number" placeholder="Years of Experience"
+								id="js1experience" name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}">
 
 							<c:choose>
@@ -318,8 +328,9 @@
 						<div class="panel-heading">Interests</div>
 						<div class="panel-body">
 							I prefer to work in: <select
-								class="js-example-basic-multiple-preferredcountries"
-								multiple="multiple" name="selected_preferredcountries" required>
+								class="js-example-basic-multiple-preferredcountries edit_profileField"
+								multiple="multiple" name="selected_preferredcountries"
+								id="preferredCountries" required>
 								<c:forEach items="${country_list}" var="item">
 									<c:choose>
 										<c:when
@@ -333,9 +344,9 @@
 								</c:forEach>
 
 							</select> <br> Preferred Project Areas: <br> <select
-								class="js-example-basic-multiple-preferredprojectareas"
+								class="js-example-basic-multiple-preferredprojectareas edit_profileField"
 								multiple="multiple" name="selected_preferredprojectareas"
-								required>
+								id="preferredAreas" required>
 								<c:forEach items="${project_area_list}" var="item">
 									<c:choose>
 										<c:when
@@ -350,8 +361,9 @@
 
 
 							</select> <br> Preferred Job Sectors: <br> <select
-								class="js-example-basic-multiple-preferredjobsectors"
-								multiple="multiple" name="selected_preferredjobsectors" required>
+								class="js-example-basic-multiple-preferredjobsectors edit_profileField"
+								multiple="multiple" name="selected_preferredjobsectors"
+								id="preferredJobSectors" required>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
 										<c:when
@@ -395,7 +407,7 @@
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input class="btn btn-success edit_org_profile_save" onclick="return checkFields();" value="Update details" />
+							<input type="submit" class="btn btn-success edit_org_profile_save" value="Update details" />
 						</div>
 					</div>
 
@@ -414,27 +426,46 @@
 
 	<script type="text/javascript">
 		function checkFields() {
+			var firstName = document.getElementById("editIndFirstName");
+
+			if (firstName.value === "") {
+				alert('Please input your job title at your current organization.')
+				return false;
+			}
+
+			var lastName = document.getElementById("editIndLastName");
+
+			if (lastName.value === "") {
+				alert('Please input your job title at your current organization.')
+				return false;
+			}
+
 			var jobTitle = document.getElementById("editJobTitle");
 			console.log("jobTitle: " + jobTitle.value);
-			
+
 			var organization = document.getElementById("editOrg");
 			console.log("organization: " + organization.value);
-			
+
 			if (jobTitle.value !== "" && organization.value === "") {
 				alert('Please choose your organization.')
 				return false;
 			}
-			
+
 			if (jobTitle.value === "" && organization.value !== "") {
 				alert('Please input your job title at your current organization.')
 				return false;
 			}
-			
+
 			var minHours = document.getElementById("editMinHour");
 			console.log("minHours: " + minHours.value);
 
 			var maxHours = document.getElementById("editMaxHour");
 			console.log("maxHours: " + maxHours.value);
+
+			if (minHours === "" || maxHours === "") {
+				alert('Please enter the number of hours that you are willing to volunteer for projects.')
+				return false;
+			}
 
 			if (minHours !== "" && maxHours !== "") {
 				var min = parseInt(minHours.value);
@@ -450,31 +481,45 @@
 					return false;
 				}
 			}
-			
+
+			var skillsets = document.getElementById("skillsets");
+			console.log("skillsets: " + skillsets);
+
+			if (skillsets !== null) {
+				console.log("skillsets: " + skillsets.value);
+				if (skillsets.value === "") {
+					alert('Please state your skills.')
+					return false;
+				}
+			}
+
 			var jsIndi1 = document.getElementById("jsIndi1Value");
 			console.log("1 value: " + jsIndi1);
-			
+
 			var jsIndiEx1 = document.getElementById("js1experience");
-			
+			console.log("1 experience: " + jsIndiEx1);
+
 			if (jsIndi1 !== null) {
 				console.log("1a: " + jsIndi1.value);
 				if (jsIndi1.value !== "" && jsIndiEx1.value === "") {
-					console.log("js indi xperience value 2: "
-							+ jsIndiEx1.value);
+					console
+							.log("js indi xperience value 1: "
+									+ jsIndiEx1.value);
 					change('js1experience', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi1.value === "" && jsIndiEx1.value !== "") {
-					console.log("js indi xperience value 1: "
-							+ jsIndiEx1.value);
+					console
+							.log("js indi xperience value 1: "
+									+ jsIndiEx1.value);
 					change('jsIndi1Value', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 			}
-			
+
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
 			console.log("2A: " + jsIndi2A);
 
@@ -574,6 +619,43 @@
 				}
 			}
 
+			var preferredCountries = document
+					.getElementById("preferredCountries");
+			console.log("preferredCountries: " + preferredCountries);
+
+			if (preferredCountries !== null) {
+				console.log("preferredCountries: " + preferredCountries.value);
+				if (preferredCountries.value === "") {
+					alert('Please tell us which country you prefer to volunter in.')
+					return false;
+				}
+			}
+
+			var preferredAreas = document.getElementById("preferredAreas");
+			console.log("preferredAreas: " + preferredAreas);
+
+			if (preferredAreas !== null) {
+				console.log("preferredAreas: " + preferredAreas.value);
+				if (preferredAreas.value === "") {
+					alert('Please tell us the areas you would like to volunteer in.')
+					return false;
+				}
+			}
+
+			var preferredJobSectors = document
+					.getElementById("preferredJobSectors");
+			console.log("preferredJobSectors: " + preferredJobSectors);
+
+			if (preferredJobSectors !== null) {
+				console
+						.log("preferredJobSectors: "
+								+ preferredJobSectors.value);
+				if (preferredJobSectors.value === "") {
+					alert('Please tell us the job sectors you prefer to work in.')
+					return false;
+				}
+			}
+
 			return true;
 		}
 
@@ -597,6 +679,14 @@
 	<script type="text/javascript">
 		$(".js-example-basic-multiple-preferredjobsectors").select2({
 			placeholder : "Which job sectors are important to you?"
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".js-example-basic-single-country").select2({
+				placeholder : "Country which you are based in: ",
+				allowClear : true
+			});
 		});
 	</script>
 	<script type="text/javascript">

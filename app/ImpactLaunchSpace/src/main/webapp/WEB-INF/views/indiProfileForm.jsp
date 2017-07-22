@@ -39,7 +39,7 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<%@include file="common/navigation.jspf"%>
 				<div class="col-lg-12 form_container indi_profile_container">
-					<form method="post" onsubmit="return checkFields()" action="setup-individual" enctype="multipart/form-data"
+					<form method="post" onsubmit="return checkFields();" action="setup-individual" enctype="multipart/form-data"
 						class="form-horizontal indi_profile_form">
 						<h3>Personal information</h3>
 						<div class="form-group">
@@ -190,8 +190,8 @@
 							<div class="col-lg-12">
 								<input type="number" name="minimumHours" min="1" max="100"
 									id="minHours" class="form-control profileField"
-									placeholder="Minimum Hours" required> <input
-									type="number" name="maximumHours" id="maxHours" min="1"
+									placeholder="Minimum Hours" required> 
+								<input type="number" name="maximumHours" id="maxHours" min="1"
 									max="100" class="form-control profileField"
 									placeholder="Maximum Hours" required>
 							</div>
@@ -309,11 +309,12 @@
 			console.log("1a " + jsIndi1A);
 
 			var jsIndiEx1B = document.getElementById("js1experience");
-
+			console.log("js1 experience: " + jsIndiEx1B);
+			
 			if (jsIndi1A !== null) {
 				console.log("1a: " + jsIndi1A.value);
 				if (jsIndi1A.value !== "" && jsIndiEx1B.value === "") {
-					console.log("js indi xperience value 2: "
+					console.log("js indi xperience value 1: "
 							+ jsIndiEx1B.value);
 					change('js1experience', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
