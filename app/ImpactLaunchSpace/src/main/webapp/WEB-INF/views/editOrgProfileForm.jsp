@@ -17,7 +17,8 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script
@@ -36,15 +37,13 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
+				<!--navigation bar  -->
+				<%@include file="common/navigation.jspf"%>
 
-
-<!--navigation bar  -->
-<%@include file="common/navigation.jspf" %>
-					
 
 				<div class="edit_org_profile_display_container">
 					<div class="panel panel-default">
-						<div class="panel-heading">Edit Organisation Profile Form</div>
+						<div class="panel-heading">Edit Organization Profile Form</div>
 						<div class="panel-body">
 
 							<div class="edit_org_pic" style="display: inline-block">
@@ -105,53 +104,56 @@
 									</div>
 								</div>
 
-
-								<hr>
-								<div class="org_profile_display_countries">
-
-									<select class="js-example-basic-multiple" multiple="multiple"
-										name="selected_countryofoperation" required>
-										<c:forEach items="${country_list}" var="item">
-											<p class="org_countries">
-												<c:choose>
-													<c:when
-														test="${organization_countriesofoperation_list.contains(item.getCountry_name())}">
-														<option value="${item.getCountry_name()}"
-															selected="selected">${item.getCountry_name()}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
-													</c:otherwise>
-												</c:choose>
-											</p>
-										</c:forEach>
-									</select>
-
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">Job Sectors</div>
-									<div class="panel-body">
-										<div class="org_profile_display_jobSectors">
-											<select class="js-example-basic-multiple2"
-												multiple="multiple" name="selected_jobsectors" required>
-												<c:forEach items="${job_sector_list}" var="item">
+								<div class="form-group">
+									<label for="editCountry" class="col-sm-2 control-label">Countries
+										Of Operation</label>
+									<div class="col-sm-10">
+										<select id="editCountry"
+											class="js-example-basic-multiple edit_profileField"
+											multiple="multiple" name="selected_countryofoperation"
+											required>
+											<c:forEach items="${country_list}" var="item">
+												<p class="org_countries">
 													<c:choose>
 														<c:when
-															test="${organization_jobsector_list.contains(item.getJob_sector())}">
-															<option value="${item.getJob_sector()}"
-																selected="selected">${item.getJob_sector()}</option>
+															test="${organization_countriesofoperation_list.contains(item.getCountry_name())}">
+															<option value="${item.getCountry_name()}"
+																selected="selected">${item.getCountry_name()}</option>
 														</c:when>
 														<c:otherwise>
-															<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+															<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
 														</c:otherwise>
 													</c:choose>
-												</c:forEach>
-											</select>
-										</div>
+												</p>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
+
 								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
+									<label for="editJobSectors" class="col-sm-2 control-label">Job
+										Sectors</label>
+									<div class="col-sm-10">
+										<select id="editJobSectors" class="js-example-basic-multiple2 edit_profileField" multiple="multiple"
+											name="selected_jobsectors" required>
+											<c:forEach items="${job_sector_list}" var="item">
+												<c:choose>
+													<c:when
+														test="${organization_jobsector_list.contains(item.getJob_sector())}">
+														<option value="${item.getJob_sector()}"
+															selected="selected">${item.getJob_sector()}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-10">
 										<input class="btn btn-success edit_org_profile_save"
 											type="submit" value="Update details" />
 									</div>

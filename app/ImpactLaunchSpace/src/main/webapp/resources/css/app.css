@@ -117,9 +117,9 @@ html, body {
 }
 
 .org_profile_container {
-	margin-top: 85rem;
+	margin-top: 30rem;
 	margin-bottom: 5rem;
-	height: 100rem;
+	height: 70rem;
 	width: 75rem;
 	border: 0.125rem solid black;
 }
@@ -130,10 +130,6 @@ html, body {
 	height: 170rem;
 	width: 75rem;
 	border: 0.125rem solid black;
-}
-
-.org_profile_form {
-	margin-top: -10rem;
 }
 
 .indi_profile_form {
@@ -148,9 +144,7 @@ html, body {
 }
 
 .edit_profileField {
-	width: 20rem;
-	margin-left: auto;
-	margin-right: auto;
+	width: 25rem;
 }
 
 .companyBio, .personalBio {
@@ -377,6 +371,7 @@ html, body {
 	margin-top: 35rem;
 	margin-bottom: 5rem;
 	width: 85rem;
+	height: 65rem;
 }
 
 .edit_ind_profile_display_container {
@@ -558,68 +553,13 @@ html, body {
 
 }
 
-
-.custom-file-upload-hidden {
-	display: none;
-	visibility: hidden;
-	position: absolute;
-	left: -9999px;
-}
-
-.custom-file-upload {
-	display: block;
-	width: auto;
-	font-size: 16px;
-	margin-top: 30px; //
-	border: 1px solid #ccc; label { display : block;
-	margin-bottom: 5px;
-}
-
-}
-.file-upload-wrapper {
+#profile_upload_button {
 	position: relative;
-	margin-bottom: 5px;
-	//border: 1px solid #ccc;
-}
-
-.file-upload-input {
-	width: $file-upload-size;
-	color: #188cd2;
-	font-size: 16px;
-	padding: 11px 17px;
-	background-color: $file-upload-color; @ include transition(all 0.2s
-	ease-in);
-	float: left; /* IE 9 Fix */ &: hover , & : focus { 
-        background-color : darken( $ file-upload-color, 5);
-	outline: none;
-}
-
-
-.file-upload-button {
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: 1px solid #ccc;
+	text-align: center;
+	background-color: #5199ff;
 	cursor: pointer;
-	display: inline-block;
-	color: #fff;
-	font-size: 16px;
-	text-transform: uppercase;
-	padding: 11px 20px;
-	border: none;
-	margin-left: -1px;
-	background-color: darken($ file-upload-color, 10);
-	float: left; /* IE 9 Fix */
-	@
-	include
-	transition(all
-	0.2s
-	ease-in);
-	&:
-	hover
-	{
-	background-color
-	:
-	darken(
-	$
-	file-upload-color
-	,
-	20
-	);
 }

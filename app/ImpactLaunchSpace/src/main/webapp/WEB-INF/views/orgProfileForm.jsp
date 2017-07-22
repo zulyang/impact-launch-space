@@ -14,7 +14,8 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
 	rel="stylesheet" />
@@ -38,15 +39,20 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigation.jspf" %>
+				<%@include file="common/navigation.jspf"%>
 
 				<div class="col-lg-12 form_container org_profile_container">
 					<form method="post" action="setup-organization"
 						enctype="multipart/form-data"
 						class="form-horizontal org_profile_form">
 						<div class="form-group">
-							<div class="col-lg-12 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
-								<input type="file" name="profilePicture">
+							<div class="col-lg-12">
+								<div id="profile_upload_button" onclick="uploadFile()">Upload
+									a display picture</div>
+								<div style='height: 0px; width: 0px; overflow: hidden;'>
+									<input id="uploadFile" name="profilePicture" type="file"
+										value="upload" onchange="sub(this)" />
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
@@ -63,13 +69,13 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="companyName" required="required" type="text"
+								<input name="companyName" required type="text"
 									class="form-control profileField" placeholder="Company name">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<select class="js-example-basic-multiple" multiple="multiple"
+								<select class="js-example-basic-multiple" required multiple="multiple"
 									name="countriesOfOperation">
 									<c:forEach items="${country_list}" var="item">
 										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
@@ -115,7 +121,17 @@
 		</div>
 	</div>
 
-
+	<script type="text/javascript">
+		function uploadFile() {
+			document.getElementById("uploadFile").click();
+		}
+		function sub(obj) {
+			var file = obj.value;
+			var fileName = file.split("\\");
+			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
+			event.preventDefault();
+		}
+	</script>
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple").select2({

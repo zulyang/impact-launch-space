@@ -230,6 +230,7 @@ public class LoginController {
 				return "verifyaccount"; // verifyaccount
 			}
 		}
+		model.addAttribute("verifyNewAccount", "Your username and/or password is incorrect.");
 		System.out.println("in verify account 6");
 		return "verifyaccount"; // verifyaccount
 	}

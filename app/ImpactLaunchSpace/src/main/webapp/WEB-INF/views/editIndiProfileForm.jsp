@@ -61,14 +61,13 @@
 								</form>
 							</div>
 
-							<form onsubmit="return checkFields();"
-								class="form-horizontal edit_ind_profile_container"
+							<form class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
 									<label for="editIndFirstName" class="col-sm-3 control-label">First
 										Name</label>
 									<div class="col-sm-9">
-										<input type="text" id="editIndFirstName"
+										<input type="text" id="editIndFirstName" required
 											value="${individual.getFirst_name()}" name="firstName"
 											class="form-control edit_profileField" />
 									</div>
@@ -78,7 +77,7 @@
 									<label for="editIndLastName" class="col-sm-3 control-label">Last
 										Name</label>
 									<div class="col-sm-9">
-										<input type="text" value="${individual.getLast_name()}"
+										<input type="text" required value="${individual.getLast_name()}"
 											name="lastName" class="form-control edit_profileField"
 											id="editIndLastName" />
 									</div>
@@ -113,7 +112,7 @@
 										Of Birth</label>
 									<div class="col-sm-9">
 										<input type="date" value="${individual.getDateOfBirth()}"
-											name="dateOfBirth" class="form-control edit_profileField"
+											name="dateOfBirth" required class="form-control edit_profileField"
 											id="editDob" />
 									</div>
 								</div>
@@ -121,7 +120,7 @@
 								<div class="form-group">
 									<label for="editCountry" class="col-sm-3 control-label">Country</label>
 									<div class="col-sm-9">
-										<input type="text" value="${individual.getCountry()}"
+										<input type="text" required value="${individual.getCountry()}"
 											name="country" class="form-control edit_profileField"
 											id="editCountry" />
 									</div>
@@ -161,7 +160,7 @@
 									<label for="editMinHour" class="col-sm-3 control-label">Min
 										Hours</label>
 									<div class="col-sm-9">
-										<input type="number"
+										<input type="number" required
 											value="${individual.getMinimumVolunteerHours()}"
 											name="minimumVolunteerHours"
 											class="form-control edit_profileField" id="editMinHour" />
@@ -172,7 +171,7 @@
 									<label for="editMaxHour" class="col-sm-3 control-label">Max
 										Hours</label>
 									<div class="col-sm-9">
-										<input type="number"
+										<input type="number" required
 											value="${individual.getMaximumVolunteerHours()}"
 											name="maximumVolunteerHours"
 											class="form-control edit_profileField" id="editMaxHour" />
@@ -207,9 +206,10 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> <select
+							<br> I have expertise in these Job Sectors: <br> 
+							<select
 								class="js-example-basic-single-jobsectorindividual-required"
-								name="selected_jobsector1" required>
+								name="selected_jobsector1" id="jsIndi1Value">
 								<option value=""></option>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
@@ -222,8 +222,9 @@
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-							</select> <input id="js1experienceA" type="number"
-								placeholder="Years of Experience" required
+							</select> 
+							<input id="js1experienceA" type="number"
+								placeholder="Years of Experience" id="js1experience"
 								name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}">
 
@@ -394,8 +395,7 @@
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input class="btn btn-success edit_org_profile_save"
-								type="submit" value="Update details" />
+							<input class="btn btn-success edit_org_profile_save" onclick="return checkFields();" value="Update details" />
 						</div>
 					</div>
 
@@ -414,6 +414,67 @@
 
 	<script type="text/javascript">
 		function checkFields() {
+			var jobTitle = document.getElementById("editJobTitle");
+			console.log("jobTitle: " + jobTitle.value);
+			
+			var organization = document.getElementById("editOrg");
+			console.log("organization: " + organization.value);
+			
+			if (jobTitle.value !== "" && organization.value === "") {
+				alert('Please choose your organization.')
+				return false;
+			}
+			
+			if (jobTitle.value === "" && organization.value !== "") {
+				alert('Please input your job title at your current organization.')
+				return false;
+			}
+			
+			var minHours = document.getElementById("editMinHour");
+			console.log("minHours: " + minHours.value);
+
+			var maxHours = document.getElementById("editMaxHour");
+			console.log("maxHours: " + maxHours.value);
+
+			if (minHours !== "" && maxHours !== "") {
+				var min = parseInt(minHours.value);
+				var max = parseInt(maxHours.value);
+
+				if (min < 0 || max < 0) {
+					alert('Please enter numbers greater than 0 for hours to volunteer.')
+					return false;
+				}
+
+				if (min > max) {
+					alert('Your minimum hours cannot be greater than maximum hours.')
+					return false;
+				}
+			}
+			
+			var jsIndi1 = document.getElementById("jsIndi1Value");
+			console.log("1 value: " + jsIndi1);
+			
+			var jsIndiEx1 = document.getElementById("js1experience");
+			
+			if (jsIndi1 !== null) {
+				console.log("1a: " + jsIndi1.value);
+				if (jsIndi1.value !== "" && jsIndiEx1.value === "") {
+					console.log("js indi xperience value 2: "
+							+ jsIndiEx1.value);
+					change('js1experience', 'required');
+					alert('Please fill in the years of experience you have for the sector(s) chosen.')
+					return false;
+				}
+
+				if (jsIndi1.value === "" && jsIndiEx1.value !== "") {
+					console.log("js indi xperience value 1: "
+							+ jsIndiEx1.value);
+					change('jsIndi1Value', 'required');
+					alert('Please select a sector for the number of years of experience that you have for.')
+					return false;
+				}
+			}
+			
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
 			console.log("2A: " + jsIndi2A);
 
