@@ -20,3 +20,17 @@
 	font-weight:400;font-size:24px;	 	}
 .navbar-barnd{vertical-align : middle;line-height:45px;}
 .btn-success.create {margin-top:10px;}
+
+.save, .cancel {
+	display: none;
+}
+
+/* .editable-field{
+	background: transparent;
+} */
+
+.editable-field:disabled,
+.editable-field[disabled]{
+  border: 1px solid transparent;
+  background-color: transparent;
+}

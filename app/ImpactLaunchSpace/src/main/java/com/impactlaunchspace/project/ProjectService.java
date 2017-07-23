@@ -40,21 +40,29 @@ public class ProjectService {
 				new Timestamp(Calendar.getInstance().getTime().getTime()), 0);
 
 		projectDAO.insert(project);
-
-		for (String ban_username : project_banlist) {
-			projectBanListDAO.insert(new ProjectBanList(project_name, ban_username, project_proposer));
-		}
-
-		for (String target_area : selected_projectareas) {
-			projectTargetAreaDAO.insert(new ProjectTargetArea(project_name, target_area, project_proposer));
+		
+		if(project_banlist != null){
+			for (String ban_username : project_banlist) {
+				projectBanListDAO.insert(new ProjectBanList(project_name, ban_username, project_proposer));
+			}
 		}
 		
-		for(ProjectResourceCategory project_resource_category : selected_resourceCategories){
-			projectResourceCategoryDAO.insert(project_resource_category);
+		if(selected_projectareas != null){
+			for (String target_area : selected_projectareas) {
+				projectTargetAreaDAO.insert(new ProjectTargetArea(project_name, target_area, project_proposer));
+			}	
 		}
 		
-		for(ProjectRequestedResource project_requested_resource : selected_requestedResources){
-			projectRequestedResourceDAO.insert(project_requested_resource);
+		if(selected_resourceCategories != null){
+			for(ProjectResourceCategory project_resource_category : selected_resourceCategories){
+				projectResourceCategoryDAO.insert(project_resource_category);
+			}
+		}
+		
+		if(selected_requestedResources != null){
+			for(ProjectRequestedResource project_requested_resource : selected_requestedResources){
+				projectRequestedResourceDAO.insert(project_requested_resource);
+			}
 		}
 
 	}
@@ -124,5 +132,22 @@ public class ProjectService {
 		return projectDAO.retrieveProjectsBySearch(causes, location);
 	}
 	
+	public void closeResourceCategory(String project_name, String project_proposer, String resource_category) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
+		projectResourceCategoryDAO.closeResourceCategory(project_name, project_proposer, resource_category);
+	}
 	
+	public void remove(String project_name, String project_proposer,
+			String resource_category, String resource_name){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
+		projectRequestedResourceDAO.remove(project_name, project_proposer, resource_category, resource_name);
+	}
+	
+	public ArrayList<ProjectRequestedResource> retrieveAllProjectRequestedResource(String project_name, String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
+		return projectRequestedResourceDAO.retrieveAllProjectRequestedResource(project_name, project_proposer);
+	}
 }

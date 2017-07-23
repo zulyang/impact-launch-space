@@ -1,9 +1,11 @@
 package com.impactlaunchspace.project;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -90,12 +92,12 @@ public class ProjectController {
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner,
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
 			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
-			@RequestParam(required = false) ArrayList<String> selected_banlist, 
-			@RequestParam(required=false) ArrayList<String> resourceCategory, 
-			@RequestParam(required=false) ArrayList<String> resourceName, 
-			@RequestParam(required=false)  ArrayList<String> resourceDescription,
-			HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		
+			@RequestParam(required = false) ArrayList<String> selected_banlist,
+			@RequestParam(required = false) ArrayList<String> resourceCategory,
+			@RequestParam(required = false) ArrayList<String> resourceName,
+			@RequestParam(required = false) ArrayList<String> resourceDescription, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+
 		String project_name = projectTitle;
 		String description = projectDescription;
 		String purpose = projectPurpose;
@@ -129,32 +131,31 @@ public class ProjectController {
 																										// too
 			}
 		}
-		
+
 		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
 		ArrayList<ProjectRequestedResource> selected_requestedResources = new ArrayList<ProjectRequestedResource>();
-		
-		for(String resourceCategory_string : resourceCategory){
-			ProjectResourceCategory projectResourceCategoryObj = new ProjectResourceCategory(project_name, resourceCategory_string, project_proposer);
-			if(!resourceCategory.contains(projectResourceCategoryObj)){
+
+		for (String resourceCategory_string : resourceCategory) {
+			ProjectResourceCategory projectResourceCategoryObj = new ProjectResourceCategory(project_name,
+					resourceCategory_string, project_proposer);
+			if (!resourceCategory.contains(projectResourceCategoryObj)) {
 				selected_resourceCategories.add(projectResourceCategoryObj);
 			}
-	
+
 		}
-		
-		for(int i = 0; i < resourceName.size(); i++){
-			ProjectRequestedResource projectRequestedResourceObj = new ProjectRequestedResource(project_name, resourceCategory.get(i), resourceName.get(i),
-			resourceDescription.get(i) , project_proposer);
+
+		for (int i = 0; i < resourceName.size(); i++) {
+			ProjectRequestedResource projectRequestedResourceObj = new ProjectRequestedResource(project_name,
+					resourceCategory.get(i), resourceName.get(i), resourceDescription.get(i), project_proposer);
 			selected_requestedResources.add(projectRequestedResourceObj);
 		}
 
-		
 		projectService.setupProject(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, selected_banlist,
-				selected_projectareas,selected_resourceCategories,selected_requestedResources);
+				selected_projectareas, selected_resourceCategories, selected_requestedResources);
 
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
-		
 
 		return "redirect:" + "view-project";
 	}
@@ -205,7 +206,33 @@ public class ProjectController {
 
 		model.addAttribute("project_ban_list", project_ban_list);
 
-		return "edit-project";
+		// populates the edit page with the requested resources for the user to
+		// edit
+		model.addAttribute("project_requested_resources",
+				projectService.retrieveAllProjectRequestedResource(project_name, project_proposer));
+
+		return "blahblah";
+	}
+
+	@RequestMapping(value = "/edit-project-update", method = RequestMethod.GET)
+	public void processAjaxUpdate(@RequestParam("project-name") String project_name,
+			@RequestParam("project-proposer") String project_proposer, HttpServletResponse response, HttpServletRequest request, ModelMap model,
+			RedirectAttributes redirectAttributes) throws IOException {
+
+	}
+
+	@RequestMapping(value = "/edit-project-delete", method = RequestMethod.GET)
+	public void processAjaxDelete(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			RedirectAttributes redirectAttributes) throws IOException {
+		
+		String old_resource_name = request.getParameter("old_resource_name");
+		String old_resource_description = request.getParameter("old_resource_description");
+		String old_resource_category = request.getParameter("old_resource_category");
+
+		String resource_name = request.getParameter("old_resource_name");
+		String resource_description = request.getParameter("old_resource_description");
+		String resource_category = request.getParameter("old_resource_category");
+
 	}
 
 	@RequestMapping(value = "/edit-project", method = RequestMethod.POST)
@@ -214,7 +241,7 @@ public class ProjectController {
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
 			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
 			@RequestParam(required = false) ArrayList<String> selected_banlist, HttpServletRequest request,
-			ModelMap model, RedirectAttributes redirectAttributes){
+			ModelMap model, RedirectAttributes redirectAttributes) {
 
 		String project_proposer = (String) request.getSession().getAttribute("username");
 
@@ -245,10 +272,10 @@ public class ProjectController {
 		projectService.updateProjectDetails(projectTitle, projectDescription, projectPurpose, projectDuration,
 				projectLocation, isPublic, hiddenToOutsiders, hiddenToAll, oldProjectTitle, project_proposer,
 				updated_projectBanList, updated_targetAreas);
-		
+
 		redirectAttributes.addAttribute("project-name", projectTitle);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
-		
+
 		return "redirect:" + "view-project";
 
 	}
@@ -264,15 +291,15 @@ public class ProjectController {
 
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
 		String projectPrivacy = "public";
-		
-		if(selected_project.isHiddenToAll()){
+
+		if (selected_project.isHiddenToAll()) {
 			projectPrivacy = "hidden";
 		}
-		
-		if(selected_project.isHiddenToOutsiders()){
+
+		if (selected_project.isHiddenToOutsiders()) {
 			projectPrivacy = "private";
 		}
-		
+
 		ArrayList<ProjectTargetArea> projectTargetAreasObj = projectService.retrieveTargetProjectAreas(project_name,
 				project_proposer);
 		ArrayList<String> projectTargetAreas = new ArrayList<String>();
@@ -315,51 +342,30 @@ public class ProjectController {
 		model.addAttribute("selected_project", selected_project);
 		model.addAttribute("project_resource_categories", projectResourceCategories);
 		model.addAttribute("project_requested_resources", projectRequestedResources);
-		
-		
-		
-	
-		if(projectPrivacy.equals("hidden")){
-			if(request.getSession().getAttribute("username").equals(project_proposer)){
+
+		if (projectPrivacy.equals("hidden")) {
+			if (request.getSession().getAttribute("username").equals(project_proposer)) {
 				return "viewProject";
-			}else{
+			} else {
 				return "viewProjectPrivate";
 			}
 		}
-		
-		//for now if u are not the project creator u will see the private page
-		if(projectPrivacy.equals("private")){
-			if(request.getSession().getAttribute("username").equals(project_proposer)){
+
+		// for now if u are not the project creator u will see the private page
+		if (projectPrivacy.equals("private")) {
+			if (request.getSession().getAttribute("username").equals(project_proposer)) {
 				return "viewProject";
-			}else{
+			} else {
 				return "viewProjectPrivate";
 			}
 		}
-		
-		
-		if(projectPrivacy.equals("public")){
+
+		if (projectPrivacy.equals("public")) {
 			return "viewProject";
 		}
 		return "viewProject";
 	}
-	
-	@RequestMapping(value = "/testmultiple", method = RequestMethod.GET)
-	public String testtestest(HttpServletRequest request, ModelMap model) {
 
-		
-		return "testmultiple";
-	}
-	
-	@RequestMapping(value = "/testmultiple", method = RequestMethod.POST)
-	public String testtestest2(@RequestParam(required=false) ArrayList<String> resourceCategory, @RequestParam(required=false) ArrayList<String> resourceName, 
-			@RequestParam(required=false)  ArrayList<String> resourceDescription, HttpServletRequest request, ModelMap model) {
-		System.out.println(resourceCategory);
-		System.out.println(resourceName);
-		System.out.println(resourceDescription);
-		
-		return "testmultiple";
-	}
-	
 	@RequestMapping(value = "/view-privateproject", method = RequestMethod.GET)
 	public String showProjProjectViewPage(@RequestParam("project-name") String project_name,
 			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
@@ -368,8 +374,32 @@ public class ProjectController {
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
-		
+
 		return "viewProjectPrivate";
 	}
 
+	@RequestMapping(value = "/edward-processajax", method = RequestMethod.GET)
+	public void showAjaxPage2(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			RedirectAttributes redirectAttributes) throws IOException {
+		String name = null;
+		name = "Hello " + request.getParameter("user");
+		System.out.println(name);
+		if (request.getParameter("user") != null) {
+			if (request.getParameter("user").toString().equals("")) {
+				name = "Hello User";
+			}
+		}
+
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(name);
+
+	}
+	
+	@RequestMapping(value = "/edwardajax", method = RequestMethod.GET)
+	public String showAjaxPage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			RedirectAttributes redirectAttributes) {
+
+		return "edwardAjax";
+	}
 }

@@ -19,6 +19,10 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/resource.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project.css" />
+<link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -42,6 +46,7 @@
 			collapsible : true,
 			heightStyle : "content"
 		});
+		;
 	});
 </script>
 </head>
@@ -274,10 +279,10 @@
 						<h3>What I Need</h3>
 						<div>
 							<div class="form-group row">
-								<div id="results" class="col-sm-9"></div>
+								<div id="results" class="col-sm-12"></div>
 								<br> <br> <br>
 								<div class="col-sm-9">
-									<input id="buttonclck" class="btn btn-info" type="button"
+									<input id="buttonclick" class="btn btn-info" type="button"
 										value="Add more resources" />
 								</div>
 							</div>
@@ -295,6 +300,54 @@
 		</div>
 	</div>
 
+	<!-- Add new resources modal-->
+	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Add New Resource(s)</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+
+
+						<div id="resourcesNeeded" class="form-group row col-md-6">
+							<div class="col-md-12">
+								<select id="resourceCategory" name="resourceCategory"
+									class="col-md-4 js-example-basic-single-resourcecategory">
+									<option></option>
+									<c:forEach items="${resource_category_list}" var="item">
+										<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+									</c:forEach>
+								</select> <input id="resourceName" name="resourceName"
+									class="form-control col-md-4 create-project-add"
+									placeholder="What resources do you need?" type="text" />
+								<textarea id="resourceDescription" name="resourceDescription"
+									class="form-control col-md-4 create-project-add"
+									placeholder="Describe your resource here..."></textarea>
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End of modal -->
+
+
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -302,60 +355,64 @@
 
 							$('#results')
 									.append(
-											'<table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="border"><tr><th>Category</th><th>Resource Needed</th></tr> <tr> <td><select id="category1" class="js-example-basic-single-resourcecategory" name="selected_resourcecategory1"> <option></option><c:forEach items="${resource_category_list}" var="item"><option value="${item.getSkillset()}">${item.getSkillset()}</option></c:forEach></select></td> <td> <input type="text" name="resource1" id="resource1" value="" /> </td></tr></table>');
+											/* '<table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="border"><tr><th>Category</th><th>Resource Needed</th><th>Description</th></tr> <tr> <td><select id="category1" class="js-example-basic-single-resourcecategory" name="selected_resourcecategory1"> <option></option><c:forEach items="${resource_category_list}" var="item"><option value="${item.getSkillset()}">${item.getSkillset()}</option></c:forEach></select></td> <td> <input type="text" name="resource1" id="resource1" value="" /> </td> <td> <input type="textarea" name="resource1" id="resource1" value=""/></td></tr></table>'); */
+											'<table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="table table-striped table-hover"><thead><tr><th>S/N</th><th>Resource Name</th><th>Resource Description</th><th>Category</th><th>Actions</th></tr></thead><tbody><c:forEach items="${project_requested_resources}" var="item" varStatus="loop"><tr><td><p>${loop.index + 1}</p></td><td><p><input class="editable-field form-control" type="text" value="${item.getResource_name()}" disabled="true" /></p></td><td><p><input class="editable-field form-control" type="textarea" value="${item.getRequest_description()}" disabled="true" /></p></td><td><p><select id="resourceCategory" name="resourceCategory" class="col-md-4 js-example-basic-single-resourcecategory" hidden><option></option><c:forEach items="${resource_category_list}" var="item1"><option value="${item1.getSkillset()}">${item1.getSkillset()}</option></c:forEach></select><span class="label label-success" id="currentResourceCategory">${item.getResource_category()}</span></p></td><td class="col-md-2"><p><button type="btn" class="btn btn-primary manage-edit-button"href="#"><i class="fa fa-pencil"></i>Edit</button><button type="btn" class="btn btn-success save" href="#"><i class="fa fa-save"></i>Save</button><button type="btn" class="btn btn-danger delete" href="#"><i class="fa fa-trash"></i> Delete</button><button type="btn" class="btn btn-default cancel" href="#"><i class="fa fa-close"></i>Cancel</button></p></td></tr></c:forEach></tbody></table>');
 
-							$('#buttonclck')
-									.on(
-											'click',
+							$('#buttonclick').on('click', function() {
+
+								$('#myModal').modal('show');
+								return true;
+
+							});
+							/* var lastRow = $(
+									'#resourcesNeeded')
+									.closest(
+											'#resourcesNeeded')
+									.find("tr:last-child");
+							var lastRowInputs = lastRow
+									.find('input');
+							var isClone = false;
+							lastRowInputs.each(function() {
+								if ($(this).val().length) {
+									isClone = true;
+								}
+							});
+							if (!isClone)
+								return false;
+							var cloned = lastRow.clone();
+							cloned
+									.find('input, select, textarea')
+									.each(
 											function() {
-												var lastRow = $(
-														'#resourcesNeeded')
-														.closest(
-																'#resourcesNeeded')
-														.find("tr:last-child");
-												var lastRowInputs = lastRow
-														.find('input');
-												var isClone = false;
-												lastRowInputs.each(function() {
-													if ($(this).val().length) {
-														isClone = true;
-													}
-												});
-												if (!isClone)
-													return false;
-												var cloned = lastRow.clone();
-												cloned
-														.find('input, select')
-														.each(
-																function() {
-																	var id = $(
-																			this)
-																			.attr(
-																					'id');
+												var id = $(
+														this)
+														.attr(
+																'id');
 
-																	var regIdMatch = /^(.+)(\d+)$/;
-																	var aIdParts = id
-																			.match(regIdMatch);
-																	var newId = aIdParts[1]
-																			+ (parseInt(
-																					aIdParts[2],
-																					10) + 1);
+												var regIdMatch = /^(.+)(\d+)$/;
+												var aIdParts = id.match(regIdMatch);
+												var newId = aIdParts[1]
+														+ (parseInt(
+																aIdParts[2],
+																10) + 1);
 
-																	$(this)
-																			.attr(
-																					'id',
-																					newId);
-																	$(this)
-																			.attr(
-																					'name',
-																					newId);
-																});
-
-												cloned.find(
-														"input[type='text']")
-														.val('');
-												cloned.insertAfter(lastRow);
+												$(this)
+														.attr(
+																'id',
+																newId);
+												$(this)
+														.attr(
+																'name',
+																newId);
 											});
+
+							cloned.find(
+									"input[type='text']")
+									.val('');
+							cloned.find("select").val('');
+							cloned.find("textarea").val('');
+							cloned.insertAfter(lastRow);
+							}); */
 
 						});
 	</script>
@@ -430,6 +487,56 @@
 				placeholder : "Select an expertise/category: ",
 				allowClear : true
 			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.manage-edit-button').click(function() {
+				var disabledStatus = $('.editable-field').attr('disabled');
+				// check if it is disabled, if disabledStatus == undefined, it means that the button is uneditable
+				if (disabledStatus !== undefined)
+					$('.editable-field').removeAttr('disabled');
+				else
+					$('.editable-field').attr('disabled', true);
+			});
+
+			$('.manage-edit-button').click(function() {
+				$(this).hide();
+				$(this).siblings('.delete, .cancel').hide();
+				$(this).siblings('.save, .cancel').show();
+				$('#resourceCategory').show();
+				$('#currentResourceCategory').hide();
+			});
+
+			$('.cancel').click(function() {
+				$(this).siblings('.manage-edit-button, .delete').show();
+				$(this).siblings('.save').hide();
+				$(this).hide();
+				var disabledStatus = $('.editable-field').attr('disabled');
+				if (disabledStatus !== undefined)
+					$('.editable-field').removeAttr('disabled');
+				else
+					$('.editable-field').attr('disabled', true);
+				$('#resourceCategory').hide();
+				$('#currentResourceCategory').show();
+			});
+
+			$('.save').click(function() {
+				$(this).siblings('.manage-edit-button, .delete').show();
+				$(this).siblings('.cancel').hide();
+				$(this).hide();
+				var disabledStatus = $('.editable-field').attr('disabled');
+				if (disabledStatus !== undefined)
+					$('.editable-field').removeAttr('disabled');
+				else
+					$('.editable-field').attr('disabled', true);
+				$('#resourceCategory').hide();
+				$('#currentResourceCategory').show();
+			});
+			
+			$('#resourceCategory').hide();
+
 		});
 	</script>
 </body>

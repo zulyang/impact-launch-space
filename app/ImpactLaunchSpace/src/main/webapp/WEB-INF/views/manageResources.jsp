@@ -20,7 +20,8 @@
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/resource.css" />
-
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project.css" />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet"
@@ -68,12 +69,24 @@
                 <tbody>
                     <tr>
                         <td><p>1</p></td>
-                        <td><p>First Aid Skills</p></td>
-                        <td><p>other form of description here?</p></td>
-                        <td><p><span class="label label-success">Healthcare</span></p></td>
+                        <td><p><input class="editable-field form-control" type="text" value="First Aid Skills" disabled="true"/></p></td>
+                        <td><p><input class="editable-field form-control" type="textarea" value="other form of description here?" disabled="true"/></p></td>
+                        <td><p>
+                        
+                        <select id="resourceCategory" name="resourceCategory"
+												class="col-md-4 js-example-basic-single-resourcecategory">
+												<option></option>
+												<c:forEach items="${resource_category_list}" var="item">
+													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+												</c:forEach>
+											</select>
+                        
+                        <span class="label label-success">Healthcare</span></p></td>
                         <td class="col-md-2"><p>
-                            <button type="btn" class="btn btn-primary" href="#"><i class="fa fa-pencil"></i> Edit</button>
-                            <button type="btn" class="btn btn-danger" href="#"><i class="fa fa-trash"></i> Delete</button>
+                            <button type="btn" class="btn btn-primary manage-edit-button" href="#"><i class="fa fa-pencil"></i> Edit</button>
+                             <button type="btn" class="btn btn-success save" href="#"><i class="fa fa-save"></i> Save</button>
+                             <button type="btn" class="btn btn-danger delete" href="#"><i class="fa fa-trash"></i> Delete</button>
+                             <button type="btn" class="btn btn-default cancel" href="#"><i class="fa fa-close"></i> Cancel</button>
                         </p></td>
                     </tr>
                     <tr>
@@ -115,9 +128,26 @@
       </div>
       <div class="modal-body">
 	  <div class="container">
-		<div class=row>
-		<h3>test test</h3>
-	  </div>
+		
+		
+		<div id="resourcesNeeded" class="form-group row col-md-6">
+										<div class="col-md-12">
+											<select id="resourceCategory" name="resourceCategory"
+												class="col-md-4 js-example-basic-single-resourcecategory">
+												<option></option>
+												<c:forEach items="${resource_category_list}" var="item">
+													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+												</c:forEach>
+											</select> <input id="resourceName" name="resourceName"
+												class="form-control col-md-4 create-project-add"
+												placeholder="What resources do you need?" type="text" />
+											<textarea id="resourceDescription" name="resourceDescription"
+												class="form-control col-md-4 create-project-add" 
+												placeholder="Describe your resource here..."></textarea>
+										</div>
+									</div>
+		
+		
 	  </div>
 	  
         
@@ -142,6 +172,42 @@ $(document).ready(function(){
 				$('#myModal').modal('show');
 				return true;
 		});
+		
+		$('.manage-edit-button').click(function () {
+			var disabledStatus = $('.editable-field').attr('disabled');
+			// check if it is disabled, if disabledStatus == undefined, it means that the button is uneditable
+			if (disabledStatus !== undefined)
+				$('.editable-field').removeAttr('disabled');
+			else
+				$('.editable-field').attr('disabled', true);
+		});
+		
+		$('.manage-edit-button').click(function() {
+		    $(this).hide();
+		    $(this).siblings('.delete, .cancel').hide();
+		    $(this).siblings('.save, .cancel').show();
+		});
+		$('.cancel').click(function() {
+		    $(this).siblings('.manage-edit-button, .delete').show();
+		    $(this).siblings('.save').hide();
+		    $(this).hide();
+			var disabledStatus = $('.editable-field').attr('disabled');
+			if (disabledStatus !== undefined)
+				$('.editable-field').removeAttr('disabled');
+			else
+				$('.editable-field').attr('disabled', true);
+		});
+		$('.save').click(function() {
+		    $(this).siblings('.manage-edit-button, .delete').show();
+		    $(this).siblings('.cancel').hide();
+		    $(this).hide();
+			var disabledStatus = $('.editable-field').attr('disabled');
+			if (disabledStatus !== undefined)
+				$('.editable-field').removeAttr('disabled');
+			else
+				$('.editable-field').attr('disabled', true);
+		});
+
 	});
 	
 	</script>

@@ -1,5 +1,8 @@
 package com.impactlaunchspace.jdbc;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +11,12 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.impactlaunchspace.dao.DocumentsIndividualDAO;
 import com.impactlaunchspace.dao.ProjectRequestedResourceDAO;
+import com.impactlaunchspace.entity.IndividualAccount;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 
@@ -82,6 +90,38 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 		}
 	}
 	
+	public ArrayList<ProjectRequestedResource> retrieveAllProjectRequestedResource(String project_name, String project_proposer){
+		ArrayList<ProjectRequestedResource> output = new ArrayList<ProjectRequestedResource>();
+		
+		String sql = "SELECT * FROM PROJECT_REQUESTED_RESOURCES WHERE project_name = ? AND project_proposer = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ProjectRequestedResource projectRequestedResource = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				projectRequestedResource = new ProjectRequestedResource(rs.getString("project_name"), rs.getString("resource_category"),
+						rs.getString("resource_name"), rs.getString("request_description"), rs.getString("project_proposer"));
+				output.add(projectRequestedResource);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
 	public void remove(String project_name, String project_proposer,
 			String resource_category, String resource_name){
 		String sql = "DELETE FROM PROJECT_REQUESTED_RESOURCES WHERE project_name = ? AND project_proposer = ? AND resource_category = ? AND resource_name = ?";
@@ -110,4 +150,33 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 		}
 	}
 	
+	public void update(String new_resource_name, String new_resource_category, String new_request_description,
+			String project_name, String old_resource_name, String old_resource_category, String project_proposer) {
+		String sql = "UPDATE PROJECT_REQUESTED_RESOURCES SET "
+				+ "resource_category = ?, resource_name = ?, request_description = ? WHERE project_name = ? AND resource_category = ? AND resource_name = ? AND project_proposer = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, new_resource_name);
+			ps.setString(2, new_resource_category);
+			ps.setString(3, new_request_description);
+			ps.setString(4, project_name);
+			ps.setString(5, old_resource_name);
+			ps.setString(6, old_resource_category);
+			ps.setString(7, project_proposer);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }
