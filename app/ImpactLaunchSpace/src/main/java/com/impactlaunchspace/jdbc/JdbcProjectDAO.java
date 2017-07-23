@@ -23,7 +23,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 
 	public void insert(Project project) {
 		String sql = "INSERT INTO PROJECTS "
-				+ "(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, created_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, created_date, page_views) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -41,6 +41,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 			ps.setBoolean(10, project.isHiddenToAll());
 			ps.setString(11, project.getProject_status());
 			ps.setTimestamp(12, project.getCreated_date());
+			ps.setInt(13, project.getPage_Views());
 
 			ps.executeUpdate();
 			ps.close();
