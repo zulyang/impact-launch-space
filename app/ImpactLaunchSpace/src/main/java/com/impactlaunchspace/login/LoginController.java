@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.impactlaunchspace.entity.Country;
 import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.exception.ExceptionController;
@@ -613,6 +614,13 @@ public class LoginController {
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		model.addAttribute("passwordError", "Your passwords do not match.");
 		return "changepassword";
+	}
+	
+	@RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
+	public String ajaxTest(ModelMap model) {
+		ArrayList<Country> countries = profileService.retrieveCountryList();
+		model.addAttribute("countries", countries);
+		return "SearchPage";
 	}
 
 }

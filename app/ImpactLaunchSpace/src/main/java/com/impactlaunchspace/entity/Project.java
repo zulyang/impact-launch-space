@@ -1,8 +1,10 @@
 package com.impactlaunchspace.entity;
 
 import java.sql.Date;
+import java.util.Comparator;
+import java.sql.Timestamp;
 
-public class Project {
+public class Project{
 	private String project_name;
 	private String description;
 	private String purpose;
@@ -14,11 +16,12 @@ public class Project {
 	private boolean hiddenToOutsiders;
 	private boolean hiddenToAll;
 	private String project_status;
-	private Date created_date;
+	private Timestamp created_date;
+	private int page_views;
 
 	public Project(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
-			boolean hiddenToAll, String project_status, Date created_date) {
+			boolean hiddenToAll, String project_status, Timestamp created_date, int page_views) {
 		super();
 		this.project_name = project_name;
 		this.description = description;
@@ -32,6 +35,7 @@ public class Project {
 		this.hiddenToAll = hiddenToAll;
 		this.project_status = project_status;
 		this.created_date = created_date;
+		this.page_views = page_views;
 	}
 
 	public String getProject_name() {
@@ -78,8 +82,82 @@ public class Project {
 		return project_status;
 	}
 
-	public Date getCreated_date() {
+	public Timestamp getCreated_date() {
 		return created_date;
 	}
 
+	public int getPage_Views(){
+		return page_views;
+	}
+
+	//Comparator Methods
+
+	//Popularity
+	public static Comparator<Project> getProjectByAscPopularity() {
+		Comparator<Project> comp = new Comparator<Project>() {
+			@Override
+			public int compare(Project p1, Project p2) {
+
+				return Integer.valueOf(p1.getPage_Views()).compareTo(p2.getPage_Views());
+			}
+		};
+		return comp;
+	}
+
+	public static Comparator<Project> getProjectByDescPopularity() {
+		Comparator<Project> comp = new Comparator<Project>() {
+			@Override
+			public int compare(Project p1, Project p2) {
+
+				return Integer.valueOf(p2.getPage_Views()).compareTo(p1.getPage_Views());
+			}
+		};
+		return comp;
+	}
+
+	//Duration
+	public static Comparator<Project> getProjectByAscDuration() {
+		Comparator<Project> comp = new Comparator<Project>() {
+			@Override
+			public int compare(Project p1, Project p2) {
+
+				return Integer.valueOf(p1.getDuration()).compareTo(p2.getDuration());
+			}
+		};
+		return comp;
+	}
+
+	public static Comparator<Project> getProjectByDescDuration() {
+		Comparator<Project> comp = new Comparator<Project>() {
+			@Override
+			public int compare(Project p1, Project p2) {
+
+				return Integer.valueOf(p2.getDuration()).compareTo(p1.getDuration());
+			}
+		};
+		return comp;
+	}
+
+	//Date
+	public static Comparator<Project> getProjectByAscDate() {
+		Comparator<Project> comp = new Comparator<Project>() {
+			@Override
+			public int compare(Project p1, Project p2) {
+
+				return p1.getCreated_date().compareTo(p2.getCreated_date());
+			}
+		};
+		return comp;
+	}
+
+	public static Comparator<Project> getProjectByDescDate() {
+		Comparator<Project> comp = new Comparator<Project>() {
+			@Override
+			public int compare(Project p1, Project p2) {
+
+				return p2.getCreated_date().compareTo(p1.getCreated_date());
+			}
+		};
+		return comp;
+	}
 }

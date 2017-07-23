@@ -16,4 +16,6 @@ public interface ProjectDAO {
 	public void updateProject(String project_name, String description, String purpose, int duration, String location,
 			boolean isPublic, boolean hiddenToOutsiders, boolean hiddenToAll, String old_project_name,
 			String project_proposer);
+	
+	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location);
 }

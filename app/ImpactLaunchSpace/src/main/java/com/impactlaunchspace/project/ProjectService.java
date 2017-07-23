@@ -1,6 +1,7 @@
 package com.impactlaunchspace.project;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,7 +37,7 @@ public class ProjectService {
 
 		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
-				new Date(Calendar.getInstance().getTime().getTime()));
+				new Timestamp(Calendar.getInstance().getTime().getTime()), 0);
 
 		projectDAO.insert(project);
 
@@ -114,6 +115,13 @@ public class ProjectService {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
 		return projectRequestedResourceDAO.retrieveProjectRequestedResource(project_name, resource_category, project_proposer);
+		
+	}
+	
+	public ArrayList<Project> searchProjects(String causes, String location) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
+		return projectDAO.retrieveProjectsBySearch(causes, location);
 	}
 	
 	

@@ -40,7 +40,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 			ps.setBoolean(9, project.isHiddenToOutsiders());
 			ps.setBoolean(10, project.isHiddenToAll());
 			ps.setString(11, project.getProject_status());
-			ps.setDate(12, project.getCreated_date());
+			ps.setTimestamp(12, project.getCreated_date());
 
 			ps.executeUpdate();
 			ps.close();
@@ -73,7 +73,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
 						rs.getString("project_proposer"), rs.getString("organization"),
 						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
-						rs.getString("project_status"), rs.getDate("created_date"));
+						rs.getString("project_status"), rs.getTimestamp("created_date"), rs.getInt("page_views"));
 			}
 			rs.close();
 			ps.close();
@@ -106,7 +106,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
 						rs.getString("project_proposer"), rs.getString("organization"),
 						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
-						rs.getString("project_status"), rs.getDate("created_date"));
+						rs.getString("project_status"), rs.getTimestamp("created_date"), rs.getInt("page_views"));
 				output.add(project);
 			}
 			rs.close();
@@ -140,7 +140,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
 						rs.getString("project_proposer"), rs.getString("organization"),
 						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
-						rs.getString("project_status"), rs.getDate("created_date"));
+						rs.getString("project_status"), rs.getTimestamp("created_date"), rs.getInt("page_views"));
 				output.add(project);
 			}
 			rs.close();
@@ -183,6 +183,56 @@ public class JdbcProjectDAO implements ProjectDAO {
 			// update documents table
 			ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location){
+		ArrayList<Project> output = new ArrayList<Project>();
+
+		//Multiple SQL's to select from the Misc filters.
+
+		//Default Setting when the user hits the search landing page.
+		String sql ="SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
+				+ " AND p.Project_Proposer = pt.Project_Proposer WHERE PROJECT_AREA = ?";
+
+		if(!location.equals("All")){
+			   sql ="SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
+					+ " AND p.Project_Proposer = pt.Project_Proposer WHERE PROJECT_AREA = ? AND LOCATION = ?";
+		}
+
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			ps.setString(1, causes);
+
+			if(!location.equals("All")){
+			ps.setString(2, location);
+			}
+
+			Project project = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				project = new Project(rs.getString("project_name"), rs.getString("description"),
+						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
+						rs.getString("project_proposer"), rs.getString("organization"),
+						rs.getBoolean("isPublic"), rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
+						rs.getString("project_status"), rs.getTimestamp("created_date") , rs.getInt("page_views"));
+				output.add(project);
+			}
+			rs.close();
+			ps.close();
+			return output;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
