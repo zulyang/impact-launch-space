@@ -198,9 +198,10 @@ public class JdbcProjectDAO implements ProjectDAO {
 	
 	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location){
 		ArrayList<Project> output = new ArrayList<Project>();
-
+		
+		//If Search bar is not empty
+		
 		//Multiple SQL's to select from the Misc filters.
-
 		//Default Setting when the user hits the search landing page.
 		String sql ="SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
 				+ " AND p.Project_Proposer = pt.Project_Proposer WHERE PROJECT_AREA = ?";

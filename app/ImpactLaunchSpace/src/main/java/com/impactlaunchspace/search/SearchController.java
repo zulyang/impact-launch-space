@@ -44,7 +44,9 @@ public class SearchController {
 		//Get the list of projects based on the causes.
 		ArrayList<Project> projects = new ArrayList<Project>();
 		projects = projectService.searchProjects(causes, location);
-		Map<Integer, String > list = new LinkedHashMap<Integer, String>();
+		
+		//Use LinkedHashMap to keep the order of the Json Objects. 
+		Map<Integer, String> list = new LinkedHashMap<Integer, String>();
 
 
 		if(misc.equals("Popularity")){
@@ -69,9 +71,17 @@ public class SearchController {
 			projectdetails.put(i, projects.get(i).getPurpose());
 			projectdetails.put(i, Integer.toString(projects.get(i).getDuration()));
 			projectdetails.put(i, projects.get(i).getLocation());
-			projectdetails.put(i, projects.get(i).getProject_status());*/
-
-			list.put(i+1, projects.get(i).getProject_name());
+			projectdetails.put(i, projects.get(i).getProject_status());			
+			list.put(i+1, projectdetails);*/
+			
+			
+			String projname = projects.get(i).getProject_name();
+			String projpurpose = projects.get(i).getPurpose();
+			int projDuration = projects.get(i).getDuration();
+			String projLocation = projects.get(i).getLocation();
+			String projStatus = projects.get(i).getProject_status();
+			String toReturn = projname + "," + projpurpose + "," + Integer.toString(projDuration) + "," + projLocation + ","+  projStatus; 
+			list.put(i+1, toReturn);
 		}
 
 		String json = null;

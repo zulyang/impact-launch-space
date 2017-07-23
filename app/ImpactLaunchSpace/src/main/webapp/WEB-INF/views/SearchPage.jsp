@@ -18,12 +18,15 @@
 				causeName : $causes,
 				locationName : $location,
 				miscName : $misc
-			}, function(responseJson) {
-				var $select = $('#projects');
-				$select.find('option').remove(); //remove all existing projects
-				$.each(responseJson, function(key, value) {
-					$('<option>').val(key).text(value).appendTo($select);
-				});
+			}, function(responseJson) {			
+				$("#projects tbody").empty()
+			    var trHTML = '';
+			    $.each(responseJson, function (key, value) {	
+					var val = value
+					var res = val.split(",");
+			        trHTML += '<tr><td>' + res[0] + '</td><td>' + res[1] + '</td><td>' + res[2] + '</td><td>' + res[3] +'</td><td>' + res[4] + '</td></tr>' ;
+			    });			    
+			    $('#projects').append(trHTML);			
 			});
 		});
 	});
@@ -31,6 +34,13 @@
 </head>
 <body>
 	<h1>Search For Project</h1>
+	
+	<form action="student.jsp" method="GET">
+	Search By Keyword: <input type="text" name="Name">
+    <input type ="submit" value="Search"></form>
+	
+	
+	<br>
 	Select Causes:
 	<select id="causes">
 		<option>Select Cause</option>
@@ -72,12 +82,25 @@
 		<option value="Duration">Duration</option>
 		<option value="Project Status">Project Status</option>	 <!-- Have to use database? -->
 	</select>  
-
 	<br>
+	
+	<!-- RESULTS -->
 	Projects:
-	<select id="projects">
-		<option>Select Project</option>
-	</select>
+	<table id="projects" border='1'>
+	<thead>
+    <tr>
+        <th>Project Name</th>
+        <th>Project Purpose</th>
+        <th>Project Duration</th>
+        <th>Project Location</th>
+        <th>Project Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+	</table>
 
+	
+	
 </body>
 </html>
