@@ -1017,7 +1017,7 @@ ALTER TABLE `users`
 -- Indexes for table `user_offered_resources`
 --
 ALTER TABLE `user_offered_resources`
-  ADD PRIMARY KEY (`username`,`resource_category`),
+  ADD PRIMARY KEY (`username`,`resource_category`,`resource_name`),
   ADD KEY `user_offered_resources_fk` (`username`),
   ADD KEY `user_offered_resources_fk2` (`resource_category`);
 
