@@ -63,8 +63,7 @@
 					<div id="accordion">
 						<h3>Basic Info</h3>
 						<div>
-							<form action="edit-project"
-								onsubmit="return checkResourceFields();" method="post">
+							<form action="edit-project" method="post">
 								<input type="hidden" id="oldProjectTitle"
 									value="${sample_project.getProject_name()}"
 									name="oldProjectTitle" class="form-control">
@@ -279,18 +278,85 @@
 						<h3>What I Need</h3>
 						<div>
 							<div class="form-group row">
-								<div id="results" class="col-sm-12"></div>
-								<br> <br> <br>
-								<div class="col-sm-9">
-									<input id="buttonclick" class="btn btn-info" type="button"
-										value="Add more resources" />
+								<nav class="navbar navbar-default query" role="query">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse" id="">
+										<button type="button" id="addResource"
+											class="btn btn-success create pull-right">
+											<i class="fa fa-plus-circle"></i> Add resource
+										</button>
+									</div>
+
+								</div>
+								</nav>
+								<div class="table-responsive col-md-12">
+									<table width="100%" border="0" cellspacing="0" cellpadding="5"
+										id="resourcesNeeded" class="table table-striped table-hover">
+										<thead>
+											<tr>
+												<th>Resource Name</th>
+												<th>Resource Description</th>
+												<th>Category</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody id="resourceTableBody">
+											<%
+												int id = 0;
+											%>
+											<c:forEach items="${project_requested_resources}" var="item"
+												varStatus="loop">
+												<tr id="resourceRow<%=++id%>">
+													<td><input class="editable-field form-control"
+														id="reso<%=id %>" type="text"
+														value="${item.getResource_name()}" disabled="true" /></td>
+													<td><input class="editable-field form-control"
+														id="desc<%=id %>" type="textarea"
+														value="${item.getRequest_description()}" disabled="true" />
+													</td>
+													<td>
+													<select id="resourceCategory<%=id%>"
+														name="resourceCategory"
+														class="col-md-4 resourceCategory" style="width:20rem;">
+															<option></option>
+															<c:forEach items="${resource_category_list}" var="item1">
+																<option value="${item1.getSkillset()}">${item1.getSkillset()}</option>
+															</c:forEach>
+													</select> 
+													<span class="label label-success"
+														id="currentResourceCategory<%=id%>">${item.getResource_category()}</span>
+													</td>
+													<td class="col-md-2">
+														<button id="edit<%=id%>" type="button"
+															class="btn btn-primary manage-edit-button"
+															onClick="edit(this.id)">
+															<i class="fa fa-pencil"></i>Edit
+														</button>
+														<button id="save<%=id%>" type="button"
+															onClick="save(this.id)" class="btn btn-success save"
+															href="#">
+															<i class="fa fa-save"></i>Save
+														</button>
+														<button id="dele<%=id%>" onClick="deleteRow(this.id)"
+															type="button" class="btn btn-danger delete" href="#">
+															<i class="fa fa-trash"></i> Delete
+														</button>
+														<button id="canc<%=id%>" onClick="cancel(this.id)"
+															type="button" class="btn btn-default cancel" href="#">
+															<i class="fa fa-close"></i>Cancel
+														</button>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
 
 					</div>
 					<hr>
-					<button class="btn btn-block btn-success" type="submit">Update
+					<button class="btn btn-block btn-success" onclick="return confirmSubmit();" type="submit">Update
 						Project</button>
 				</div>
 				</form>
@@ -300,137 +366,19 @@
 		</div>
 	</div>
 
-	<!-- Add new resources modal-->
-	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">Add New Resource(s)</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container">
-
-
-						<div id="resourcesNeeded" class="form-group row col-md-6">
-							<div class="col-md-12">
-								<select id="resourceCategory" name="resourceCategory"
-									class="col-md-4 js-example-basic-single-resourcecategory">
-									<option></option>
-									<c:forEach items="${resource_category_list}" var="item">
-										<option value="${item.getSkillset()}">${item.getSkillset()}</option>
-									</c:forEach>
-								</select> <input id="resourceName" name="resourceName"
-									class="form-control col-md-4 create-project-add"
-									placeholder="What resources do you need?" type="text" />
-								<textarea id="resourceDescription" name="resourceDescription"
-									class="form-control col-md-4 create-project-add"
-									placeholder="Describe your resource here..."></textarea>
-							</div>
-						</div>
-
-
-
-					</div>
-
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-success">Add</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End of modal -->
-
-
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-
-							$('#results')
-									.append(
-											/* '<table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="border"><tr><th>Category</th><th>Resource Needed</th><th>Description</th></tr> <tr> <td><select id="category1" class="js-example-basic-single-resourcecategory" name="selected_resourcecategory1"> <option></option><c:forEach items="${resource_category_list}" var="item"><option value="${item.getSkillset()}">${item.getSkillset()}</option></c:forEach></select></td> <td> <input type="text" name="resource1" id="resource1" value="" /> </td> <td> <input type="textarea" name="resource1" id="resource1" value=""/></td></tr></table>'); */
-											'<table width="100%" border="0" cellspacing="0" cellpadding="5" id="resourcesNeeded" class="table table-striped table-hover"><thead><tr><th>S/N</th><th>Resource Name</th><th>Resource Description</th><th>Category</th><th>Actions</th></tr></thead><tbody><c:forEach items="${project_requested_resources}" var="item" varStatus="loop"><tr><td><p>${loop.index + 1}</p></td><td><p><input class="editable-field form-control" type="text" value="${item.getResource_name()}" disabled="true" /></p></td><td><p><input class="editable-field form-control" type="textarea" value="${item.getRequest_description()}" disabled="true" /></p></td><td><p><select id="resourceCategory" name="resourceCategory" class="col-md-4 js-example-basic-single-resourcecategory" hidden><option></option><c:forEach items="${resource_category_list}" var="item1"><option value="${item1.getSkillset()}">${item1.getSkillset()}</option></c:forEach></select><span class="label label-success" id="currentResourceCategory">${item.getResource_category()}</span></p></td><td class="col-md-2"><p><button type="btn" class="btn btn-primary manage-edit-button"href="#"><i class="fa fa-pencil"></i>Edit</button><button type="btn" class="btn btn-success save" href="#"><i class="fa fa-save"></i>Save</button><button type="btn" class="btn btn-danger delete" href="#"><i class="fa fa-trash"></i> Delete</button><button type="btn" class="btn btn-default cancel" href="#"><i class="fa fa-close"></i>Cancel</button></p></td></tr></c:forEach></tbody></table>');
-
-							$('#buttonclick').on('click', function() {
-
-								$('#myModal').modal('show');
-								return true;
-
-							});
-							/* var lastRow = $(
-									'#resourcesNeeded')
-									.closest(
-											'#resourcesNeeded')
-									.find("tr:last-child");
-							var lastRowInputs = lastRow
-									.find('input');
-							var isClone = false;
-							lastRowInputs.each(function() {
-								if ($(this).val().length) {
-									isClone = true;
-								}
-							});
-							if (!isClone)
-								return false;
-							var cloned = lastRow.clone();
-							cloned
-									.find('input, select, textarea')
-									.each(
-											function() {
-												var id = $(
-														this)
-														.attr(
-																'id');
-
-												var regIdMatch = /^(.+)(\d+)$/;
-												var aIdParts = id.match(regIdMatch);
-												var newId = aIdParts[1]
-														+ (parseInt(
-																aIdParts[2],
-																10) + 1);
-
-												$(this)
-														.attr(
-																'id',
-																newId);
-												$(this)
-														.attr(
-																'name',
-																newId);
-											});
-
-							cloned.find(
-									"input[type='text']")
-									.val('');
-							cloned.find("select").val('');
-							cloned.find("textarea").val('');
-							cloned.insertAfter(lastRow);
-							}); */
-
-						});
+		$(document).ready(function() {
+	              $('.resourceCategory').hide();
+		});
 	</script>
 
 	<script>
-		function checkResourceFields() {
-			var category = document.getElementById("category1");
-			var resource = document.getElementById("resource1");
-			console.log(category.value);
-			console.log(resource.value);
-
-			if (category.value === "" || resource.value === "") {
-				console.log("blank");
-				alert("Please fill in all resource fields!");
-				return false;
-			}
-
-			return true;
+		function confirmSubmit() {
+			if (confirm("Are you sure you want to save changes?") == true) {
+		        return true;
+		    } else {
+		        return false;
+		    }
 		}
 	</script>
 
@@ -449,6 +397,96 @@
 		if (userType === "indi" && indiOrg === "") {
 			document.getElementById("radio_indi").checked = true;
 			document.getElementById("radio_org").disabled = true;
+		}
+	</script>
+	
+	<script type="text/javascript">
+		$('#addResource').on(
+				'click',
+				function() {
+					var totalRows = $('#resourceTableBody tr').length;
+					console.log("table rows: " + totalRows);
+					var lastRow = totalRows + 1;
+					
+					$('#resourceTableBody tr:last').after('<tr id="resourceRow<%=++id%>"><td><input class="editable-field form-control"id="reso'+lastRow+'" type="text" disabled="true" /></td><td><input class="editable-field form-control"id="desc'+lastRow+'" type="textarea" disabled="true" /></td><td><select id="resourceCategory'+lastRow+'"name="resourceCategory"class="col-md-4 resourceCategory" style="width:20rem;"><option></option><c:forEach items="${resource_category_list}" var="item1"><option value="${item1.getSkillset()}">${item1.getSkillset()}</option></c:forEach></select><span class="label label-success"id="currentResourceCategory'+lastRow+'">${item.getResource_category()}</span></td><td class="col-md-2"><button id="edit'+lastRow+'" type="button"class="btn btn-primary manage-edit-button"onClick="edit(this.id)"><i class="fa fa-pencil"></i>Edit</button><button id="save'+lastRow+'" type="button"onClick="save(this.id)" class="btn btn-success save"href="#"><i class="fa fa-save"></i>Save</button><button id="dele'+lastRow+'" onClick="deleteRow(this.id)"type="button" class="btn btn-danger delete" href="#"><i class="fa fa-trash"></i> Delete</button><button id="canc'+lastRow+'" onClick="cancel(this.id)"type="button" class="btn btn-default cancel" href="#"><i class="fa fa-close"></i>Cancel</button></td></tr>');
+					
+					$('#reso' + lastRow).prop('disabled', false);
+					$('#desc' + lastRow).prop('disabled', false);
+					$('#edit' + lastRow).hide();
+					$('#dele' + lastRow).hide();
+					$('#save' + lastRow).show();
+					$('#canc' + lastRow).show();
+					$('#resourceCategory' + lastRow).show();	
+					$('#currentResourceCategory' + lastRow).hide();
+				});
+
+		function edit(id) {
+			var disabledStatus = $('.editable-field').attr('disabled');
+			console.log("disabledstatus: " + disabledStatus);
+			var newId = id.substring(4);
+
+			console.log("id: " + id);
+			console.log("newId: " + newId);
+
+			var toShow = '#resourceCategory' + newId;
+			console.log("toShow: " + toShow);
+
+			$('#reso' + newId).prop('disabled', false);
+			$('#desc' + newId).prop('disabled', false);
+			$('#edit' + newId).hide();
+			$('#dele' + newId).hide();
+			$('#save' + newId).show();
+			$('#canc' + newId).show();
+			$('#resourceCategory' + newId).show();
+			$('#currentResourceCategory' + newId).hide();
+		};
+
+		function save(id) {
+			var disabledStatus = $('.editable-field').attr('disabled');
+			var newId = id.substring(4);
+			console.log("id: " + newId);
+
+			$('#reso' + newId).prop('disabled', true);
+			$('#desc' + newId).prop('disabled', true);
+			$('#edit' + newId).show();
+			$('#dele' + newId).show();
+			$('#save' + newId).hide();
+			$('#canc' + newId).hide();
+			
+			var newlyAddedResourceCat = document.getElementById("resourceCategory" + newId);
+			console.log("newlyAddedResourceCat: " + newlyAddedResourceCat);
+			if (newlyAddedResourceCat !== null) {
+				console.log("newlyAddedResourceCat: " + newlyAddedResourceCat.value);
+				var currentResourceCategory = $('#currentResourceCategory' + newId);
+				currentResourceCategory.text('');
+				currentResourceCategory.text(newlyAddedResourceCat.value);
+			}
+			
+			$('#resourceCategory' + newId).hide();
+			$('#currentResourceCategory' + newId).show();
+		};
+
+		function cancel(id) {
+			var disabledStatus = $('.editable-field').attr('disabled');
+			var newId = id.substring(4);
+
+			console.log("id: " + newId);
+			var toHide = '#resourceCategory' + newId;
+			console.log("toHide: " + toHide);
+
+			$('#reso' + newId).prop('disabled', true);
+			$('#desc' + newId).prop('disabled', true);
+			$('#edit' + newId).show();
+			$('#dele' + newId).show();
+			$('#save' + newId).hide();
+			$('#canc' + newId).hide();
+			$('#resourceCategory' + newId).hide();
+			$('#currentResourceCategory' + newId).show();
+		}
+
+		function deleteRow(id) {
+			var newId = id.substring(4);
+			$('#resourceRow' + newId).hide();
 		}
 	</script>
 
@@ -474,73 +512,18 @@
 	</script>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".js-example-basic-single-organization").select2({
-				placeholder : "Select an organization: "
-			});
+		$(".js-example-basic-single-organization").select2({
+			placeholder : "Select an organization: "
 		});
 	</script>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".js-example-basic-single-resourcecategory").select2({
-				placeholder : "Select an expertise/category: ",
-				allowClear : true
-			});
+		$(".js-example-basic-single-resourcecategory").select2({
+			placeholder : "Select an expertise/category: ",
+			allowClear : true
 		});
 	</script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.manage-edit-button').click(function() {
-				var disabledStatus = $('.editable-field').attr('disabled');
-				// check if it is disabled, if disabledStatus == undefined, it means that the button is uneditable
-				if (disabledStatus !== undefined)
-					$('.editable-field').removeAttr('disabled');
-				else
-					$('.editable-field').attr('disabled', true);
-			});
-
-			$('.manage-edit-button').click(function() {
-				$(this).hide();
-				$(this).siblings('.delete, .cancel').hide();
-				$(this).siblings('.save, .cancel').show();
-				$('#resourceCategory').show();
-				$('#currentResourceCategory').hide();
-			});
-
-			$('.cancel').click(function() {
-				$(this).siblings('.manage-edit-button, .delete').show();
-				$(this).siblings('.save').hide();
-				$(this).hide();
-				var disabledStatus = $('.editable-field').attr('disabled');
-				if (disabledStatus !== undefined)
-					$('.editable-field').removeAttr('disabled');
-				else
-					$('.editable-field').attr('disabled', true);
-				$('#resourceCategory').hide();
-				$('#currentResourceCategory').show();
-			});
-
-			$('.save').click(function() {
-				$(this).siblings('.manage-edit-button, .delete').show();
-				$(this).siblings('.cancel').hide();
-				$(this).hide();
-				var disabledStatus = $('.editable-field').attr('disabled');
-				if (disabledStatus !== undefined)
-					$('.editable-field').removeAttr('disabled');
-				else
-					$('.editable-field').attr('disabled', true);
-				$('#resourceCategory').hide();
-				$('#currentResourceCategory').show();
-			});
-			
-			$('#resourceCategory').hide();
-
-		});
-	</script>
 </body>
-
-
 
 </html>

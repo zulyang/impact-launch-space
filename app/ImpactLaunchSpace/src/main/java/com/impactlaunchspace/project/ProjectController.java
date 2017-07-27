@@ -211,7 +211,7 @@ public class ProjectController {
 		model.addAttribute("project_requested_resources",
 				projectService.retrieveAllProjectRequestedResource(project_name, project_proposer));
 
-		return "blahblah";
+		return "edit-project";
 	}
 
 	@RequestMapping(value = "/edit-project-update", method = RequestMethod.GET)
