@@ -35,15 +35,31 @@ public class ResourceController {
 	}
 	
 	@RequestMapping(value = "/addUserResource", method = RequestMethod.POST)
-	public String addUserResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
+	public void addUserResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
 			@RequestParam String modalResourceDescription, HttpServletRequest request){
 		String username = (String)request.getSession().getAttribute("username");
-		username = "xiaowei";
+		System.out.println("adding user resource for " + username);
 		UserOfferedResource userOfferedResource = new UserOfferedResource(username, modalResourceCategory, modalResourceName, modalResourceDescription);
 		resourceService.insertUserResourceOffering(userOfferedResource);
-		return "redirect:"+"manageUserResource";
 	}
 	
+	@RequestMapping(value = "/removeUserResource", method = RequestMethod.POST)
+	public void removeUserResource(@RequestParam String resourceName, @RequestParam String resourceCategory, 
+			@RequestParam String resourceDescription, HttpServletRequest request){
+		String username = (String)request.getSession().getAttribute("username");
+		System.out.println("deleting user resource for " + username);
+		UserOfferedResource userOfferedResource = new UserOfferedResource(username, resourceCategory, resourceName, resourceDescription);
+		resourceService.removeUserResourceOffering(userOfferedResource);
+	}
 	
-	
+	@RequestMapping(value = "/saveUserResource", method = RequestMethod.POST)
+	public void saveUserResource(@RequestParam String resourceName, @RequestParam String resourceCategory, 
+			@RequestParam String resourceDescription, @RequestParam String oldResourceCategory, 
+			@RequestParam String oldResourceName, @RequestParam String oldResourceDescription, HttpServletRequest request){
+		String username = (String)request.getSession().getAttribute("username");
+		System.out.println("saving user resource for " + username);
+		UserOfferedResource oldUserOfferedResource = new UserOfferedResource(username, oldResourceCategory, oldResourceName, oldResourceDescription);
+		UserOfferedResource userOfferedResource = new UserOfferedResource(username, resourceCategory, resourceName, resourceDescription);
+		resourceService.updateUserResourceOffering(oldUserOfferedResource, userOfferedResource);
+	}
 }

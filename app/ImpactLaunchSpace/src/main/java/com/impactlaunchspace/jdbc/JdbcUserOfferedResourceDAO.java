@@ -134,8 +134,9 @@ public class JdbcUserOfferedResourceDAO implements UserOfferedResourceDAO {
 	}
 
 	@Override
-	public void update(UserOfferedResource userOfferedResource) {
-		String sql = "UPDATE `user_offered_resources` SET `resource_category`= ?,`resource_name`= ?,`request_description`= ? WHERE `username`= ?";
+	public void update(UserOfferedResource oldUserOfferedResource, UserOfferedResource userOfferedResource) {
+		String sql = "UPDATE `user_offered_resources` SET `resource_category`= ?,`resource_name`= ?,`request_description`= ? "
+				+ "WHERE `username`= ? and `resource_category`= ? and`resource_name`= ? and`request_description`= ?";
 		Connection conn = null;
 
 		try {
@@ -145,9 +146,13 @@ public class JdbcUserOfferedResourceDAO implements UserOfferedResourceDAO {
 			ps.setString(2, userOfferedResource.getResourceName());
 			ps.setString(3, userOfferedResource.getResourceDescription());
 			ps.setString(4, userOfferedResource.getUsername());
+			ps.setString(5, oldUserOfferedResource.getResourceCategory());
+			ps.setString(6, oldUserOfferedResource.getResourceName());
+			ps.setString(7, oldUserOfferedResource.getResourceDescription());
 			ps.executeUpdate();
+			System.out.println(ps.getUpdateCount());
 			ps.close();
-
+			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 
