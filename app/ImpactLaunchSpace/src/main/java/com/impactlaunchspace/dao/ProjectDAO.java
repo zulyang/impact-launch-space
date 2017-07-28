@@ -17,5 +17,5 @@ public interface ProjectDAO {
 			boolean isPublic, boolean hiddenToOutsiders, boolean hiddenToAll, String old_project_name,
 			String project_proposer);
 	
-	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location);
+	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location, String searchbox);
 }

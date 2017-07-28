@@ -126,10 +126,10 @@ public class ProjectService {
 		
 	}
 	
-	public ArrayList<Project> searchProjects(String causes, String location) {
+	public ArrayList<Project> searchProjects(String causes, String location, String searchbox) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
-		return projectDAO.retrieveProjectsBySearch(causes, location);
+		return projectDAO.retrieveProjectsBySearch(causes, location, searchbox);
 	}
 	
 	public void closeResourceCategory(String project_name, String project_proposer, String resource_category) {

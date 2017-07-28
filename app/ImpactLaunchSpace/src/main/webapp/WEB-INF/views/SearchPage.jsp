@@ -8,16 +8,21 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	    $(document).ready(function() {
-		$('#causes').add('#location').add('#misc').change(function(event) {
-
+		$('#searchbox').add('#causes').add('#location').add('#misc').on('keyup change', function(event) {
+			
+			var $searchbox = $("select#searchbox").val();
 			var $causes = $("select#causes").val();
 			var $location = $("select#location").val();
 			var $misc = $("select#misc").val();
-
+			
 			$.get('searchproject', {
+				
+				searchboxName:$searchbox,
 				causeName : $causes,
 				locationName : $location,
 				miscName : $misc
+				
+				
 			}, function(responseJson) {			
 				$("#projects tbody").empty()
 			    var trHTML = '';
@@ -34,12 +39,9 @@
 </head>
 <body>
 	<h1>Search For Project</h1>
-	
-	<form action="student.jsp" method="GET">
-	Search By Keyword: <input type="text" name="Name">
-    <input type ="submit" value="Search"></form>
-	
-	
+		
+	Search By Keyword: <input type="text" name= "searchbox" id="searchbox" placeholder="Project Keyword" />
+    	
 	<br>
 	Select Causes:
 	<select id="causes">

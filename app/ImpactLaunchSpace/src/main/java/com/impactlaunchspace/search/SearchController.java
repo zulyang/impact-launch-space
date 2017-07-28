@@ -40,10 +40,11 @@ public class SearchController {
 		String causes = request.getParameter("causeName");
 		String location = request.getParameter("locationName");
 		String misc = request.getParameter("miscName");
-
+		String searchbox = request.getParameter("searchboxName");
+		
 		//Get the list of projects based on the causes.
 		ArrayList<Project> projects = new ArrayList<Project>();
-		projects = projectService.searchProjects(causes, location);
+		projects = projectService.searchProjects(causes, location, searchbox);
 		
 		//Use LinkedHashMap to keep the order of the Json Objects. 
 		Map<Integer, String> list = new LinkedHashMap<Integer, String>();
