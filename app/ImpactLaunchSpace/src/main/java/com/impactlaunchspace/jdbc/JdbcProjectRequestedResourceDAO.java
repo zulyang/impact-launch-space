@@ -158,12 +158,12 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, new_resource_name);
-			ps.setString(2, new_resource_category);
+			ps.setString(1, new_resource_category);
+			ps.setString(2, new_resource_name);
 			ps.setString(3, new_request_description);
 			ps.setString(4, project_name);
-			ps.setString(5, old_resource_name);
-			ps.setString(6, old_resource_category);
+			ps.setString(5, old_resource_category);
+			ps.setString(6, old_resource_name);
 			ps.setString(7, project_proposer);
 			ps.executeUpdate();
 			ps.close();

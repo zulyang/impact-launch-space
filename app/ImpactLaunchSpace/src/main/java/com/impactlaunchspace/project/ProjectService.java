@@ -150,4 +150,16 @@ public class ProjectService {
 		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
 		return projectRequestedResourceDAO.retrieveAllProjectRequestedResource(project_name, project_proposer);
 	}
+	
+	public void updateProjectRequestedResource(String new_resource_name, String new_resource_category, String new_request_description, String project_name, String old_resource_name, String old_resource_category,String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
+		projectRequestedResourceDAO.update(new_resource_name, new_resource_category, new_request_description, project_name, old_resource_name, old_resource_category, project_proposer);
+	}
+	
+	public void openNewResourceCategory(String project_name, String project_proposer, String resource_category) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
+		projectResourceCategoryDAO.insert(new ProjectResourceCategory(project_name,resource_category, project_proposer));
+	}
 }

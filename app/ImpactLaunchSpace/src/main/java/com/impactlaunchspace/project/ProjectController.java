@@ -22,6 +22,7 @@ import com.impactlaunchspace.entity.ProjectBanList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
+import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
 
@@ -214,27 +215,6 @@ public class ProjectController {
 		return "edit-project";
 	}
 
-	@RequestMapping(value = "/edit-project-update", method = RequestMethod.GET)
-	public void processAjaxUpdate(@RequestParam("project-name") String project_name,
-			@RequestParam("project-proposer") String project_proposer, HttpServletResponse response, HttpServletRequest request, ModelMap model,
-			RedirectAttributes redirectAttributes) throws IOException {
-
-	}
-
-	@RequestMapping(value = "/edit-project-delete", method = RequestMethod.GET)
-	public void processAjaxDelete(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			RedirectAttributes redirectAttributes) throws IOException {
-		
-		String old_resource_name = request.getParameter("old_resource_name");
-		String old_resource_description = request.getParameter("old_resource_description");
-		String old_resource_category = request.getParameter("old_resource_category");
-
-		String resource_name = request.getParameter("old_resource_name");
-		String resource_description = request.getParameter("old_resource_description");
-		String resource_category = request.getParameter("old_resource_category");
-
-	}
-
 	@RequestMapping(value = "/edit-project", method = RequestMethod.POST)
 	public String processEditProject(@RequestParam String oldProjectTitle, @RequestParam String projectTitle,
 			@RequestParam String projectPurpose, @RequestParam ArrayList<String> selected_projectareas,
@@ -396,10 +376,61 @@ public class ProjectController {
 
 	}
 	
-	@RequestMapping(value = "/edwardajax", method = RequestMethod.GET)
-	public String showAjaxPage(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/saveProjectResource", method = RequestMethod.POST)
+	public void saveUserResource(@RequestParam String oldProjectTitle, @RequestParam String resourceName, @RequestParam String resourceCategory, 
+			@RequestParam String resourceDescription, @RequestParam String oldResourceCategory, 
+			@RequestParam String oldResourceName, @RequestParam String oldResourceDescription, HttpServletRequest request){
+		String project_proposer = (String)request.getSession().getAttribute("username");
+		System.out.println("saving user resource for " + project_proposer);
+		System.out.println("new name: " + resourceName);
+		System.out.println("new cate:" + resourceCategory);
+		System.out.println("new desc:" + resourceDescription);
+		System.out.println("project title: " + oldProjectTitle);
+		System.out.println("old name: " + oldResourceName);
+		System.out.println("old cate:" + oldResourceCategory);
+		System.out.println("old desc:" + oldResourceDescription);
+		
+		//this handles logic if the update removes an existing category the user has or if it creates a new one
+		boolean isSame = resourceCategory.equals(oldResourceCategory);
+		int resourceCategorySizeFrom = projectService.retrieveRequestedResources(oldProjectTitle, oldResourceCategory, project_proposer).size();
+		int resourceCategorySizeTo = projectService.retrieveRequestedResources(oldProjectTitle, resourceCategory, project_proposer).size();
+		
+		if(!isSame){
+			//if the update removes from the category with only 1 resource in it
+			if(resourceCategorySizeFrom == 1){
+				projectService.closeResourceCategory(oldProjectTitle, project_proposer, oldResourceCategory);
+			}
+			
+			//if the update involves a new category
+			if(resourceCategorySizeTo == 0){
+				projectService.openNewResourceCategory(oldProjectTitle, project_proposer, resourceCategory);
+			}
+		}
+		projectService.updateProjectRequestedResource(resourceName, resourceCategory, resourceDescription, oldProjectTitle, oldResourceName, oldResourceCategory, project_proposer);
+		
+	}
 
-		return "edwardAjax";
+	@RequestMapping(value = "/deleteProjectResource", method = RequestMethod.POST)
+	public void processAjaxDelete(@RequestParam String resourceName, @RequestParam String resourceCategory, 
+			@RequestParam String resourceDescription, @RequestParam String oldProjectTitle, HttpServletRequest request) throws IOException {
+		
+		String project_proposer = (String)request.getSession().getAttribute("username");
+		
+		//this validation checks if the resource category would be empty upon deletion, if yes... close the reso category as well
+		int resourceCategorySize = projectService.retrieveRequestedResources(oldProjectTitle, resourceCategory, project_proposer).size();
+		
+		if(resourceCategorySize == 1){
+			projectService.closeResourceCategory(oldProjectTitle, project_proposer, resourceCategory);
+		}
+		projectService.remove(oldProjectTitle, project_proposer, resourceCategory, resourceName);
+
+	}
+	
+	@RequestMapping(value = "/addProjectResource", method = RequestMethod.POST)
+	public void addUserResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
+			@RequestParam String modalResourceDescription, HttpServletRequest request){
+		String project_proposer = (String)request.getSession().getAttribute("username");
+		System.out.println("adding user resource for " + project_proposer);
+
 	}
 }

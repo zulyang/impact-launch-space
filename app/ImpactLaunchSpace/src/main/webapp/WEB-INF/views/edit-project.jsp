@@ -309,23 +309,33 @@
 												<tr id="resourceRow<%=++id%>">
 													<td><input class="editable-field form-control"
 														id="reso<%=id %>" type="text"
-														value="${item.getResource_name()}" disabled="true" /></td>
+														value="${item.getResource_name()}" disabled="true" /> <input
+														type="hidden" id="old_reso<%=id %>"
+														value="${item.getResource_name()}" /></td>
 													<td><input class="editable-field form-control"
 														id="desc<%=id %>" type="textarea"
 														value="${item.getRequest_description()}" disabled="true" />
-													</td>
-													<td>
-													<select id="resourceCategory<%=id%>"
-														name="resourceCategory"
-														class="col-md-4 resourceCategory" style="width:20rem;">
+														<input type="hidden" id="old_desc<%=id %>"
+														value="${item.getRequest_description()}" /></td>
+													<td><select id="resourceCategory<%=id%>"
+														name="resourceCategory" class="col-md-4 resourceCategory"
+														style="width: 20rem;">
 															<option></option>
 															<c:forEach items="${resource_category_list}" var="item1">
-																<option value="${item1.getSkillset()}">${item1.getSkillset()}</option>
+																<c:choose>
+																	<c:when test="${item1.getSkillset().equals(item.getResource_category()) }">
+																		<option value="${item1.getSkillset()}" selected = "selected">${item1.getSkillset()}</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${item1.getSkillset()}">${item1.getSkillset()}</option>
+																	</c:otherwise>
+																</c:choose>
+																
 															</c:forEach>
-													</select> 
-													<span class="label label-success"
+													</select> <span class="label label-success"
 														id="currentResourceCategory<%=id%>">${item.getResource_category()}</span>
-													</td>
+														<input type="hidden" id="old_rc<%=id%>"
+														value="${item.getResource_category()}" /></td>
 													<td class="col-md-2">
 														<button id="edit<%=id%>" type="button"
 															class="btn btn-primary manage-edit-button"
@@ -356,7 +366,8 @@
 
 					</div>
 					<hr>
-					<button class="btn btn-block btn-success" onclick="return confirmSubmit();" type="submit">Update
+					<button class="btn btn-block btn-success"
+						onclick="return confirmSubmit();" type="submit">Update
 						Project</button>
 				</div>
 				</form>
@@ -399,27 +410,26 @@
 			document.getElementById("radio_org").disabled = true;
 		}
 	</script>
-	
-	<script type="text/javascript">
-		$('#addResource').on(
-				'click',
-				function() {
-					var totalRows = $('#resourceTableBody tr').length;
-					console.log("table rows: " + totalRows);
-					var lastRow = totalRows + 1;
-					
-					$('#resourceTableBody tr:last').after('<tr id="resourceRow<%=++id%>"><td><input class="editable-field form-control"id="reso'+lastRow+'" type="text" disabled="true" /></td><td><input class="editable-field form-control"id="desc'+lastRow+'" type="textarea" disabled="true" /></td><td><select id="resourceCategory'+lastRow+'"name="resourceCategory"class="col-md-4 resourceCategory" style="width:20rem;"><option></option><c:forEach items="${resource_category_list}" var="item1"><option value="${item1.getSkillset()}">${item1.getSkillset()}</option></c:forEach></select><span class="label label-success"id="currentResourceCategory'+lastRow+'">${item.getResource_category()}</span></td><td class="col-md-2"><button id="edit'+lastRow+'" type="button"class="btn btn-primary manage-edit-button"onClick="edit(this.id)"><i class="fa fa-pencil"></i>Edit</button><button id="save'+lastRow+'" type="button"onClick="save(this.id)" class="btn btn-success save"href="#"><i class="fa fa-save"></i>Save</button><button id="dele'+lastRow+'" onClick="deleteRow(this.id)"type="button" class="btn btn-danger delete" href="#"><i class="fa fa-trash"></i> Delete</button><button id="canc'+lastRow+'" onClick="cancel(this.id)"type="button" class="btn btn-default cancel" href="#"><i class="fa fa-close"></i>Cancel</button></td></tr>');
-					
-					$('#reso' + lastRow).prop('disabled', false);
-					$('#desc' + lastRow).prop('disabled', false);
-					$('#edit' + lastRow).hide();
-					$('#dele' + lastRow).hide();
-					$('#save' + lastRow).show();
-					$('#canc' + lastRow).show();
-					$('#resourceCategory' + lastRow).show();	
-					$('#currentResourceCategory' + lastRow).hide();
-				});
 
+	<script type="text/javascript">
+	$('#addResource').on(
+			'click',
+			function() {
+				var totalRows = $('#resourceTableBody tr').length;
+				console.log("table rows: " + totalRows);
+				var lastRow = totalRows + 1;
+				
+				$('#resourceTableBody tr:last').after('<tr id="resourceRow<%=++id%>"><td><input class="editable-field form-control"id="reso'+lastRow+'" type="text" disabled="true" /></td><td><input class="editable-field form-control"id="desc'+lastRow+'" type="textarea" disabled="true" /></td><td><select id="resourceCategory'+lastRow+'"name="resourceCategory"class="col-md-4 resourceCategory" style="width:20rem;"><option></option><c:forEach items="${resource_category_list}" var="item1"><option value="${item1.getSkillset()}">${item1.getSkillset()}</option></c:forEach></select><span class="label label-success"id="currentResourceCategory'+lastRow+'">${item.getResource_category()}</span></td><td class="col-md-2"><button id="edit'+lastRow+'" type="button"class="btn btn-primary manage-edit-button"onClick="edit(this.id)"><i class="fa fa-pencil"></i>Edit</button><button id="save'+lastRow+'" type="button"onClick="save(this.id)" class="btn btn-success save"href="#"><i class="fa fa-save"></i>Save</button><button id="dele'+lastRow+'" onClick="deleteRow(this.id)"type="button" class="btn btn-danger delete" href="#"><i class="fa fa-trash"></i> Delete</button><button id="canc'+lastRow+'" onClick="cancel(this.id)"type="button" class="btn btn-default cancel" href="#"><i class="fa fa-close"></i>Cancel</button></td></tr>');
+				
+				$('#reso' + lastRow).prop('disabled', false);
+				$('#desc' + lastRow).prop('disabled', false);
+				$('#edit' + lastRow).hide();
+				$('#dele' + lastRow).hide();
+				$('#save' + lastRow).show();
+				$('#canc' + lastRow).show();
+				$('#resourceCategory' + lastRow).show();	
+				$('#currentResourceCategory' + lastRow).hide();
+			});
 		function edit(id) {
 			var disabledStatus = $('.editable-field').attr('disabled');
 			console.log("disabledstatus: " + disabledStatus);
@@ -443,27 +453,54 @@
 
 		function save(id) {
 			var disabledStatus = $('.editable-field').attr('disabled');
-			var newId = id.substring(4);
-			console.log("id: " + newId);
+			var oldId = id.substring(4);
 
-			$('#reso' + newId).prop('disabled', true);
-			$('#desc' + newId).prop('disabled', true);
-			$('#edit' + newId).show();
-			$('#dele' + newId).show();
-			$('#save' + newId).hide();
-			$('#canc' + newId).hide();
+			console.log("id: " + oldId);
+
+			$('#reso' + oldId).prop('disabled', true);
+			$('#desc' + oldId).prop('disabled', true);
+			$('#edit' + oldId).show();
+			$('#dele' + oldId).show();
+			$('#save' + oldId).hide();
+			$('#canc' + oldId).hide();
+			$('#resourceCategory' + oldId).hide();
+			$('#currentResourceCategory' + oldId).show();
+
+			var resourceCategory = $('#resourceCategory' + oldId).val();
+			var resourceName = $('#reso' + oldId).val();
+			var resourceDescription = $('#desc' + oldId).val();
+			var oldResourceCategory = $('#old_rc' + oldId).val();
+			var oldResourceName = $('#old_reso' + oldId).val();
+			var oldResourceDescription = $('#old_desc' + oldId).val();
+			var oldProjectTitle = $('#oldProjectTitle').val();
 			
-			var newlyAddedResourceCat = document.getElementById("resourceCategory" + newId);
-			console.log("newlyAddedResourceCat: " + newlyAddedResourceCat);
-			if (newlyAddedResourceCat !== null) {
-				console.log("newlyAddedResourceCat: " + newlyAddedResourceCat.value);
-				var currentResourceCategory = $('#currentResourceCategory' + newId);
-				currentResourceCategory.text('');
-				currentResourceCategory.text(newlyAddedResourceCat.value);
-			}
+			$.post('saveProjectResource',{
+				resourceCategory : resourceCategory,
+				resourceName : resourceName,
+				resourceDescription :resourceDescription,
+				oldResourceCategory :oldResourceCategory,
+				oldResourceName : oldResourceName,
+				oldResourceDescription : oldResourceDescription,
+				oldProjectTitle : oldProjectTitle
+			});
 			
+			$("#row" + oldId).hide();
+			
+			var newId = $('#userResourceTable tr').length + 1;
+			 
+			$('tr#row' + oldId).after(
+					'<tr id="row'+newId+'"> <td><p><input class="editable-field form-control" id="reso'+newId+'" type="text"value="'+resourceName+'" disabled="true" /> <input type="hidden" id="old_reso'+newId+'" value="${uro.getResourceName()}"/></p></td> <td><p> <input class="editable-field form-control" style="border: 1px solid transparent;background-color: transparent;" id="desc'+newId+'" type="textarea"value="'+resourceDescription+'" disabled="true" /> <input type="hidden" id="old_desc'+newId+'" value="'+resourceDescription+'"/></p></td> <td><p> <input type="hidden" id="old_rc'+newId+'" value="'+resourceCategory+'"/> <select id="resourceCategory'+newId+'"name="resourceCategory"class="col-md-4 js-example-basic-single-resourcecategory resourceCategory"> <option></option> <c:forEach items="${resource_category_list}" var="item"> <c:choose> <c:when test="${item.getSkillset().equals('+resourceCategory+')}"> <option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option> </c:when> <c:otherwise> <option value="${item.getSkillset()}">${item.getSkillset()}</option> </c:otherwise> </c:choose> </c:forEach> </select> <span class="label label-success"id="currentResourceCategory'+newId+'">'+resourceCategory+'</span> </p></td> <td class="col-md-2"><p> <button id="edit'+newId+'" type="btn" name="edit"class="btn btn-primary edit" onClick="edit(this.id)"href="#"> <i class="fa fa-pencil"></i> Edit </button> <button id="save'+newId+'" type="button" name="save"class="btn btn-success save" onClick="save(this.id)"href="#"> <i class="fa fa-save"></i> Save </button> <button id="dele'+newId+'" type="submit" name="delete"class="btn btn-danger delete" onClick="del(this.id)"href="#"> <i class="fa fa-trash"></i> Delete </button> <button id="canc'+newId+'" type="btn" name="cancel"class="btn btn-default cancel" onClick="cancel(this.id)"href="#"> <i class="fa fa-close"></i> Cancel </button> </p></td></tr>');
+			$('.resourceCategory').hide();
+			
+			$('#resourceCategory' + newId).val(resourceCategory);
+			$('#currentResourceCategory' + newId).val(resourceCategory);
+			$('#old_rc' + newId).val(resourceCategory);
+			$('#old_reso' + newId).val(resourceName);
+			$('#old_desc' + newId).val(resourceDescription);
+
 			$('#resourceCategory' + newId).hide();
 			$('#currentResourceCategory' + newId).show();
+
 		};
 
 		function cancel(id) {
@@ -486,6 +523,16 @@
 
 		function deleteRow(id) {
 			var newId = id.substring(4);
+			var resourceCategory = $('#old_rc' + newId).val();
+			var resourceName = $('#reso' + newId).val();
+			var resourceDescription = $('#desc' + newId).val();
+			var oldProjectTitle = $('#oldProjectTitle').val();
+			$.post('deleteProjectResource', {
+				resourceCategory : resourceCategory,
+				resourceName : resourceName,
+				resourceDescription : resourceDescription,
+				oldProjectTitle : oldProjectTitle
+			});
 			$('#resourceRow' + newId).hide();
 		}
 	</script>
