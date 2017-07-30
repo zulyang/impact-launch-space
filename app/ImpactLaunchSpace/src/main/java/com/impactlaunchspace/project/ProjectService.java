@@ -132,12 +132,6 @@ public class ProjectService {
 		return projectDAO.retrieveProjectsBySearch(causes, location, searchbox);
 	}
 	
-	public void closeResourceCategory(String project_name, String project_proposer, String resource_category) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
-		projectResourceCategoryDAO.closeResourceCategory(project_name, project_proposer, resource_category);
-	}
-	
 	public void remove(String project_name, String project_proposer,
 			String resource_category, String resource_name){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
@@ -157,9 +151,22 @@ public class ProjectService {
 		projectRequestedResourceDAO.update(new_resource_name, new_resource_category, new_request_description, project_name, old_resource_name, old_resource_category, project_proposer);
 	}
 	
+	public void addProjectRequestedResource(String project_name, String project_proposer, String resource_category, String resource_name, String request_description) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
+		projectRequestedResourceDAO.insert(new ProjectRequestedResource(project_name, resource_category, resource_name,	request_description, project_proposer));
+	}
+	
+	//The below two methods add a new resource/remove a resource category for a project	
 	public void openNewResourceCategory(String project_name, String project_proposer, String resource_category) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
 		projectResourceCategoryDAO.insert(new ProjectResourceCategory(project_name,resource_category, project_proposer));
+	}
+	
+	public void closeResourceCategory(String project_name, String project_proposer, String resource_category) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
+		projectResourceCategoryDAO.closeResourceCategory(project_name, project_proposer, resource_category);
 	}
 }

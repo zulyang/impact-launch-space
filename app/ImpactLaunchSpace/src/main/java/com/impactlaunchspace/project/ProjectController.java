@@ -427,10 +427,18 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/addProjectResource", method = RequestMethod.POST)
-	public void addUserResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
-			@RequestParam String modalResourceDescription, HttpServletRequest request){
+	public void addProjectResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
+			@RequestParam String modalResourceDescription, @RequestParam String oldProjectTitle, HttpServletRequest request){
 		String project_proposer = (String)request.getSession().getAttribute("username");
 		System.out.println("adding user resource for " + project_proposer);
-
+		
+		int resourceCategorySize = projectService.retrieveRequestedResources(oldProjectTitle, modalResourceCategory, project_proposer).size();
+		
+		if(resourceCategorySize == 0){
+			projectService.openNewResourceCategory(oldProjectTitle, project_proposer, modalResourceCategory);
+		}
+		
+		projectService.addProjectRequestedResource(oldProjectTitle, project_proposer, modalResourceCategory, modalResourceName, modalResourceDescription);
 	}
+	
 }
