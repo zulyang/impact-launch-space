@@ -86,7 +86,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 					e.printStackTrace();
 				}
 				fileType = "." + fileType.split("/")[1];
-				
+
 				blob = rs.getBlob("profilePicture");
 				in = blob.getBinaryStream();
 				File temp = File.createTempFile("ILS-download", fileType);
@@ -148,7 +148,70 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 					e.printStackTrace();
 				}
 				fileType = "." + fileType.split("/")[1];
-				
+
+				blob = rs.getBlob("profilePicture");
+				in = blob.getBinaryStream();
+				File temp = File.createTempFile("ILS-download", fileType);
+				OutputStream out = new FileOutputStream(temp);
+				byte[] buff = new byte[4096]; // how much of the blob to
+												// read/write at a time
+				int len = 0;
+
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+
+				organizationAccount = new OrganizationAccount(rs.getString("username"), rs.getString("email"),
+						rs.getString("companyName"), rs.getBoolean("needsSupport"), rs.getBoolean("offeringSupport"),
+						temp, rs.getString("companyBio"), rs.getString("contactDetails"));
+				temp.deleteOnExit();
+			}
+			rs.close();
+			ps.close();
+			return organizationAccount;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		return null;
+
+	}
+
+	public OrganizationAccount findByCompanyName(String companyName) {
+
+		String sql = "SELECT * FROM ORGANIZATION_ACCOUNTS WHERE companyName = ?";
+
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, companyName);
+			OrganizationAccount organizationAccount = null;
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Blob blob = rs.getBlob("profilePicture");
+				InputStream in = blob.getBinaryStream();
+				byte[] bytes = IOUtils.toByteArray(in);
+				String fileType = "";
+				try {
+					fileType = FileTypeUtils.getContentType(bytes);
+				} catch (ContentTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fileType = "." + fileType.split("/")[1];
+
 				blob = rs.getBlob("profilePicture");
 				in = blob.getBinaryStream();
 				File temp = File.createTempFile("ILS-download", fileType);
@@ -211,7 +274,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 					e.printStackTrace();
 				}
 				fileType = "." + fileType.split("/")[1];
-				
+
 				blob = rs.getBlob("profilePicture");
 				in = blob.getBinaryStream();
 				File temp = File.createTempFile("ILS-download", fileType);
@@ -275,7 +338,7 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 					e.printStackTrace();
 				}
 				fileType = "." + fileType.split("/")[1];
-				
+
 				blob = rs.getBlob("profilePicture");
 				in = blob.getBinaryStream();
 				File temp = File.createTempFile("ILS-download", fileType);
@@ -346,10 +409,10 @@ public class JdbcOrganizationAccountDAO implements OrganizationAccountDAO {
 			}
 		}
 	}
-	
-	public ArrayList<String> retrieveOrganizationNamelist(){
+
+	public ArrayList<String> retrieveOrganizationNamelist() {
 		ArrayList<String> output = new ArrayList<String>();
-		
+
 		String sql = "SELECT * FROM organization_accounts";
 		Connection conn = null;
 		try {

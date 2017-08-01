@@ -20,6 +20,18 @@ public class Notification {
 		this.notification_subject = notification_subject;
 		this.notification_message = notification_message;
 		this.sent_time = calculateSentTime();
+		this.isRead = false;
+	}
+
+	public Notification(String recipient_username, String sender_username, String notification_subject,
+			String notification_message, String sent_time, boolean isRead) {
+		super();
+		this.recipient_username = recipient_username;
+		this.sender_username = sender_username;
+		this.notification_subject = notification_subject;
+		this.notification_message = notification_message;
+		this.sent_time = sent_time;
+		this.isRead = isRead;
 	}
 
 	public String getRecipient_username() {
@@ -50,8 +62,8 @@ public class Notification {
 		Calendar now = Calendar.getInstance();
 		Date dt = now.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String expiry = sdf.format(dt);
-		return expiry;
+		String sentTime = sdf.format(dt);
+		return sentTime;
 	}
 
 }
