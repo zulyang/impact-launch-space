@@ -19,8 +19,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 
@@ -47,9 +45,9 @@
 							+ res[0] + '</span></div><div class="projectStatus">' + res[4]
 							+ '</div><div class="card-content"><p>'+ res[1]
 							+ '<hr/><i class="fa fa-clock-o"></i> ' + res[2] + ' day(s)<br><i class="fa fa-globe"></i> '+ res[3]
-							+ '<br><i class="fa fa-user-circle-o"></i> ' + res[5] + '</p></div><div class="card-action">'
+							+ '<br><i class="fa fa-user-circle-o"></i> ' + res[5] + '</p></div>'
 							+ '<a href ="/view-project?project-name=' + res[0]
-							+ '&project-proposer=' + res[5]+ '">View Project</a> </div></div> </div>';
+							+ '&project-proposer=' + res[5]+ '"><div class="card-action">View Project</div></a></div> </div>';
 						});
 						$('#projectResults').append(trHTML);
 						});
