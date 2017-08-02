@@ -186,7 +186,7 @@
 											</c:forEach>
 										</select> <input id="modalResourceName" name="modalResourceName"
 											class="form-control col-md-4 create-project-add"
-											placeholder="What resources do you need?" type="text" />
+											placeholder="What resources can you provide?" type="text" />
 										<textarea id="modalResourceDescription"
 											name="modalResourceDescription"
 											class="form-control col-md-4 create-project-add"
