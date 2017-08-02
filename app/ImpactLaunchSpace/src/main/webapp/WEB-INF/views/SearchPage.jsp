@@ -5,12 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search For Project</title>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
 	    $(document).ready(function() {
 		$('#searchbox').add('#causes').add('#location').add('#misc').on('keyup change', function(event) {
 			
-			var $searchbox = $("select#searchbox").val();
+			var $searchbox = $("input#searchbox").val();
 			var $causes = $("select#causes").val();
 			var $location = $("select#location").val();
 			var $misc = $("select#misc").val();
@@ -29,7 +31,8 @@
 			    $.each(responseJson, function (key, value) {	
 					var val = value
 					var res = val.split(",");
-			        trHTML += '<tr><td>' + res[0] + '</td><td>' + res[1] + '</td><td>' + res[2] + '</td><td>' + res[3] +'</td><td>' + res[4] + '</td></tr>' ;
+			        trHTML += '<tr><td>' + res[0] + '</td><td>' + res[1] + '</td><td>' + res[2] + '</td><td>' + res[3] +'</td><td>' + res[4] + '</td><td>' 
+			        + res[5] + '</td><td>'+ '<a href ="/view-project?project-name=' + res[0] + '&project-proposer=' + res[5] +'">Link</a></td></tr>';
 			    });			    
 			    $('#projects').append(trHTML);			
 			});
@@ -39,8 +42,9 @@
 </head>
 <body>
 	<h1>Search For Project</h1>
-		
-	Search By Keyword: <input type="text" name= "searchbox" id="searchbox" placeholder="Project Keyword" />
+	
+	Search By text:
+	<input type="text" name="searchbox" id="searchbox" placeholder="Enter Keyword Here">
     	
 	<br>
 	Select Causes:
@@ -82,7 +86,7 @@
 		<option selected ="Popularity">Popularity</option>
 		<option value="Newest">Newest</option>
 		<option value="Duration">Duration</option>
-		<option value="Project Status">Project Status</option>	 <!-- Have to use database? -->
+		<option value="Project Status">Project Status</option>	 
 	</select>  
 	<br>
 	
@@ -96,6 +100,8 @@
         <th>Project Duration</th>
         <th>Project Location</th>
         <th>Project Status</th>
+        <th>Project Proposer</th>
+        <th>View project</th>
     </tr>
     </thead>
     <tbody>

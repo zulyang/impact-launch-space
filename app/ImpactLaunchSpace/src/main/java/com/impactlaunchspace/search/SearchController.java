@@ -66,22 +66,14 @@ public class SearchController {
 		}
 
 		for(int i = 0; i<projects.size(); i++){
-			//Display Projects in Order
-			/*Map<Integer, String > projectdetails = new LinkedHashMap<Integer, String>();
-			projectdetails.put(i, projects.get(i).getProject_name());
-			projectdetails.put(i, projects.get(i).getPurpose());
-			projectdetails.put(i, Integer.toString(projects.get(i).getDuration()));
-			projectdetails.put(i, projects.get(i).getLocation());
-			projectdetails.put(i, projects.get(i).getProject_status());			
-			list.put(i+1, projectdetails);*/
-			
 			
 			String projname = projects.get(i).getProject_name();
 			String projpurpose = projects.get(i).getPurpose();
 			int projDuration = projects.get(i).getDuration();
 			String projLocation = projects.get(i).getLocation();
 			String projStatus = projects.get(i).getProject_status();
-			String toReturn = projname + "," + projpurpose + "," + Integer.toString(projDuration) + "," + projLocation + ","+  projStatus; 
+			String projProposer = projects.get(i).getProject_proposer();
+			String toReturn = projname + "," + projpurpose + "," + Integer.toString(projDuration) + "," + projLocation + ","+  projStatus + "," + projProposer; 
 			list.put(i+1, toReturn);
 		}
 
@@ -92,4 +84,5 @@ public class SearchController {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);
 	}
+	
 }
