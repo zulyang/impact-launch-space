@@ -73,20 +73,6 @@ public class ProjectController {
 		return "createproject";
 	}
 
-	@RequestMapping(value = "/projectTest", method = RequestMethod.GET)
-	public String showProjectPage(HttpServletRequest request, ModelMap model) {
-		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
-		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
-		request.getSession().setAttribute("resource_category_list", profileService.retrieveSkillsetList());
-		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
-		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
-
-		profileService.retrieveJobSectorList();
-		profileService.retrieveSkillsetList();
-
-		return "projectTest";
-	}
-
 	// Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.POST)
 	public String processCreateProject(@RequestParam String projectTitle, @RequestParam String projectPurpose,

@@ -52,4 +52,10 @@ public class ResourceService {
 		userOfferedResourceDAO.update(oldUserOfferedResource, userOfferedResource);
 	}
 	
+	public UserOfferedResource retrieveOfferedResource(String username, String resource_category, String resource_name){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
+				.getBean("userOfferedResourceDAO");
+		return userOfferedResourceDAO.retrieveResource(username, resource_category, resource_name);
+	}
 }

@@ -165,5 +165,36 @@ public class JdbcUserOfferedResourceDAO implements UserOfferedResourceDAO {
 			}
 		}
 	}
+	
+	public UserOfferedResource retrieveResource(String username, String resource_category, String resource_name) {
+		UserOfferedResource output = null;
 
+		System.out.println(username);
+		
+		String sql = "SELECT * FROM `user_offered_resources` WHERE `username` = ? AND `resource_category` = ? AND `resource_name` = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, resource_category);
+			ps.setString(3, resource_name);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				output = new UserOfferedResource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }
