@@ -56,7 +56,7 @@
 
 				<div class="create-project-container">
 
-					<div class="wizard">
+					<div id="rootwizard" class="wizard">
 						<div class="wizard-inner">
 							<div class="connecting-line"></div>
 							<ul class="nav nav-tabs" role="tablist">
@@ -90,132 +90,132 @@
 							</ul>
 						</div>
 
-						<form action="create-project" method = "post" role="form">
+						<form action="create-project" method="post">
+							<input type="submit" id="createProject" style="display: none" />
 							<div class="tab-content">
 								<div class="tab-pane active" role="tabpanel" id="step1">
 									<h3>Step 1</h3>
 									<p>Fill in basic information of new project</p>
-									<form action="create-project" method="post">
-										<div class="form-group row">
-											<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
-											<div class="col-sm-9">
-												<input type="text" id="projectTitle" value=""
-													name="projectTitle" class="form-control">
-											</div>
+									<div class="form-group row">
+										<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
+										<div class="col-sm-9">
+											<input required type="text" id="projectTitle"
+												name="projectTitle" class="form-control">
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
-											<div class="col-sm-9">
-												<input type="text" id="projectPurpose" value=""
-													name="projectPurpose" class="form-control"
-													placeholder="Your project purpose in one line">
-											</div>
+									<div class="form-group row">
+										<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
+										<div class="col-sm-9">
+											<input required type="text" id="projectPurpose"
+												name="projectPurpose" class="form-control"
+												placeholder="Your project purpose in one line">
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="socialImpactType" class="col-sm-3 col-form-label">Social
-												Impact Type</label>
-											<div class="col-sm-9">
-												<select class="js-example-basic-multiple-targetprojectareas create-new-project-select2 form-control"
-													multiple="multiple" name="selected_projectareas" required>
-													<c:forEach items="${project_area_list}" var="item">
-														<option value="${item.getProject_area()}">${item.getProject_area()}</option>
-													</c:forEach>
-												</select>
-
-
-
-											</div>
+									<div class="form-group row">
+										<label for="socialImpactType" class="col-sm-3 col-form-label">Social
+											Impact Type</label>
+										<div class="col-sm-9">
+											<select required id="socialImpact"
+												class="js-example-basic-multiple-targetprojectareas create-new-project-select2 form-control"
+												multiple="multiple" name="selected_projectareas">
+												<c:forEach items="${project_area_list}" var="item">
+													<option value="${item.getProject_area()}">${item.getProject_area()}</option>
+												</c:forEach>
+											</select>
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="projectOwner" class="col-sm-3 col-form-label">Project
-												Owner</label>
-											<div class="col-sm-9" style="display: block; height: 34px;">
-												<input type="radio" id="radio_indi" value="individual"
-													name="projectOwner" /> Myself <input type="radio"
-													id="radio_org" value="organization" name="projectOwner" />
-												Organization <input type="hidden" id="userType"
-													name="userType" value="${user_type}"> <input
-													type="hidden" id="indiOrg" name="indiOrg"
-													value="${indi_org}">
-											</div>
+									<div class="form-group row">
+										<label for="projectOwner" class="col-sm-3 col-form-label">Project
+											Owner</label>
+										<div class="col-sm-9" style="display: block; height: 34px;">
+											<input required type="radio" id="radio_indi"
+												value="individual" name="projectOwner" /> Myself <input
+												required type="radio" id="radio_org" value="organization"
+												name="projectOwner" /> Organization <input required
+												type="hidden" id="userType" name="userType"
+												value="${user_type}"> <input type="hidden"
+												id="indiOrg" name="indiOrg" value="${indi_org}">
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="projectLocation" class="col-sm-3 col-form-label">Project
-												Location</label>
-											<div class="col-sm-9">
-												<select class="js-example-basic-single-projectlocation"
-													name="projectLocation" required>
-													<option></option>
-													<c:forEach items="${country_list}" var="item">
-														<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
-													</c:forEach>
-												</select>
-											</div>
+									<div class="form-group row">
+										<label for="projectLocation" class="col-sm-3 col-form-label">Project
+											Location</label>
+										<div class="col-sm-9">
+											<select required id="projectLocation"
+												class="js-example-basic-single-projectlocation"
+												name="projectLocation">
+												<option></option>
+												<c:forEach items="${country_list}" var="item">
+													<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+												</c:forEach>
+											</select>
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="projectDescription"
-												class="col-sm-3 col-form-label">Project Description</label>
-											<div class="col-sm-9">
-												<input type="text" id="projectDescription" value=""
-													name="projectDescription" class="form-control"
-													placeholder="A short summary of project">
-											</div>
+									<div class="form-group row">
+										<label for="projectDescription"
+											class="col-sm-3 col-form-label">Project Description</label>
+										<div class="col-sm-9">
+											<input required type="text" id="projectDescription" value=""
+												name="projectDescription" class="form-control"
+												placeholder="A short summary of project">
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
-												Privacy</label>
-											<div class="col-sm-9" style="display: block; height: 34px;">
-												<input type="radio" id="projectPrivacy" value="public"
-													name="projectPrivacy" /> Public <input type="radio"
-													id="projectPrivacy" value="hidden" name="projectPrivacy" />
-												Hide from All <input type="radio" id="projectPrivacy"
-													value="private" name="projectPrivacy" /> Hide from
-												Outsiders
-											</div>
+									<div class="form-group row">
+										<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
+											Privacy</label>
+										<div class="col-sm-9" style="display: block; height: 34px;">
+											<input required type="radio" id="projectPrivacy1"
+												value="public" name="projectPrivacy" /> Public <input
+												required type="radio" id="projectPrivacy2" value="hidden"
+												name="projectPrivacy" /> Hide from All <input required
+												type="radio" id="projectPrivacy3" value="private"
+												name="projectPrivacy" /> Hide from Outsiders
 										</div>
+									</div>
 
-										<div class="form-group row">
-											<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
-												Duration</label>
-											<div class="col-sm-9">
-												<input type="number" id="projectDuration" value=""
-													name="projectDuration" class="form-control"
-													placeholder="Number of days">
-											</div>
+									<div class="form-group row">
+										<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
+											Duration</label>
+										<div class="col-sm-9">
+											<input required type="number" id="projectDuration" value=""
+												name="projectDuration" class="form-control"
+												placeholder="Number of days">
 										</div>
+									</div>
 
 
-										<div class="form-group row">
-											<label for="projectBanList" class="col-sm-3 col-form-label">Ban
-												List</label>
-											<div class="col-sm-9">
-												<select
-													class="js-example-basic-multiple-banlistusers create-new-project-select2 form-control"
-													multiple="multiple" name="selected_banlist">
-													<c:forEach items="${user_list}" var="item">
-														<c:if test="${item.equals(username) == false}">
-															<option value="${item}">${item}</option>
-														</c:if>
-													</c:forEach>
-												</select> <br>
-											</div>
+									<div class="form-group row">
+										<label for="projectBanList" class="col-sm-3 col-form-label">Ban
+											List</label>
+										<div class="col-sm-9">
+											<select
+												class="js-example-basic-multiple-banlistusers create-new-project-select2 form-control"
+												multiple="multiple" name="selected_banlist">
+												<c:forEach items="${user_list}" var="item">
+													<c:if test="${item.equals(username) == false}">
+														<option value="${item}">${item}</option>
+													</c:if>
+												</c:forEach>
+											</select> <br>
 										</div>
-										<hr/>
-										<ul class="list-inline pull-right">
-											<li><button type="button"
-													class="btn btn-primary next-step">Save and
-													continue</button></li>
-										</ul>
+									</div>
+									<hr />
+									<ul class="list-inline pull-right">
+										<li><button type="button" onclick="return checkStep1();"
+												class="btn btn-primary next-step">Save and continue</button>
+										</li>
+									</ul>
 								</div>
 								<div class="tab-pane" role="tabpanel" id="step2">
 									<h3>Step 2</h3>
-									<p>Upload relevant materials for others to know more about your project</p>
+									<p>Upload relevant materials for others to know more about
+										your project</p>
 									<div class="form-group row">
 										<label for="projectVideo" class="col-sm-3 control-label">Project
 											Video</label>
@@ -234,7 +234,7 @@
 												documents</button>
 										</div>
 									</div>
-<hr/>
+									<hr />
 									<ul class="list-inline pull-right">
 										<li><button type="button"
 												class="btn btn-default prev-step">Previous</button></li>
@@ -245,47 +245,47 @@
 								<div class="tab-pane" role="tabpanel" id="step3">
 									<h3>Step 3</h3>
 									<p>Indicate the resource(s) your project need</p>
-									
-									
-									
+
 									<div id="resourcesNeeded" class="form-group row col-sm-9">
-										<div class="col-md-12">
-												<select id="resourceCategory1" name="resourceCategory" class="col-md-4">
-													<option></option>
-													<c:forEach items="${resource_category_list}" var="item">
-														<option value="${item.getSkillset()}">${item.getSkillset()}</option>
-													</c:forEach>
-												</select>  
-											<input id="resourceName1" name="resourceName" class="form-control col-md-4"
+										<div class="col-md-12" style="padding-top: 3rem;">
+											<select required id="resourceCategory1"
+												name="resourceCategory" class="col-md-4 resourceCat">
+												<option value="" disabled selected>Select your
+													resource category</option>
+												<c:forEach items="${resource_category_list}" var="item">
+													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+												</c:forEach>
+											</select> <input required id="resourceName1" name="resourceName"
+												style="padding-top: 1rem;"
+												class="form-control col-md-4 resourceName"
 												placeholder="What resources do you need?" type="text" />
-											<textarea id="resourceDescription1" name="resourceDescription" class="form-control col-md-4"
+											<textarea required id="resourceDescription1"
+												style="padding-top: 3rem;" name="resourceDescription"
+												class="form-control col-md-4 resourceDes"
 												placeholder="Describe your resource here..."></textarea>
 										</div>
 									</div>
 
 									<div class="col-sm-12">
 										<input id="addResource" class="btn btn-info" type="button"
-											value="Add Resource" />
-									<br/><br/><hr/></div>
-									
-									
+											value="Add Resource" /> <br /> <input
+											onclick="checkAllFields()" class="btn btn-info" type="button"
+											value="Check All Fields" /> <br /> <br />
+										<hr />
+									</div>
+
+
 									<ul class="list-inline pull-right">
 										<li><button type="button"
 												class="btn btn-default prev-step">Previous</button></li>
-									<!-- 
-										<li><button type="button"
-												class="btn btn-primary btn-info-full next-step">Save
-												and continue</button></li> -->
-												<li><button type="submit" class="btn btn-success next-step" >Create Project</button></li>
-										<!-- <hr />
-										<button class="btn btn-block btn-success" type="submit">Create
-											Project</button> -->
+										<li><button type="submit" id="createProject" onclick="checkAllFields();" class="btn btn-success next-step createProject">Create Project</button></li>
 									</ul>
 								</div>
 								<div class="tab-pane" role="tabpanel" id="complete">
 									<h3>Complete</h3>
 									<p>Your project has been successfully created!</p>
-									<button type="button" class="btn btn-default">Back To Home</button>
+									<button type="button" class="btn btn-default">Back To
+										Home</button>
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -293,55 +293,213 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
 	<script type="text/javascript">
-		function checkInput() {
-			var info = $("#resourceTags1").val();
-			if (info === "") {
-				console.log("info is blank");
+		$(document).ready(function() {
+			window.setInterval(function(){
+				checkAllFields();
+				}, 1000);
+		});
+	</script>
+
+	<script type="text/javascript">
+		function checkAllFields() {
+			var lastRow = $('#resourcesNeeded').find("div:last");
+			var lastRowInputField = lastRow.find('select');
+			var id = lastRowInputField.attr("id");
+			console.log("lastRowInputs: " + id);
+
+			var emptyResourceFields = false;
+
+			var totalRows = id.substring(16);
+			console.log("totalRows: " + totalRows);
+
+			for (count = 1; count <= totalRows; count++) {
+				var resourceCat = document.getElementById("resourceCategory" + count).value;
+				var resourceName = document.getElementById("resourceName" + count).value;
+				var resourceDes = document.getElementById("resourceDescription" + count).value;
+				
+				console.log("resourceCat: " + resourceCat);
+				console.log("resourceName: " + resourceName);
+				console.log("resourceDes: " + resourceDes);
+
+				if(resourceCat === "" || resourceName === "" || resourceDes === ""){
+					emptyResourceFields = true;
+					console.log("fail empty");
+					$('.createProject').prop('disabled', true);
+					//alert("Please fill in all the fields for the resources you need.");
+					return false;
+				}
 			}
-			console.log("info: " + info);
+			
+			if(!emptyResourceFields) {
+				console.log("pass empty");
+				$('.createProject').prop('disabled', false);
+			}
+			
+			return true;
 		}
 
-		$('#addResource').on(
-				'click',
-				function() {
-					var lastRow = $('#resourcesNeeded').closest(
-							'#resourcesNeeded').find("div:last-child");
-					console.log("lastRow: " + lastRow);
-					var lastRowInputs = lastRow.find('input');
-					var isClone = false;
-					
-					lastRowInputs.each(function() {
-						if ($(this).val().length) {
-							isClone = true;
-						}
-					});
-					if (!isClone)
-						return false;
-					console.log("isClone is true");
-					var cloned = lastRow.clone();
-					cloned.find('input, select, textarea').each(
-							function() {
-								var id = $(this).attr('id');
-								console.log("id: " + id);
-								var regIdMatch = /^(.+)(\d+)$/;
-								var aIdParts = id.match(regIdMatch);
-								var newId = aIdParts[1]
-										+ (parseInt(aIdParts[2], 10) + 1);
+		function checkStep1() {
+			var title = document.getElementById("projectTitle").value;
+			var purpose = document.getElementById("projectPurpose").value;
+			var socialImpact = document.getElementById("socialImpact").value;
+			var radioIndi = document.getElementById("radio_indi");
+			var radioOrg = document.getElementById("radio_org");
+			console.log("radioIndi: " + radioIndi.checked);
+			console.log("radioOrg: " + radioOrg.checked);
 
-								$(this).attr('id', newId);
-								$(this).attr('name', newId);
+			var projectLocation = document.getElementById("projectLocation").value;
+			var projectDescription = document
+					.getElementById("projectDescription").value;
+
+			var projectPrivacy1 = document.getElementById("projectPrivacy1");
+			console.log("projectPrivacy1: " + projectPrivacy1.checked);
+			var projectPrivacy2 = document.getElementById("projectPrivacy2");
+			console.log("projectPrivacy2: " + projectPrivacy2.checked);
+			var projectPrivacy3 = document.getElementById("projectPrivacy3");
+			console.log("projectPrivacy3: " + projectPrivacy3.checked);
+
+			var projectDuration = document.getElementById("projectDuration").value;
+
+			var message = "Please fill in the ";
+			var passFields = true;
+
+			if (title === "") {
+				console.log("title");
+				message += "title, ";
+				passFields = false;
+			}
+
+			if (purpose === "") {
+				console.log("purpose");
+				message += "purpose, ";
+				passFields = false;
+				//alert("Please fill in the purpose.");
+			}
+
+			if (socialImpact === "") {
+				console.log("social impact");
+				passFields = false;
+				message += "social impact, ";//alert("Please fill in the title.");
+			}
+
+			if (!radioIndi.checked && !radioOrg.checked) {
+				console.log("indi org radio");
+				passFields = false;
+				message += "project owner, ";//alert("Please state the project owner.");
+			}
+
+			if (projectLocation === "") {
+				console.log("projectLocation");
+				passFields = false;
+				message += "project location, ";//alert("Please state where the project will be based in.");
+			}
+
+			if (projectDescription === "") {
+				console.log("projectDescription");
+				passFields = false;
+				message += "project description, ";//alert("Please describe the project.");
+			}
+
+			if (!projectPrivacy1.checked && !projectPrivacy2.checked
+					&& !projectPrivacy3.checked) {
+				console.log("projectPrivacy");
+				passFields = false;
+				message += "project privacy, ";//alert("Please state the project owner.");
+			}
+
+			if (projectDuration === "") {
+				console.log("projectDuration");
+				passFields = false;
+				message += "project duration, ";//alert("Please state the estimated project duration.");
+			}
+
+			if (!passFields) {
+				message = message.replace(/,\s*$/, "");
+				console.log("fail field");
+				alert(message += ".");
+				return false;
+			} else {
+				console.log("pass field");
+				return true;
+			}
+		}
+
+		$('#addResource')
+				.on(
+						'click',
+						function() {
+							var lastRow = $('#resourcesNeeded').closest(
+									'#resourcesNeeded').find("div:last-child");
+							console.log("lastRow: " + lastRow);
+							var lastRowInputs = lastRow.find('input');
+							var lastRowSelect = lastRow.find('select');
+							var lastRowTextarea = lastRow.find('textarea');
+
+							var isClone = false;
+
+							var checkInput = false;
+							var checkSelect = false;
+							var checkTextarea = false;
+
+							lastRowInputs.each(function() {
+								if ($(this).val().length) {
+									checkInput = true;
+								}
 							});
 
-					cloned.find("input[type='text']").val('');
-					cloned.find("select").val('');
-					cloned.find("textarea").val('');
-					cloned.insertAfter(lastRow);					
-				});
+							lastRowSelect.each(function() {
+								if ($(this).val() !== null) {
+									if ($(this).val().length) {
+										checkSelect = true;
+									}
+								}
+							});
+
+							lastRowTextarea.each(function() {
+								if ($(this).val().length) {
+									checkTextarea = true;
+								}
+							});
+
+							console.log("check input: " + checkInput);
+							console.log("checkSelect: " + checkSelect);
+							console.log("checkTextarea: " + checkTextarea);
+							
+							if(!checkInput || !checkSelect || !checkTextarea){
+								console.log("empty resource fields");
+								alert("Please fill in all the fields for the resources you need.");
+								return false;
+							}
+
+							console.log("isClone is true");
+							var cloned = lastRow.clone();
+							cloned
+									.find('input, select, textarea')
+									.each(
+											function() {
+												var id = $(this).attr('id');
+												console.log("id: " + id);
+												var regIdMatch = /^(.+)(\d+)$/;
+												var aIdParts = id
+														.match(regIdMatch);
+												var newId = aIdParts[1]
+														+ (parseInt(
+																aIdParts[2], 10) + 1);
+
+												$(this).attr('id', newId);
+												$(this).attr('name', newId);
+											});
+
+							cloned.find("input[type='text']").val('');
+							cloned.find("select").val('');
+							cloned.find("textarea").val('');
+							cloned.insertAfter(lastRow);
+
+						});
 	</script>
 
 	<script>
