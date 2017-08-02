@@ -29,4 +29,7 @@
 	<import resource="project/Spring-ProjectTargetArea.xml" />
 	<import resource="project/Spring-ProjectResourceCategory.xml" />
 	<import resource="project/Spring-DocumentsProject.xml" />
+	<import resource="project/Spring-ProjectUserRequest.xml" />
+	<import resource="project/Spring-ProjectMemberList.xml" />
+	<import resource="notifications/Spring-Notification.xml" />
 </beans>

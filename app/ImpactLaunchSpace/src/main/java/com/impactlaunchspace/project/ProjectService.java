@@ -1,6 +1,5 @@
 package com.impactlaunchspace.project;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,13 +8,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.dao.ProjectBanListDAO;
 import com.impactlaunchspace.dao.ProjectDAO;
+import com.impactlaunchspace.dao.ProjectMemberListDAO;
 import com.impactlaunchspace.dao.ProjectRequestedResourceDAO;
 import com.impactlaunchspace.dao.ProjectResourceCategoryDAO;
 import com.impactlaunchspace.dao.ProjectTargetAreaDAO;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectBanList;
+import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
@@ -30,7 +32,9 @@ public class ProjectService {
 			ArrayList<ProjectRequestedResource> selected_requestedResources) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
+		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
 		ProjectBanListDAO projectBanListDAO = (ProjectBanListDAO) context.getBean("projectBanListDAO");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
 		ProjectTargetAreaDAO projectTargetAreaDAO = (ProjectTargetAreaDAO) context.getBean("projectTargetAreaDAO");
 		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
 		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
@@ -40,6 +44,13 @@ public class ProjectService {
 				new Timestamp(Calendar.getInstance().getTime().getTime()), 0);
 
 		projectDAO.insert(project);
+		
+		projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,project_proposer,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
+		
+		if(organization != null || organization.length() > 0){
+			String organizationAccountUsername = organizationAccountDAO.findByCompanyName(organization).getUsername();
+			projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
+		}
 		
 		if(project_banlist != null){
 			for (String ban_username : project_banlist) {
