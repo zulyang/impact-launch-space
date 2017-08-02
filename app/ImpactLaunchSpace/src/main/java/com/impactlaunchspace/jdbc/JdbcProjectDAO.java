@@ -198,41 +198,25 @@ public class JdbcProjectDAO implements ProjectDAO {
 	
 	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location, String searchbox){
 		ArrayList<Project> output = new ArrayList<Project>();
-		
-		//If Search bar is not empty
-		
+				
 		//Multiple SQL's to select from the Misc filters.
 		//Default Setting when the user hits the search landing page.
-		String sql = "";
-		/*if(searchbox!=null){
-			 sql ="SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
-					+ " AND p.Project_Proposer = pt.Project_Proposer WHERE PROJECT_NAME LIKE " + searchbox + "%";
-		}*/
-		 sql ="SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
-				+ " AND p.Project_Proposer = pt.Project_Proposer WHERE PROJECT_AREA = ?";
-
-		if(!location.equals("All")){
-			   sql ="SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
-					+ " AND p.Project_Proposer = pt.Project_Proposer WHERE PROJECT_AREA = ? AND LOCATION = ?";
-		}
-
+		
+		String sql = "SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
+		          + " AND p.Project_Proposer = pt.Project_Proposer WHERE pt.PROJECT_NAME LIKE '%" + searchbox + "%' ";
+		    
+		    if (!causes.equals("Select Cause")) {
+		      sql += "AND pt.PROJECT_AREA = '" + causes + "'";
+		    }
+		    if (!location.equals("All")){
+		      sql += "AND p.LOCATION = '" + location + "'";
+		    }
+		
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			if(!causes.equals("Select Cause")){
-			ps.setString(1, causes);
-			}
-
-			if(!location.equals("All")){
-			ps.setString(2, location);
-			}
-			
-			if(searchbox!=null){
-				ps.setString(3, searchbox);
-			}
-
 			Project project = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
