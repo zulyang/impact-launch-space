@@ -22,8 +22,10 @@ import com.impactlaunchspace.entity.IndividualAccount;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectTargetArea;
+import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.project.ProjectService;
+import com.impactlaunchspace.resource.ResourceService;
 import com.impactlaunchspace.users.UserService;
 
 @Controller
@@ -31,9 +33,12 @@ public class SearchController {
 
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	ResourceService resourceService;
 
 	// Search For Project Based On Causes
-	@RequestMapping(value = "/searchproject", method = RequestMethod.GET)
+	@RequestMapping(value = "/searchforproject", method = RequestMethod.GET)
 	public void searchForProject(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException{
 
 		//Get the Causes. This method should return the Project.
@@ -85,4 +90,36 @@ public class SearchController {
 		response.getWriter().write(json);
 	}
 	
+	@RequestMapping(value = "/searchforresource", method = RequestMethod.GET)
+	public void searchForResource(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException{
+
+		//Get the Causes. This method should return the Project.
+		String skillset = request.getParameter("skillsetName");
+		String searchbox = request.getParameter("searchboxName");
+
+		//Get the list of projects based on the causes.
+		ArrayList<UserOfferedResource> resource = new ArrayList<UserOfferedResource>();
+		resource = resourceService.searchResource(skillset, searchbox);
+
+		//Use LinkedHashMap to keep the order of the Json Objects.
+		Map<Integer, String> list = new LinkedHashMap<Integer, String>();
+
+		for(int i = 0; i<resource.size(); i++){
+
+			String resourceName = resource.get(i).getResourceName();
+			String resourceDescription = resource.get(i).getResourceDescription();
+			String resourceCategory = resource.get(i).getResourceCategory();
+			String username = resource.get(i).getUsername();
+
+			String toReturn = resourceName + "," + resourceDescription + "," + resourceCategory  + "," + username;
+			list.put(i+1, toReturn);
+		}
+
+		String json = null;
+		json = new Gson().toJson(list);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+	}
 }

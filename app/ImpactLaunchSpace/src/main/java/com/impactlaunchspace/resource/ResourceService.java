@@ -58,4 +58,11 @@ public class ResourceService {
 				.getBean("userOfferedResourceDAO");
 		return userOfferedResourceDAO.retrieveResource(username, resource_category, resource_name);
 	}
+	
+	public ArrayList<UserOfferedResource>searchResource(String skillset, String searchbox) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
+				.getBean("userOfferedResourceDAO");
+		return userOfferedResourceDAO.retrieveResourcesBySearch(skillset, searchbox);
+	}
 }

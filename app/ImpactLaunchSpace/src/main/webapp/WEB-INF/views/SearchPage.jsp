@@ -25,12 +25,15 @@
 <script>
 	    $(document).ready(function() {
 						$('#searchbox').add('#causes').add('#location').add('#misc').on('keyup change',function(event) {
+						
+						if($("input#searchbox").val().length >= 3){
 						var $searchbox = $("input#searchbox").val();
+						}
 						var $causes = $("select#causes").val();
 						var $location = $("select#location").val();
 						var $misc = $("select#misc").val();
 
-						$.get('searchproject',{
+						$.get('searchforproject',{
 							searchboxName : $searchbox,
 							causeName : $causes,
 							locationName : $location,
@@ -68,7 +71,7 @@
 					<div class="explore-search">
 						Search By Keyword: <span class="icon"><i
 							class="fa fa-search"></i></span> <input type="text" name="searchbox"
-							id="searchbox" placeholder="Project Keyword" class="search" /> <br>
+							id="searchbox" placeholder="Minimum 3 Characters" class="search" /> <br>
 
 						<div class="styled-select slate">
 

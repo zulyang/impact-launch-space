@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.impactlaunchspace.entity.Country;
 import com.impactlaunchspace.entity.JobSectorIndividual;
+import com.impactlaunchspace.entity.Skillset;
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.exception.ExceptionController;
 import com.impactlaunchspace.profile.ProfileService;
@@ -616,11 +617,20 @@ public class LoginController {
 		return "changepassword";
 	}
 	
-	@RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
-	public String ajaxTest(ModelMap model) {
+	@RequestMapping(value = "/searchproject", method = RequestMethod.GET)
+	public String searchProject(ModelMap model) {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
 		model.addAttribute("countries", countries);
 		return "SearchPage";
+	}
+
+	@RequestMapping(value = "/searchresource", method = RequestMethod.GET)
+	public String searchResource(ModelMap model) {
+		ArrayList<Country> countries = profileService.retrieveCountryList();
+		ArrayList<Skillset> skillset = profileService.retrieveSkillsetList();
+		model.addAttribute("countries", countries);
+		model.addAttribute("skillset",skillset);
+		return "SearchResource";
 	}
 
 }

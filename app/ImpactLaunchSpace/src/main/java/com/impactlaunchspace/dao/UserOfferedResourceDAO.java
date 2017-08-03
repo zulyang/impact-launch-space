@@ -16,4 +16,6 @@ public interface UserOfferedResourceDAO {
 	public void removeAll(String username);
 
 	public UserOfferedResource retrieveResource(String username, String resource_category, String resource_name);
+	
+	public ArrayList<UserOfferedResource> retrieveResourcesBySearch(String skillset, String searchbox);
 }

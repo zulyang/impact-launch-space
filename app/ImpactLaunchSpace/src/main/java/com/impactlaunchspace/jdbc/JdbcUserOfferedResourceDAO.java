@@ -197,4 +197,41 @@ public class JdbcUserOfferedResourceDAO implements UserOfferedResourceDAO {
 			}
 		}
 	}
+	
+	@Override
+	public ArrayList<UserOfferedResource> retrieveResourcesBySearch(String skillset, String searchbox) {
+		ArrayList<UserOfferedResource> output = new ArrayList<UserOfferedResource>();
+
+		String sql = "SELECT * FROM user_offered_resources WHERE user_offered_resources.resource_name LIKE '%" + searchbox + "%'";
+
+	    if (!skillset.equals("Select skillset")) {
+		      sql += "AND user_offered_resources.resource_category = '" + skillset + "'";
+		    }
+
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			UserOfferedResource userOfferedResource = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				userOfferedResource = new UserOfferedResource(rs.getString("username"), rs.getString("resource_category"), rs.getString("resource_name"), rs.getString("request_description"));
+				output.add(userOfferedResource);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }
