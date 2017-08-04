@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.project.ProjectService;
@@ -29,13 +30,13 @@ public class RequestController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ResourceService resourceService;
-	
+
 	@Autowired
 	RequestService requestService;
-	
+
 	@RequestMapping(value = "/applyProjectModal", method = RequestMethod.GET)
 	public String showProjectPage(HttpServletRequest request, ModelMap model) {
 		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
@@ -43,38 +44,61 @@ public class RequestController {
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
-		
+
 		String username = (String) request.getSession().getAttribute("username");
-		//for now legal is hard-coded
-		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username, "Legal");
-		
+		// for now legal is hard-coded
+		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username,
+				"Legal");
+
 		model.addAttribute("user_offered_resources", userOfferedResources);
 		model.addAttribute("selected_resource_category", "Legal");
 		return "applyProjectModal";
 	}
 	
-	@RequestMapping(value="/sendApplyRequest", method = RequestMethod.POST)
-	
-	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer, 
+	@RequestMapping(value = "/sendApplyRequest", method = RequestMethod.POST)
+
+	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer,
 			@RequestParam String selected_resource_category, @RequestParam String selected_resource_name,
-			@RequestParam String selected_resource_desc, @RequestParam String personal_note,
-			HttpServletRequest request, ModelMap model) {
+			@RequestParam String selected_resource_desc, @RequestParam String personal_note, HttpServletRequest request,
+			ModelMap model) {
 		String username = (String) request.getSession().getAttribute("username");
-		requestService.createUserRequest(project_name, selected_resource_category, "Environmental Lawyers x 3", project_proposer, username, selected_resource_category, selected_resource_name, selected_resource_desc, personal_note);
+		requestService.createUserRequest(project_name, selected_resource_category, "Environmental Lawyers x 3",
+				project_proposer, username, selected_resource_category, selected_resource_name, selected_resource_desc,
+				personal_note);
 
 		return "applyRequestSuccess";
 	}
 	
-	@RequestMapping(value = "/getResourceDescription", method = RequestMethod.POST)
-	public void getResourceDescriptionAjax(@RequestParam String resourceName, @RequestParam String resourceCategory, HttpServletRequest request, ModelMap model, HttpServletResponse response) throws IOException {
+	//AJAX METHODS BELOW
+	@RequestMapping(value = "/obtainUserResources", method = RequestMethod.GET)
+	public void obtainUserResources(@RequestParam String selected_resource_category, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws IOException {
 		String username = (String) request.getSession().getAttribute("username");
-		
-		UserOfferedResource selected_resource = resourceService.retrieveOfferedResource(username, resourceCategory, resourceName);
+		// for now legal is hard-coded
+		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username,
+				selected_resource_category);
+
+		String json = null;
+		json = new Gson().toJson(userOfferedResources);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);
+	}
+
+
+	@RequestMapping(value = "/getResourceDescription", method = RequestMethod.POST)
+	public void getResourceDescriptionAjax(@RequestParam String resourceName, @RequestParam String resourceCategory,
+			HttpServletRequest request, ModelMap model, HttpServletResponse response) throws IOException {
+		String username = (String) request.getSession().getAttribute("username");
+
+		UserOfferedResource selected_resource = resourceService.retrieveOfferedResource(username, resourceCategory,
+				resourceName);
 		String desc = "";
-		if(selected_resource != null){
+		if (selected_resource != null) {
 			desc = selected_resource.getResourceDescription();
 		}
 
-		response.getWriter().write(desc); 
+		response.getWriter().write(desc);
 	}
 }
