@@ -35,12 +35,19 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 </head>
 <body>
-	<h1>Applying for Environmental Lawyers</h1>
+<form action="sendApplyRequest" method="post">
+	<!-- These 2 fields are static, no need to copy these over -->
+	<input type="hidden" name="project_name" value="Water the kids">
+	<input type="hidden" name="project_proposer" value="edward">
+	
+	<h1>Applying for Environmental Lawyers x 3</h1>
 
-	<input type="hidden" id="selected_resource_category" value="Legal">
+	<input type="hidden"  id="selected_resource_category" name="selected_resource_category" value="${selected_resource_category }">
+	
 	<br>
 
-	<h2>My Resources</h2>
+	<h2>My Resources under Category : ${selected_resource_category}</h2>
+	<h4>(Select one from your available resources)</h4>
 	<select class="js-example-basic-single-userresource"
 		name="selected_resource_name" id="selected_resource_name" required>
 		<option></option>
@@ -49,7 +56,7 @@
 		</c:forEach>
 	</select>
 	<h3>
-		Description
+		Resource Description
 		<br>
 		<input type="text" name="selected_resource_desc" id="selected_resource_desc" readonly>
 	</h3>
@@ -57,8 +64,11 @@
 	<h3>
 		Add a personal note
 		<br>
-		<input type="text" name="personal_note" id="personal_note" value="">
+		<input type="text" name="personal_note" id="personal_note" value="" placeholder="Add a personal note...">
 	</h3>
+
+	<input type="submit" value="Apply for resource">
+</form>
 
 	<script type="text/javascript">
 		$(".js-example-basic-single-userresource").select2({

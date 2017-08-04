@@ -33,6 +33,9 @@ public class RequestController {
 	@Autowired
 	ResourceService resourceService;
 	
+	@Autowired
+	RequestService requestService;
+	
 	@RequestMapping(value = "/applyProjectModal", method = RequestMethod.GET)
 	public String showProjectPage(HttpServletRequest request, ModelMap model) {
 		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
@@ -42,11 +45,24 @@ public class RequestController {
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
 		
 		String username = (String) request.getSession().getAttribute("username");
-		ArrayList<UserOfferedResource> userOfferedResources = resourceService.getUserResourceOffering(username);
+		//for now legal is hard-coded
+		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username, "Legal");
 		
 		model.addAttribute("user_offered_resources", userOfferedResources);
-		
+		model.addAttribute("selected_resource_category", "Legal");
 		return "applyProjectModal";
+	}
+	
+	@RequestMapping(value="/sendApplyRequest", method = RequestMethod.POST)
+	
+	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer, 
+			@RequestParam String selected_resource_category, @RequestParam String selected_resource_name,
+			@RequestParam String selected_resource_desc, @RequestParam String personal_note,
+			HttpServletRequest request, ModelMap model) {
+		String username = (String) request.getSession().getAttribute("username");
+		requestService.createUserRequest(project_name, selected_resource_category, "Environmental Lawyers x 3", project_proposer, username, selected_resource_category, selected_resource_name, selected_resource_desc, personal_note);
+
+		return "applyRequestSuccess";
 	}
 	
 	@RequestMapping(value = "/getResourceDescription", method = RequestMethod.POST)

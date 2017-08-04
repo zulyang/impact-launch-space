@@ -46,6 +46,8 @@
 					<div class="section-block">
 						<div class="funding-meta">
 							<h1>${selected_project.getProject_name() }</h1>
+							<input type="hidden" name="project_name" value="${selected_project.getProject_name() }">
+							<input type="hidden" name="project_proposer" value="${selected_project.getProject_proposer()}">
 							<span class="type-meta"><i class="fa fa-user"></i> <c:choose>
 									<c:when test="${selected_project.getOrganization() != null}">
 									${selected_project.getOrganization()}

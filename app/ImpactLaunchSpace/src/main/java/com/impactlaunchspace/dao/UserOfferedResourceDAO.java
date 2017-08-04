@@ -18,4 +18,6 @@ public interface UserOfferedResourceDAO {
 	public UserOfferedResource retrieveResource(String username, String resource_category, String resource_name);
 	
 	public ArrayList<UserOfferedResource> retrieveResourcesBySearch(String skillset, String searchbox);
+	
+	public ArrayList<UserOfferedResource> retrieveResourcesInCategory(String username, String resource_category);
 }

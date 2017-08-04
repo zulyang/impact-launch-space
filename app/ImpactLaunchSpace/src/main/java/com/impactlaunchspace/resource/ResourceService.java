@@ -44,6 +44,14 @@ public class ResourceService {
 		return userOfferedResourceDAO.retrieveAll(username);
 	}
 	
+	public ArrayList<UserOfferedResource> retrieveResourcesInCategory(String username, String resource_category){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
+				.getBean("userOfferedResourceDAO");
+		
+		return userOfferedResourceDAO.retrieveResourcesInCategory(username, resource_category);
+	}
+	
 	public void updateUserResourceOffering(UserOfferedResource oldUserOfferedResource, UserOfferedResource userOfferedResource) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
