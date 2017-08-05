@@ -5,7 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search For Project</title>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<!--custom css codes -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/explore.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
@@ -37,21 +50,34 @@
 </script>
 </head>
 <body>
-	<h1>Search For Resource</h1>
 
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+				<%@include file="common/navigation.jspf"%>
+<div class="explore-header col-sm-12">
+	<h1 class="explore-title">Search For Resource</h1>
+<div class="explore-search">
 	Search By Keyword:
-	<input type="text" name="searchbox" id="searchbox" placeholder="Minimum 3 Characters">
-	<br>	       
-Select skillset:
+	<span class="icon"><i class="fa fa-search"></i></span><input type="text" name="searchbox" id="searchbox" placeholder="Minimum 3 Characters" class="search"/>
+	<br>	
+	
+	<div class="styled-select slate">
+	<br>Select skillset:
 	<select id="skillset">
-		<option>Select skillset</option>
+		<option>All</option>
 		<c:forEach items="${skillset}" var="skillset">
    			<option value="${skillset.getSkillset()}">${skillset.getSkillset()}</option>
 		</c:forEach>
 	</select>
+	</div>
+	</div>
+	</div>
 	<br>
+	
 	<!-- RESULTS -->
-	Resources:
+	
+	 Resources:
 	<table id="resources" border='1'>
 	<thead>
     <tr>
@@ -64,7 +90,10 @@ Select skillset:
     </thead>
     <tbody>
     </tbody>
-	</table>
+	</table> 
 
+</div>
+</div>
+</div>
 </body>
 </html>
