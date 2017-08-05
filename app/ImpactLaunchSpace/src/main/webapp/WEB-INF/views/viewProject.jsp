@@ -203,8 +203,17 @@
 											<p>
 												<br> <span><i class="fa fa-users"></i> 180
 													backers</span>
-												<button onClick="return apply();" type="button"
-													id="applyForResource" class="btn btn-reward">APPLY</button>
+													<c:choose>
+														<c:when test="${userRequestsForProject.contains(item1.get(0))}">
+															<button onClick="return apply();" type="button"
+															id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
+														</c:when>
+														<c:otherwise>
+															<button onClick="return apply();" type="button"
+															id="applyForResource" class="btn btn-reward">APPLY</button>
+														</c:otherwise>
+													</c:choose>
+												
 													
 											<div class="modal fade" tabindex="-1" role="dialog"
 												id="myModal">
@@ -233,7 +242,9 @@
 																			<input type="hidden" id="selected_resource_category"
 																				name="selected_resource_category"
 																				value="${item}"> <br>
-
+																			<input type="hidden" id="selected_requested_resource"
+																				name="selected_requested_resource"
+																				value="${item1.get(0)}">
 																			<h2>My Resources under category:
 																				${item}</h2>
 																			<h4>(Select one from your available resources)</h4>

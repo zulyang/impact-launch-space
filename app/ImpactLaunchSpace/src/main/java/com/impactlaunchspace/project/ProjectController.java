@@ -22,8 +22,9 @@ import com.impactlaunchspace.entity.ProjectBanList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
-import com.impactlaunchspace.entity.UserOfferedResource;
+import com.impactlaunchspace.entity.ProjectUserRequest;
 import com.impactlaunchspace.profile.ProfileService;
+import com.impactlaunchspace.request.RequestService;
 import com.impactlaunchspace.users.UserService;
 
 @Controller
@@ -37,6 +38,9 @@ public class ProjectController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RequestService requestService;
 
 	// Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
@@ -257,6 +261,7 @@ public class ProjectController {
 
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
 		String projectPrivacy = "public";
+		String username = (String)request.getSession().getAttribute("username");
 
 		if (selected_project.isHiddenToAll()) {
 			projectPrivacy = "hidden";
@@ -300,9 +305,16 @@ public class ProjectController {
 
 			}
 			projectRequestedResources.put(projectResourceCategoryObj.getResource_category(), resourcenames);
-
 		}
-
+		
+		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService.retrieveProjectRequestsOfUser(project_name, project_proposer, username);
+		ArrayList<String> userRequestsForProject = new ArrayList<String>();
+		
+		for(ProjectUserRequest userRequestsForProjectObj : userRequestsForProjectObjs){
+			userRequestsForProject.add(userRequestsForProjectObj.getRequested_resource_name());
+		}
+		
+		model.addAttribute("userRequestsForProject", userRequestsForProject);
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);

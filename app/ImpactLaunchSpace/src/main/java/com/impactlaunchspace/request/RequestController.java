@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.impactlaunchspace.entity.UserOfferedResource;
@@ -57,16 +58,21 @@ public class RequestController {
 	
 	@RequestMapping(value = "/sendApplyRequest", method = RequestMethod.POST)
 
-	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer,
-			@RequestParam String selected_resource_category, @RequestParam String selected_resource_name,
-			@RequestParam String selected_resource_desc, @RequestParam String personal_note, HttpServletRequest request,
+	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer,	
+			@RequestParam String selected_requested_resource, @RequestParam String selected_resource_category, 
+			@RequestParam String selected_resource_name, @RequestParam String selected_resource_desc, 
+			@RequestParam String personal_note, HttpServletRequest request, RedirectAttributes redirectAttributes,
 			ModelMap model) {
 		String username = (String) request.getSession().getAttribute("username");
-		requestService.createUserRequest(project_name, selected_resource_category, "Environmental Lawyers x 3",
+		requestService.createUserRequest(project_name, selected_resource_category, selected_requested_resource,
 				project_proposer, username, selected_resource_category, selected_resource_name, selected_resource_desc,
 				personal_note);
 
-		return "applyRequestSuccess";
+		redirectAttributes.addAttribute("project-name", project_name);
+		redirectAttributes.addAttribute("project-proposer", project_proposer);
+
+		return "redirect:" + "view-project";
+
 	}
 	
 	//AJAX METHODS BELOW
