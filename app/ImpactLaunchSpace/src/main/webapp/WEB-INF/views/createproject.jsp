@@ -249,7 +249,7 @@
 									<div id="resourcesNeeded" class="form-group row col-sm-9">
 										<div class="col-md-12" style="padding-top: 3rem;">
 											<select required id="resourceCategory1"
-												name="resourceCategory" class="col-md-4 resourceCat">
+												name="resourceCategory" class="col-md-4 resourceCat" style= "width: 100%">
 												<option value="" disabled selected>Select your
 													resource category</option>
 												<c:forEach items="${resource_category_list}" var="item">

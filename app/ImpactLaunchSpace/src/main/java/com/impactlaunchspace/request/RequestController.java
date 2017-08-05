@@ -70,14 +70,14 @@ public class RequestController {
 	}
 	
 	//AJAX METHODS BELOW
-	@RequestMapping(value = "/obtainUserResources", method = RequestMethod.GET)
+	@RequestMapping(value = "/obtainUserResources", method = RequestMethod.POST)
 	public void obtainUserResources(@RequestParam String selected_resource_category, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws IOException {
 		String username = (String) request.getSession().getAttribute("username");
 		// for now legal is hard-coded
 		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username,
 				selected_resource_category);
-
+		System.out.println("entering this method with " + userOfferedResources.size() + " objects");
 		String json = null;
 		json = new Gson().toJson(userOfferedResources);
 

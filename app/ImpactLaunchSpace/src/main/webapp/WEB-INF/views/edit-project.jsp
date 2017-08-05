@@ -92,7 +92,7 @@
 										Impact Type</label>
 									<div class="col-sm-9">
 										<select class="js-example-basic-multiple-targetprojectareas"
-											multiple="multiple" name="selected_projectareas" required>
+											multiple="multiple" name="selected_projectareas" style= "width: 100%" required>
 											<c:forEach items="${project_area_list}" var="item">
 												<c:choose>
 													<c:when
@@ -170,10 +170,10 @@
 									<label for="projectDescription" class="col-sm-3 col-form-label">Project
 										Description</label>
 									<div class="col-sm-9">
-										<input type="text" id="projectDescription"
+										<textarea id="projectDescription"
 											value="${ sample_project.getDescription()}"
 											name="projectDescription" class="form-control"
-											placeholder="A short summary of project">
+											placeholder="A short summary of project">${ sample_project.getDescription()}</textarea>
 									</div>
 								</div>
 
@@ -234,7 +234,7 @@
 										List</label>
 									<div class="col-sm-9">
 										<select class="js-example-basic-multiple-banlistusers"
-											multiple="multiple" name="selected_banlist">
+											multiple="multiple" name="selected_banlist"  style= "width: 100%">
 											<option value=""></option>
 											<c:forEach items="${user_list}" var="item">
 												<c:choose>

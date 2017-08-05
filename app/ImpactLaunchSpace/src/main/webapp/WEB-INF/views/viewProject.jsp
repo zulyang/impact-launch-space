@@ -27,11 +27,17 @@
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
-
+<!--for multiple select (Select2)-->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 </head>
 <body class="project">
@@ -46,9 +52,11 @@
 					<div class="section-block">
 						<div class="funding-meta">
 							<h1>${selected_project.getProject_name() }</h1>
-							<input type="hidden" name="project_name" value="${selected_project.getProject_name() }">
-							<input type="hidden" name="project_proposer" value="${selected_project.getProject_proposer()}">
-							<span class="type-meta"><i class="fa fa-user"></i> <c:choose>
+							<input type="hidden" name="project_name"
+								value="${selected_project.getProject_name() }"> <input
+								type="hidden" name="project_proposer"
+								value="${selected_project.getProject_proposer()}"> <span
+								class="type-meta"><i class="fa fa-user"></i> <c:choose>
 									<c:when test="${selected_project.getOrganization() != null}">
 									${selected_project.getOrganization()}
 								</c:when>
@@ -158,10 +166,11 @@
 						<h1 class="section-title">OWNER</h1>
 						<div class="profile-contents">
 							<h2 class="position">${creator_name }</h2>
-							<div class="profile-image"><img
-								src="/imageDisplay?username=${selected_project.getProject_proposer()}"
-								class="img responsive"
-								alt="John Smith Profile Photo"></div>
+							<div class="profile-image">
+								<img
+									src="/imageDisplay?username=${selected_project.getProject_proposer()}"
+									class="img responsive" alt="John Smith Profile Photo">
+							</div>
 							<!--social links-->
 							<ul class="list-inline">
 								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -182,15 +191,85 @@
 
 							<div class="reward-block">
 								<h3>Category ${loop.index + 1}: ${item}</h3>
+								<!-- category -->
 								<c:forEach var="type" items="${project_requested_resources}">
 									<c:if test="${type.key.equals(item) }">
 
-										<c:forEach var="item" items="${type.value}">
-											<h2>${item.get(0)}</h2>
-											<p>${item.get(1)}
+										<c:forEach var="item1" items="${type.value}">
+											<h2>${item1.get(0)}</h2>
+											<!-- name -->
+											<p>${item1.get(1)}
+												<!-- description -->
 											<p>
 												<br> <span><i class="fa fa-users"></i> 180
-													backers</span> <a href="" class="btn btn-reward">APPLY</a>
+													backers</span>
+												<button onClick="return apply();" type="button"
+													id="applyForResource" class="btn btn-reward">APPLY</button>
+													
+											<div class="modal fade" tabindex="-1" role="dialog"
+												id="myModal">
+												<div class="modal-dialog">
+													<div class="modal-content">
+
+														<form action="sendApplyRequest" method="post">
+															<!-- These 2 fields are static, no need to copy these over -->
+															<input type="hidden" name="project_name"
+																value="Water the kids"> <input type="hidden"
+																name="project_proposer" value="edward">
+
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+																<h4 class="modal-title">Applying for ${item1.get(0)}</h4>
+															</div>
+
+															<div class="modal-body">
+																<div class="container">
+																	<div id="resourcesNeeded"
+																		class="form-group row col-md-5">
+																		<div class="col-md-12">
+																			<input type="hidden" id="selected_resource_category"
+																				name="selected_resource_category"
+																				value="${item}"> <br>
+
+																			<h2>My Resources under category:
+																				${item}</h2>
+																			<h4>(Select one from your available resources)</h4>
+																			<select class="js-example-basic-single-userresource"
+																				name="selected_resource_name"
+																				id="selected_resource_name" required>
+																			</select>
+																			<h3>
+																				Resource Description <br> <input type="text"
+																					name="selected_resource_desc" class="form-control"
+																					id="selected_resource_desc" readonly>
+																			</h3>
+
+																			<h3>
+																				Add a personal note <br> <input type="text"
+																					class="form-control" name="personal_note"
+																					id="personal_note" value=""
+																					placeholder="Add a personal note...">
+																			</h3>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">Cancel</button>
+																<button type="submit" onclick="return ();" id="add"
+																	class="btn btn-success">Apply for resource</button>
+															</div>
+														</form>
+
+													</div>
+												</div>
+											</div>
+
 										</c:forEach>
 									</c:if>
 								</c:forEach>
@@ -205,15 +284,72 @@
 				</div>
 				<!--/sidebar-->
 			</div>
+
+
+
 		</div>
 	</div>
 	<!-- Template JS -->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 
+	<script>
+		function apply() {
+			var selected_resource_category = $('#selected_resource_category').val();
+			var select = document.getElementById('selected_resource_name');
+			$('#selected_resource_name').empty();
+			
+			var blankoption = document.createElement('option');
+			blankoption.value = "";
+			blankoption.innerHTML = "";
+		    select.appendChild(blankoption);
+		    
+			$.post('obtainUserResources', {
+				selected_resource_category : selected_resource_category
+			}, function(responseJson) {
+				$.each(responseJson,function(key,value) {
+					
+					var opt = document.createElement('option');
+				    opt.value = value.resourceName;
+				    opt.innerHTML = value.resourceName;
+				    select.appendChild(opt);
+				});
+			});
+			
+			$('#myModal').modal('show');
+		};
+	</script>
 
+	<script type="text/javascript">
+		$(".js-example-basic-single-userresource").select2({
+			placeholder : "Select from your existing resources: ",
+			allowClear : true
+		});
+	</script>
+
+	<script>
+		    $(document).ready(function() {
+			$('#selected_resource_name').change(function(event) {
+				var resourceCategory = $("#selected_resource_category").val();
+				var resourceName = $("select#selected_resource_name").val();
+
+				$.post('getResourceDescription', {
+					resourceName : resourceName,
+					resourceCategory : resourceCategory
+				}, function(responseText) {
+					$('#selected_resource_desc').val(responseText);
+				});
+				
+				$('#myModal').on(
+				'hidden.bs.modal',
+				function() {
+					$(this).find("select,#personal_note,#selected_resource_desc").val('').end();
+				});
+			});
+		});
+	</script>
 </body>
-
+ 
 
 
 </html>
