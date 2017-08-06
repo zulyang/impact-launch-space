@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.ArrayList"%>
 
@@ -185,9 +184,10 @@
 					<div class="section-block">
 						<h1 class="section-title">WHAT WE NEED</h1>
 						<!--resources-->
+						<c:set var="count" value="0" scope="page" />
+						
 						<c:forEach items="${project_resource_categories}" var="item"
 							varStatus="loop">
-
 
 							<div class="reward-block">
 								<h3>Category ${loop.index + 1}: ${item}</h3>
@@ -200,23 +200,24 @@
 											<!-- name -->
 											<p>${item1.get(1)}
 												<!-- description -->
-											<p>
+											</p>
+											<c:set var="count" value="${count + 1}" scope="page"/>
 												<br> <span><i class="fa fa-users"></i> 180
 													backers</span>
 													<c:choose>
 														<c:when test="${userRequestsForProject.contains(item1.get(0))}">
-															<button onClick="return apply();" type="button"
+															<button onClick="apply()" type="button"
 															id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
 														</c:when>
 														<c:otherwise>
-															<button onClick="return apply();" type="button"
-															id="applyForResource" class="btn btn-reward">APPLY</button>
+															<button onClick="apply(${count})" type="button"
+															id="applyForResource" class="btn btn-reward applyButton">APPLY</button>
 														</c:otherwise>
 													</c:choose>
 												
 													
 											<div class="modal fade" tabindex="-1" role="dialog"
-												id="myModal">
+												id="myModal${count}">
 												<div class="modal-dialog">
 													<div class="modal-content">
 
@@ -247,22 +248,24 @@
 																				value="${item1.get(0)}">
 																			<h2>My Resources under category:
 																				${item}</h2>
-																			<h4>(Select one from your available resources)</h4>
+																			<h4>(Select one from your available resources)
 																			<select class="js-example-basic-single-userresource"
 																				name="selected_resource_name"
 																				id="selected_resource_name" required>
 																			</select>
+																			</h4>
 																			<h3>
-																				Resource Description <br> <input type="text"
-																					name="selected_resource_desc" class="form-control"
-																					id="selected_resource_desc" readonly>
+																				Resource Description <br> 
+																			<textarea type="text" rows="4" 
+																					name="selected_resource_desc" style="width: 40rem" class="form-control modal_details"
+																					id="selected_resource_desc" readonly></textarea>
 																			</h3>
 
 																			<h3>
-																				Add a personal note <br> <input type="text"
-																					class="form-control" name="personal_note"
+																				Add a personal note <br> <textarea type="text" style="width: 40rem"
+																					class="form-control modal_details" rows="5" name="personal_note"
 																					id="personal_note" value=""
-																					placeholder="Add a personal note...">
+																					placeholder="Add a personal note..."></textarea>
 																			</h3>
 																		</div>
 																	</div>
@@ -272,7 +275,7 @@
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default"
 																	data-dismiss="modal">Cancel</button>
-																<button type="submit" onclick="return ();" id="add"
+																<button type="submit" id="add"
 																	class="btn btn-success">Apply for resource</button>
 															</div>
 														</form>
@@ -305,7 +308,7 @@
 		src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 
 	<script>
-		function apply() {
+		function apply(count) {
 			var selected_resource_category = $('#selected_resource_category').val();
 			var select = document.getElementById('selected_resource_name');
 			$('#selected_resource_name').empty();
@@ -327,7 +330,9 @@
 				});
 			});
 			
-			$('#myModal').modal('show');
+			console.log("count: " + count);
+			
+			$('#myModal' + count).modal('show');
 		};
 	</script>
 
