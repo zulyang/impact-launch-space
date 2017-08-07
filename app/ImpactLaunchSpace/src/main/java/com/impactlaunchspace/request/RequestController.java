@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.impactlaunchspace.entity.Notification;
+import com.impactlaunchspace.entity.OrganizationAccount;
+import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.UserOfferedResource;
+import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.project.ProjectService;
 import com.impactlaunchspace.resource.ResourceService;
@@ -37,6 +41,9 @@ public class RequestController {
 
 	@Autowired
 	RequestService requestService;
+	
+	@Autowired
+	NotificationService notificationService;
 
 	@RequestMapping(value = "/applyProjectModal", method = RequestMethod.GET)
 	public String showProjectPage(HttpServletRequest request, ModelMap model) {
@@ -57,7 +64,6 @@ public class RequestController {
 	}
 	
 	@RequestMapping(value = "/sendApplyRequest", method = RequestMethod.POST)
-
 	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer,	
 			@RequestParam String selected_requested_resource, @RequestParam String selected_resource_category, 
 			@RequestParam String selected_resource_name, @RequestParam String selected_resource_desc, 
@@ -67,7 +73,45 @@ public class RequestController {
 		requestService.createUserRequest(project_name, selected_resource_category, selected_requested_resource,
 				project_proposer, username, selected_resource_category, selected_resource_name, selected_resource_desc,
 				personal_note);
-
+		
+		
+		//building the notification message string
+		String notification_message = "The following user: " + username + " has applied to offer his support for " + project_name;
+		notification_message += "%n";
+		notification_message += "%n";
+		notification_message += "Details of offered Resource";
+		notification_message += "%n";
+		notification_message += "Resource name: " + selected_resource_name;
+		notification_message += "%n";
+		notification_message += "Resource description: " + selected_resource_desc;
+		
+		if(personal_note.length() != 0){
+			notification_message += "%n";
+			notification_message += "Personal note from user:";
+			notification_message += "%n";
+			notification_message += personal_note;
+		}
+		
+		Notification notification = new Notification(project_proposer, "admin", username + "A user has applied to offer his support for " + project_name,
+		notification_message);
+		
+		System.out.println("sending notification to" + project_proposer);
+		
+		notificationService.sendNotification(notification);
+		
+		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
+		
+		if(selected_project.getOrganization() != null || selected_project.getOrganization().isEmpty() != true){
+			
+			OrganizationAccount organizationObj = profileService.findByCompanyName(selected_project.getOrganization());
+			
+			Notification notification2 = new Notification(organizationObj.getUsername(), "admin", "A user has applied to offer his support for " + project_name,
+					notification_message);
+					
+					notificationService.sendNotification(notification2);
+		}
+		
+		
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
 
@@ -83,7 +127,7 @@ public class RequestController {
 		// for now legal is hard-coded
 		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username,
 				selected_resource_category);
-		System.out.println("entering this method with " + userOfferedResources.size() + " objects");
+		System.out.println("entering this method with " + userOfferedResources.size() + " objects from " + selected_resource_category);
 		String json = null;
 		json = new Gson().toJson(userOfferedResources);
 

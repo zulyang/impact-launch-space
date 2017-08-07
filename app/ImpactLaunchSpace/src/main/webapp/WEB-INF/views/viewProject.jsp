@@ -240,7 +240,7 @@
 																	<div id="resourcesNeeded"
 																		class="form-group row col-md-5">
 																		<div class="col-md-12">
-																			<input type="hidden" id="selected_resource_category"
+																			<input type="hidden" id="selected_resource_category${count}"
 																				name="selected_resource_category"
 																				value="${item}"> <br>
 																			<input type="hidden" id="selected_requested_resource"
@@ -251,14 +251,14 @@
 																			<h4>(Select one from your available resources)
 																			<select class="js-example-basic-single-userresource"
 																				name="selected_resource_name"
-																				id="selected_resource_name" required>
+																				id="selected_resource_name" required style="width: 40rem">
 																			</select>
 																			</h4>
 																			<h3>
 																				Resource Description <br> 
 																			<textarea type="text" rows="4" 
 																					name="selected_resource_desc" style="width: 40rem" class="form-control modal_details"
-																					id="selected_resource_desc" readonly></textarea>
+																					id="selected_resource_desc${count}" readonly></textarea>
 																			</h3>
 
 																			<h3>
@@ -309,9 +309,13 @@
 
 	<script>
 		function apply(count) {
-			var selected_resource_category = $('#selected_resource_category').val();
-			var select = document.getElementById('selected_resource_name');
+			var selected_resource_category = $('#selected_resource_category'+ count).val();
+			var selects = document.getElementsByName('selected_resource_name');
+			var select = selects[count-1];
+			
 			$('#selected_resource_name').empty();
+			select.options.length = 0;
+			$('#selected_resource_desc' + count).val('');
 			
 			var blankoption = document.createElement('option');
 			blankoption.value = "";
@@ -322,6 +326,7 @@
 				selected_resource_category : selected_resource_category
 			}, function(responseJson) {
 				$.each(responseJson,function(key,value) {
+					console.log(value.resourceName);
 					
 					var opt = document.createElement('option');
 				    opt.value = value.resourceName;
@@ -333,6 +338,18 @@
 			console.log("count: " + count);
 			
 			$('#myModal' + count).modal('show');
+			
+			$(select).change(function(event) {
+				var resourceCategory = $('#selected_resource_category'+ count).val();
+				var resourceName = $(select).val();
+				$.post('getResourceDescription', {
+					resourceName : resourceName,
+					resourceCategory : resourceCategory
+				}, function(responseText) {
+					console.log(responseText);
+					$('#selected_resource_desc' + count).val(responseText);
+				});
+			});
 		};
 	</script>
 
@@ -345,24 +362,14 @@
 
 	<script>
 		    $(document).ready(function() {
-			$('#selected_resource_name').change(function(event) {
-				var resourceCategory = $("#selected_resource_category").val();
-				var resourceName = $("select#selected_resource_name").val();
 
-				$.post('getResourceDescription', {
-					resourceName : resourceName,
-					resourceCategory : resourceCategory
-				}, function(responseText) {
-					$('#selected_resource_desc').val(responseText);
-				});
-				
 				$('#myModal').on(
 				'hidden.bs.modal',
 				function() {
 					$(this).find("select,#personal_note,#selected_resource_desc").val('').end();
 				});
 			});
-		});
+	
 	</script>
 </body>
  

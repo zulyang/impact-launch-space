@@ -296,6 +296,12 @@ public class ProfileService {
 	    ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 	    DocumentsIndividualDAO documentsIndividualDAO = (DocumentsIndividualDAO) context.getBean("documentsIndividualDAO");
 	    documentsIndividualDAO.delete(username, document);
-	  }
+	}
+	
+	public OrganizationAccount findByCompanyName(String companyName){
+		 ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		 OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
+		 return organizationAccountDAO.findByCompanyName(companyName);
+	}
 
 }
