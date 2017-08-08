@@ -49,7 +49,9 @@ public class ProjectService {
 		
 		if(organization != null || organization.length() > 0){
 			String organizationAccountUsername = organizationAccountDAO.findByCompanyName(organization).getUsername();
-			projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
+			if(projectMemberListDAO.retrieveMemberList(project_name, organizationAccountUsername) == null){
+				projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
+			}
 		}
 		
 		if(project_banlist != null){

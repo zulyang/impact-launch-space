@@ -115,12 +115,16 @@ public class ProjectController {
 			project_proposer = username;
 		} else if (projectOwner.equals("organization")) {
 			project_proposer = username;
-			if (profileService.getIndividualAccountDetails(username).getOrganization() != null
-					|| profileService.getIndividualAccountDetails(username).getOrganization().length() > 0) {
-				organization = profileService.getIndividualAccountDetails(username).getOrganization(); // replace
-																										// this
-																										// too
+			if(profileService.getIndividualAccountDetails(username) != null){
+				if (profileService.getIndividualAccountDetails(username).getOrganization() != null
+						|| profileService.getIndividualAccountDetails(username).getOrganization().length() > 0) {
+					organization = profileService.getIndividualAccountDetails(username).getOrganization(); 
+																											
+				}
+			}else{
+				organization = profileService.getOrganizationAccountDetails(username).getCompanyName();
 			}
+			
 		}
 
 		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
@@ -159,7 +163,8 @@ public class ProjectController {
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
-		model.addAttribute("username", "edward");
+		
+		String username = (String)request.getSession().getAttribute("username");
 
 		profileService.retrieveJobSectorList();
 		profileService.retrieveSkillsetList();
@@ -175,7 +180,7 @@ public class ProjectController {
 		// populates the edit profile page with project areas its project areas
 		// in the DB
 		ArrayList<ProjectTargetArea> project_target_areas_objs = projectService
-				.retrieveTargetProjectAreas("Water the kids", "edward");
+				.retrieveTargetProjectAreas(project_name, project_proposer);
 		ArrayList<String> project_target_areas = new ArrayList<String>();
 
 		for (ProjectTargetArea project_target_area : project_target_areas_objs) {
@@ -186,13 +191,12 @@ public class ProjectController {
 
 		// populates the edit profile page with the list of banned users its
 		// banned user in the DB
-		ArrayList<ProjectBanList> project_ban_list_objs = projectService.retrieveProjectBanList("Water the kids",
-				"edward");
+		ArrayList<ProjectBanList> project_ban_list_objs = projectService.retrieveProjectBanList(project_name,
+				project_proposer);
 		ArrayList<String> project_ban_list = new ArrayList<String>();
 
 		for (ProjectBanList project_ban_username : project_ban_list_objs) {
 			project_ban_list.add(project_ban_username.getBanned_username());
-			System.out.print(project_ban_username.getBanned_username());
 		}
 
 		model.addAttribute("project_ban_list", project_ban_list);

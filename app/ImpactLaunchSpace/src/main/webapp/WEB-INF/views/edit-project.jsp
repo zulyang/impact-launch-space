@@ -115,26 +115,26 @@
 										Owner</label>
 									<div class="col-sm-9" style="display: block; height: 34px;">
 										<c:if
-											test="${project.getOrganization() == null || project.getOrganization().equals(\"\")}">
+											test="${sample_project.getOrganization() == null || sample_project.getOrganization().equals(\"\")}">
 											<input type="radio" id="radio_indi" value="individual"
 												name="projectOwner" checked disabled />
 										</c:if>
 
 										<c:if
-											test="${project.getOrganization() != null || project.getOrganization().equals(\"\")}">
+											test="${sample_project.getOrganization() != null || sample_project.getOrganization().equals(\"\")}">
 											<input type="radio" id="radio_indi" value="individual"
 												name="projectOwner" disabled />
 										</c:if>
 										Myself
 
 										<c:if
-											test="${project.getOrganization() == null || project.getOrganization().equals(\"\")}">
+											test="${sample_project.getOrganization() == null || sample_project.getOrganization().equals(\"\")}">
 											<input type="radio" id="radio_org" value="organization"
 												name="projectOwner" disabled />
 										</c:if>
 
 										<c:if
-											test="${project.getOrganization() != null || project.getOrganization().equals(\"\")}">
+											test="${sample_project.getOrganization() != null || sample_project.getOrganization().equals(\"\")}">
 											<input type="radio" id="radio_org" value="organization"
 												name="projectOwner" checked disabled />
 										</c:if>
