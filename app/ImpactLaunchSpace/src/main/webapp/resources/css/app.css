@@ -94,30 +94,29 @@ html, body {
 	font-size: 1.5rem;
 }
 
-#navigationLogin .navbar-default .navbar-nav>li>a:hover{
-		transition: 0.5s ease;
-      border-top: 4px solid white;
-  border-bottom: 4px solid white;  
-
+#navigationLogin .navbar-default .navbar-nav>li>a:hover {
+	transition: 0.5s ease;
+	border-top: 4px solid white;
+	border-bottom: 4px solid white;
 }
 
-#navigationLogin .navbar-default{
+#navigationLogin .navbar-default {
 	background: transparent !important;
 	border: 0;
 }
+
 #navigationLogin .navbar-default .navbar-nav>li>a {
-  color: #ffffff;
-  font-size: 20px;
-  text-decoration: none;
-  
-  padding: 20px 0;
-  margin: 0 20px;
+	color: #ffffff;
+	font-size: 20px;
+	text-decoration: none;
+	padding: 20px 0;
+	margin: 0 20px;
 }
 
 #navigationLogin .nav_elements {
-    margin-top: 1.5rem;
-    margin-right: 6rem;
-    padding: 1.5rem;
+	margin-top: 1.5rem;
+	margin-right: 6rem;
+	padding: 1.5rem;
 }
 
 .center {
@@ -224,7 +223,7 @@ html, body {
 	position: relative;
 }
 
-.org_profile_form{
+.org_profile_form {
 	width: 90%;
 }
 
@@ -551,12 +550,12 @@ html, body {
 	font-size: large;
 }
 
-.create-project-container{
-  margin-top: 10rem;
-  margin-bottom: 5rem;
-  width: 85rem;
-  margin-left:auto;
-  margin-right: auto;
+.create-project-container {
+	margin-top: 10rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .ui-state-active {
@@ -569,14 +568,15 @@ html, body {
 	color: #FFFFFF;
 }
 
-#navigation .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
+#navigation .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
+	{
 	color: white;
 }
 
-#navigation .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+#navigation .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus,
+	.navbar-default .navbar-nav>.open>a:hover {
 	color: #1f2d5d !important;
-	background-color:white; 
-
+	background-color: white;
 }
 
 #profile_upload_button {
@@ -588,8 +588,31 @@ html, body {
 	text-align: center;
 	background-color: #5199ff;
 	cursor: pointer;
+	max-width: 400px;
+	white-space: pre-wrap; /* CSS3 */
+	white-space: -moz-pre-wrap; /* Firefox */
+	white-space: -pre-wrap; /* Opera <7 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word;
 }
 
-textarea{
-	resize:vertical;
+#document_upload_button {
+	position: relative;
+	padding: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: 1px solid #ccc;
+	text-align: center;
+	background-color: #5199ff;
+	cursor: pointer;
+	max-width: 400px;
+	white-space: pre-wrap; /* CSS3 */
+	white-space: -moz-pre-wrap; /* Firefox */
+	white-space: -pre-wrap; /* Opera <7 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word;
+}
+
+textarea {
+	resize: vertical;
 }

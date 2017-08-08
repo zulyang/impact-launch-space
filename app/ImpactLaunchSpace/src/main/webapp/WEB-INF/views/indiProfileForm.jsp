@@ -50,10 +50,9 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<div id="profile_upload_button" onclick="uploadFile()">Upload a profile
-									picture</div>
+								<div id="profile_upload_button" onclick="uploadPicture()">Upload a profile picture</div>
 								<div style='height: 0px; width: 0px; overflow: hidden;'>
-									<input id="uploadFile" name="profilePicture" type="file"
+									<input id="uploadPicture" name="profilePicture" type="file"
 										value="upload" onchange="sub(this)" />
 								</div>
 							</div>
@@ -220,10 +219,10 @@
 						<br>
 						<div class="form-group">
 							<div class="col-lg-12 custom-file-upload" id="documents">
-								<div id="profile_upload_button" onclick="uploadFile()">Upload your documents</div>
+								<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
 								<div style='height: 0px; width: 0px; overflow: hidden;'>
-									<input id="uploadFile" name="documents" multiple type="file"
-										value="upload" onchange="sub(this)" />
+									<input id=uploadFile name="documents" multiple type="file"
+										value="upload" onchange="docSub(this)" />
 								</div>
 							</div>
 						</div>
@@ -241,14 +240,30 @@
 	</div>
 
 	<script type="text/javascript">
-		function uploadFile() {
-			document.getElementById("uploadFile").click();
+		function uploadPicture() {
+			document.getElementById("uploadPicture").click();
 		}
 		function sub(obj) {
 			var file = obj.value;
 			var fileName = file.split("\\");
 			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
 			event.preventDefault();
+		}
+		
+		function uploadFile() {
+			document.getElementById("uploadFile").click();
+		}
+		function docSub(obj) {
+			var fileList = document.getElementById("uploadFile").files;
+			var allFileNames;
+			
+			for(var i = 0; i < fileList.length; i++) {
+				var fileName = fileList[i].name.split("\\");
+				allFileNames += (fileName + "<br>");
+			}
+			
+			document.getElementById("document_upload_button").innerHTML = allFileNames.substring(9);
+			event.preventDefault();	
 		}
 	</script>
 
