@@ -309,33 +309,24 @@
 			var lastRow = $('#resourcesNeeded').find("div:last");
 			var lastRowInputField = lastRow.find('select');
 			var id = lastRowInputField.attr("id");
-			console.log("lastRowInputs: " + id);
 
 			var emptyResourceFields = false;
 
 			var totalRows = id.substring(16);
-			console.log("totalRows: " + totalRows);
 
 			for (count = 1; count <= totalRows; count++) {
 				var resourceCat = document.getElementById("resourceCategory" + count).value;
 				var resourceName = document.getElementById("resourceName" + count).value;
 				var resourceDes = document.getElementById("resourceDescription" + count).value;
-				
-				console.log("resourceCat: " + resourceCat);
-				console.log("resourceName: " + resourceName);
-				console.log("resourceDes: " + resourceDes);
 
 				if(resourceCat === "" || resourceName === "" || resourceDes === ""){
 					emptyResourceFields = true;
-					console.log("fail empty");
 					$('.createProject').prop('disabled', true);
-					//alert("Please fill in all the fields for the resources you need.");
 					return false;
 				}
 			}
 			
 			if(!emptyResourceFields) {
-				console.log("pass empty");
 				$('.createProject').prop('disabled', false);
 			}
 			
@@ -348,19 +339,14 @@
 			var socialImpact = document.getElementById("socialImpact").value;
 			var radioIndi = document.getElementById("radio_indi");
 			var radioOrg = document.getElementById("radio_org");
-			console.log("radioIndi: " + radioIndi.checked);
-			console.log("radioOrg: " + radioOrg.checked);
 
 			var projectLocation = document.getElementById("projectLocation").value;
 			var projectDescription = document
 					.getElementById("projectDescription").value;
 
 			var projectPrivacy1 = document.getElementById("projectPrivacy1");
-			console.log("projectPrivacy1: " + projectPrivacy1.checked);
 			var projectPrivacy2 = document.getElementById("projectPrivacy2");
-			console.log("projectPrivacy2: " + projectPrivacy2.checked);
 			var projectPrivacy3 = document.getElementById("projectPrivacy3");
-			console.log("projectPrivacy3: " + projectPrivacy3.checked);
 
 			var projectDuration = document.getElementById("projectDuration").value;
 
@@ -368,62 +354,51 @@
 			var passFields = true;
 
 			if (title === "") {
-				console.log("title");
 				message += "title, ";
 				passFields = false;
 			}
 
 			if (purpose === "") {
-				console.log("purpose");
 				message += "purpose, ";
 				passFields = false;
-				//alert("Please fill in the purpose.");
 			}
 
 			if (socialImpact === "") {
-				console.log("social impact");
 				passFields = false;
-				message += "social impact, ";//alert("Please fill in the title.");
+				message += "social impact, ";
 			}
 
 			if (!radioIndi.checked && !radioOrg.checked) {
-				console.log("indi org radio");
 				passFields = false;
-				message += "project owner, ";//alert("Please state the project owner.");
+				message += "project owner, ";
 			}
 
 			if (projectLocation === "") {
-				console.log("projectLocation");
 				passFields = false;
-				message += "project location, ";//alert("Please state where the project will be based in.");
+				message += "project location, ";
 			}
 
 			if (projectDescription === "") {
-				console.log("projectDescription");
 				passFields = false;
-				message += "project description, ";//alert("Please describe the project.");
+				message += "project description, ";
 			}
 
 			if (!projectPrivacy1.checked && !projectPrivacy2.checked
 					&& !projectPrivacy3.checked) {
-				console.log("projectPrivacy");
 				passFields = false;
-				message += "project privacy, ";//alert("Please state the project owner.");
+				message += "project privacy, ";
 			}
 
 			if (projectDuration === "") {
-				console.log("projectDuration");
 				passFields = false;
-				message += "project duration, ";//alert("Please state the estimated project duration.");
+				message += "project duration, ";
 			}
 
 			if (!passFields) {
 				message = message.replace(/,\s*$/, "");
-				console.log("fail field");
 				alert(message += ".");
 				return false;
 			} else {
-				console.log("pass field");
 				return true;
 			}
 		}
@@ -434,7 +409,6 @@
 						function() {
 							var lastRow = $('#resourcesNeeded').closest(
 									'#resourcesNeeded').find("div:last-child");
-							console.log("lastRow: " + lastRow);
 							var lastRowInputs = lastRow.find('input');
 							var lastRowSelect = lastRow.find('select');
 							var lastRowTextarea = lastRow.find('textarea');
@@ -464,25 +438,18 @@
 									checkTextarea = true;
 								}
 							});
-
-							console.log("check input: " + checkInput);
-							console.log("checkSelect: " + checkSelect);
-							console.log("checkTextarea: " + checkTextarea);
 							
 							if(!checkInput || !checkSelect || !checkTextarea){
-								console.log("empty resource fields");
 								alert("Please fill in all the fields for the resources you need.");
 								return false;
 							}
 
-							console.log("isClone is true");
 							var cloned = lastRow.clone();
 							cloned
 									.find('input, select, textarea')
 									.each(
 											function() {
 												var id = $(this).attr('id');
-												console.log("id: " + id);
 												var regIdMatch = /^(.+)(\d+)$/;
 												var aIdParts = id
 														.match(regIdMatch);
@@ -504,7 +471,6 @@
 
 	<script>
 		var userType = document.getElementById("userType").value;
-		console.log(userType);
 
 		if (userType === "org") {
 			document.getElementById("radio_org").checked = true;
@@ -512,7 +478,6 @@
 		}
 
 		var indiOrg = document.getElementById("indiOrg").value;
-		console.log(indiOrg);
 
 		if (userType === "indi" && indiOrg === "") {
 			document.getElementById("radio_indi").checked = true;

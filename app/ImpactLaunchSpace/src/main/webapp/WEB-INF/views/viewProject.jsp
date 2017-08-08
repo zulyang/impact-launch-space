@@ -326,16 +326,12 @@
 				selected_resource_category : selected_resource_category
 			}, function(responseJson) {
 				$.each(responseJson,function(key,value) {
-					console.log(value.resourceName);
-					
 					var opt = document.createElement('option');
 				    opt.value = value.resourceName;
 				    opt.innerHTML = value.resourceName;
 				    select.appendChild(opt);
 				});
 			});
-			
-			console.log("count: " + count);
 			
 			$('#myModal' + count).modal('show');
 			
@@ -346,7 +342,6 @@
 					resourceName : resourceName,
 					resourceCategory : resourceCategory
 				}, function(responseText) {
-					console.log(responseText);
 					$('#selected_resource_desc' + count).val(responseText);
 				});
 			});

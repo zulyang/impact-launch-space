@@ -108,8 +108,6 @@
 	window.onload = function() {
 		var registerCheckStatus = document.getElementById("registerSuccess").value;
 
-		console.log(registerCheckStatus);
-
 		if (registerCheckStatus.length > 0) {
 			if ($('#register_container').css('display') !== 'none') {
 				$('#register_success').show().siblings('div').hide();

@@ -17,7 +17,8 @@
 <!--custom css codes -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script
@@ -31,8 +32,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigation.jspf" %>
-				
+				<%@include file="common/navigation.jspf"%>
 
 				<div class="org_profile_display_container">
 					<div class="panel panel-default">
@@ -46,19 +46,23 @@
 								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<a href="" class="btn btn-default"> Leave A
-										Message </a>
+									<a href="" class="btn btn-default"> Leave A Message </a>
 								</div>
 
 								<hr>
 								<p class="org_bio">${organization.getCompanyBio()}</p>
 								<hr>
-								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${profileemail}</p><br/>
-								<p style="display: inline-block"><i class="fa fa-phone"></i> ${organization.getContactDetails()}</p>
+								<p style="display: inline-block">
+									<i class="fa fa-envelope"></i> ${profileemail}
+								</p>
+								<br />
+								<p style="display: inline-block">
+									<i class="fa fa-phone"></i> ${organization.getContactDetails()}
+								</p>
 								<hr>
-								
+
 								<div class="org_profile_display_countries">
-								<i class="fa fa-globe"></i> 
+									<i class="fa fa-globe"></i>
 									<c:forEach items="${countriesOfOperation}" var="item">
 										<p class="org_countries">${item.getCountry_name()}</p>
 									</c:forEach>

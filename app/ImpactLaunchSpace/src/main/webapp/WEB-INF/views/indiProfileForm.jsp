@@ -93,7 +93,7 @@
 						<h3>Work</h3>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="jobTitle" id="jobTitle" type="text"
+								<input name="jobTitle" id="jobTitle" type="text" required
 									class="form-control profileField"
 									placeholder="Current job title">
 							</div>
@@ -269,26 +269,17 @@
 	<script type="text/javascript">
 		function checkFields() {
 			var jobTitle = document.getElementById("jobTitle");
-			console.log("jobTitle: " + jobTitle.value);
 			
 			var organization = document.getElementById("organization");
-			console.log("organization: " + organization.value);
 			
-			if (jobTitle.value !== "" && organization.value === "") {
-				alert('Please choose your organization.')
-				return false;
-			}
-			
-			if (jobTitle.value === "" && organization.value !== "") {
-				alert('Please input your job title at your current organization.')
+			if (jobTitle.value === "") {
+				alert('Please input your job title.')
 				return false;
 			}
 			
 			var minHours = document.getElementById("minHours");
-			console.log("minHours: " + minHours.value);
 
 			var maxHours = document.getElementById("maxHours");
-			console.log("maxHours: " + maxHours.value);
 
 			if (minHours !== "" && maxHours !== "") {
 				var min = parseInt(minHours.value);
@@ -306,24 +297,17 @@
 			}
 
 			var jsIndi1A = document.getElementById("jsIndi1Value");
-			console.log("1a " + jsIndi1A);
 
 			var jsIndiEx1B = document.getElementById("js1experience");
-			console.log("js1 experience: " + jsIndiEx1B);
 			
 			if (jsIndi1A !== null) {
-				console.log("1a: " + jsIndi1A.value);
 				if (jsIndi1A.value !== "" && jsIndiEx1B.value === "") {
-					console.log("js indi xperience value 1: "
-							+ jsIndiEx1B.value);
 					change('js1experience', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi1A.value === "" && jsIndiEx1B.value !== "") {
-					console.log("js indi xperience value 1: "
-							+ jsIndiEx1B.value);
 					change('jsIndi1Value', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
@@ -331,49 +315,35 @@
 			}
 
 			var jsIndi2A = document.getElementById("jsIndi2Value");
-			console.log("2A: " + jsIndi2A);
 
 			var jsIndiEx2B = document.getElementById("js2experience");
 
 			if (jsIndi2A !== null) {
-				console.log("2b: " + jsIndi2A.value);
 				if (jsIndi2A.value !== "" && jsIndiEx2B.value === "") {
-					console.log("js indi xperience value 2: "
-							+ jsIndiEx2B.value);
 					change('js2experience', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi2A.value === "" && jsIndiEx2B.value !== "") {
-					console.log("js indi xperience value 2B: "
-							+ jsIndiEx2B.value);
 					change('jsIndi2Value', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 			}
 
-			console.log("BREAK -------------------");
-
 			var jsIndi3A = document.getElementById("jsIndi3Value");
-			console.log("3A: " + jsIndi3A);
 
 			var jsIndiEx3B = document.getElementById("js3experience");
 
 			if (jsIndi3A !== null) {
-				console.log("3b: " + jsIndi3A.value);
 				if (jsIndi3A.value !== "" && jsIndiEx3B.value === "") {
-					console.log("js indi xperience value 3: "
-							+ jsIndiEx3B.value);
 					change('js3experience', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi3A.value === "" && jsIndiEx3B.value !== "") {
-					console.log("js indi xperience value 3A: "
-							+ jsIndiEx3B.value);
 					change('jsIndi3Value', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;

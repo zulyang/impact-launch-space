@@ -95,8 +95,6 @@ public class RequestController {
 		Notification notification = new Notification(project_proposer, "admin", username + "A user has applied to offer his support for " + project_name,
 		notification_message);
 		
-		System.out.println("sending notification to" + project_proposer);
-		
 		notificationService.sendNotification(notification);
 		
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
@@ -127,7 +125,6 @@ public class RequestController {
 		// for now legal is hard-coded
 		ArrayList<UserOfferedResource> userOfferedResources = resourceService.retrieveResourcesInCategory(username,
 				selected_resource_category);
-		System.out.println("entering this method with " + userOfferedResources.size() + " objects from " + selected_resource_category);
 		String json = null;
 		json = new Gson().toJson(userOfferedResources);
 

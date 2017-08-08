@@ -69,10 +69,6 @@ public class ProjectController {
 
 		model.addAttribute("user_type", user_type);
 		model.addAttribute("indi_org", indi_org);
-		System.out.println("indi: " + indi);
-		System.out.println("indi_org: " + indi_org);
-		System.out.println("org: " + org);
-		System.out.println("usertype: " + user_type);
 
 		return "createproject";
 	}
@@ -192,7 +188,6 @@ public class ProjectController {
 
 		for (ProjectBanList project_ban_username : project_ban_list_objs) {
 			project_ban_list.add(project_ban_username.getBanned_username());
-			System.out.print(project_ban_username.getBanned_username());
 		}
 
 		model.addAttribute("project_ban_list", project_ban_list);
@@ -282,7 +277,6 @@ public class ProjectController {
 		ArrayList<ProjectResourceCategory> projectResourceCategoriesObj = projectService
 				.retrieveProjectResourceCategories(project_name, project_proposer);
 		ArrayList<String> projectResourceCategories = new ArrayList<String>();
-		System.out.print("category size: " + projectResourceCategoriesObj.size());
 
 		HashMap<String, ArrayList<ArrayList<String>>> projectRequestedResources = new HashMap<String, ArrayList<ArrayList<String>>>();
 
@@ -290,16 +284,13 @@ public class ProjectController {
 			projectResourceCategories.add(projectResourceCategoryObj.getResource_category());
 			ArrayList<ProjectRequestedResource> requestedResourceObjs = projectService.retrieveRequestedResources(
 					project_name, projectResourceCategoryObj.getResource_category(), project_proposer);
-			System.out.println("requested resource size: " + requestedResourceObjs.size());
 
 			ArrayList<ArrayList<String>> resourcenames = new ArrayList<ArrayList<String>>();
 
 			for (ProjectRequestedResource requestedResource : requestedResourceObjs) {
 				ArrayList<String> resourceDetails = new ArrayList<String>();
 				resourceDetails.add(requestedResource.getResource_name());
-				System.out.println(requestedResource.getResource_name());
 				resourceDetails.add(requestedResource.getRequest_description());
-				System.out.println(requestedResource.getRequest_description());
 
 				resourcenames.add(resourceDetails);
 
@@ -361,7 +352,6 @@ public class ProjectController {
 			RedirectAttributes redirectAttributes) throws IOException {
 		String name = null;
 		name = "Hello " + request.getParameter("user");
-		System.out.println(name);
 		if (request.getParameter("user") != null) {
 			if (request.getParameter("user").toString().equals("")) {
 				name = "Hello User";
@@ -379,14 +369,6 @@ public class ProjectController {
 			@RequestParam String resourceDescription, @RequestParam String oldResourceCategory, 
 			@RequestParam String oldResourceName, @RequestParam String oldResourceDescription, HttpServletRequest request){
 		String project_proposer = (String)request.getSession().getAttribute("username");
-		System.out.println("saving user resource for " + project_proposer);
-		System.out.println("new name: " + resourceName);
-		System.out.println("new cate:" + resourceCategory);
-		System.out.println("new desc:" + resourceDescription);
-		System.out.println("project title: " + oldProjectTitle);
-		System.out.println("old name: " + oldResourceName);
-		System.out.println("old cate:" + oldResourceCategory);
-		System.out.println("old desc:" + oldResourceDescription);
 		
 		//this handles logic if the update removes an existing category the user has or if it creates a new one
 		boolean isSame = resourceCategory.equals(oldResourceCategory);
@@ -428,7 +410,6 @@ public class ProjectController {
 	public void addProjectResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
 			@RequestParam String modalResourceDescription, @RequestParam String oldProjectTitle, HttpServletRequest request){
 		String project_proposer = (String)request.getSession().getAttribute("username");
-		System.out.println("adding user resource for " + project_proposer);
 		
 		int resourceCategorySize = projectService.retrieveRequestedResources(oldProjectTitle, modalResourceCategory, project_proposer).size();
 		

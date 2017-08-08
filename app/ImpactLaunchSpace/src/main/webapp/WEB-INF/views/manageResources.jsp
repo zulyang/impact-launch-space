@@ -204,8 +204,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- End of modal -->
-
 
 	</div>
 </body>
@@ -241,9 +239,6 @@
 </script>
 <script type="text/javascript">
 	function edit(id) {
-	/* 	var disabledStatus = $('.editable-field').attr('disabled');
-		console.log("disabledstatus: " + disabledStatus); */
-		console.log("id: " + id);
 		var newId = id.substring(4);
 
 		$('#reso' + newId).prop('disabled', false);
@@ -260,8 +255,6 @@
 		var disabledStatus = $('.editable-field').attr('disabled');
 
 		var oldId = id.substring(4);
-
-		console.log("id: " + id);
 
 		$('#reso' + oldId).prop('disabled', true);
 		$('#desc' + oldId).prop('disabled', true);
@@ -307,8 +300,6 @@
 
 		var newId = id.substring(4);
 
-		console.log("id: " + id);
-
 		$('#reso' + newId).prop('disabled', true);
 		$('#desc' + newId).prop('disabled', true);
 		$('#edit' + newId).show();
@@ -320,7 +311,6 @@
 	};
 
 	function del(id){
-		console.log("id: " + id);
 		var newId = id.substring(4);
 		var resourceCategory = $('#resourceCategory' + newId).val();
 		var resourceName = $('#reso' + newId).val();
