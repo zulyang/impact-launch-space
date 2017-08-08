@@ -54,12 +54,12 @@
 								<hr>
 								<p class="indi_bio">${individual.getPersonalBio()}</p>
 								<hr>
-								<p>${individual.getJobTitle()}</p>
-								<p>${individual.getOrganization()}</p>
+								<p><i class="fa fa-briefcase"></i> ${individual.getJobTitle()}</p>
+								<p><i class="fa fa-building"></i> ${individual.getOrganization()}</p>
 								<hr>
-								<p style="display: inline-block">${user.getEmail()}</p>
-								<p style="display: inline-block">${individual.getContactDetails()}</p>
-								<p>${individual.getCountry()}</p>
+								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p>
+								<p style="display: inline-block"><i class="fa fa-phone"></i> ${individual.getContactDetails()}</p>
+								<p><i class="fa fa-map-pin"></i> ${individual.getCountry()}</p>
 							</div>
 						</div>
 					</div>

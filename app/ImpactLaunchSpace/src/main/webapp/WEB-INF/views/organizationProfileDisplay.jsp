@@ -54,10 +54,11 @@
 								<hr>
 								<p class="org_bio">${organization.getCompanyBio()}</p>
 								<hr>
-								<p style="display: inline-block">${user.getEmail()}</p>
-								<p style="display: inline-block">${organization.getContactDetails()}</p>
+								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p>
+								<p style="display: inline-block"><i class="fa fa-phone"></i> ${organization.getContactDetails()}</p>
 								<hr>
 								<div class="org_profile_display_countries">
+								<i class="fa fa-map-pin"></i> 
 									<c:forEach items="${countriesOfOperation}" var="item">
 										<p class="org_countries">${item.getCountry_name()}</p>
 									</c:forEach>
