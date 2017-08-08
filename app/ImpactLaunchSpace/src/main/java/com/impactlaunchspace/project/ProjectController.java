@@ -96,7 +96,9 @@ public class ProjectController {
 		boolean hiddenToOutsiders = false;
 		boolean hiddenToAll = false;
 		String project_status = "new";
-
+		
+		System.out.println("Number of resources: " + resourceName.size());
+		
 		if (projectPrivacy.equals("public")) {
 			isPublic = true;
 		} else if (projectPrivacy.equals("private")) {

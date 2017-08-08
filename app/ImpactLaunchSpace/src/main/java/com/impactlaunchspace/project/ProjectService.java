@@ -47,7 +47,7 @@ public class ProjectService {
 		
 		projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,project_proposer,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
 		
-		if(organization != null || organization.length() > 0){
+		if(organization != null){
 			String organizationAccountUsername = organizationAccountDAO.findByCompanyName(organization).getUsername();
 			if(projectMemberListDAO.retrieveMemberList(project_name, organizationAccountUsername) == null){
 				projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
