@@ -143,7 +143,7 @@ html, body {
 	margin-bottom: 5rem;
 	height: 70rem;
 	width: 75rem;
-	border: 0.125rem solid black;
+	border: 0.125rem solid gray;
 }
 
 .indi_profile_container {
@@ -151,7 +151,7 @@ html, body {
 	margin-bottom: 5rem;
 	height: 170rem;
 	width: 75rem;
-	border: 0.125rem solid black;
+	border: 0.125rem solid gray;
 }
 
 .indi_profile_form {
@@ -269,8 +269,7 @@ html, body {
 
 .verify_account {
 	position: absolute;
-	color: black;
-	border: 0.125rem solid grey;
+	color: white;
 	border-radius: 0;
 	width: 20rem;
 	cursor: pointer;
@@ -427,7 +426,7 @@ html, body {
 	min-height: 100%;
 }
 
-.edit_org_pic, .org_profile_display_countries {
+.edit_org_pic {
 	margin: 1rem;
 }
 
@@ -470,6 +469,7 @@ html, body {
 
 .indi_bio, .org_bio {
 	width: 45rem;
+	text-align: justify;
 }
 
 .indi_profile_display_container {

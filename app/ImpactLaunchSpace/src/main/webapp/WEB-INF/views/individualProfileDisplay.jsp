@@ -58,9 +58,9 @@
 								<p><i class="fa fa-briefcase"></i> ${individual.getJobTitle()}</p>
 								<p><i class="fa fa-building"></i> ${individual.getOrganization()}</p>
 								<hr>
-								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p>
+								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p><br/>
 								<p style="display: inline-block"><i class="fa fa-phone"></i> ${individual.getContactDetails()}</p>
-								<p><i class="fa fa-map-pin"></i> ${individual.getCountry()}</p>
+								<p><i class="fa fa-globe"></i> ${individual.getCountry()}</p>
 							</div>
 						</div>
 					</div>
