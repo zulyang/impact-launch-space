@@ -11,36 +11,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Manage Resources</title>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-<!--custom css codes -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/resource.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/project.css" />
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-	crossorigin="anonymous"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-	rel="stylesheet" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/resource.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
+<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" rel="stylesheet" />
+<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 </head>
+
 <body>
 	<div class="container-fluid">
 		<div class="row">
