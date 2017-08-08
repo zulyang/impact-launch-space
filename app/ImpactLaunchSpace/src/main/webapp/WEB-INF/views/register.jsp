@@ -27,7 +27,6 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigationLogin.jspf" %>
 
 				<div class="col-lg-12 form_container" id="register_container">
 					<h4 class="createAccount">Create a new account</h4>
@@ -82,11 +81,15 @@
 					</form>
 				</div>
 
+<%@include file="common/navigationLogin.jspf" %>
 				<div class="col-lg-12 register_success" id="register_success"
 					style="display: none;">
+					
+<%@include file="common/navigationLogin.jspf" %>
+					
 					<h4 class="register_success_message">Registration Successful</h4>
 					<p class="success_verify_message">You have successfully
-						registered for an account. A verification code has been sent to
+						registered for an account.<br> A verification code has been sent to
 						your email.</p>
 					<a href="/verifyaccount" class="btn btn-info verify_account" id="verify_account"
 						role="button">Verify My Account</a>
