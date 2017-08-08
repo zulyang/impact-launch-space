@@ -446,10 +446,8 @@
 			}
 
 			var jobTitle = document.getElementById("editJobTitle");
-			console.log("jobTitle: " + jobTitle.value);
 
 			var organization = document.getElementById("editOrg");
-			console.log("organization: " + organization.value);
 
 			if (jobTitle.value !== "" && organization.value === "") {
 				alert('Please choose your organization.')
@@ -462,10 +460,8 @@
 			}
 
 			var minHours = document.getElementById("editMinHour");
-			console.log("minHours: " + minHours.value);
 
 			var maxHours = document.getElementById("editMaxHour");
-			console.log("maxHours: " + maxHours.value);
 
 			if (minHours === "" || maxHours === "") {
 				alert('Please enter the number of hours that you are willing to volunteer for projects.')
@@ -488,10 +484,8 @@
 			}
 
 			var skillsets = document.getElementById("skillsets");
-			console.log("skillsets: " + skillsets);
 
 			if (skillsets !== null) {
-				console.log("skillsets: " + skillsets.value);
 				if (skillsets.value === "") {
 					alert('Please state your skills.')
 					return false;
@@ -499,26 +493,17 @@
 			}
 
 			var jsIndi1 = document.getElementById("jsIndi1Value");
-			console.log("1 value: " + jsIndi1);
 
 			var jsIndiEx1 = document.getElementById("js1experience");
-			console.log("1 experience: " + jsIndiEx1);
 
 			if (jsIndi1 !== null) {
-				console.log("1a: " + jsIndi1.value);
 				if (jsIndi1.value !== "" && jsIndiEx1.value === "") {
-					console
-							.log("js indi xperience value 1: "
-									+ jsIndiEx1.value);
 					change('js1experience', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi1.value === "" && jsIndiEx1.value !== "") {
-					console
-							.log("js indi xperience value 1: "
-									+ jsIndiEx1.value);
 					change('jsIndi1Value', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
@@ -526,24 +511,18 @@
 			}
 
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
-			console.log("2A: " + jsIndi2A);
 
 			var jsIndiEx2A = document.getElementById("js2experienceA");
 
 			if (jsIndi2A !== null) {
-				console.log("2a: " + jsIndi2A.value);
 
 				if (jsIndi2A.value !== "" && jsIndiEx2A.value === "") {
-					console.log("js indi xperience value 2A: "
-							+ jsIndiEx2A.value);
 					change('js2experienceA', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi2A.value === "" && jsIndiEx2A.value !== "") {
-					console.log("js indi xperience value 2A: "
-							+ jsIndiEx2A.value);
 					change('jsIndi2aValue', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
@@ -551,49 +530,35 @@
 			}
 
 			var jsIndi2B = document.getElementById("jsIndi2bValue");
-			console.log("2B: " + jsIndi2B);
 
 			var jsIndiEx2B = document.getElementById("js2experienceB");
 
 			if (jsIndi2B !== null) {
-				console.log("2b: " + jsIndi2B.value);
 				if (jsIndi2B.value !== "" && jsIndiEx2B.value === "") {
-					console.log("js indi xperience value 2B: "
-							+ jsIndiEx2B.value);
 					change('js2experienceB', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi2B.value === "" && jsIndiEx2B.value !== "") {
-					console.log("js indi xperience value 2B: "
-							+ jsIndiEx2B.value);
 					change('jsIndi2bValue', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 			}
 
-			console.log("BREAK -------------------");
-
 			var jsIndi3A = document.getElementById("jsIndi3aValue");
-			console.log("3A: " + jsIndi3A);
 			var jsIndiEx3A = document.getElementById("js3experienceA");
 
 			if (jsIndi3A !== null) {
-				console.log("3a: " + jsIndi3A.value);
 
 				if (jsIndi3A.value !== "" && jsIndiEx3A.value === "") {
-					console.log("js indi xperience value 3A: "
-							+ jsIndiEx3A.value);
 					change('js3experienceA', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
 
 				if (jsIndi3A.value === "" && jsIndiEx3A.value !== "") {
-					console.log("js indi xperience value 3A: "
-							+ jsIndiEx3A.value);
 					change('jsIndi3aValue', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
@@ -601,23 +566,17 @@
 			}
 
 			var jsIndi3B = document.getElementById("jsIndi3bValue");
-			console.log("3B: " + jsIndi3B);
 
 			var jsIndiEx3B = document.getElementById("js3experienceB");
 
 			if (jsIndi3B !== null) {
-				console.log("3b: " + jsIndi3B.value);
 				if (jsIndi3B.value !== "" && jsIndiEx3B.value === "") {
-					console.log("js indi xperience value 3B: "
-							+ jsIndiEx3B.value);
 					change('js3experienceB', 'required');
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
 
 				if (jsIndi3B.value === "" && jsIndiEx3B.value !== "") {
-					console.log("js indi xperience value 3B: "
-							+ jsIndiEx3B.value);
 					change('jsIndi3bValue', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
@@ -626,10 +585,8 @@
 
 			var preferredCountries = document
 					.getElementById("preferredCountries");
-			console.log("preferredCountries: " + preferredCountries);
 
 			if (preferredCountries !== null) {
-				console.log("preferredCountries: " + preferredCountries.value);
 				if (preferredCountries.value === "") {
 					alert('Please tell us which country you prefer to volunter in.')
 					return false;
@@ -637,10 +594,8 @@
 			}
 
 			var preferredAreas = document.getElementById("preferredAreas");
-			console.log("preferredAreas: " + preferredAreas);
 
 			if (preferredAreas !== null) {
-				console.log("preferredAreas: " + preferredAreas.value);
 				if (preferredAreas.value === "") {
 					alert('Please tell us the areas you would like to volunteer in.')
 					return false;
@@ -649,12 +604,8 @@
 
 			var preferredJobSectors = document
 					.getElementById("preferredJobSectors");
-			console.log("preferredJobSectors: " + preferredJobSectors);
 
 			if (preferredJobSectors !== null) {
-				console
-						.log("preferredJobSectors: "
-								+ preferredJobSectors.value);
 				if (preferredJobSectors.value === "") {
 					alert('Please tell us the job sectors you prefer to work in.')
 					return false;

@@ -79,7 +79,6 @@ public class ProfileController {
 
 		// handle multiple select for countries of operation
 		for (String countryOfOperation : countriesOfOperation) {
-			System.out.print(countryOfOperation);
 			CountryOfOperation countryOfOperationObj = new CountryOfOperation(countryOfOperation, username);
 			countriesOfOperationList.add(countryOfOperationObj);
 		}
@@ -468,7 +467,6 @@ public class ProfileController {
 
 		for (String preferredJobSector : selected_preferredjobsectors) {
 			updated_preferredjobsector_individual.add(new PreferredJobSector(preferredJobSector, username));
-			System.out.println(preferredJobSector);
 		}
 
 		ArrayList<PreferredProjectArea> updated_preferredprojectarea_individual = new ArrayList<PreferredProjectArea>();
@@ -659,8 +657,6 @@ public class ProfileController {
 			IndividualAccount individualAccount = profileService.getIndividualAccountDetails(username);
 			File file = individualAccount.getProfilePicture();
 			response.setContentType("image/jpeg");
-			System.out.println(file.getName());
-			System.out.println(response.getContentType());
 			byte[] bytesArray = new byte[(int) file.length()];
 			FileInputStream fis = new FileInputStream(file);
 			fis.read(bytesArray); // read file into bytes[]
@@ -690,15 +686,13 @@ public class ProfileController {
 			edwardo_jobsector_list.add(jso.getJob_sector());
 		}
 		model.addAttribute("edwardo_jobsector_list", edwardo_jobsector_list);
-
-		System.out.print(edwardo_country_list.contains("Singapore"));
+		
 		return "testSelect2";
 	}
 
 	@RequestMapping(value = "/processSelect2", method = RequestMethod.POST)
 	public String displaySelect2(@RequestParam ArrayList<String> selected_countries, ModelMap model) {
 		for (String country : selected_countries) {
-			System.out.print(country);
 		}
 
 		model.put("selected_countries", selected_countries);

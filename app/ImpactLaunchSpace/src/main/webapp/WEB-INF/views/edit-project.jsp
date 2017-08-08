@@ -443,7 +443,6 @@
 
 	<script>
 		var userType = document.getElementById("userType").value;
-		console.log(userType);
 
 		if (userType === "org") {
 			document.getElementById("radio_org").checked = true;
@@ -451,7 +450,6 @@
 		}
 
 		var indiOrg = document.getElementById("indiOrg").value;
-		console.log(indiOrg);
 
 		if (userType === "indi" && indiOrg === "") {
 			document.getElementById("radio_indi").checked = true;
@@ -468,7 +466,6 @@
 						
 						if(resourceCategory === "" || resourceName === "" || resourceDescription === "") {
 							alert("Please fill up all the fields.");
-							console.log("blankssss in add");
 							return false;
 						}
 						
@@ -503,11 +500,7 @@
 		function edit(id) {
 			var newId = id.substring(4);
 
-			console.log("id: " + id);
-			console.log("newId: " + newId);
-
 			var toShow = '#resourceCategory' + newId;
-			console.log("toShow: " + toShow);
 
 			$('#reso' + newId).prop('disabled', false);
 			$('#desc' + newId).prop('disabled', false);
@@ -527,14 +520,10 @@
 			var resoName = $('#reso'+oldId).val();
 			var resoDesc = $('#desc'+oldId).val();
 			
-			
 			if(resoCat === "" || resoName === "" || resoDesc === "") {
-				console.log("blankssss in save");
 				alert("Please fill up all the fields.");
 				return false;
 			}
-
-			console.log("id: " + oldId);
 
 			$('#reso' + oldId).prop('disabled', true);
 			$('#desc' + oldId).prop('disabled', true);
@@ -543,10 +532,8 @@
 			$('#save' + oldId).hide();
 			$('#canc' + oldId).hide();
 			
-			var newlyAddedResourceCat = document.getElementById("resourceCategory" + oldId); 
-		      console.log("newlyAddedResourceCat: " + newlyAddedResourceCat); 
-		      if (newlyAddedResourceCat !== null) { 
-		        console.log("newlyAddedResourceCat: " + newlyAddedResourceCat.value); 
+			var newlyAddedResourceCat = document.getElementById("resourceCategory" + oldId);
+		      if (newlyAddedResourceCat !== null) {
 		        var currentResourceCategory = $('#currentResourceCategory' + oldId); 
 		        currentResourceCategory.text(''); 
 		        currentResourceCategory.text(newlyAddedResourceCat.value); 
@@ -596,10 +583,7 @@
 		function cancel(id) {
 			var disabledStatus = $('.editable-field').attr('disabled');
 			var newId = id.substring(4);
-
-			console.log("id: " + newId);
 			var toHide = '#resourceCategory' + newId;
-			console.log("toHide: " + toHide);
 
 			$('#reso' + newId).prop('disabled', true);
 			$('#desc' + newId).prop('disabled', true);

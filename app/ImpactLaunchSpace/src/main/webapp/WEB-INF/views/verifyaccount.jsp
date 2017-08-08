@@ -85,7 +85,6 @@
 				.getElementById("verifyNewAccountSuccess").value;
 
 		if (verifyNewAccountStatus.length > 0) {
-			console.log("in here la");
 			$('#register_container').hide();
 			$('#register_success').hide();
 			$('#verify_container').show();
@@ -93,7 +92,6 @@
 		}
 
 		if (verifyNewAccountSuccessStatus.length > 0) {
-			console.log("in here 2");
 			$('#register_container').hide();
 			$('#register_success').hide();
 			$('#verify_container').hide();

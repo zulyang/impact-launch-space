@@ -79,8 +79,6 @@
 	window.onload = function() {
 		var unlockAccountStatus = document.getElementById("unlockAccountPin").value;
 
-		console.log(unlockAccountStatus);
-
 		if (unlockAccountStatus.length > 0) {
 			$('#welcome').hide();
 			$('#unlockAccountPinMessage').show()

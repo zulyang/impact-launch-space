@@ -51,7 +51,6 @@ public class VerificationTokenService {
 		// email = loginService.returnEmailFromUsername(usernameemail);
 		// username = loginService.returnUsernameFromEmail(usernameemail);
 		// }
-		System.out.println(usernameemail);
 		VerificationToken vt = verificationTokenDAO.retrieveVerificationToken(usernameemail);
 		
 		String verificationCode = vt.getVerification_code();
@@ -149,9 +148,6 @@ public class VerificationTokenService {
 
 			// send
 			Response response = sendGrid.makeCall(request);
-			System.out.println("status code: " + response.getStatusCode());
-			System.out.println("body: " + response.getBody());
-			System.out.println("headers: " + response.getHeaders());
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

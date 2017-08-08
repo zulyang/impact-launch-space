@@ -119,10 +119,6 @@
 		var pinValue = document.getElementById("pinValue").value;
 		var passwordUnmatch = document.getElementById("passwordUnmatch").value;
 		
-		console.log(forgotPWvalidation.length);
-		console.log(emailValue.length);
-		console.log(pinValue);
-		
 		if ((forgotPWvalidation.length === 0 && emailValue.length > 0) || pinValue.length > 0) {
 			if ($('#email_sent_prompt').css('display') == 'none' && $('#wait_prompt').css('display') == 'none') {
 				$('#email_sent_prompt').show();

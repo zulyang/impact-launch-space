@@ -146,9 +146,6 @@ public class ResetTokenService {
 
 			// send
 			Response response = sendGrid.makeCall(request);
-			System.out.println("status code: " + response.getStatusCode());
-			System.out.println("body: " + response.getBody());
-			System.out.println("headers: " + response.getHeaders());
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -230,9 +227,6 @@ public class ResetTokenService {
 
 			// send
 			Response response = sendGrid.makeCall(request);
-			System.out.println("status code: " + response.getStatusCode());
-			System.out.println("body: " + response.getBody());
-			System.out.println("headers: " + response.getHeaders());
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
