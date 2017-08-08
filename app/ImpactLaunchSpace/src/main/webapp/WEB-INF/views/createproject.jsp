@@ -142,9 +142,9 @@
 										<label for="projectDescription"
 											class="col-sm-3 col-form-label">Project Description</label>
 										<div class="col-sm-9">
-											<input required type="text" id="projectDescription" value=""
+											<textarea required id="projectDescription" value=""
 												name="projectDescription" class="form-control"
-												placeholder="A short summary of project">
+												placeholder="A short summary of project" rows = "4"></textarea>
 										</div>
 									</div>
 
@@ -250,9 +250,7 @@
 
 									<div class="col-sm-12">
 										<input id="addResource" class="btn btn-info" type="button"
-											value="Add Resource" /> <br /> <input
-											onclick="checkAllFields()" class="btn btn-info" type="button"
-											value="Check All Fields" /> <br /> <br />
+											value="Add Resource" /> <br />
 										<hr />
 									</div>
 
