@@ -55,7 +55,10 @@
 								<p class="indi_bio">${individual.getPersonalBio()}</p>
 								<hr>
 								<p><i class="fa fa-briefcase"></i> ${individual.getJobTitle()}</p>
-								<p><i class="fa fa-building"></i> ${individual.getOrganization()}</p>
+								<c:if test="${individual.getOrganization().length() > 0}">
+									<p><i class="fa fa-building"></i> ${individual.getOrganization()}</p>
+								</c:if>
+								
 								<hr>
 								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p>
 								<p style="display: inline-block"><i class="fa fa-phone"></i> ${individual.getContactDetails()}</p>

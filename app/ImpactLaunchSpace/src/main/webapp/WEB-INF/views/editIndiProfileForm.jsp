@@ -100,6 +100,11 @@
 											name="organization" id="editOrg">
 											<option></option>
 											<c:forEach items="${organization_list}" var="item">
+												<c:choose>
+													<c:when test="${individual.getOrganization().equals(item) }">
+														<option value="${item}" selected="selected">${item}</option>
+													</c:when>
+												</c:choose>
 												<option value="${item}">${item}</option>
 											</c:forEach>
 										</select>
@@ -198,7 +203,7 @@
 						<div class="panel-body">
 							My Skills: <br> <select
 								class="js-example-basic-multiple-skills" multiple="multiple"
-								name="selected_skillsets" required id="skillsets">
+								name="selected_skillsets" required id="skillsets" style = "width : 100%" >
 								<c:forEach items="${skillset_list}" var="item">
 									<c:choose>
 										<c:when
@@ -221,7 +226,7 @@
 						<div class="panel-body">
 							<br> I have expertise in these Job Sectors: <br> <select
 								class="js-example-basic-single-jobsectorindividual-required"
-								name="selected_jobsector1" id="jsIndi1Value">
+								name="selected_jobsector1" id="jsIndi1Value" style = "width : 49%">
 								<option value=""></option>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
@@ -236,13 +241,13 @@
 								</c:forEach>
 							</select> <input type="number" placeholder="Years of Experience"
 								id="js1experience" name="selected_jobsector1_years"
-								value="${jobSectorIndividual1.getYearsOfExperience()}">
+								value="${jobSectorIndividual1.getYearsOfExperience()}" style = "width : 49%" >
 
 							<c:choose>
 								<c:when test="${jobSectorIndividual2 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector2" id="jsIndi2aValue">
+										name="selected_jobsector2" id="jsIndi2aValue" style = "width : 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
@@ -260,12 +265,12 @@
 									<input type="number" id="js2experienceA"
 										placeholder="Years of Experience"
 										name="selected_jobsector2_years"
-										value="${jobSectorIndividual2.getYearsOfExperience()}">
+										value="${jobSectorIndividual2.getYearsOfExperience()}" style = "width : 49%">
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector2" id="jsIndi2bValue">
+										name="selected_jobsector2" id="jsIndi2bValue" style = "width : 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -275,7 +280,7 @@
 									</select>
 									<input type="number" id="js2experienceB"
 										placeholder="Years of Experience"
-										name="selected_jobsector2_years">
+										name="selected_jobsector2_years" style = "width : 49%">
 								</c:otherwise>
 							</c:choose>
 
@@ -283,7 +288,7 @@
 								<c:when test="${jobSectorIndividual3 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector3" id="jsIndi3aValue">
+										name="selected_jobsector3" id="jsIndi3aValue" style = "width : 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
@@ -301,12 +306,12 @@
 									<input type="number" id="js3experienceA"
 										placeholder="Years of Experience"
 										name="selected_jobsector3_years"
-										value="${jobSectorIndividual3.getYearsOfExperience()}">
+										value="${jobSectorIndividual3.getYearsOfExperience()}" style = "width : 49%">
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector3" id="jsIndi3bValue">
+										name="selected_jobsector3" id="jsIndi3bValue" style = "width : 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -316,7 +321,7 @@
 									</select>
 									<input type="number" id="js3experienceB"
 										placeholder="Years of Experience"
-										name="selected_jobsector3_years">
+										name="selected_jobsector3_years" style = "width : 49%">
 								</c:otherwise>
 							</c:choose>
 
@@ -330,7 +335,7 @@
 							I prefer to work in: <select
 								class="js-example-basic-multiple-preferredcountries edit_profileField"
 								multiple="multiple" name="selected_preferredcountries"
-								id="preferredCountries" required>
+								id="preferredCountries" style = "width : 100%" required>
 								<c:forEach items="${country_list}" var="item">
 									<c:choose>
 										<c:when
@@ -345,7 +350,7 @@
 
 							</select> <br> Preferred Project Areas: <br> <select
 								class="js-example-basic-multiple-preferredprojectareas edit_profileField"
-								multiple="multiple" name="selected_preferredprojectareas"
+								multiple="multiple" name="selected_preferredprojectareas" style = "width : 100%" 
 								id="preferredAreas" required>
 								<c:forEach items="${project_area_list}" var="item">
 									<c:choose>
@@ -363,7 +368,7 @@
 							</select> <br> Preferred Job Sectors: <br> <select
 								class="js-example-basic-multiple-preferredjobsectors edit_profileField"
 								multiple="multiple" name="selected_preferredjobsectors"
-								id="preferredJobSectors" required>
+								id="preferredJobSectors" style = "width : 100%" required>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
 										<c:when
@@ -722,7 +727,8 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".js-example-basic-single-organization").select2({
-				placeholder : "Select an organization: "
+				placeholder : "Select an organization: ",
+				allowClear : true
 			});
 		});
 	</script>

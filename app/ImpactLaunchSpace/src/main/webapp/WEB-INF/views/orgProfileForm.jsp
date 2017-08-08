@@ -51,32 +51,35 @@
 									a display picture</div>
 								<div style='height: 0px; width: 0px; overflow: hidden;'>
 									<input id="uploadFile" name="profilePicture" type="file"
-										value="upload" onchange="sub(this)" />
+										value="upload" onchange="sub(this)" style = "width : 100%" />
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="text" name="username" value="${username}" readonly
-									class="form-control profileField">
+									class="form-control profileField"
+									style = "width : 100%">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="text" name="email" value="${email}" readonly
-									class="form-control profileField">
+									class="form-control profileField"
+									style = "width : 100%">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input name="companyName" required type="text"
-									class="form-control profileField" placeholder="Company name">
+									class="form-control profileField" placeholder="Company name"
+									style = "width : 100%">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<select class="js-example-basic-multiple" required multiple="multiple"
-									name="countriesOfOperation">
+									name="countriesOfOperation" style = "width : 100%">
 									<c:forEach items="${country_list}" var="item">
 										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
 									</c:forEach>
@@ -86,7 +89,7 @@
 						<div class="form-group">
 							<div class="col-lg-12">
 								<select class="js-example-basic-multiple2" multiple="multiple"
-									name="selected_jobsectors" required>
+									name="selected_jobsectors" style = "width : 100%" required>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>
@@ -97,14 +100,15 @@
 							<div class="col-lg-12">
 								<textarea rows="4" name="companyBio"
 									class="form-control companyBio"
-									placeholder="A short company bio"></textarea>
+									placeholder="A short company bio" style = "width : 100%"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input name="contactDetails" required="required" type="text"
 									class="form-control profileField"
-									placeholder="Office telephone number">
+									placeholder="Office telephone number"
+									style = "width : 100%">
 							</div>
 						</div>
 						<div class="form-group">

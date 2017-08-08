@@ -97,9 +97,9 @@
 									<label for="editOrgBio" class="col-sm-2 control-label">Company
 										Bio</label>
 									<div class="col-sm-10">
-										<textarea id="editOrgBio" rows="4" type="text"
+										<textarea id="editOrgBio" rows="4"
 											name="companyBio" class="form-control edit_profileField"
-											value="${organization.getCompanyBio()}">
+											value="${organization.getCompanyBio()}">${organization.getCompanyBio()}
 										</textarea>
 									</div>
 								</div>

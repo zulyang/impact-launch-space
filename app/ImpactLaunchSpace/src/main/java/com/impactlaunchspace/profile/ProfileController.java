@@ -454,6 +454,10 @@ public class ProfileController {
 		String username = individual.getUsername();
 		String email = individual.getEmail();
 		// to-do
+		if(organization.length() == 0){
+			organization = null;
+		}
+		
 		IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
 				individual.getEmail(), dateOfBirth, firstName, lastName, country, jobTitle, minimumVolunteerHours,
 				maximumVolunteerHours, organization, individual.isPublicProfile(), individual.getProfilePicture(),
