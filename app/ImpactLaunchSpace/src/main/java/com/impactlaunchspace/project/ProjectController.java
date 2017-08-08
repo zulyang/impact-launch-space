@@ -127,15 +127,19 @@ public class ProjectController {
 
 		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
 		ArrayList<ProjectRequestedResource> selected_requestedResources = new ArrayList<ProjectRequestedResource>();
-
+		ArrayList<String> resourceCategoryStrings = new ArrayList<String>();
+		
 		for (String resourceCategory_string : resourceCategory) {
 			ProjectResourceCategory projectResourceCategoryObj = new ProjectResourceCategory(project_name,
 					resourceCategory_string, project_proposer);
-			if (!resourceCategory.contains(projectResourceCategoryObj)) {
+			if (!resourceCategoryStrings.contains(resourceCategory_string)) {
 				selected_resourceCategories.add(projectResourceCategoryObj);
+				resourceCategoryStrings.add(resourceCategory_string);
 			}
-
+			
 		}
+		
+		System.out.println("size " + selected_resourceCategories.size());
 
 		for (int i = 0; i < resourceName.size(); i++) {
 			ProjectRequestedResource projectRequestedResourceObj = new ProjectRequestedResource(project_name,
