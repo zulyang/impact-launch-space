@@ -18,7 +18,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
 
 				<div class="col-lg-12 form_container">
 					<h4 class="unlockAccountMessage">Enter your verification

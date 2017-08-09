@@ -25,7 +25,7 @@
 </head>
 
 <body class="project">
-	<%@include file="common/navigation.jspf"%>
+	<%@include file="../common/navigation.jspf"%>
 
 
 	<!--main content-->

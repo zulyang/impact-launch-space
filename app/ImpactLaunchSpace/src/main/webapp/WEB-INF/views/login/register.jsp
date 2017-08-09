@@ -73,11 +73,11 @@
 					</form>
 				</div>
 
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
 				<div class="col-lg-12 register_success" id="register_success"
 					style="display: none;">
 					
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
 					
 					<h4 class="register_success_message">Registration Successful</h4>
 					<p class="success_verify_message">You have successfully

@@ -17,11 +17,11 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
 
 				<div class="col-lg-12 form_container">
 					<h4 class="welcome">Forgot your password?</h4>
-					<form action="forgotpassword" method="POST"
+					<form action="forgot-password" method="POST"
 						class="form-horizontal forgot_form" id="forgotPasswordForm">
 						<div class="form-group">
 							<div class="col-lg-12">

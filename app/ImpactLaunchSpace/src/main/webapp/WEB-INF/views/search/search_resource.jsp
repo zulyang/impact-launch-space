@@ -47,7 +47,7 @@
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
-				<%@include file="common/navigation.jspf"%>
+				<%@include file="../common/navigation.jspf"%>
 <div class="explore-header col-sm-12">
 	<h1 class="explore-title">Search For Resource</h1>
 <div class="explore-search">

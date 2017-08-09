@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
                     
                     <div class="col-lg-12 form_container">
                         <h4 class="unlockAccountMessage">Your account has been locked. You may unlock it here.</h4>
@@ -38,7 +38,7 @@
                             </div>
                             <p class="accountUnlockValidation">${accountUnlockValidation}</p>
                             <div class="forget">
-                                <a href="/forgotpassword">Forget your password?</a>
+                                <a href="/forgot-password">Forget your password?</a>
                             </div>
                         </form>
                     </div>

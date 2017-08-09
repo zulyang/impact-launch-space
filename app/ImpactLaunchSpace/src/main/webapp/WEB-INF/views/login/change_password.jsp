@@ -9,7 +9,7 @@
 <body>
 	<div>
 		<h4 class="welcome">Set your new password</h4>
-		<form action="changepassword" method="POST" class="form-horizontal">
+		<form action="change-password" method="POST" class="form-horizontal">
 			<div class="form-group">
 				<div class="col-lg-12">
 					<input type="password" name="existingPassword" class="form-control field"

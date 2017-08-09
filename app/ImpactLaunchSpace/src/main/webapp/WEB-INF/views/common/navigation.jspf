@@ -20,7 +20,7 @@
 								<ul class="dropdown-menu">
 									<li><a href="/create-project">Create Project</a></li>
 									<li role="separator" class="divider"></li>
-									<li><a href="/searchproject">Explore Projects</a></li>
+									<li><a href="/search-project">Explore Projects</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="/view-project?project-name=Water%20the%20kids&project-proposer=edward">View Water the kids</a></li>
 									<li><a href="/edit-project?project-name=Water%20the%20kids&project-proposer=edward">Edit Water the kids</a></li>
@@ -30,9 +30,9 @@
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Resources <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="/manageUserResource">Manage Resources</a></li>
+									<li><a href="/manage-user-resources">Manage Resources</a></li>
 									<li role="separator" class="divider"></li>
-									<li><a href="/searchresource">Explore Resources</a></li>
+									<li><a href="/search-resource">Explore Resources</a></li>
 								</ul></li>
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
@@ -65,7 +65,7 @@
 							<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 								</a>
 								<ul class="dropdown-menu">
-								<li><a href="/individualProfileDisplay">View My Profile</a></li>
+								<li><a href="/view-my-profile">View My Profile</a></li>
 									<li><a href="#">FAQ</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="/logout">Log Out</a></li>

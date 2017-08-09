@@ -16,14 +16,14 @@
 <script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
 <script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-
 </head>
+
 <body class="profile">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigation.jspf" %>
+<%@include file="../../common/navigation.jspf" %>
 					
 
 				<div class="indi_profile_display_container">
@@ -39,8 +39,7 @@
 									${individual.getLast_name()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<a href="editprofile-individual" class="btn btn-default">
-										Edit Profile </a> <a href="" class="btn btn-default"> Leave A
+								 <a href="" class="btn btn-default"> Leave A
 										Message </a>
 								</div>
 
@@ -51,6 +50,7 @@
 								<c:if test="${individual.getOrganization().length() > 0}">
 									<p><i class="fa fa-building"></i> ${individual.getOrganization()}</p>
 								</c:if>
+								
 								<hr>
 								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p><br/>
 								<p style="display: inline-block"><i class="fa fa-phone"></i> ${individual.getContactDetails()}</p>
@@ -120,7 +120,7 @@
 											</a>
 										</td>
 										<td><a href="/downloadFile?file=${document}">${document.getName()}</a></td>
-									<tr>
+									</tr>
 								</c:forEach>
 							</table>
 						</div>

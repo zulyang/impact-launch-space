@@ -41,9 +41,9 @@ public class ProfileController {
 	UserService userService;
 
 	// Setup for Organizations
-	@RequestMapping(value = "/orgProfileForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/setup-organization", method = RequestMethod.GET)
 	public String showSetupPageForOrganizationProfile() {
-		return "orgProfileForm";
+		return "profile/organization/" + "setup_organization_profile";
 	}
 
 	@RequestMapping(value = "/setup-organization", method = RequestMethod.POST)
@@ -93,15 +93,15 @@ public class ProfileController {
 				profileService.retrieveCountriesOfOperations(username));
 		request.getSession().setAttribute("jobSectorsOrganization",
 				profileService.retrieveOrganizationJobSectors(username));
-		return "organizationProfileDisplay";
+		return "profile/organization/" + "view_own_organization_profile";
 	}
 
-	@RequestMapping(value = "/organizationProfileDisplay", method = RequestMethod.GET)
+	@RequestMapping(value = "/view-organization-profile", method = RequestMethod.GET)
 	public String showOrganizationDisplayPage(HttpServletRequest request) {
-		return "organizationProfileDisplay";
+		return "profile/organization/" + "view_own_organization_profile";
 	}
 
-	@RequestMapping(value = "/editOrgProfileForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit-organization-profile", method = RequestMethod.GET)
 	public String EditProfilePageOrganization(ModelMap model, HttpServletRequest request) {
 
 		// Populate the JobSectors and countries the organization has chosen for
@@ -128,7 +128,7 @@ public class ProfileController {
 				organization_countriesofoperation_list);
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
-		return "editOrgProfileForm";
+		return "profile/organization/" + "edit_organization_profile";
 	}
 
 	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.GET)
@@ -137,9 +137,9 @@ public class ProfileController {
 	}
 
 	// Setup for Individuals
-	@RequestMapping(value = "/indiProfileForm", method = RequestMethod.GET)
+	@RequestMapping(value = "/setup-individual", method = RequestMethod.GET)
 	public String showSetupPageForIndividualProfile() {
-		return "indiProfileForm";
+		return "profile/individual/" + "setup_individual_profile";
 	}
 
 	@RequestMapping(value = "/setup-individual", method = RequestMethod.POST)
@@ -243,7 +243,7 @@ public class ProfileController {
 				profileService.retrievePreferredProjectArea(username));
 		request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username));
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		return "individualProfileDisplay";
+		return "profile/individual/" + "view_own_individual_profile";
 	}
 
 	@RequestMapping(value = "/individualprofile1", method = RequestMethod.GET)
@@ -287,13 +287,13 @@ public class ProfileController {
 				profileService.retrieveCountriesOfOperations(username));
 		request.getSession().setAttribute("jobSectorsOrganization",
 				profileService.retrieveOrganizationJobSectors(username));
-		return "organizationProfileDisplay";
+		return "profile/organization/" + "view_own_organization_profile";
 	}
 
 	// Dashboard and Edit Pages for Individual Profiles
-	@RequestMapping(value = "/individualProfileDisplay", method = RequestMethod.GET)
+	@RequestMapping(value = "/view-my-profile", method = RequestMethod.GET)
 	public String showIndividualProfilePage(HttpServletRequest request, ModelMap model) {
-		return "individualProfileDisplay";
+		return "profile/individual/" + "view_own_individual_profile";
 	}
 	
 	@RequestMapping(value = "/view-profile", method = RequestMethod.GET)
@@ -311,7 +311,8 @@ public class ProfileController {
 						profileService.retrieveCountriesOfOperations(username));
 				request.getSession().setAttribute("jobSectorsOrganization",
 						profileService.retrieveOrganizationJobSectors(username));
-				return "organizationPublicDisplay";
+				return "profile/organization/" + "view_public_organization_profile";
+				
 			}else if(userType.equals("individual")){
 				IndividualAccount individual = profileService.getIndividualAccountDetails(username);
 				boolean isPublic = individual.isPublicProfile();
@@ -332,9 +333,9 @@ public class ProfileController {
 						profileService.retrieveAllSkillsOfUser(username));
 				
 				if(isPublic){
-					return "individualPublicDisplay";
+					return "profile/individual/" + "view_public_individual_profile";
 				}else{
-					return "individualProfileDisplayPrivate";
+					return "profile/individual/" + "view_private_individual_profile";
 				}
 				
 			}
@@ -342,7 +343,7 @@ public class ProfileController {
 			
 			
 		}
-		return "individualProfileDisplay";
+		return "profile/individual/" + "view_own_individual_profile";
 	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.GET)
@@ -433,7 +434,7 @@ public class ProfileController {
 
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(individual.getUsername()));
-		return "/editIndiProfileForm";
+		return "profile/individual/" + "edit_individual_profile";
 	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.POST)
@@ -570,10 +571,10 @@ public class ProfileController {
 		request.getSession().setAttribute("preferredJobSectors", profileService.retrievePreferredJobSectors(username));
 		request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username));
 
-		return "individualProfileDisplay";
+		return "profile/individual/" + "view_own_individual_profile";
 	}
 
-	@RequestMapping(value = "/editprofile-individual-profilepic", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit-individual-profile-pic", method = RequestMethod.POST)
 	public String processUpdateIndividualProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture,
 			HttpServletRequest request) {
 		if (profilePicture.isEmpty() || profilePicture == null) {
@@ -610,7 +611,7 @@ public class ProfileController {
 		}
 	}
 
-	@RequestMapping(value = "/editprofile-organization-profilepic", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit-organization-profile-pic", method = RequestMethod.POST)
 	public String processUpdateOrganizationProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture,
 			HttpServletRequest request) {
 		if (profilePicture.isEmpty() || profilePicture == null) {
@@ -635,7 +636,7 @@ public class ProfileController {
 			profileService.updateOrganizationAccount(updatedOrganizationAccount, organization.getUsername());
 			request.getSession().setAttribute("organization",
 					profileService.getOrganizationAccountDetails(organization.getUsername()));
-			return "editOrgProfileForm";
+			return "profile/organization/" + "edit_organization_profile";
 		}
 	}
 
@@ -726,6 +727,6 @@ public class ProfileController {
 		profileService.deleteDocument(username, file);
 		// change the session attributes
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		return "editIndiProfileForm";
+		return "profile/individual/" + "edit_individual_profile";
 	}
 }

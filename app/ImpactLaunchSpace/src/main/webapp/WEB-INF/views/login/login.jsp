@@ -18,7 +18,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
 				<div class="col-lg-12 form_container">
 					<h4 id="welcome" class="welcome">Welcome!</h4>
 					<h4 id="unlockAccountPinMessage" class="unlockAccountPinMessage" style="display: none;">${unlockAccountPin}
@@ -55,7 +55,7 @@
 						<p class="loginValidation">${loginValidation}</p>
 
 						<div class="forget">
-							<a href="/forgotpassword">Forget your password?</a>
+							<a href="/forgot-password">Forget your password?</a>
 						</div>
 					</form>
 				</div>

@@ -26,15 +26,15 @@ public class ResourceController {
 	UserService userService;
 	
 	//Show Manage User Resource Page
-	@RequestMapping(value = "/manageUserResource", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage-user-resources", method = RequestMethod.GET)
 	public String showEditUserResourcePage(HttpServletRequest request, ModelMap model) {
 		String username = (String)request.getSession().getAttribute("username");
 		model.addAttribute("user_resource_offering", resourceService.getUserResourceOffering(username));
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
-		return "manageResources";
+		return "resource/" + "manage_user_resources";
 	}
 	
-	@RequestMapping(value = "/addUserResource", method = RequestMethod.POST)
+	@RequestMapping(value = "/add-user-resource", method = RequestMethod.POST)
 	public void addUserResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
 			@RequestParam String modalResourceDescription, HttpServletRequest request){
 		String username = (String)request.getSession().getAttribute("username");
@@ -42,7 +42,7 @@ public class ResourceController {
 		resourceService.insertUserResourceOffering(userOfferedResource);
 	}
 	
-	@RequestMapping(value = "/removeUserResource", method = RequestMethod.POST)
+	@RequestMapping(value = "/remove-user-resource", method = RequestMethod.POST)
 	public void removeUserResource(@RequestParam String resourceName, @RequestParam String resourceCategory, 
 			@RequestParam String resourceDescription, HttpServletRequest request){
 		String username = (String)request.getSession().getAttribute("username");
@@ -50,7 +50,7 @@ public class ResourceController {
 		resourceService.removeUserResourceOffering(userOfferedResource);
 	}
 	
-	@RequestMapping(value = "/saveUserResource", method = RequestMethod.POST)
+	@RequestMapping(value = "/save-user-resource", method = RequestMethod.POST)
 	public void saveUserResource(@RequestParam String resourceName, @RequestParam String resourceCategory, 
 			@RequestParam String resourceDescription, @RequestParam String oldResourceCategory, 
 			@RequestParam String oldResourceName, @RequestParam String oldResourceDescription, HttpServletRequest request){

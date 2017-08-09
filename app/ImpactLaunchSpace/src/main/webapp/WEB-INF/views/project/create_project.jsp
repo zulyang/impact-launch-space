@@ -34,7 +34,7 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
 				<!--navigation bar  -->
-				<%@include file="common/navigation.jspf"%>
+				<%@include file="../common/navigation.jspf"%>
 
 				<div class="create-project-container">
 

@@ -17,10 +17,10 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigationLogin.jspf" %>
+<%@include file="../common/navigationLogin.jspf" %>
 				<div class="col-lg-12 verify_container" id="verify_container">
 					<h4 class="verifyAccountMessage">Verify your account</h4>
-					<form method="post" class="form-horizontal" action="verifyaccount">
+					<form method="post" class="form-horizontal" action="verify-account">
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="text" name="usernameemail"

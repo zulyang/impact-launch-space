@@ -9,7 +9,7 @@
                   
                     <ul class="nav navbar-nav navbar-right nav_elements">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/login1">Sign In</a></li>
+                        <li><a href="/login">Sign In</a></li>
                         <li><a href="/register">Sign Up</a></li>
                     </ul>
                 </div>

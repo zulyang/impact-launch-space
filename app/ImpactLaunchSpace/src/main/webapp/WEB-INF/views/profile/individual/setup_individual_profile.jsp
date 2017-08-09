@@ -23,7 +23,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
-				<%@include file="common/navigation.jspf"%>
+				<%@include file="../../common/navigation.jspf"%>
 				<div class="col-lg-12 form_container indi_profile_container">
 					<form method="post" onsubmit="return checkFields();" action="setup-individual" enctype="multipart/form-data"
 						class="form-horizontal indi_profile_form">

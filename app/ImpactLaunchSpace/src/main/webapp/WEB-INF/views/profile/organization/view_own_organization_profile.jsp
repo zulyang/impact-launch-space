@@ -23,7 +23,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="common/navigation.jspf" %>
+<%@include file="../../common/navigation.jspf" %>
 					
 				<div class="org_profile_display_container">
 					<div class="panel panel-default">
@@ -37,7 +37,7 @@
 								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>
 
 								<div style="display: inline-block" class="btn-group">
-									<a href="editOrgProfileForm" class="btn btn-default">
+									<a href="edit-organization-profile" class="btn btn-default">
 										Edit Profile </a> 
 									<a href="" class="btn btn-default"> Leave A
 										Message </a>

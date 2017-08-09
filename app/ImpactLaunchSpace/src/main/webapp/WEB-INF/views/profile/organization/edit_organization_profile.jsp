@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<!--navigation bar  -->
-				<%@include file="common/navigation.jspf"%>
+				<%@include file="../../common/navigation.jspf"%>
 
 
 				<div class="edit_org_profile_display_container">
@@ -34,7 +34,7 @@
 						<div class="panel-body">
 
 							<div class="edit_org_pic" style="display: inline-block">
-								<form action="editprofile-organization-profilepic" method="post"
+								<form action="edit-organization-profile-pic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${organization.getUsername()}"
 										class="circle_edit_org_profile_image" height="64" width="64">

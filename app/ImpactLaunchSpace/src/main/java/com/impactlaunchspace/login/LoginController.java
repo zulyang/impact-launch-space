@@ -51,9 +51,9 @@ public class LoginController {
 	private final int MAX_LOGIN_ATTEMPTS = 5;
 
 	// Unlocking locked accounts
-	@RequestMapping(value = "/unlockmyaccount", method = RequestMethod.GET)
+	@RequestMapping(value = "/unlock-account", method = RequestMethod.GET)
 	public String showUnlockPage(ModelMap model) {
-		return "unlockaccount";
+		return "login/" + "unlock_account";
 	}
 
 	@RequestMapping(value = "/sendresetcodelocked", method = RequestMethod.POST)
@@ -70,16 +70,16 @@ public class LoginController {
 				model.addAttribute("email", email);
 				model.addAttribute("accountUnlockValidation", "Please check your email for your verification token");
 				rtService.regenerateResetCode(username, email);
-				return "unlockaccountpin"; // unlockaccountpin
+				return "login/" + "unlock_account_pin";
 			} else {
 				// FRONT END TO PRINT ERROR THAT THE USERNAME/PW IS WRONG
 				model.addAttribute("accountUnlockValidation", "Username/password is incorrect.");
-				return "unlockaccount"; // unlockaccount
+				return "login/" + "unlock_account";
 			}
 		} else {
 			// FRONT END TO PRINT ERROR THAT THE ACCOUNT DOES NOT EXIST
 			model.addAttribute("accountUnlockValidation", "The account does not exist.");
-			return "unlockaccount"; // unlockaccount
+			return "login/" + "unlock_account";
 
 		}
 	}
@@ -95,17 +95,17 @@ public class LoginController {
 			loginService.resetLoginAttempts(username);
 			model.addAttribute("unlockAccountPin", "Your account has been unlocked.");
 			// FRONT END TO PRINT THAT ACCOUNT HAS BEEN UNLOCKED
-			return "login1";
+			return "login/" + "login";
 		}
 		// FRONT END TO PRINT PIN IS WRONG
 		model.addAttribute("unlockAccountPin", "You have entered an incorrect verification token.");
-		return "unlockaccountpin";
+		return "login/" + "unlock_account_pin";
 	}
 
 	// Register Users
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegisterPage(ModelMap model) {
-		return "register";
+		return "login/" + "register";
 	}
 
 	@RequestMapping(value = "/registernewuser", method = RequestMethod.POST)
@@ -132,13 +132,13 @@ public class LoginController {
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
 			model.addAttribute("passwordCheck",
 					"Password must contain letters, digits, symbols and have at least 6 characters.");
-			return "register";
+			return "login/" + "register";
 		}
 
 		// FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
 		if (!password1.equals(password2)) {
 			model.addAttribute("passwordCheck", "Please ensure that both your passwords match.");
-			return "register";
+			return "login/" + "register";
 		}
 
 		boolean usernameExists = loginService.userExists(username);
@@ -146,15 +146,15 @@ public class LoginController {
 		// FRONT END TO PRINT ERROR THAT USERNAME AND EMAIL HAS ALR BEEN USED
 		if (usernameExists && emailExists) {
 			model.addAttribute("registerCheck", "The username and email is already in use.");
-			return "register";
+			return "login/" + "register";
 		} else if (usernameExists && !emailExists) {
 			// FRONT END TO PRINT ERROR THAT USERNAME HAS ALR BEEN USED
 			model.addAttribute("registerCheck", "The username is already in use.");
-			return "register";
+			return "login/" + "register";
 		} else if (!usernameExists && emailExists) {
 			// FRONT END TO PRINT ERROR THAT EMAIL HAS ALR BEEN USED
 			model.addAttribute("registerCheck", "The email is already in use.");
-			return "register";
+			return "login/" + "register";
 		}
 
 		boolean registerSuccess = registerService.registerNewUser(username, password1, email, user_type);
@@ -164,11 +164,11 @@ public class LoginController {
 			vtService.sendVerificationEmail(verificationCode, email);
 			// below is for resending verification
 			model.addAttribute("registerSuccess", "success");
-			return "register";
+			return "login/" + "register";
 		} else {
 			// FRONT END TO PRINT GENERIC ERROR, ERROR REGISTERING
 			model.addAttribute("registerCheck", "An error has occurred during registration.");
-			return "register";
+			return "login/" + "register";
 		}
 	}
 
@@ -178,9 +178,9 @@ public class LoginController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/verifyaccount", method = RequestMethod.GET)
+	@RequestMapping(value = "/verify-account", method = RequestMethod.GET)
 	public String showVerifyAccountPage(ModelMap model) {
-		return "verifyaccount";
+		return "login/" + "verify_account";
 	}
 
 	@RequestMapping(value = "/tokenexpired", method = RequestMethod.GET)
@@ -188,7 +188,7 @@ public class LoginController {
 		return "tokenexpired";
 	}
 
-	@RequestMapping(value = "/verifyaccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/verify-account", method = RequestMethod.POST)
 	public String verifyAccount(@RequestParam String usernameemail, @RequestParam String password,
 			@RequestParam String verificationcode, ModelMap model, 
 			HttpServletRequest request, HttpServletResponse response) {
@@ -205,7 +205,7 @@ public class LoginController {
 							"Your token has expired. Please check your email for a new token.");
 					// FRONT END TO PRINT TOKEN HAS EXPIRED, A NEW ONE HAS BEEN
 					// SENT TO UR INBOX
-					return "verifyaccount"; // tokenexpired
+					return "login/" + "verify_account"; // tokenexpired
 				}
 				vtService.unlock(username);
 				// FRONT END TO BRING TO SUCCESS PAGE
@@ -214,11 +214,11 @@ public class LoginController {
 			} else {
 				// FRONT END TO PRINT TOKEN IS INVALID
 				model.addAttribute("verifyNewAccount", "Your token is incorrect. Please try again.");
-				return "verifyaccount"; // verifyaccount
+				return "login/" + "verify_account"; // verifyaccount
 			}
 		}
 		model.addAttribute("verifyNewAccount", "Your username and/or password is incorrect.");
-		return "verifyaccount"; // verifyaccount
+		return "login/" + "verify_account"; // verifyaccount
 	}
 
 	// Resending Verification Code at potentially other screens
@@ -253,9 +253,9 @@ public class LoginController {
 	}
 
 	// Login and authenticate
-	@RequestMapping(value = "/login1", method = RequestMethod.GET)
-	public String showLogin1Page(ModelMap model) {
-		return "login1";
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String showLoginPage(ModelMap model) {
+		return "login/" + "login";
 	}
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
@@ -270,7 +270,7 @@ public class LoginController {
 			// user does not exist
 			// FRONT END TO PRINT USERNAME/PW IS WRONG
 			model.addAttribute("loginValidation", "Username/password is incorrect.");
-			return "login1";
+			return "login/" + "login";
 		} else {
 			isUser = loginService.authenticate(usernameemail, password);
 			isEnabled = loginService.checkEnabled(usernameemail);
@@ -279,7 +279,7 @@ public class LoginController {
 				// FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
 				// account locked or verified, do not increase login attempts
 				model.addAttribute("loginValidation", "This account is locked or unverified.");
-				return "login1"; // lockedlogin
+				return "login/" + "login"; // lockedlogin
 			} else if (isEnabled && !isUser) {
 				loginAttempts = loginService.getLoginAttempts(username);
 
@@ -290,7 +290,7 @@ public class LoginController {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG
 					model.addAttribute("loginValidation", "Username/password is incorrect.");
 					loginService.increaseLoginAttempts(username);
-					return "login1";
+					return "login/" + "login";
 				} else {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS
 					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
@@ -298,7 +298,7 @@ public class LoginController {
 					model.addAttribute("accountLockedValidation",
 							"Your account has been locked. You may unlock it here. ");
 					loginService.lockAccount(username);
-					return "unlockaccount";
+					return "login/" + "unlock_account";
 				}
 
 			} else if (isEnabled && isUser) {
@@ -369,7 +369,7 @@ public class LoginController {
 								profileService.retrieveCountriesOfOperations(username));
 						request.getSession().setAttribute("jobSectorsOrganization",
 								profileService.retrieveOrganizationJobSectors(username));
-						return "organizationProfileDisplay";
+						return "profile/organization/" + "view_own_organization_profile";
 					} else if (userType.equals("individual")) {
 						// add a cookie to the response.
 						if (c != null) {
@@ -390,7 +390,7 @@ public class LoginController {
 								profileService.retrievePreferredProjectArea(username));
 						request.getSession().setAttribute("userSkills",
 								profileService.retrieveAllSkillsOfUser(username));
-						return "individualProfileDisplay";
+						return "profile/individual/" + "view_own_individual_profile";
 					}
 				} else {
 					// userservice to determine if indiv/organ and redirect to
@@ -407,25 +407,25 @@ public class LoginController {
 						if (c != null) {
 							response.addCookie(c);
 						}
-						return "orgProfileForm";
+						return "profile/organization/" + "setup_organization_profile";
 					} else if (userType.equals("individual")) {
 						if (c != null) {
 							response.addCookie(c);
 						}
 						model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 						model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
-						return "indiProfileForm";
+						return "profile/individual/" + "setup_individual_profile";
 					}
 				}
 			}
 		}
-		return "login1";
+		return "login/" + "login";
 	}
 
 	// forget my password
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
 	public String showForgotPasswordPage(ModelMap model) {
-		return "forgotpassword";
+		return "login/" + "forgot_password";
 	}
 
 	@RequestMapping(value = "/errorgeneric", method = RequestMethod.GET)
@@ -433,7 +433,7 @@ public class LoginController {
 		return "error.jsp";
 	}
 
-	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/forgot-password", method = RequestMethod.POST)
 	public String resetPassword(@RequestParam String usernameemail, ModelMap model) {
 		boolean userExists = loginService.userExists(usernameemail);
 		if (userExists && usernameemail.length() != 0) {
@@ -448,12 +448,12 @@ public class LoginController {
 			rtService.regenerateResetCode(username, email);
 			model.addAttribute("username", username);
 			model.addAttribute("email", email);
-			return "forgotpassword";
+			return "login/" + "forgot_password";
 		}
 		// FRONT END TO PRINT AN ACCOUNT WITH THAT EMAIL DOESN NOT EXIST
 		// else error at current page
 		model.addAttribute("forgotPasswordCheck", "The email does not exist.");
-		return "forgotpassword";
+		return "login/" + "forgot_password";
 
 	}
 
@@ -466,11 +466,11 @@ public class LoginController {
 			model.addAttribute("email", email);
 			model.addAttribute("correctPin", "correctPin");
 			rtService.unlock(username);
-			return "forgotpassword";
+			return "login/" + "forgot_password";
 		}
 		// FRONT END TO PRINT PIN IS WRONG
 		model.addAttribute("pinWrongMessage", "You have entered an incorrect PIN.");
-		return "forgotpassword";
+		return "login/" + "forgot_password";
 	}
 
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
@@ -495,7 +495,7 @@ public class LoginController {
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
 			model.addAttribute("passwordError",
 					"Password must contain letters, digits, symbols and have at least 6 characters.");
-			return "forgotpassword";
+			return "login/" + "change_password";
 		}
 
 		if (password1.equals(password2)) {
@@ -508,7 +508,7 @@ public class LoginController {
 		}
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		model.addAttribute("passwordError", "Your passwords do not match.");
-		return "forgotpassword";
+		return "login/" + "change_password";
 	}
 
 	@ExceptionHandler(value = Exception.class)
@@ -536,18 +536,18 @@ public class LoginController {
 					break;
 				}
 			}
-			return "redirect:/login1";
+			return "redirect:" + "login";
 		}
 		return "false";
 	}
 	
 	// Register Users
-	@RequestMapping(value = "/changepassword", method = RequestMethod.GET)
+	@RequestMapping(value = "/change-password", method = RequestMethod.GET)
 	public String showChangePWPage(ModelMap model) {
-		return "changepassword";
+		return "login/" + "change_password";
 	}
 	
-	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
 	public String changePassword(@RequestParam String username, @RequestParam String existingPassword, @RequestParam String password1,
 			@RequestParam String password2, ModelMap model) {
 		boolean isCorrectPW = loginService.authenticate(username, existingPassword);
@@ -559,7 +559,7 @@ public class LoginController {
 		if(!isCorrectPW){
 			model.addAttribute("passwordError",
 					"Existing Password is incorrect");
-			return "changepassword";
+			return "login/" + "change_password";
 		}
 		
 		for (int i = 0; i < passLength; i++) {
@@ -575,7 +575,7 @@ public class LoginController {
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
 			model.addAttribute("passwordError",
 					"Password must contain letters, digits, symbols and have at least 6 characters.");
-			return "changepassword";
+			return "login/" + "change_password";
 		}
 
 		if (password1.equals(password2)) {
@@ -583,27 +583,27 @@ public class LoginController {
 			model.addAttribute("username", username);
 			model.addAttribute("passwordMatch", "passwordMatch");
 			model.addAttribute("passwordValidation", "You have successfully changed your password.");
-			return "changepassword";
+			return "login/" + "change_password";
 		}
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		model.addAttribute("passwordError", "Your passwords do not match.");
-		return "changepassword";
+		return "login/" + "change_password";
 	}
 	
-	@RequestMapping(value = "/searchproject", method = RequestMethod.GET)
+	@RequestMapping(value = "/search-project", method = RequestMethod.GET)
 	public String searchProject(ModelMap model) {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
 		model.addAttribute("countries", countries);
-		return "SearchPage";
+		return "search/" + "search_project";
 	}
 
-	@RequestMapping(value = "/searchresource", method = RequestMethod.GET)
+	@RequestMapping(value = "/search-resource", method = RequestMethod.GET)
 	public String searchResource(ModelMap model) {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
 		ArrayList<Skillset> skillset = profileService.retrieveSkillsetList();
 		model.addAttribute("countries", countries);
 		model.addAttribute("skillset",skillset);
-		return "SearchResource";
+		return "search/" + "search_resource";
 	}
 
 }

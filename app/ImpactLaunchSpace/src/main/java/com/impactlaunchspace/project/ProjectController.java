@@ -70,7 +70,7 @@ public class ProjectController {
 		model.addAttribute("user_type", user_type);
 		model.addAttribute("indi_org", indi_org);
 
-		return "createproject";
+		return "project/" + "create_project";
 	}
 
 	// Show Create Project Page
@@ -202,7 +202,7 @@ public class ProjectController {
 		model.addAttribute("project_requested_resources",
 				projectService.retrieveAllProjectRequestedResource(project_name, project_proposer));
 
-		return "edit-project";
+		return "project/" + "edit_project";
 	}
 
 	@RequestMapping(value = "/edit-project", method = RequestMethod.POST)
@@ -319,25 +319,25 @@ public class ProjectController {
 
 		if (projectPrivacy.equals("hidden")) {
 			if (request.getSession().getAttribute("username").equals(project_proposer)) {
-				return "viewProject";
+				return "project/" + "view_project_public";
 			} else {
-				return "viewProjectPrivate";
+				return "project/" + "view_project_private";
 			}
 		}
 
 		// for now if u are not the project creator u will see the private page
 		if (projectPrivacy.equals("private")) {
 			if (request.getSession().getAttribute("username").equals(project_proposer)) {
-				return "viewProject";
+				return "project/" + "view_project_public";
 			} else {
-				return "viewProjectPrivate";
+				return "project/" + "view_project_private";
 			}
 		}
 
 		if (projectPrivacy.equals("public")) {
-			return "viewProject";
+			return "project/" + "view_project_public";
 		}
-		return "viewProject";
+		return "project/" + "view_project_public";
 	}
 
 	@RequestMapping(value = "/view-privateproject", method = RequestMethod.GET)
@@ -349,7 +349,7 @@ public class ProjectController {
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
 
-		return "viewProjectPrivate";
+		return "project/" + "view_project_private";
 	}
 
 	@RequestMapping(value = "/edward-processajax", method = RequestMethod.GET)
