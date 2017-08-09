@@ -10,10 +10,11 @@ public class ProjectUserRequest {
 	private String offered_resource_name;
 	private String offered_request_description;
 	private String offer_comments;
+	private String request_status;
 	
 	public ProjectUserRequest(String project_name, String requested_resource_category, String requested_resource_name,
 			String project_proposer, String resource_offerer, String offered_resource_category,
-			String offered_resource_name, String offered_request_description, String offer_comments) {
+			String offered_resource_name, String offered_request_description, String offer_comments, String request_status) {
 		super();
 		this.project_name = project_name;
 		this.requested_resource_category = requested_resource_category;
@@ -24,6 +25,7 @@ public class ProjectUserRequest {
 		this.offered_resource_name = offered_resource_name;
 		this.offered_request_description = offered_request_description;
 		this.offer_comments = offer_comments;
+		this.request_status = request_status;
 	}
 	
 	
@@ -53,6 +55,10 @@ public class ProjectUserRequest {
 	}
 	public String getOffer_comments() {
 		return offer_comments;
+	}
+
+	public String getRequest_status() {
+		return request_status;
 	}
 
 	
