@@ -438,7 +438,7 @@
 																aIdParts[2], 10) + 1);
 
 												$(this).attr('id', newId);
-												$(this).attr('name', newId);
+												//$(this).attr('name', newId);
 											});
 
 							cloned.find("input[type='text']").val('');

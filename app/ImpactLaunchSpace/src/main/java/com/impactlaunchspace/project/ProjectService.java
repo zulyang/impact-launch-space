@@ -42,12 +42,12 @@ public class ProjectService {
 		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
 				new Timestamp(Calendar.getInstance().getTime().getTime()), 0);
-
+		
 		projectDAO.insert(project);
 		
 		projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,project_proposer,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
 		
-		if(organization != null || organization.length() > 0){
+		if(organization != null){
 			String organizationAccountUsername = organizationAccountDAO.findByCompanyName(organization).getUsername();
 			if(projectMemberListDAO.retrieveMemberList(project_name, organizationAccountUsername) == null){
 				projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
