@@ -310,15 +310,22 @@ public class JdbcProjectDAO implements ProjectDAO {
 
 		// Multiple SQL's to select from the Misc filters.
 		// Default Setting when the user hits the search landing page.
+		if(searchbox == null){
+			searchbox = "";
+		}
+		
 		String sql = "SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
 					+ " AND p.Project_Proposer = pt.Project_Proposer WHERE pt.PROJECT_NAME LIKE '%" + searchbox + "%' ";
 		
 		if (!causes.equals("Select Cause")) {
 			sql += "AND pt.PROJECT_AREA = '" + causes + "'";
+			
 		}
 		if (!location.equals("All")){
 			sql += "AND p.LOCATION = '" + location + "'";
 		}
+		
+		sql += "group by p.Project_Name, p.Project_Proposer";
 		
 		Connection conn = null;
 		try {
