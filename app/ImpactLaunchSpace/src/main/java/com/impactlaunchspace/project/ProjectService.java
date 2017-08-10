@@ -1,5 +1,6 @@
 package com.impactlaunchspace.project;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.impactlaunchspace.dao.DocumentsProjectDAO;
 import com.impactlaunchspace.dao.OrganizationAccountDAO;
 import com.impactlaunchspace.dao.ProjectBanListDAO;
 import com.impactlaunchspace.dao.ProjectDAO;
@@ -25,11 +27,10 @@ import com.impactlaunchspace.entity.ProjectTargetArea;
 @Service
 public class ProjectService {
 
-	public void setupProject(String project_name, String description, String purpose, int duration, String location,
-			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
-			boolean hiddenToAll, String project_status, ArrayList<String> project_banlist,
+	public void setupProject(Project project, ArrayList<String> project_banlist,
 			ArrayList<String> selected_projectareas, ArrayList<ProjectResourceCategory> selected_resourceCategories,
 			ArrayList<ProjectRequestedResource> selected_requestedResources) {
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
 		OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
@@ -39,30 +40,29 @@ public class ProjectService {
 		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
 		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
 
-		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
-				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
-				new Timestamp(Calendar.getInstance().getTime().getTime()), 0);
-		
 		projectDAO.insert(project);
 		
-		projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,project_proposer,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
+		projectMemberListDAO.insert(new ProjectMemberList(project.getProject_name(), project.getProject_proposer(), 
+				project.getProject_proposer(), "admin", new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
 		
+		String organization = project.getOrganization();
 		if(organization != null){
 			String organizationAccountUsername = organizationAccountDAO.findByCompanyName(organization).getUsername();
-			if(projectMemberListDAO.retrieveMemberList(project_name, organizationAccountUsername) == null){
-				projectMemberListDAO.insert(new ProjectMemberList(project_name, project_proposer,organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString()));
-			}
+			if(projectMemberListDAO.retrieveMemberList(project.getProject_name(), organizationAccountUsername) == null){ 
+		        projectMemberListDAO.insert(new ProjectMemberList(project.getProject_name(), project.getProject_proposer(), 
+		        		organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString())); 
+		    } 
 		}
 		
 		if(project_banlist != null){
 			for (String ban_username : project_banlist) {
-				projectBanListDAO.insert(new ProjectBanList(project_name, ban_username, project_proposer));
+				projectBanListDAO.insert(new ProjectBanList(project.getProject_name(), ban_username, project.getProject_proposer()));
 			}
 		}
 		
 		if(selected_projectareas != null){
 			for (String target_area : selected_projectareas) {
-				projectTargetAreaDAO.insert(new ProjectTargetArea(project_name, target_area, project_proposer));
+				projectTargetAreaDAO.insert(new ProjectTargetArea(project.getProject_name(), target_area, project.getProject_proposer()));
 			}	
 		}
 		
@@ -100,12 +100,10 @@ public class ProjectService {
 				projectBanListDAO.insert(projectBanList);
 			}
 		}
-		
 
 		for (ProjectTargetArea projectTargetArea : updated_targetAreas) {
 			projectTargetAreaDAO.insert(projectTargetArea);
 		}
-
 	}
 
 	public Project retrieveProject(String project_name, String project_proposer) {
@@ -181,5 +179,11 @@ public class ProjectService {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectResourceCategoryDAO projectResourceCategoryDAO = (ProjectResourceCategoryDAO) context.getBean("projectResourceCategoryDAO");
 		projectResourceCategoryDAO.closeResourceCategory(project_name, project_proposer, resource_category);
+	}
+
+	public void deleteDocument(String project_name, String project_proposer, File file) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		DocumentsProjectDAO documentProjectDAO = (DocumentsProjectDAO) context.getBean("documentsProjectDAO");
+		documentProjectDAO.delete(project_name, project_proposer, file);
 	}
 }

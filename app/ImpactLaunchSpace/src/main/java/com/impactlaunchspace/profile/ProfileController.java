@@ -3,6 +3,7 @@ package com.impactlaunchspace.profile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -157,23 +158,29 @@ public class ProfileController {
 			@RequestParam("profilePicture") MultipartFile profilePicture,
 			@RequestParam("documents") MultipartFile[] documents, ModelMap model, HttpServletRequest request) {
 
-		File profilePictureFile = new File(profilePicture.getOriginalFilename());
-		try {
-			profilePicture.transferTo(profilePictureFile);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		File profilePictureFile = null;
+		if(profilePicture.getOriginalFilename().isEmpty()){
+			profilePictureFile = new File("src/main/webapp/resources/img/astronaut.png");
+		}else{
+			profilePictureFile = new File(profilePicture.getOriginalFilename());
+			
+			try {
+				profilePicture.transferTo(profilePictureFile);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		ArrayList<File> documentList = new ArrayList<>();
-		if (documents != null && documents.length > 0) {
+		if (documents != null) {
 			for (MultipartFile document : documents) {
 				File documentFile = new File(document.getOriginalFilename());
 				try {
 					document.transferTo(documentFile);
 				} catch (IllegalStateException | IOException e) {
-					e.printStackTrace();
+					//first document error
 				}
 				documentList.add(documentFile);
 			}
@@ -312,7 +319,6 @@ public class ProfileController {
 				request.getSession().setAttribute("jobSectorsOrganization",
 						profileService.retrieveOrganizationJobSectors(username));
 				return "profile/organization/" + "view_public_organization_profile";
-				
 			}else if(userType.equals("individual")){
 				IndividualAccount individual = profileService.getIndividualAccountDetails(username);
 				boolean isPublic = individual.isPublicProfile();
@@ -339,9 +345,6 @@ public class ProfileController {
 				}
 				
 			}
-			
-			
-			
 		}
 		return "profile/individual/" + "view_own_individual_profile";
 	}
@@ -406,7 +409,6 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual1_string",
 							jobSectorsIndividual.get(0).getJob_sector());
 				}
-
 			}
 
 			if (i == 1) {
@@ -422,7 +424,6 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividual.get(2));
 					request.getSession().setAttribute("jobSectorIndividual3_string",
 							jobSectorsIndividual.get(2).getJob_sector());
-
 				}
 			}
 		}
@@ -434,7 +435,7 @@ public class ProfileController {
 
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(individual.getUsername()));
-		return "profile/individual/" + "edit_individual_profile";
+		return "/profile/individual/" + "edit_individual_profile";
 	}
 
 	@RequestMapping(value = "/editprofile-individual", method = RequestMethod.POST)
@@ -454,10 +455,10 @@ public class ProfileController {
 		String username = individual.getUsername();
 		String email = individual.getEmail();
 		// to-do
-		if(organization.length() == 0){
-			organization = null;
-		}
-		
+		if(organization.length() == 0){ 
+	      organization = null; 
+	    } 
+
 		IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
 				individual.getEmail(), dateOfBirth, firstName, lastName, country, jobTitle, minimumVolunteerHours,
 				maximumVolunteerHours, organization, individual.isPublicProfile(), individual.getProfilePicture(),
@@ -523,9 +524,7 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual1", jobSectorsIndividualSession.get(0));
 					request.getSession().setAttribute("jobSectorIndividual1_string",
 							jobSectorsIndividualSession.get(0).getJob_sector());
-
 				}
-
 			}
 
 			if (i == 1) {
@@ -533,7 +532,6 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual2", jobSectorsIndividualSession.get(1));
 					request.getSession().setAttribute("jobSectorIndividual2_string",
 							jobSectorsIndividualSession.get(1).getJob_sector());
-
 				}
 			}
 
@@ -542,7 +540,6 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividualSession.get(2));
 					request.getSession().setAttribute("jobSectorIndividual3_string",
 							jobSectorsIndividualSession.get(2).getJob_sector());
-
 				}
 			}
 
@@ -551,13 +548,11 @@ public class ProfileController {
 				request.getSession().removeAttribute("jobSectorIndividual2_string");
 				request.getSession().removeAttribute("jobSectorIndividual3");
 				request.getSession().removeAttribute("jobSectorIndividual3_string");
-
 			}
 
 			if (jobSectorsIndividualSession.size() == 2) {
 				request.getSession().removeAttribute("jobSectorIndividual3");
 				request.getSession().removeAttribute("jobSectorIndividual3_string");
-
 			}
 
 		}
@@ -578,8 +573,10 @@ public class ProfileController {
 	public String processUpdateIndividualProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture,
 			HttpServletRequest request) {
 		if (profilePicture.isEmpty() || profilePicture == null) {
-			return "editprofile-individual";
+			System.out.println("Is null or empty");
+			return "profile/individual/" + "edit_individual_profile";
 		} else {
+			System.out.println(profilePicture);
 			File profilePictureFile = new File(profilePicture.getOriginalFilename());
 			try {
 				profilePicture.transferTo(profilePictureFile);
@@ -591,6 +588,7 @@ public class ProfileController {
 				e.printStackTrace();
 			}
 			IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("myacccount-individual");
+			System.out.println("Individual "+individual);
 			IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
 					individual.getEmail(), individual.getDateOfBirth(), individual.getFirst_name(),
 					individual.getLast_name(), individual.getCountry(), individual.getJobTitle(),
@@ -607,7 +605,7 @@ public class ProfileController {
 			request.getSession().setAttribute("myacccount-individual",
 					profileService.getIndividualAccountDetails(individual.getUsername()));
 
-			return "editprofile-individual";
+			return "profile/individual/" + "edit_individual_profile";
 		}
 	}
 
@@ -687,7 +685,7 @@ public class ProfileController {
 			edwardo_jobsector_list.add(jso.getJob_sector());
 		}
 		model.addAttribute("edwardo_jobsector_list", edwardo_jobsector_list);
-		
+
 		return "testSelect2";
 	}
 
