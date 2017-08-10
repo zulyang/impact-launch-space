@@ -78,6 +78,18 @@
 								<div class="tab-pane active" role="tabpanel" id="step1">
 									<h3>Step 1</h3>
 									<p>Fill in basic information of new project</p>
+									
+									<div class="form-group row">
+										<label for="projectImage" class="col-sm-3 col-form-label">Image</label>
+										<div class="col-sm-9">
+											<div id="profile_upload_button" onclick="uploadPicture()">Upload a profile picture</div>
+											<div style='height: 0px; width: 0px; overflow: hidden;'>
+												<input id="uploadPicture" name="projectImage" type="file"
+													value="upload" onchange="sub(this)" />
+											</div>
+										</div>
+									</div>
+									
 									<div class="form-group row">
 										<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
 										<div class="col-sm-9">
@@ -187,6 +199,18 @@
 											</select> <br>
 										</div>
 									</div>
+									
+									<div class="form-group row">
+										<label for="projectImage" class="col-sm-3 col-form-label">Image</label>
+										<div class="col-sm-9">
+											<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
+											<div style='height: 0px; width: 0px; overflow: hidden;'>
+												<input id=uploadFile name="documents" multiple type="file"
+													value="upload" onchange="docSub(this)" />
+											</div>
+										</div>
+									</div>
+									
 									<hr />
 									<ul class="list-inline pull-right">
 										<li><button type="button" onclick="return checkStep1();"
@@ -282,6 +306,32 @@
 				checkAllFields();
 				}, 1000);
 		});
+		
+		function uploadPicture() {
+			document.getElementById("uploadPicture").click();
+		}
+		function sub(obj) {
+			var file = obj.value;
+			var fileName = file.split("\\");
+			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
+			event.preventDefault();
+		}
+		
+		function uploadFile() {
+			document.getElementById("uploadFile").click();
+		}
+		function docSub(obj) {
+			var fileList = document.getElementById("uploadFile").files;
+			var allFileNames;
+			
+			for(var i = 0; i < fileList.length; i++) {
+				var fileName = fileList[i].name.split("\\");
+				allFileNames += (fileName + "<br>");
+			}
+			
+			document.getElementById("document_upload_button").innerHTML = allFileNames.substring(9);
+			event.preventDefault();	
+		}
 	</script>
 
 	<script type="text/javascript">

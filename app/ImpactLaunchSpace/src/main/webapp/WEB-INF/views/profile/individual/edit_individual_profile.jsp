@@ -390,6 +390,15 @@
 										</a></td>
 									</tr>
 								</c:forEach>
+								<tr>
+									<div class="col-lg-12 custom-file-upload" id="documents">
+									<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
+									<div style='height: 0px; width: 0px; overflow: hidden;'>
+										<input id=uploadFile name="documents" multiple type="file"
+											value="upload" onchange="docSub(this)" />
+									</div>
+								</tr>
+							</div>
 							</table>
 						</div>
 					</div>
@@ -416,6 +425,23 @@
 	</div>
 
 	<script type="text/javascript">
+	
+		function uploadFile() {
+			document.getElementById("uploadFile").click();
+		}
+		function docSub(obj) {
+			var fileList = document.getElementById("uploadFile").files;
+			var allFileNames;
+			
+			for(var i = 0; i < fileList.length; i++) {
+				var fileName = fileList[i].name.split("\\");
+				allFileNames += (fileName + "<br>");
+			}
+			
+			document.getElementById("document_upload_button").innerHTML = allFileNames.substring(9);
+			event.preventDefault();	
+		}
+	
 		function checkFields() {
 			var firstName = document.getElementById("editIndFirstName");
 

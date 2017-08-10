@@ -524,9 +524,7 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual1", jobSectorsIndividualSession.get(0));
 					request.getSession().setAttribute("jobSectorIndividual1_string",
 							jobSectorsIndividualSession.get(0).getJob_sector());
-
 				}
-
 			}
 
 			if (i == 1) {
@@ -534,7 +532,6 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual2", jobSectorsIndividualSession.get(1));
 					request.getSession().setAttribute("jobSectorIndividual2_string",
 							jobSectorsIndividualSession.get(1).getJob_sector());
-
 				}
 			}
 
@@ -543,7 +540,6 @@ public class ProfileController {
 					request.getSession().setAttribute("jobSectorIndividual3", jobSectorsIndividualSession.get(2));
 					request.getSession().setAttribute("jobSectorIndividual3_string",
 							jobSectorsIndividualSession.get(2).getJob_sector());
-
 				}
 			}
 
@@ -552,13 +548,11 @@ public class ProfileController {
 				request.getSession().removeAttribute("jobSectorIndividual2_string");
 				request.getSession().removeAttribute("jobSectorIndividual3");
 				request.getSession().removeAttribute("jobSectorIndividual3_string");
-
 			}
 
 			if (jobSectorsIndividualSession.size() == 2) {
 				request.getSession().removeAttribute("jobSectorIndividual3");
 				request.getSession().removeAttribute("jobSectorIndividual3_string");
-
 			}
 
 		}
