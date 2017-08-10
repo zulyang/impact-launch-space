@@ -1,18 +1,25 @@
 package com.impactlaunchspace.project;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.impactlaunchspace.entity.IndividualAccount;
@@ -38,9 +45,9 @@ public class ProjectController {
 
 	@Autowired
 	UserService userService;
-	
-	@Autowired
-	RequestService requestService;
+
+	@Autowired 
+  	RequestService requestService; 
 
 	// Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
@@ -78,7 +85,9 @@ public class ProjectController {
 	public String processCreateProject(@RequestParam String projectTitle, @RequestParam String projectPurpose,
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner,
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
-			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
+			@RequestParam String projectPrivacy, @RequestParam int projectDuration, 
+			@RequestParam("projectImage") MultipartFile projectImage,
+			@RequestParam("documents") MultipartFile[] documents,
 			@RequestParam(required = false) ArrayList<String> selected_banlist,
 			@RequestParam(required = false) ArrayList<String> resourceCategory,
 			@RequestParam(required = false) ArrayList<String> resourceName,
@@ -96,9 +105,7 @@ public class ProjectController {
 		boolean hiddenToOutsiders = false;
 		boolean hiddenToAll = false;
 		String project_status = "new";
-		
-		System.out.println("Number of resources: " + resourceName.size());
-		
+
 		if (projectPrivacy.equals("public")) {
 			isPublic = true;
 		} else if (projectPrivacy.equals("private")) {
@@ -113,43 +120,63 @@ public class ProjectController {
 			project_proposer = username;
 		} else if (projectOwner.equals("organization")) {
 			project_proposer = username;
-			if(profileService.getIndividualAccountDetails(username) != null){
-				if (profileService.getIndividualAccountDetails(username).getOrganization() != null
-						|| profileService.getIndividualAccountDetails(username).getOrganization().length() > 0) {
-					organization = profileService.getIndividualAccountDetails(username).getOrganization(); 
-																											
-				}
-			}else{
-				organization = profileService.getOrganizationAccountDetails(username).getCompanyName();
-			}
-			
+			 if(profileService.getIndividualAccountDetails(username) != null){ 
+		        if (profileService.getIndividualAccountDetails(username).getOrganization() != null || profileService.getIndividualAccountDetails(username).getOrganization().length() > 0) { 
+		          organization = profileService.getIndividualAccountDetails(username).getOrganization();                                           
+		        } 
+		      }else{ 
+		        organization = profileService.getOrganizationAccountDetails(username).getCompanyName(); 
+		      } 
 		}
 
 		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
 		ArrayList<ProjectRequestedResource> selected_requestedResources = new ArrayList<ProjectRequestedResource>();
-		ArrayList<String> resourceCategoryStrings = new ArrayList<String>();
-		
+		ArrayList<String> resourceCategoryStrings = new ArrayList<String>(); 
+
 		for (String resourceCategory_string : resourceCategory) {
 			ProjectResourceCategory projectResourceCategoryObj = new ProjectResourceCategory(project_name,
 					resourceCategory_string, project_proposer);
-			if (!resourceCategoryStrings.contains(resourceCategory_string)) {
-				selected_resourceCategories.add(projectResourceCategoryObj);
-				resourceCategoryStrings.add(resourceCategory_string);
-			}
-			
+			if (!resourceCategoryStrings.contains(resourceCategory_string)) { 
+		        selected_resourceCategories.add(projectResourceCategoryObj); 
+		        resourceCategoryStrings.add(resourceCategory_string); 
+		    } 
 		}
-		
-		System.out.println("size " + selected_resourceCategories.size());
 
 		for (int i = 0; i < resourceName.size(); i++) {
 			ProjectRequestedResource projectRequestedResourceObj = new ProjectRequestedResource(project_name,
 					resourceCategory.get(i), resourceName.get(i), resourceDescription.get(i), project_proposer);
 			selected_requestedResources.add(projectRequestedResourceObj);
 		}
+		
+		File projectImageFile = new File(projectImage.getOriginalFilename());
+		try {
+			projectImage.transferTo(projectImageFile);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		projectService.setupProject(project_name, description, purpose, duration, location, project_proposer,
-				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, selected_banlist,
-				selected_projectareas, selected_resourceCategories, selected_requestedResources);
+		ArrayList<File> documentList = new ArrayList<>();
+		if (documents != null && documents.length > 0) {
+			for (MultipartFile document : documents) {
+				File documentFile = new File(document.getOriginalFilename());
+				try {
+					document.transferTo(documentFile);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				documentList.add(documentFile);
+			}
+		}
+
+		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
+				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
+				new Timestamp(Calendar.getInstance().getTime().getTime()), 0, projectImageFile, documentList);
+		
+		projectImageFile.deleteOnExit();
+		
+		projectService.setupProject(project, selected_banlist, selected_projectareas, selected_resourceCategories, selected_requestedResources);
 
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
@@ -193,8 +220,8 @@ public class ProjectController {
 
 		// populates the edit profile page with the list of banned users its
 		// banned user in the DB
-		ArrayList<ProjectBanList> project_ban_list_objs = projectService.retrieveProjectBanList(project_name,
-				project_proposer);
+		ArrayList<ProjectBanList> project_ban_list_objs = projectService
+			.retrieveProjectBanList(project_name, project_proposer);
 		ArrayList<String> project_ban_list = new ArrayList<String>();
 
 		for (ProjectBanList project_ban_username : project_ban_list_objs) {
@@ -208,7 +235,7 @@ public class ProjectController {
 		model.addAttribute("project_requested_resources",
 				projectService.retrieveAllProjectRequestedResource(project_name, project_proposer));
 
-		return "project/" + "edit_project";
+		return "project/" + "edit-project";
 	}
 
 	@RequestMapping(value = "/edit-project", method = RequestMethod.POST)
@@ -288,35 +315,33 @@ public class ProjectController {
 		ArrayList<ProjectResourceCategory> projectResourceCategoriesObj = projectService
 				.retrieveProjectResourceCategories(project_name, project_proposer);
 		ArrayList<String> projectResourceCategories = new ArrayList<String>();
-
+		
 		HashMap<String, ArrayList<ArrayList<String>>> projectRequestedResources = new HashMap<String, ArrayList<ArrayList<String>>>();
 
 		for (ProjectResourceCategory projectResourceCategoryObj : projectResourceCategoriesObj) {
 			projectResourceCategories.add(projectResourceCategoryObj.getResource_category());
 			ArrayList<ProjectRequestedResource> requestedResourceObjs = projectService.retrieveRequestedResources(
 					project_name, projectResourceCategoryObj.getResource_category(), project_proposer);
-
+			
 			ArrayList<ArrayList<String>> resourcenames = new ArrayList<ArrayList<String>>();
 
 			for (ProjectRequestedResource requestedResource : requestedResourceObjs) {
 				ArrayList<String> resourceDetails = new ArrayList<String>();
 				resourceDetails.add(requestedResource.getResource_name());
 				resourceDetails.add(requestedResource.getRequest_description());
-
 				resourcenames.add(resourceDetails);
-
 			}
 			projectRequestedResources.put(projectResourceCategoryObj.getResource_category(), resourcenames);
 		}
-		
-		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService.retrieveProjectRequestsOfUser(project_name, project_proposer, username);
-		ArrayList<String> userRequestsForProject = new ArrayList<String>();
-		
-		for(ProjectUserRequest userRequestsForProjectObj : userRequestsForProjectObjs){
-			userRequestsForProject.add(userRequestsForProjectObj.getRequested_resource_name());
-		}
-		
-		model.addAttribute("userRequestsForProject", userRequestsForProject);
+
+		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService.retrieveProjectRequestsOfUser(project_name, project_proposer, username); 
+    	ArrayList<String> userRequestsForProject = new ArrayList<String>(); 
+     
+   	 	for(ProjectUserRequest userRequestsForProjectObj : userRequestsForProjectObjs){ 
+      		userRequestsForProject.add(userRequestsForProjectObj.getRequested_resource_name()); 
+    	} 
+     
+    	model.addAttribute("userRequestsForProject", userRequestsForProject); 
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);
@@ -325,25 +350,25 @@ public class ProjectController {
 
 		if (projectPrivacy.equals("hidden")) {
 			if (request.getSession().getAttribute("username").equals(project_proposer)) {
-				return "project/" + "view_project_public";
+				return "project/" + "view_project_public"; 
 			} else {
-				return "project/" + "view_project_private";
+				return "project/" + "view_project_private"; 
 			}
 		}
 
 		// for now if u are not the project creator u will see the private page
 		if (projectPrivacy.equals("private")) {
 			if (request.getSession().getAttribute("username").equals(project_proposer)) {
-				return "project/" + "view_project_public";
+				return "project/" + "view_project_public"; 
 			} else {
-				return "project/" + "view_project_private";
+				return "project/" + "view_project_private"; 
 			}
 		}
 
 		if (projectPrivacy.equals("public")) {
-			return "project/" + "view_project_public";
+			return "project/" + "view_project_public"; 
 		}
-		return "project/" + "view_project_public";
+		return "project/" + "view_project_public"; 
 	}
 
 	@RequestMapping(value = "/view-privateproject", method = RequestMethod.GET)
@@ -355,7 +380,7 @@ public class ProjectController {
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
 
-		return "project/" + "view_project_private";
+		return "project/" + "view_project_private"; 
 	}
 
 	@RequestMapping(value = "/edward-processajax", method = RequestMethod.GET)
@@ -368,11 +393,9 @@ public class ProjectController {
 				name = "Hello User";
 			}
 		}
-
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(name);
-
 	}
 	
 	@RequestMapping(value = "/saveProjectResource", method = RequestMethod.POST)
@@ -429,6 +452,45 @@ public class ProjectController {
 		}
 		
 		projectService.addProjectRequestedResource(oldProjectTitle, project_proposer, modalResourceCategory, modalResourceName, modalResourceDescription);
+	}
+	
+	@RequestMapping(value = "/projectImageDisplay", method = RequestMethod.GET)
+	public void showImage(@RequestParam("project-name") String project_name, 
+			@RequestParam("project-proposer") String project_proposer, HttpServletResponse response,
+			HttpServletRequest request) throws ServletException, IOException {
+		Project project = projectService.retrieveProject(project_name, project_proposer);
+		File file = project.getProjectImage();
+		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+		byte[] bytesArray = new byte[(int) file.length()];
+		FileInputStream fis = new FileInputStream(file);
+		fis.read(bytesArray); // read file into bytes[]
+		fis.close();
+		response.getOutputStream().write(bytesArray);
+		response.getOutputStream().close();
+	}
+	
+	@RequestMapping(value = "/downloadProjectFile", method = RequestMethod.GET)
+	public void showFiles(@RequestParam File file, HttpServletResponse response, HttpServletRequest request)
+			throws ServletException {
+		FileInputStream inputStream;
+		try {
+			inputStream = new FileInputStream(file);
+			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+			response.setHeader("Content-Length", String.valueOf(file.length()));
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+			inputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping(value = "/deleteProjectFile", method = RequestMethod.GET)
+	public String deleteFile(@RequestParam("project-name") String project_name,
+			@RequestParam("project-proposer") String project_proposer, @RequestParam File file, HttpServletResponse response,
+			HttpServletRequest request) throws ServletException {
+		projectService.deleteDocument(project_name, project_proposer, file);
+		return "editIndiProfileForm";
 	}
 	
 }

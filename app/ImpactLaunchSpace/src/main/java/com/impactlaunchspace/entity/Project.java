@@ -1,8 +1,9 @@
 package com.impactlaunchspace.entity;
 
-import java.sql.Date;
-import java.util.Comparator;
+import java.io.File;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Project{
 	private String project_name;
@@ -18,10 +19,13 @@ public class Project{
 	private String project_status;
 	private Timestamp created_date;
 	private int page_views;
+	private File projectImage;
+	private ArrayList<File> documentList;
 
 	public Project(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
-			boolean hiddenToAll, String project_status, Timestamp created_date, int page_views) {
+			boolean hiddenToAll, String project_status, Timestamp created_date, int page_views, 
+			File projectImage, ArrayList<File> documentList) {
 		super();
 		this.project_name = project_name;
 		this.description = description;
@@ -36,6 +40,8 @@ public class Project{
 		this.project_status = project_status;
 		this.created_date = created_date;
 		this.page_views = page_views;
+		this.projectImage = projectImage;
+		this.documentList = documentList;
 	}
 
 	public String getProject_name() {
@@ -88,6 +94,14 @@ public class Project{
 
 	public int getPage_Views(){
 		return page_views;
+	}
+	
+	public File getProjectImage() {
+		return projectImage;
+	}
+	
+	public ArrayList<File> getDocumentList() {
+		return documentList;
 	}
 
 	//Comparator Methods

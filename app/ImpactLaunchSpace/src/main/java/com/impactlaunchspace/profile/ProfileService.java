@@ -51,7 +51,6 @@ public class ProfileService {
 			if (countryOfOperation != null) {
 				countryOfOperationDAO.insert(countryOfOperation);
 			}
-
 		}
 
 		for (JobSectorOrganization jobSectorOrganization : jobSectorsOrganization) {
@@ -82,7 +81,6 @@ public class ProfileService {
 			if (jobSectorIndividual != null) {
 				jobSectorIndividualDAO.insert(jobSectorIndividual);
 			}
-
 		}
 
 		for (PreferredCountry preferredCountry : prferredCountryList) {
@@ -297,11 +295,11 @@ public class ProfileService {
 	    DocumentsIndividualDAO documentsIndividualDAO = (DocumentsIndividualDAO) context.getBean("documentsIndividualDAO");
 	    documentsIndividualDAO.delete(username, document);
 	}
-	
-	public OrganizationAccount findByCompanyName(String companyName){
-		 ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
-		 OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO");
-		 return organizationAccountDAO.findByCompanyName(companyName);
-	}
+
+	public OrganizationAccount findByCompanyName(String companyName){ 
+     ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml"); 
+     OrganizationAccountDAO organizationAccountDAO = (OrganizationAccountDAO) context.getBean("organizationAccountDAO"); 
+     return organizationAccountDAO.findByCompanyName(companyName); 
+  } 
 
 }
