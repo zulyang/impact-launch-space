@@ -28,26 +28,25 @@
 				<div class="org_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div style="display: inline-block">
+							<div class="profile_img">
 								<img src="/imageDisplay?username=${organization.getUsername()}"
 									class="circle_org_profile_image">
 							</div>
 
-							<div style="display: inline-block">
-								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>
+							<div class="profile_bio">
+								<h1>${organization.getCompanyName()}</h1>
 
-								<div style="display: inline-block" class="btn-group">
+								<div class="btn-group">
 									<a href="edit-organization-profile" class="btn btn-default">
 										Edit Profile </a> 
-									<a href="" class="btn btn-default"> Leave A
-										Message </a>
+									<a href="" class="btn btn-default"> Leave Message</a>
 								</div>
 
 								<hr>
 								<p class="org_bio">${organization.getCompanyBio()}</p>
 								<hr>
-								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p><br/>
-								<p style="display: inline-block"><i class="fa fa-phone"></i> ${organization.getContactDetails()}</p>
+								<p style="display: inline-block;"><i class="fa fa-envelope"></i> ${user.getEmail()}</p><br/>
+								<p style="display: inline-block;"><i class="fa fa-phone"></i> ${organization.getContactDetails()}</p>
 								<hr>
 								
 								<div class="org_profile_display_countries">

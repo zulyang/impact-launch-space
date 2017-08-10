@@ -29,16 +29,16 @@
 				<div class="indi_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div style="display: inline-block">
+							<div class="profile_img">
 								<img src="/imageDisplay?username=${individual.getUsername()}"
 									class="circle_indi_profile_image">
 							</div>
 
-							<div style="display: inline-block">
-								<h1 style="display: inline-block">${individual.getFirst_name()}
+							<div class="profile_bio">
+								<h1>${individual.getFirst_name()}
 									${individual.getLast_name()}</h1>
 
-								<div style="display: inline-block" class="btn-group">
+								<div class="btn-group">
 									<a href="editprofile-individual" class="btn btn-default">
 										Edit Profile </a> <a href="" class="btn btn-default"> Leave A
 										Message </a>

@@ -1,9 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
 html, body {
 	height: 100%;
 	width: 100%;
 	background-image: url("../img/swirl.png");
 	background-repeat: repeat;
 	z-index: -100;
+	font-family: "Open Sans";
+	
 }
 
 .signin, .unlockaccount {
@@ -33,6 +37,7 @@ html, body {
 	overflow: scroll;
 	max-width: 100%;
 	overflow-x: hidden;
+	margin-top: 20rem;
 }
 
 .profileNav {
@@ -181,6 +186,21 @@ html, body {
 	width: 250px;
 	height: 250px;
 	min-height: 100%;
+}
+
+.profile_img{
+	position: relative; 
+	width: 250px; 
+	height: 250px; 
+	overflow: hidden; 
+	border-radius: 50%; 
+	display: inline-block;
+}
+
+.profile_bio{
+	display: inline-block; 
+	float: right; 
+	width: 65%;
 }
 
 .profile_save {
@@ -386,31 +406,34 @@ html, body {
 }
 
 .org_profile_display_container {
-	margin-top: 15rem;
+	/* margin-top: 15rem; */
 	margin-bottom: 5rem;
 	width: 85rem;
 }
 
 .edit_org_profile_display_container {
-	margin-top: 35rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 	height: 65rem;
 }
 
 .edit_ind_profile_display_container {
-	margin-top: 115rem;
+	margin-top: 90rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 }
 
 .circle_org_profile_image {
-	margin-top: -16rem;
+/* 	margin-top: -16rem;
 	margin-right: 1rem;
 	border-radius: 50%;
 	width: 250px;
 	height: 250px;
-	min-height: 100%;
+	min-height: 100%; */
+	width: auto;
+	height: 100%;
+	display: inline-block;
+	float: left;
 }
 
 .circle_edit_org_profile_image {
@@ -471,14 +494,14 @@ html, body {
 }
 
 .indi_bio, .org_bio {
-	width: 45rem;
+	width: 95%;
 	text-align: justify;
 }
 
 .indi_profile_display_container {
-	margin-top: 75rem;
+	margin-top: 30rem; 
 	margin-bottom: 5rem;
-	width: 75rem;
+	width: 85rem;
 }
 
 .panel-heading {
@@ -494,12 +517,16 @@ html, body {
 }
 
 .circle_indi_profile_image {
-	margin-top: -25rem;
+	/* margin-top: -25rem;
 	margin-right: 1rem;
 	border-radius: 50%;
 	width: 250px;
 	height: 250px;
-	min-height: 100%;
+	min-height: 100%; */
+	width: auto;
+	height: 100%;
+	display: inline-block;
+	float: left;
 }
 
 .indi_bio {
