@@ -25,7 +25,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 
 	public void insert(Notification notification) {
 		String sql = "INSERT INTO NOTIFICATIONS "
-				+ "(recipient_username, sender_username, notification_subject, notification_message, sent_time, isRead) VALUES (?, ?, ?, ?, ?, ?)";
+				+ "(recipient_username, sender_username, notification_subject, notification_message, sent_time, isRead, notification_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -42,6 +42,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			ps.setString(4, notification.getNotification_message());
 			ps.setTimestamp(5, new Timestamp(time));
 			ps.setBoolean(6, notification.isRead());
+			ps.setString(7, notification.getNotification_type());
 			ps.executeUpdate();
 			ps.close();
 
@@ -97,7 +98,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 	}
 
 	
-	public ArrayList<Notification> retrieveRecievedNotificationsOfUser(String username) {
+	public ArrayList<Notification> retrieveReceivedNotificationsOfUser(String username) {
 		ArrayList<Notification> output = new ArrayList<Notification>();
 
 		String sql = "SELECT * FROM NOTIFICATIONS WHERE recipient_username = ?";
@@ -109,7 +110,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			Notification notification = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6));
+				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6), rs.getString(7));
 				output.add(notification);
 			}
 			rs.close();
@@ -139,7 +140,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			Notification notification = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6));
+				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6) , rs.getString(7));
 				output.add(notification);
 			}
 			rs.close();

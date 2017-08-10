@@ -643,3 +643,9 @@ html, body {
 textarea {
 	resize: vertical;
 }
+
+
+.modalNotificationsField{
+	margin-bottom: 2rem;
+	background: none !important;
+}

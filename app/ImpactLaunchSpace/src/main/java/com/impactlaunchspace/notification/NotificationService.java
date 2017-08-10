@@ -1,5 +1,7 @@
 package com.impactlaunchspace.notification;
 
+import java.util.ArrayList;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,19 @@ public class NotificationService {
 		NotificationDAO notificationDAO = (NotificationDAO) context.getBean("notificationDAO");
 
 		return notificationDAO.countTotalNotificationsOfUser(username);
+	}
+	
+	public ArrayList<Notification> getInbox(String username) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		NotificationDAO notificationDAO = (NotificationDAO) context.getBean("notificationDAO");
+
+		return notificationDAO.retrieveReceivedNotificationsOfUser(username);
+	}
+	
+	public ArrayList<Notification> getSent(String username) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		NotificationDAO notificationDAO = (NotificationDAO) context.getBean("notificationDAO");
+
+		return notificationDAO.retrieveSentNotificationsOfUser(username);
 	}
 }

@@ -93,7 +93,7 @@ public class RequestController {
 		}
 		
 		Notification notification = new Notification(project_proposer, "admin", "A user has applied to offer his support for " + project_name,
-		notification_message);
+		notification_message, "request");
 		
 		notificationService.sendNotification(notification);
 		
@@ -104,7 +104,7 @@ public class RequestController {
 				OrganizationAccount organizationObj = profileService.findByCompanyName(selected_project.getOrganization());
 				
 				Notification notification2 = new Notification(organizationObj.getUsername(), "admin", "A user has applied to offer his support for " + project_name,
-						notification_message);
+						notification_message, "request");
 						
 						notificationService.sendNotification(notification2);
 			}
@@ -116,6 +116,27 @@ public class RequestController {
 
 		return "redirect:" + "view-project";
 
+	}
+	
+	@RequestMapping(value = "/myNotifications", method = RequestMethod.GET)
+	public String showMyNotifications(HttpServletRequest request, ModelMap model){
+		String username = (String) request.getSession().getAttribute("username");
+		
+		ArrayList<Notification> inbox = notificationService.getInbox(username);
+		ArrayList<Notification> sent = notificationService.getSent(username);
+		
+		System.out.println(inbox.size());
+		System.out.println(sent.size());
+		
+		model.addAttribute("inbox", inbox);
+		model.addAttribute("sent", sent);
+		
+		return "notifications/" + "view_notifications";
+	}
+	
+	@RequestMapping(value = "/acceptRequest", method = RequestMethod.GET)
+	public String acceptReqeust(){
+		return "notification/" + "my-notifications";
 	}
 	
 	//AJAX METHODS BELOW
@@ -149,4 +170,5 @@ public class RequestController {
 
 		response.getWriter().write(desc);
 	}
+	
 }

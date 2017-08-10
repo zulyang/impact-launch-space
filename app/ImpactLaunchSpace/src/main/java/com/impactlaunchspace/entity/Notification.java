@@ -11,9 +11,10 @@ public class Notification {
 	private String notification_message;
 	private String sent_time;
 	private boolean isRead;
+	private String notification_type;
 
 	public Notification(String recipient_username, String sender_username, String notification_subject,
-			String notification_message) {
+			String notification_message, String notification_type) {
 		super();
 		this.recipient_username = recipient_username;
 		this.sender_username = sender_username;
@@ -21,10 +22,11 @@ public class Notification {
 		this.notification_message = notification_message;
 		this.sent_time = calculateSentTime();
 		this.isRead = false;
+		this.notification_type = notification_type;
 	}
 
 	public Notification(String recipient_username, String sender_username, String notification_subject,
-			String notification_message, String sent_time, boolean isRead) {
+			String notification_message, String sent_time, boolean isRead, String notification_type) {
 		super();
 		this.recipient_username = recipient_username;
 		this.sender_username = sender_username;
@@ -32,6 +34,7 @@ public class Notification {
 		this.notification_message = notification_message;
 		this.sent_time = sent_time;
 		this.isRead = isRead;
+		this.notification_type = notification_type;
 	}
 
 	public String getRecipient_username() {
@@ -56,6 +59,11 @@ public class Notification {
 
 	public boolean isRead() {
 		return isRead;
+	}
+	
+
+	public String getNotification_type() {
+		return notification_type;
 	}
 
 	private String calculateSentTime() {
