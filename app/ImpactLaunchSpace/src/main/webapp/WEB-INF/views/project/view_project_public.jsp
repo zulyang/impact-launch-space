@@ -10,18 +10,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Project</title>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 </head>
 
 <body class="project">
@@ -170,7 +182,7 @@
 						<h1 class="section-title">WHAT WE NEED</h1>
 						<!--resources-->
 						<c:set var="count" value="0" scope="page" />
-						
+
 						<c:forEach items="${project_resource_categories}" var="item"
 							varStatus="loop">
 
@@ -186,38 +198,40 @@
 											<p>${item1.get(1)}
 												<!-- description -->
 											</p>
-											<c:set var="count" value="${count + 1}" scope="page"/>
-												<br> <span><i class="fa fa-users"></i> 180
-													backers</span>
-													<c:choose>
-														<c:when test="${userRequestsForProject.contains(item1.get(0))}">
-															<button onClick="apply()" type="button"
-															id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
-														</c:when>
-														<c:otherwise>
-															<button onClick="apply(${count})" type="button"
-															id="applyForResource" class="btn btn-reward applyButton">APPLY</button>
-														</c:otherwise>
-													</c:choose>
-												
-													
+											<c:set var="count" value="${count + 1}" scope="page" />
+											<br>
+											<span><i class="fa fa-users"></i> 180 backers</span>
+											<c:choose>
+												<c:when
+													test="${userRequestsForProject.contains(item1.get(0))}">
+													<button onClick="apply()" type="button"
+														id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
+												</c:when>
+												<c:otherwise>
+													<button onClick="apply(${count})" type="button"
+														id="applyForResource" class="btn btn-reward applyButton">APPLY</button>
+												</c:otherwise>
+											</c:choose>
+
+
 											<div class="modal fade" tabindex="-1" role="dialog"
 												id="myModal${count}">
 												<div class="modal-dialog">
 													<div class="modal-content">
 
 														<form action="sendApplyRequest" method="post">
-															<!-- These 2 fields are static, no need to copy these over -->
+															<!-- These 2 fields are for parsing the attirbutes -->
 															<input type="hidden" name="project_name"
-																value="Water the kids"> <input type="hidden"
-																name="project_proposer" value="edward">
-
+																value="${selected_project.getProject_name() }">
+															<input type="hidden" name="project_proposer"
+																value="${selected_project.getProject_proposer()}">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal"
 																	aria-label="Close">
 																	<span aria-hidden="true">&times;</span>
 																</button>
-																<h4 class="modal-title">Applying for ${item1.get(0)}</h4>
+																<h4 class="modal-title">Applying for
+																	${item1.get(0)}</h4>
 															</div>
 
 															<div class="modal-body">
@@ -225,31 +239,35 @@
 																	<div id="resourcesNeeded"
 																		class="form-group row col-md-5">
 																		<div class="col-md-12">
-																			<input type="hidden" id="selected_resource_category${count}"
-																				name="selected_resource_category"
-																				value="${item}"> <br>
-																			<input type="hidden" id="selected_requested_resource"
+																			<input type="hidden"
+																				id="selected_resource_category${count}"
+																				name="selected_resource_category" value="${item}">
+																			<br> <input type="hidden"
+																				id="selected_requested_resource"
 																				name="selected_requested_resource"
 																				value="${item1.get(0)}">
-																			<h2>My Resources under category:
-																				${item}</h2>
-																			<h4>(Select one from your available resources)
-																			<select class="js-example-basic-single-userresource"
-																				name="selected_resource_name"
-																				id="selected_resource_name" required style="width: 40rem">
-																			</select>
+																			<h2>My Resources under category: ${item}</h2>
+																			<h4>
+																				(Select one from your available resources) <select
+																					class="js-example-basic-single-userresource"
+																					name="selected_resource_name"
+																					id="selected_resource_name" required
+																					style="width: 40rem">
+																				</select>
 																			</h4>
 																			<h3>
-																				Resource Description <br> 
-																			<textarea type="text" rows="4" 
-																					name="selected_resource_desc" style="width: 40rem" class="form-control modal_details"
+																				Resource Description <br>
+																				<textarea type="text" rows="4"
+																					name="selected_resource_desc" style="width: 40rem"
+																					class="form-control modal_details"
 																					id="selected_resource_desc${count}" readonly></textarea>
 																			</h3>
 
 																			<h3>
-																				Add a personal note <br> <textarea type="text" style="width: 40rem"
-																					class="form-control modal_details" rows="5" name="personal_note"
-																					id="personal_note" value=""
+																				Add a personal note <br>
+																				<textarea type="text" style="width: 40rem"
+																					class="form-control modal_details" rows="5"
+																					name="personal_note" id="personal_note" value=""
 																					placeholder="Add a personal note..."></textarea>
 																			</h3>
 																		</div>
@@ -260,8 +278,8 @@
 															<div class="modal-footer">
 																<button type="button" class="btn btn-default"
 																	data-dismiss="modal">Cancel</button>
-																<button type="submit" id="add"
-																	class="btn btn-success">Apply for resource</button>
+																<button type="submit" id="add" class="btn btn-success">Apply
+																	for resource</button>
 															</div>
 														</form>
 
@@ -352,7 +370,7 @@
 	
 	</script>
 </body>
- 
+
 
 
 </html>

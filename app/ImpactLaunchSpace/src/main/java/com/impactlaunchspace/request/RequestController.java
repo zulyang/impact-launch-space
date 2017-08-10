@@ -92,21 +92,22 @@ public class RequestController {
 			notification_message += personal_note;
 		}
 		
-		Notification notification = new Notification(project_proposer, "admin", username + "A user has applied to offer his support for " + project_name,
+		Notification notification = new Notification(project_proposer, "admin", "A user has applied to offer his support for " + project_name,
 		notification_message);
 		
 		notificationService.sendNotification(notification);
 		
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
 		
-		if(selected_project.getOrganization() != null || selected_project.getOrganization().isEmpty() != true){
-			
-			OrganizationAccount organizationObj = profileService.findByCompanyName(selected_project.getOrganization());
-			
-			Notification notification2 = new Notification(organizationObj.getUsername(), "admin", "A user has applied to offer his support for " + project_name,
-					notification_message);
-					
-					notificationService.sendNotification(notification2);
+		if(selected_project.getOrganization() != null){
+			if(selected_project.getOrganization().isEmpty() != true){
+				OrganizationAccount organizationObj = profileService.findByCompanyName(selected_project.getOrganization());
+				
+				Notification notification2 = new Notification(organizationObj.getUsername(), "admin", "A user has applied to offer his support for " + project_name,
+						notification_message);
+						
+						notificationService.sendNotification(notification2);
+			}
 		}
 		
 		

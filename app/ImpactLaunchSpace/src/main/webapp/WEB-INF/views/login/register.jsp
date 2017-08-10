@@ -83,7 +83,7 @@
 					<p class="success_verify_message">You have successfully
 						registered for an account.<br> A verification code has been sent to
 						your email.</p>
-					<a href="/verifyaccount" class="btn btn-info verify_account" id="verify_account"
+					<a href="/verify-account" class="btn btn-info verify_account" id="verify_account"
 						role="button">Verify My Account</a>
 				</div>
 

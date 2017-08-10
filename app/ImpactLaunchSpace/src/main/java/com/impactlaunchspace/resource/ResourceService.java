@@ -11,63 +11,63 @@ import com.impactlaunchspace.entity.UserOfferedResource;
 
 @Service
 public class ResourceService {
-	
+
 	public void insertUserResourceOffering(UserOfferedResource userOfferedResource) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
-		
 		userOfferedResourceDAO.insert(userOfferedResource);
 	}
-	
+
 	public void removeUserResourceOffering(UserOfferedResource userOfferedResource) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
-		
 		userOfferedResourceDAO.remove(userOfferedResource);
 	}
-	
+
 	public void removeAllUserResourceOffering(String username) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
-		
+
 		userOfferedResourceDAO.removeAll(username);
 	}
-	
-	public ArrayList<UserOfferedResource> getUserResourceOffering(String username){
+
+	public ArrayList<UserOfferedResource> getUserResourceOffering(String username) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
-		
+
 		return userOfferedResourceDAO.retrieveAll(username);
 	}
-	
-	public ArrayList<UserOfferedResource> retrieveResourcesInCategory(String username, String resource_category){
+
+	public ArrayList<UserOfferedResource> retrieveResourcesInCategory(String username, String resource_category) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
-		
+
 		return userOfferedResourceDAO.retrieveResourcesInCategory(username, resource_category);
 	}
-	
-	public void updateUserResourceOffering(UserOfferedResource oldUserOfferedResource, UserOfferedResource userOfferedResource) {
+
+	public void updateUserResourceOffering(UserOfferedResource oldUserOfferedResource,
+			UserOfferedResource userOfferedResource) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
-		
+
 		userOfferedResourceDAO.update(oldUserOfferedResource, userOfferedResource);
 	}
-	
-	public UserOfferedResource retrieveOfferedResource(String username, String resource_category, String resource_name){
+
+	public UserOfferedResource retrieveOfferedResource(String username, String resource_category,
+			String resource_name) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");
 		return userOfferedResourceDAO.retrieveResource(username, resource_category, resource_name);
 	}
-	
-	public ArrayList<UserOfferedResource>searchResource(String skillset, String searchbox) {
+
+	public ArrayList<UserOfferedResource> searchResource(String skillset, String searchbox) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		UserOfferedResourceDAO userOfferedResourceDAO = (UserOfferedResourceDAO) context
 				.getBean("userOfferedResourceDAO");

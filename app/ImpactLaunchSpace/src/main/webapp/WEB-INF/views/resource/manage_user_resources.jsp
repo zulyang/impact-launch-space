@@ -85,7 +85,7 @@
 														<input type="hidden" id="old_rc<%=id%>"
 															value="${uro.getResourceCategory()}" /> <select
 															id="resourceCategory<%=id%>" name="resourceCategory"
-															class="col-md-4 js-example-basic-single-resourcecategory resourceCategory">
+															class="col-md-4 resourceCategory">
 															<option></option>
 															<c:forEach items="${resource_category_list}" var="item">
 																<c:choose>
@@ -163,7 +163,7 @@
 									<div class="col-md-12">
 										<select id="modalResourceCategory"
 											name="modalResourceCategory"
-											class="col-md-4 js-example-basic-single-resourcecategory">
+											class="col-md-4 js-example-basic-single-resourcecategoryshown" style = "width : 100%">
 											<option></option>
 											<c:forEach items="${resource_category_list}" var="item">
 												<option value="${item.getSkillset()}">${item.getSkillset()}</option>
@@ -318,5 +318,12 @@
 		$('.resourceCategory').hide();
 	});
 </script>
+
+	<script type="text/javascript">
+		$(".js-example-basic-single-resourcecategoryshown").select2({
+			placeholder : "Select an expertise/category: ",
+			allowClear : true
+		});
+	</script>
 
 </html>
