@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Search For Project</title>
+<title>Search For Resource</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/explore.css" />
@@ -70,20 +70,22 @@
 	
 	<!-- RESULTS -->
 	
-	 Resources:
-	<table id="resources" border='1'>
+
+	<div class="table-responsive col-md-12">
+	<table class="table table-striped table-hover resourceTable" id="resources">
 	<thead>
-    <tr>
-        <th>Resource Name</th>
+	<tr>
+	    <th>Resource Name</th>
         <th>Resource Description</th>
         <th>Resource Category</th>
         <th>Resource Owner</th>
         <th>Contact</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-	</table> 
+	
+	</tr>
+	</thead>
+	<tbody></tbody>
+	</table>
+	</div>
 
 </div>
 </div>

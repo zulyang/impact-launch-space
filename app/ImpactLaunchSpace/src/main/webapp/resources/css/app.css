@@ -498,8 +498,14 @@ html, body {
 	text-align: justify;
 }
 
-.indi_profile_display_container {
+.indi_public_profile_display_container {
 	margin-top: 30rem; 
+	margin-bottom: 5rem;
+	width: 85rem;
+}
+
+.indi_private_profile_display_container{
+	margin-top: -30rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 }
@@ -527,6 +533,7 @@ html, body {
 	height: 100%;
 	display: inline-block;
 	float: left;
+	
 }
 
 .indi_bio {

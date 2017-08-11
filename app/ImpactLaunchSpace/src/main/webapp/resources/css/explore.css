@@ -288,3 +288,9 @@
     font-size: smaller;
     font-weight: 600;
 }
+
+.resourceTable{
+	background: #FFFFFF;
+	margin-top: 2rem;
+	border-radius: 0.5rem;
+}
