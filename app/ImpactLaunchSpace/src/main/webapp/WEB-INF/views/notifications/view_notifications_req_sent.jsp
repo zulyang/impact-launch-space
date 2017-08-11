@@ -76,10 +76,10 @@
 											<ul class="list-group">
 												<li class="list-group-item"><a
 													href="/notifications/requests/inbox">Received <span
-														class="badge pull-right">1</span></a></li>
+														class="badge pull-right">${userRequestsSize }</span></a></li>
 												<li class="list-group-item-selected"><a
 													href="/notifications/requests/sent">Sent <span
-														class="badge pull-right">2</span></a></li>
+														class="badge pull-right">${userSentRequestsSize }</span></a></li>
 											</ul>
 										</div>
 									</div>
@@ -88,73 +88,82 @@
 							<div class="col-xs-6 col-sm-9">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<h3 class="panel-title">Requests Sent</h3>
+										<h3 class="panel-title">Requests Inbox</h3>
 									</div>
 									<div class="panel-body">
 										<div class="table-responsive col-md-12">
 											<table class="table table-striped table-hover">
 												<thead>
 													<tr>
-														<th>Sender</th>
+														<th>Project Proposer</th>
 														<th>Project Name</th>
 														<th>Resource Category</th>
-														<th>Resource Name</th>
+														<th>Requested Resource</th>
+														<th>Offered Resource</th>
+														<th>Status</th>
 													</tr>
 												</thead>
 												<tbody id="userNotificationsTable">
 													<%
 														int id = 0;
 													%>
-													<c:forEach items="${inbox}" var="item">
+													<c:forEach items="${userSentRequests}" var="item">
 
 
 														<tr id="row<%=++id%>">
 															<td><p>
-																	<c:choose>
-																		<c:when
-																			test="${item.getSender_username().equals(\"admin\")}">
-																			<b> <input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
-																				value="ImpactLaunch.Space Admin" disabled="true" />
-																			</b>
-																		</c:when>
-																		<c:otherwise>
-																			<input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
-																				value="${item.getSender_username()}" disabled="true" />
-																		</c:otherwise>
-																	</c:choose>
+																	<input class="editable-field form-control"
+																		id="offerer<%=id%>" type="text"
+																		value="${item.getProject_proposer() }" disabled="true" />
 
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="subj<%=id %>" type="textarea"
-																		value="${item.getNotification_subject()}"
+																		id="projname<%=id %>" type="textarea"
+																		value="${item.getProject_name()}" disabled="true" />
+																</p></td>
+															<td><p>
+																	<input class="editable-field form-control"
+																		id="resourcecategory<%=id%>" type="text"
+																		value="${item.getRequested_resource_category() }"
 																		disabled="true" />
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="time<%=id%>" type="text"
-																		value="${item.getSent_time() }" disabled="true" />
+																		id="requestedresourcename<%=id%>" type="text"
+																		value="${item.getRequested_resource_name() }"
+																		disabled="true" />
 																</p></td>
 
-															<input class="editable-field form-control"
-																id="message<%=id%>" type="hidden"
-																value="${item.getNotification_message()}"
-																disabled="true" />
-
+															<td><p>
+																	<input class="editable-field form-control"
+																		id="offeredresourcename<%=id%>" type="text"
+																		value="${item.getOffered_resource_name() }"
+																		disabled="true" />
+																</p></td>
+															<td><p>
+																	<input class="editable-field form-control"
+																		id="status<%=id%>" type="text"
+																		value="${item.getRequest_status() }" disabled="true" />
+																</p></td>
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
 																		class="btn btn-primary edit" onClick="view(this.id)"
 																		href="#">View</button>
-																	<button id="dele<%=id%>" type="submit" name="delete"
-																		class="btn btn-danger delete" onClick="del(this.id)"
-																		href="#">
-																		<i class="fa fa-trash"></i> Delete
-																	</button>
 																</p></td>
 														</tr>
+														<input class="editable-field form-control"
+															id="offeredresourcedesc<%=id%>" type="hidden"
+															value="${item.getOffered_request_description() }"
+															disabled="true" />
 
+														<input class="editable-field form-control"
+															id="proposer<%=id%>" type="hidden"
+															value="${item.getProject_proposer() }" disabled="true" />
+
+														<input class="editable-field form-control"
+															id="offercomments<%=id%>" type="hidden"
+															value="${item.getOffer_comments() }" disabled="true" />
 													</c:forEach>
 												</tbody>
 											</table>
@@ -177,7 +186,8 @@
 				</div>
 
 
-	<!-- View Request modal-->
+
+				<!-- View Request modal-->
 				<div class="modal fade" tabindex="-1" role="dialog"
 					id="viewRequestModal">
 					<div class="modal-dialog">
@@ -189,57 +199,81 @@
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
-									<h4 class="modal-title">View Request</h4>
+									<h4 class="modal-title">My Request Offer</h4>
 								</div>
 								<div class="modal-body">
 									<div class="container">
 										<div id="resourcesNeeded" class="form-group row col-md-5">
 											<div class="col-md-12">
-											
-											<!-- Project name, resource category, resource name, request description, project proposer -->
-											
-												<p>
-													<b>From</b>
-												</p>
-												<input id="modalSender" name="modalSender"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Sender Username here" type="text" readonly />
-													
+
+												<!-- Project name, resource category, resource name, request description, project proposer -->
+
 												<p>
 													<b>Project Name</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="modalProjName" name="modalProjName"
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-													
-													<p>
+
+												<p>
+												<p>
 													<b>Project Proposer</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="modalProjProposer" name="modalProjProposer"
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-													
-												
-												
+
 												<p>
-													<b>Resource Name</b>
+													<b>Requested Resource Name</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="modalRequestedResourceName"
+													name="modalRequestedResourceName"
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-													
+
 												<p>
-													<b>Resource Description</b>
+													<b>Offered Resource Name</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="modalOfferedResourceName"
+													name="modalOfferedResourceName"
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-										
+
+
+												<p>
+													<b>Offered Resource Description</b>
+												</p>
+												<input id="modalOfferedResourceDesc"
+													name="modalOfferedResourceDesc"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Project name" type="text" readonly />
+
+												<p>
+													<b>Your Note to Project Proposer</b>
+												</p>
+												<input id="modalPersonalNote" name="modalPersonalNote"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Project name" type="text" readonly /> 
+													
+													<input
+													id="modalRequestStatus" name="modalRequestStatus"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Project name" type="hidden" readonly />
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Later</button>
-										<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Decline </button>
-										<button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Approve </button>
+										data-dismiss="modal">Close</button>
+									<button id="cancelbtn" type="submit" class="btn btn-danger"
+										data-dismiss="modal">
+										<i class="fa fa-times"></i> Cancel Offer
+									</button>
+									<button id="confirmbtn" type="submit" class="btn btn-success"
+										data-dismiss="modal">
+										<i class="fa fa-check"></i> Confirm Offer
+									</button>
 
 								</div>
 							</form>
@@ -255,16 +289,30 @@
 	function view(id) {
 		var disabledStatus = $('.editable-field').attr('disabled');
 		var newId = id.substring(4);
-		var sender = $('#sender' + newId).val();
-		var subj = $('#subj' + newId).val();
-		var sent = $('#sent' + newId).val();
-		var message = $('#message' + newId).val();
+		var proposer = $('#proposer' + newId).val();
+		var projname = $('#projname' + newId).val();
+		var requestedresourcename = $('#requestedresourcename' + newId).val();
+		var offeredresourcename = $('#offeredresourcename' + newId).val();
+		var offeredresourcedesc = $('#offeredresourcedesc' + newId).val();
+		var offercomments = $('#offercomments' + newId).val();
+		var status = $('#status' + newId).val();
 
-		$('#modalSender').val(sender);
-		$('#modalNotificationSubject').val(subj);
-		$('#modalNotificationsMessage').val(message);
-		$('#modalNotificationsMessage').val().replace(/\r\n|\r|\n/g, "<br />")
+		$('#modalProjProposer').val(proposer);
+		$('#modalProjName').val(projname);
+		$('#modalRequestedResourceName').val(requestedresourcename);
+		$('#modalOfferedResourceName').val(offeredresourcename);
+		$('#modalOfferedResourceDesc').val(offeredresourcedesc);
+		$('#modalPersonalNote').val(offercomments);
+		$('#modalRequestStatus').val(status);
+
 		$('#viewRequestModal').modal('show');
+		if (status != "Accepted") {
+			$('#cancelbtn').hide();
+			$('#confirmbtn').hide();
+		} else {
+			$('#cancelbtn').show();
+			$('#confirmbtn').show();
+		}
 	};
 </script>
 </html>

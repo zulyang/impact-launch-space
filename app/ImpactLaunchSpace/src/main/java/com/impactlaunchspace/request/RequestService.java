@@ -27,7 +27,7 @@ public class RequestService {
 
 		ProjectUserRequest projectUserRequest = new ProjectUserRequest(project_name, requested_resource_category,
 				requested_resource_name, project_proposer, resource_offerer, offered_resource_category,
-				offered_resource_name, offered_request_description, offer_comments, "pending");
+				offered_resource_name, offered_request_description, offer_comments, "Pending");
 
 		ProjectUserRequest checkForExistingObject = projectUserRequestDAO.retrieveParticularUserRequest(project_name,
 				project_proposer, resource_offerer, requested_resource_category, requested_resource_name,
@@ -88,6 +88,14 @@ public class RequestService {
 		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
 
 		return projectUserRequestDAO.retrieveAllForUser(username);
+
+	}
+	
+	public ArrayList<ProjectUserRequest> retrieveAllSentForUser(String username) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+
+		return projectUserRequestDAO.retrieveAllSentForUser(username);
 
 	}
 	

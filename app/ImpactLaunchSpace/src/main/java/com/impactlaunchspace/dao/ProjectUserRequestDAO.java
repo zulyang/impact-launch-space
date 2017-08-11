@@ -12,6 +12,8 @@ public interface ProjectUserRequestDAO {
 	public ArrayList<ProjectUserRequest> retrieveAll(String project_name, String project_proposer);
 	
 	public ArrayList<ProjectUserRequest> retrieveAllForUser(String username);
+	
+	public ArrayList<ProjectUserRequest> retrieveAllSentForUser(String username);
 
 	public ArrayList<ProjectUserRequest> retrieveAllUserRequestsForRequestedResourceCategory(String project_name,
 			String project_proposer, String requested_resource_category);

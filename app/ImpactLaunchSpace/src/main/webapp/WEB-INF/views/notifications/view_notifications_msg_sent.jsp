@@ -79,7 +79,7 @@
 														class="badge pull-right">${userRequestsSize }</span></a></li>
 												<li class="list-group-item"><a
 													href="/notifications/requests/sent">Sent <span
-														class="badge pull-right">2</span></a></li>
+														class="badge pull-right">${userSentRequestsSize }</span></a></li>
 											</ul>
 										</div>
 									</div>
