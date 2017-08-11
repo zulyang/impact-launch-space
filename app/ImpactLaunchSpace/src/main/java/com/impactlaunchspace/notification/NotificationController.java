@@ -38,10 +38,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 
 		model.addAttribute("inbox", inbox);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
+		model.addAttribute("userRequestsSize", userRequests.size());
 		return "notifications/" + "view_notifications_msg_inbox";
 	}
 	
@@ -50,10 +52,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 
 		model.addAttribute("sent", sent);
 		model.addAttribute("inboxSize", inbox.size());
-		model.addAttribute("sentSize", sent.size());		
+		model.addAttribute("sentSize", sent.size());	
+		model.addAttribute("userRequestsSize", userRequests.size());
 		return "notifications/" + "view_notifications_msg_sent";
 	}
 	@RequestMapping(value = "/notifications/requests/inbox", method = RequestMethod.GET)
