@@ -62,10 +62,10 @@
 											<ul class="list-group">
 												<li class="list-group-item"><a
 													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">123</span></a></li>
+														class="badge pull-right">${inboxSize }</span></a></li>
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
-														class="badge pull-right">4</span></a></li>
+														class="badge pull-right">${sentSize }</span></a></li>
 											</ul>
 										</div>
 
@@ -76,7 +76,7 @@
 											<ul class="list-group">
 												<li class="list-group-item-selected"><a
 													href="/notifications/requests/inbox">Received <span
-														class="badge pull-right">1</span></a></li>
+														class="badge pull-right">${userRequestsSize }</span></a></li>
 												<li class="list-group-item"><a
 													href="/notifications/requests/sent">Sent <span
 														class="badge pull-right">2</span></a></li>
@@ -99,50 +99,46 @@
 														<th>Project Name</th>
 														<th>Resource Category</th>
 														<th>Resource Name</th>
+														<th>Resource Status</th>
 													</tr>
 												</thead>
 												<tbody id="userNotificationsTable">
 													<%
 														int id = 0;
 													%>
-													<c:forEach items="${inbox}" var="item">
+													<c:forEach items="${userRequests}" var="item">
 
 
 														<tr id="row<%=++id%>">
 															<td><p>
-																	<c:choose>
-																		<c:when
-																			test="${item.getSender_username().equals(\"admin\")}">
-																			<b> <input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
-																				value="ImpactLaunch.Space Admin" disabled="true" />
-																			</b>
-																		</c:when>
-																		<c:otherwise>
-																			<input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
-																				value="${item.getSender_username()}" disabled="true" />
-																		</c:otherwise>
-																	</c:choose>
+																	<input class="editable-field form-control"
+																		id="offerer<%=id%>" type="text"
+																		value="${item.getResource_offerer() }" disabled="true" />
 
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
 																		id="subj<%=id %>" type="textarea"
-																		value="${item.getNotification_subject()}"
+																		value="${item.getProject_name()}" disabled="true" />
+																</p></td>
+															<td><p>
+																	<input class="editable-field form-control"
+																		id="time<%=id%>" type="text"
+																		value="${item.getRequested_resource_category() }"
 																		disabled="true" />
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
 																		id="time<%=id%>" type="text"
-																		value="${item.getSent_time() }" disabled="true" />
+																		value="${item.getRequested_resource_name() }"
+																		disabled="true" />
 																</p></td>
-
-															<input class="editable-field form-control"
-																id="message<%=id%>" type="hidden"
-																value="${item.getNotification_message()}"
-																disabled="true" />
-
+															<td><p>
+																	<input class="editable-field form-control"
+																		id="time<%=id%>" type="text"
+																		value="Pending"
+																		disabled="true" />
+																</p></td>
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
 																		class="btn btn-primary edit" onClick="view(this.id)"
@@ -196,42 +192,46 @@
 									<div class="container">
 										<div id="resourcesNeeded" class="form-group row col-md-5">
 											<div class="col-md-12">
-											
-											<!-- Project name, resource category, resource name, request description, project proposer -->
-											
+
+												<!-- Project name, resource category, resource name, request description, project proposer -->
+
 												<p>
 													<b>From</b>
 												</p>
 												<input id="modalSender" name="modalSender"
 													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Sender Username here" type="text" readonly />
-													
+
 												<p>
 													<b>Project Name</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="" name=""
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-													
-													<p>
+
+												<p>
 													<b>Project Proposer</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="" name=""
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-													
-												
-												
+
+
+
 												<p>
 													<b>Resource Name</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="" name=""
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-													
+
 												<p>
 													<b>Resource Description</b>
 												</p>
-												<input id="" name="" class="form-control col-md-4 modalNotificationsField"
+												<input id="" name=""
+													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
-										
+
 											</div>
 										</div>
 									</div>
@@ -239,8 +239,14 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Later</button>
-										<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Decline </button>
-										<button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Approve </button>
+									<button type="button" class="btn btn-danger"
+										data-dismiss="modal">
+										<i class="fa fa-times"></i> Decline
+									</button>
+									<button type="button" class="btn btn-success"
+										data-dismiss="modal">
+										<i class="fa fa-check"></i> Approve
+									</button>
 
 								</div>
 							</form>

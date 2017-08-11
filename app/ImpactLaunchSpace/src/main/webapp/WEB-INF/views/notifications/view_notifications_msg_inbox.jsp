@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.ArrayList"%>
@@ -62,10 +63,10 @@
 											<ul class="list-group">
 												<li class="list-group-item-selected"><a
 													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">123</span></a></li>
+														class="badge pull-right">${inboxSize }</span></a></li>
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
-														class="badge pull-right">4</span></a></li>
+														class="badge pull-right">${sentSize }</span></a></li>
 											</ul>
 										</div>
 
@@ -241,44 +242,8 @@
 						$('#add')
 								.click(
 										function(event) {
-											var resourceCategory = $(
-													'#modalResourceCategory')
-													.val();
-											var resourceName = $(
-													'#modalResourceName').val();
-											var resourceDescription = $(
-													'#modalResourceDescription')
-													.val();
-											var newId = $('#userNotificationsTable tr').length + 1;
-											$('#userResourceTable')
-													.append(
-															'<tr id="row'+newId+'"> <td><p><input class="editable-field form-control" id="reso'+newId+'" type="text"value="'+resourceName+'" disabled="true" /> <input type="hidden" id="old_reso'+newId+'" value="'+resourceName+'"/></p></td> <td><p> <input class="editable-field form-control" style="border: 1px solid transparent;background-color: transparent;" id="desc'+newId+'" type="textarea"value="'+resourceDescription+'" disabled="true" /> <input type="hidden" id="old_desc'+newId+'" value="'+resourceDescription+'"/></p></td> <td><p> <input type="hidden" id="old_rc'+newId+'" value="'+resourceCategory+'"/> <select id="resourceCategory'+newId+'"name="resourceCategory"class="col-md-4 js-example-basic-single-resourcecategory resourceCategory"> <option></option> <c:forEach items="${resource_category_list}" var="item"> <c:choose><c:when test="${item.getSkillset().equals('
-																	+ resourceCategory
-																	+ ')}"> <option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option> </c:when> <c:otherwise> <option value="${item.getSkillset()}">${item.getSkillset()}</option> </c:otherwise> </c:choose> </c:forEach> </select> <span class="label label-success"id="currentResourceCategory'+newId+'">'
-																	+ resourceCategory
-																	+ '</span> </p></td> <td class="col-md-2"><p> <button id="edit'
-																	+ newId
-																	+ '" type="btn" name="edit"class="btn btn-primary edit" onClick="edit(this.id)"href="#"> <i class="fa fa-pencil"></i> Edit </button> <button id="save'
-																	+ newId
-																	+ '" type="button" name="save"class="btn btn-success save" onClick="save(this.id)"href="#"> <i class="fa fa-save"></i> Save </button> <button id="dele'
-																	+ newId
-																	+ '" type="submit" name="delete"class="btn btn-danger delete" onClick="del(this.id)"href="#"> <i class="fa fa-trash"></i> Delete </button> <button id="canc'
-																	+ newId
-																	+ '" type="btn" name="cancel"class="btn btn-default cancel" onClick="cancel(this.id)"href="#"> <i class="fa fa-close"></i> Cancel </button> </p></td></tr>');
-
-											$
-													.post(
-															'add-user-resource',
-															{
-																modalResourceCategory : resourceCategory,
-																modalResourceName : resourceName,
-																modalResourceDescription : resourceDescription
-															});
-
 											$('#notificationsModal').modal(
 													'hide');
-
-											$('.resourceCategory').hide();
 										});
 
 						$('#notificationsModal').on(
@@ -297,11 +262,16 @@
 		var subj = $('#subj' + newId).val();
 		var sent = $('#sent' + newId).val();
 		var message = $('#message' + newId).val();
+		var message2 = message.replace(/%n/g, "\n");
 
+		
 		$('#modalSender').val(sender);
 		$('#modalNotificationSubject').val(subj);
-		$('#modalNotificationsMessage').val(message);
-		$('#modalNotificationsMessage').val().replace(/\r\n|\r|\n/g, "<br />")
+		$('#modalNotificationsMessage').val(message2);
+		
+		
+		
+		document.getElementById("modalNotificationsMessage").innerHtml = message2;
 		$('#notificationsModal').modal('show');
 	};
 </script>

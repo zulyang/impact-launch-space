@@ -235,7 +235,7 @@ public class ProjectController {
 		model.addAttribute("project_requested_resources",
 				projectService.retrieveAllProjectRequestedResource(project_name, project_proposer));
 
-		return "project/" + "edit-project";
+		return "project/" + "edit_project";
 	}
 
 	@RequestMapping(value = "/edit-project", method = RequestMethod.POST)

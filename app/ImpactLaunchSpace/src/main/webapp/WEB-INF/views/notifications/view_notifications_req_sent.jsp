@@ -62,10 +62,10 @@
 											<ul class="list-group">
 												<li class="list-group-item"><a
 													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">123</span></a></li>
+														class="badge pull-right">${inboxSize }</span></a></li>
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
-														class="badge pull-right">4</span></a></li>
+														class="badge pull-right">${sentSize }</span></a></li>
 											</ul>
 										</div>
 

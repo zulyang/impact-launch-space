@@ -79,15 +79,18 @@ public class RequestController {
 		String notification_message = "The following user: " + username + " has applied to offer his support for " + project_name;
 		notification_message += "%n";
 		notification_message += "%n";
-		notification_message += "Details of offered Resource";
+		notification_message += "DETAILS OF OFFERED RESOURCE";
 		notification_message += "%n";
-		notification_message += "Resource name: " + selected_resource_name;
 		notification_message += "%n";
-		notification_message += "Resource description: " + selected_resource_desc;
+		notification_message += "Resource Name: " + selected_resource_name;
+		notification_message += "%n";
+		notification_message += "%n";
+		notification_message += "Resource Description: " + selected_resource_desc;
 		
 		if(personal_note.length() != 0){
 			notification_message += "%n";
-			notification_message += "Personal note from user:";
+			notification_message += "%n";
+			notification_message += "Personal Note from User:";
 			notification_message += "%n";
 			notification_message += personal_note;
 		}
@@ -116,27 +119,6 @@ public class RequestController {
 
 		return "redirect:" + "view-project";
 
-	}
-	
-	@RequestMapping(value = "/myNotifications", method = RequestMethod.GET)
-	public String showMyNotifications(HttpServletRequest request, ModelMap model){
-		String username = (String) request.getSession().getAttribute("username");
-		
-		ArrayList<Notification> inbox = notificationService.getInbox(username);
-		ArrayList<Notification> sent = notificationService.getSent(username);
-		
-		System.out.println(inbox.size());
-		System.out.println(sent.size());
-		
-		model.addAttribute("inbox", inbox);
-		model.addAttribute("sent", sent);
-		
-		return "notifications/" + "view_notifications";
-	}
-	
-	@RequestMapping(value = "/acceptRequest", method = RequestMethod.GET)
-	public String acceptReqeust(){
-		return "notification/" + "my-notifications";
 	}
 	
 	//AJAX METHODS BELOW

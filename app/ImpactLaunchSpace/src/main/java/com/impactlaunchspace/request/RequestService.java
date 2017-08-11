@@ -83,6 +83,14 @@ public class RequestService {
 
 	}
 	
+	public ArrayList<ProjectUserRequest> retrieveAllForUser(String username) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+
+		return projectUserRequestDAO.retrieveAllForUser(username);
+
+	}
+	
 	public void acceptRequest(String project_name, String project_proposer,
 			String username) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");

@@ -10,6 +10,8 @@ public interface ProjectUserRequestDAO {
 	public void remove(ProjectUserRequest projectUserRequest);
 
 	public ArrayList<ProjectUserRequest> retrieveAll(String project_name, String project_proposer);
+	
+	public ArrayList<ProjectUserRequest> retrieveAllForUser(String username);
 
 	public ArrayList<ProjectUserRequest> retrieveAllUserRequestsForRequestedResourceCategory(String project_name,
 			String project_proposer, String requested_resource_category);

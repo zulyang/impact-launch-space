@@ -117,6 +117,38 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			}
 		}
 	}
+	
+	public ArrayList<ProjectUserRequest> retrieveAllForUser(String username) {
+		ArrayList<ProjectUserRequest> output = new ArrayList<ProjectUserRequest>();
+
+		String sql = "SELECT * FROM PROJECT_USER_REQUESTS WHERE project_proposer = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ProjectUserRequest projectUserRequest = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				projectUserRequest = new ProjectUserRequest(rs.getString(1), rs.getString(2), rs.getString(3),
+						rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
+						rs.getString(9), rs.getString(10));
+				output.add(projectUserRequest);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 
 	public ArrayList<ProjectUserRequest> retrieveAllUserRequestsForRequestedResourceCategory(String project_name,
 			String project_proposer, String requested_resource_category) {
