@@ -61,7 +61,7 @@
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="date" name="dateOfBirth" required
-									placeholder="Date of Birth (dd/mm/yyyy) class="form-control profileField">
+									placeholder="Date of Birth (dd/mm/yyyy)" class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
@@ -175,10 +175,10 @@
 							<div class="col-lg-12">
 								<input type="number" name="minimumHours" min="1" max="100"
 									id="minHours" class="form-control profileField"
-									placeholder="Minimum Hours" required> 
+									placeholder="Minimum Hours per week" required> 
 								<input type="number" name="maximumHours" id="maxHours" min="1"
 									max="100" class="form-control profileField"
-									placeholder="Maximum Hours" required>
+									placeholder="Maximum Hours per week" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -206,15 +206,32 @@
 							</div>
 						</div>
 						<br>
+						<h3 style="display: inline-block; margin-right: 5px;">Privacy </h3>
+						<i class="fa fa-info-circle info_tooltip" rel="tooltip" title="A public profile will show users your email address and contact number."></i>
 						<div class="form-radio center">
-							<div class="radio_public">
+							<!-- <div class="radio_public">
 								<input name="isPublicProfile" required="required" value="true"
 									type="radio" value="Public Profile">Public Profile
 							</div>
 							<div class="radio_private">
 								<input name="isPublicProfile" required="required" value="false"
 									type="radio" value="Private Profile">Private Profile
-							</div>
+							</div> -->
+							
+                            <ul class="radio_as_button">
+                        <li>
+                        <input type="radio" id="public" name="isPublicProfile" required="required" value="true">
+                        <label for="public">Public</label>
+                        </li>
+                        
+                        <li>
+                        <input type="radio" id="private" name="isPublicProfile" required="required" value="false">
+                        <label for="private">Private</label>
+                        </li>
+                        
+                        </ul>
+							
+							
 						</div>
 						<br>
 						<div class="form-group">
@@ -417,5 +434,13 @@
 			});
 		});
 	</script>
+	
+	    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("[rel=tooltip]").tooltip({ placement: 'right'});
+        });    
+</script>
+	
 </body>
 </html>

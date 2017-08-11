@@ -60,144 +60,177 @@
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
-												<li class="list-group-item"><a href="#">Inbox<span
+												<li class="list-group-item"><a
+													href="/notifications/messages/inbox">Inbox<span
 														class="badge pull-right">123</span></a></li>
-												<li class="list-group-item"><a href="#">Sent<span
+												<li class="list-group-item-selected"><a
+													href="/notifications/messages/sent">Sent<span
 														class="badge pull-right">4</span></a></li>
+											</ul>
+										</div>
+
+										<div class="panel-heading">
+											<h4 class="panel-title">Requests</h4>
+										</div>
+										<div class="panel-collapse collapse in">
+											<ul class="list-group">
+												<li class="list-group-item"><a
+													href="/notifications/requests/inbox">Received <span
+														class="badge pull-right">1</span></a></li>
+												<li class="list-group-item"><a
+													href="/notifications/requests/sent">Sent <span
+														class="badge pull-right">2</span></a></li>
 											</ul>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-xs-6 col-sm-9">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">Messages Sent</h3>
+									</div>
+									<div class="panel-body">
+										<div class="table-responsive col-md-12">
+											<table class="table table-striped table-hover">
+												<thead>
+													<tr>
+														<th>Recipient</th>
+														<th>Message Subject</th>
+														<th>Sent Time</th>
+													</tr>
+												</thead>
+												<tbody id="userNotificationsTable">
+													<%
+														int id = 0;
+													%>
+													<c:forEach items="${inbox}" var="item">
 
-								<div class="table-responsive col-md-12 notificationsTable">
-									<table class="table table-striped table-hover">
-										<thead>
-											<tr>
-												<th>Sender</th>
-												<th>Message Subject</th>
-												<th>Sent Time</th>
-											</tr>
-										</thead>
-										<tbody id="userNotificationsTable">
-											<%
-												int id = 0;
-											%>
-											<c:forEach items="${inbox}" var="item">
 
+														<tr id="row<%=++id%>">
+															<td><p>
+																	<c:choose>
+																		<c:when
+																			test="${item.getSender_username().equals(\"admin\")}">
+																			<b> <input class="editable-field form-control"
+																				id="sender<%=id%>" type="text"
+																				value="ImpactLaunch.Space Admin" disabled="true" />
+																			</b>
+																		</c:when>
+																		<c:otherwise>
+																			<input class="editable-field form-control"
+																				id="sender<%=id%>" type="text"
+																				value="${item.getSender_username()}" disabled="true" />
+																		</c:otherwise>
+																	</c:choose>
 
-												<tr id="row<%=++id%>">
-													<td><p>
-															<c:choose>
-																<c:when
-																	test="${item.getSender_username().equals(\"admin\")}">
-																	<b> <input class="editable-field form-control"
-																		id="sender<%=id%>" type="text"
-																		value="ImpactLaunch.Space Admin" disabled="true" />
-																	</b>
-																</c:when>
-																<c:otherwise>
+																</p></td>
+															<td><p>
 																	<input class="editable-field form-control"
-																		id="sender<%=id%>" type="text"
-																		value="${item.getSender_username()}" disabled="true" />
-																</c:otherwise>
-															</c:choose>
+																		id="subj<%=id %>" type="textarea"
+																		value="${item.getNotification_subject()}"
+																		disabled="true" />
+																</p></td>
+															<td><p>
+																	<input class="editable-field form-control"
+																		id="time<%=id%>" type="text"
+																		value="${item.getSent_time() }" disabled="true" />
+																</p></td>
 
-														</p></td>
-													<td><p>
 															<input class="editable-field form-control"
-																id="subj<%=id %>" type="textarea"
-																value="${item.getNotification_subject()}"
+																id="message<%=id%>" type="hidden"
+																value="${item.getNotification_message()}"
 																disabled="true" />
-														</p></td>
-													<td><p>
-															<input class="editable-field form-control"
-																id="time<%=id%>" type="text"
-																value="${item.getSent_time() }" disabled="true" />
-														</p></td>
 
-													<input class="editable-field form-control"
-														id="message<%=id%>" type="hidden"
-														value="${item.getNotification_message()}" disabled="true" />
+															<td class="col-md-2"><p>
+																	<button id="view<%=id%>" type="btn" name="view"
+																		class="btn btn-primary edit" onClick="view(this.id)"
+																		href="#">View</button>
+																	<button id="dele<%=id%>" type="submit" name="delete"
+																		class="btn btn-danger delete" onClick="del(this.id)"
+																		href="#">
+																		<i class="fa fa-trash"></i> Delete
+																	</button>
+																</p></td>
+														</tr>
 
-													<td class="col-md-2"><p>
-															<button id="view<%=id%>" type="btn" name="view"
-																class="btn btn-primary edit" onClick="view(this.id)"
-																href="#">View</button>
-															<button id="dele<%=id%>" type="submit" name="delete"
-																class="btn btn-danger delete" onClick="del(this.id)"
-																href="#">
-																<i class="fa fa-trash"></i> Delete
-															</button>
-														</p></td>
-												</tr>
+													</c:forEach>
+												</tbody>
+											</table>
 
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
-								<div class="pull-right">
-									<ul class="pagination">
-										<li><a href="#">&laquo;</a></li>
-										<li><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#">&raquo;</a></li>
-									</ul>
+											<div class="pull-right">
+												<ul class="pagination">
+													<li><a href="#">&laquo;</a></li>
+													<li><a href="#">1</a></li>
+													<li><a href="#">2</a></li>
+													<li><a href="#">3</a></li>
+													<li><a href="#">&raquo;</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- View Notifications modal-->
-		<div class="modal fade" tabindex="-1" role="dialog"
-			id="notificationsModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
 
-					<form action="view-notification" role="form" method="post">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title">View Message</h4>
-						</div>
-						<div class="modal-body">
-							<div class="container">
-								<div id="resourcesNeeded" class="form-group row col-md-5">
-									<div class="col-md-12">
-									<p><b>From:</b></p>
-										<input id="modalSender" name="modalSender"
-											class="form-control col-md-4 modalNotificationsField"
-											placeholder="Sender Username here" type="text" readonly />
-									<p><b>Subject:</b></p>
-										<input id="modalNotificationSubject" name="modalNotificationSubject"
-											class="form-control col-md-4 modalNotificationsField"
-											placeholder="Message subject here" type="text" readonly />
-									<p><b>Message:</b></p>
-										<textarea id="modalNotificationsMessage"
-											name="modalNotificationsMessage"
-											class="form-control col-md-4 modalNotificationsField"
-											placeholder="Grab message from db and paste here" rows = "10" readonly></textarea>
+
+				<!-- View Notifications modal-->
+				<div class="modal fade" tabindex="-1" role="dialog"
+					id="notificationsModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+
+							<form action="view-notification" role="form" method="post">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title">View Message</h4>
+								</div>
+								<div class="modal-body">
+									<div class="container">
+										<div id="resourcesNeeded" class="form-group row col-md-5">
+											<div class="col-md-12">
+												<p>
+													<b>From:</b>
+												</p>
+												<input id="modalSender" name="modalSender"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Sender Username here" type="text" readonly />
+												<p>
+													<b>Subject:</b>
+												</p>
+												<input id="modalNotificationSubject"
+													name="modalNotificationSubject"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Message subject here" type="text" readonly />
+												<p>
+													<b>Message:</b>
+												</p>
+												<textarea id="modalNotificationsMessage"
+													name="modalNotificationsMessage"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Grab message from db and paste here" rows="10"
+													readonly></textarea>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">OK</button>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">OK</button>
 
+								</div>
+							</form>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </body>
 <script>
@@ -267,15 +300,15 @@
 		$('#modalSender').val(sender);
 		$('#modalNotificationSubject').val(subj);
 		$('#modalNotificationsMessage').val(message);
-		$('#modalNotificationsMessage').val().replace(/\r\n|\r|\n/g,"<br />")
+		$('#modalNotificationsMessage').val().replace(/\r\n|\r|\n/g, "<br />")
 		$('#notificationsModal').modal('show');
 	};
 </script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('.resourceCategory').hide();
-	});
+	function showTable() {
+		$()
+	}
 </script>
 
 </html>

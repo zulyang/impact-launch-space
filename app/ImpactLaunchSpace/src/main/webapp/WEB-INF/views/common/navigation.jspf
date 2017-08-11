@@ -41,7 +41,7 @@
 							</a></li>
 							
 							<li class="profileIcons"><a class="navbar-brand"
-								href="/alerts"> 
+								href="/notifications/messages/inbox"> 
 									<i class="fa fa-bell alertsIcon"></i>
 							</a></li>
 							

@@ -36,7 +36,7 @@
 							<div role="tabpanel" class="tab-pane active" id="about">
 								<div class="about-information">
 									<h1 class="section-title">Oops!</h1>
-									<p><i class="fa fa-lock fa-4x"></i> This project is private.</p>
+									<p><i class="fa fa-lock fa-4x"></i> This project is private. Contact the project owner to request access.</p>
 								</div>
 							</div>
 						</div>
@@ -60,20 +60,9 @@
 								</c:forEach> </span>
 
 							<p>${selected_project.getPurpose() }</p>
-							<h2>$10,350</h2>
-							<span class="contribution">raised by <strong>5,234</strong>
-								ready to launch
-							</span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="45"
-									aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-									<span class="sr-only">45% Complete</span>
-								</div>
-							</div>
-							<span class="goal-progress"><strong>45%</strong> of
-								$23,000 raised</span>
+							
 						</div>
-						<span class="count-down"><strong>27</strong>Days to go</span>
+						
 					</div>
 				</div>
 				<!--/main content-->
