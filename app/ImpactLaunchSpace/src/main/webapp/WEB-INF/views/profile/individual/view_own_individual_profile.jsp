@@ -26,7 +26,7 @@
 <%@include file="../../common/navigation.jspf" %>
 					
 
-				<div class="indi_profile_display_container">
+				<div class="indi_public_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div class="profile_img">
@@ -40,7 +40,7 @@
 
 								<div class="btn-group">
 									<a href="editprofile-individual" class="btn btn-default">
-										Edit Profile </a> <a href="" class="btn btn-default"> Leave A
+										Edit Profile </a> <a class="btn btn-default" onClick="sendMessage()"> Leave A
 										Message </a>
 								</div>
 
@@ -129,7 +129,49 @@
 				</div>
 			</div>
 		</div>
+		
+				
+		<!-- Leave message modal-->
+		<div class="modal fade" tabindex="-1" role="dialog" id="messageModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<form action="send-message" role="form" method="post">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Send Message To ${individual.getUsername() }</h4>
+						</div>
+						<div class="modal-body">
+							<div class="container">
+								<div class="form-group row col-md-5">
+									<div class="col-md-12 col-xs-9">
+										<textarea id=""	name="modalMessage"	class="form-control col-md-4 create-project-add"
+											placeholder="Leave your message here"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancel</button>
+							<button type="button" id="send" class="btn btn-success">Send</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 
 </body>
+
+<script type="text/javascript">
+	function sendMessage(){
+		$('#messageModal').modal('show');
+	}
+	</script>
+	
 </html>

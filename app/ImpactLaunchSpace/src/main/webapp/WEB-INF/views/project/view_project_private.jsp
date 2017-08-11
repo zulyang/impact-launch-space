@@ -81,7 +81,7 @@
 								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
 							</ul>
 							<!--/social links-->
-							<a href="#" class="btn btn-contact"><i class="fa fa-user"></i>VIEW
+							<a href="/view-profile?username=${selected_project.getProject_proposer()}" class="btn btn-contact"><i class="fa fa-user"></i>VIEW
 								PROFILE</a>
 						</div>
 					</div></div>
