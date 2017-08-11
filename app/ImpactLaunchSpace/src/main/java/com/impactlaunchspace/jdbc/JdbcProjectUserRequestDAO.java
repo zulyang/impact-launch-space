@@ -331,7 +331,7 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			String project_proposer, String resource_offerer, String offered_resource_category,
 			String offered_resource_name) {
 		String sql = "UPDATE PROJECT_USER_REQUESTS SET "
-				+ "request_status = ?, WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
+				+ "request_status = ? WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -342,8 +342,8 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			ps.setString(4, requested_resource_name);
 			ps.setString(5, project_proposer);
 			ps.setString(6, resource_offerer);
-			ps.setString(8, offered_resource_category);
-			ps.setString(9, offered_resource_name);
+			ps.setString(7, offered_resource_category);
+			ps.setString(8, offered_resource_name);
 			ps.executeUpdate();
 			ps.close();
 
@@ -361,7 +361,7 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 	
 	public void rejectRequest(String project_name, String requested_resource_category, String requested_resource_name, String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name) {
 		String sql = "UPDATE PROJECT_USER_REQUESTS SET "
-				+ "request_status = ?, WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
+				+ "request_status = ? WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -372,8 +372,8 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			ps.setString(4, requested_resource_name);
 			ps.setString(5, project_proposer);
 			ps.setString(6, resource_offerer);
-			ps.setString(8, offered_resource_category);
-			ps.setString(9, offered_resource_name);
+			ps.setString(7, offered_resource_category);
+			ps.setString(8, offered_resource_name);
 			ps.executeUpdate();
 			ps.close();
 
@@ -391,7 +391,7 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 	
 	public void confirmRequest(String project_name, String requested_resource_category, String requested_resource_name, String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name) {
 		String sql = "UPDATE PROJECT_USER_REQUESTS SET "
-				+ "request_status = ?, WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
+				+ "request_status = ? WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -402,8 +402,8 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			ps.setString(4, requested_resource_name);
 			ps.setString(5, project_proposer);
 			ps.setString(6, resource_offerer);
-			ps.setString(8, offered_resource_category);
-			ps.setString(9, offered_resource_name);
+			ps.setString(7, offered_resource_category);
+			ps.setString(8, offered_resource_name);
 			ps.executeUpdate();
 			ps.close();
 
@@ -421,7 +421,7 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 	
 	public void cancelRequest(String project_name, String requested_resource_category, String requested_resource_name, String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name) {
 		String sql = "UPDATE PROJECT_USER_REQUESTS SET "
-				+ "request_status = ?, WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
+				+ "request_status = ? WHERE project_name = ? AND requested_resource_category = ? AND requested_resource_name = ? AND project_proposer = ? AND resource_offerer = ? AND offered_resource_category = ? AND offered_resource_name = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -432,8 +432,8 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			ps.setString(4, requested_resource_name);
 			ps.setString(5, project_proposer);
 			ps.setString(6, resource_offerer);
-			ps.setString(8, offered_resource_category);
-			ps.setString(9, offered_resource_name);
+			ps.setString(7, offered_resource_category);
+			ps.setString(8, offered_resource_name);
 			ps.executeUpdate();
 			ps.close();
 

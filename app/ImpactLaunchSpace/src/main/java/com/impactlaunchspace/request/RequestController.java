@@ -41,7 +41,7 @@ public class RequestController {
 
 	@Autowired
 	RequestService requestService;
-	
+
 	@Autowired
 	NotificationService notificationService;
 
@@ -62,21 +62,21 @@ public class RequestController {
 		model.addAttribute("selected_resource_category", "Legal");
 		return "applyProjectModal";
 	}
-	
+
 	@RequestMapping(value = "/sendApplyRequest", method = RequestMethod.POST)
-	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer,	
-			@RequestParam String selected_requested_resource, @RequestParam String selected_resource_category, 
-			@RequestParam String selected_resource_name, @RequestParam String selected_resource_desc, 
+	public String processApplyRequest(@RequestParam String project_name, @RequestParam String project_proposer,
+			@RequestParam String selected_requested_resource, @RequestParam String selected_resource_category,
+			@RequestParam String selected_resource_name, @RequestParam String selected_resource_desc,
 			@RequestParam String personal_note, HttpServletRequest request, RedirectAttributes redirectAttributes,
 			ModelMap model) {
 		String username = (String) request.getSession().getAttribute("username");
 		requestService.createUserRequest(project_name, selected_resource_category, selected_requested_resource,
 				project_proposer, username, selected_resource_category, selected_resource_name, selected_resource_desc,
 				personal_note);
-		
-		
-		//building the notification message string
-		String notification_message = "The following user: " + username + " has applied to offer his support for " + project_name;
+
+		// building the notification message string
+		String notification_message = "The following user: " + username + " has applied to offer his support for "
+				+ project_name;
 		notification_message += "%n";
 		notification_message += "%n";
 		notification_message += "DETAILS OF OFFERED RESOURCE";
@@ -86,42 +86,89 @@ public class RequestController {
 		notification_message += "%n";
 		notification_message += "%n";
 		notification_message += "Resource Description: " + selected_resource_desc;
-		
-		if(personal_note.length() != 0){
+
+		if (personal_note.length() != 0) {
 			notification_message += "%n";
 			notification_message += "%n";
 			notification_message += "Personal Note from User:";
 			notification_message += "%n";
 			notification_message += personal_note;
 		}
-		
-		Notification notification = new Notification(project_proposer, "admin", "A user has applied to offer his support for " + project_name,
-		notification_message, "request");
-		
+
+		Notification notification = new Notification(project_proposer, "admin",
+				"A user has applied to offer his support for " + project_name, notification_message, "message");
+
 		notificationService.sendNotification(notification);
-		
+
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
-		
-		if(selected_project.getOrganization() != null){
-			if(selected_project.getOrganization().isEmpty() != true){
-				OrganizationAccount organizationObj = profileService.findByCompanyName(selected_project.getOrganization());
-				
-				Notification notification2 = new Notification(organizationObj.getUsername(), "admin", "A user has applied to offer his support for " + project_name,
-						notification_message, "request");
-						
-						notificationService.sendNotification(notification2);
+
+		if (selected_project.getOrganization() != null) {
+			if (selected_project.getOrganization().isEmpty() != true) {
+				OrganizationAccount organizationObj = profileService
+						.findByCompanyName(selected_project.getOrganization());
+
+				Notification notification2 = new Notification(organizationObj.getUsername(), "admin",
+						"A user has applied to offer his support for " + project_name, notification_message, "message");
+
+				notificationService.sendNotification(notification2);
 			}
 		}
-		
-		
+
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
 
 		return "redirect:" + "view-project";
 
 	}
-	
-	//AJAX METHODS BELOW
+
+	@RequestMapping(value = "/notifications/requests/process-request", method = RequestMethod.POST)
+	public String acceptRequest(@RequestParam String actiontype, @RequestParam String modalOfferedResourceName,
+			@RequestParam String modalRequestedResourceName, @RequestParam String modalProjName,
+			@RequestParam String modalOfferer, @RequestParam String modalResourceCategory,
+			@RequestParam String modalProjectProposer, HttpServletRequest request, ModelMap model) {
+
+		if (actiontype.equals("approve")) {
+			requestService.acceptRequest(modalProjName, modalResourceCategory, modalRequestedResourceName,
+					modalProjectProposer, modalOfferer, modalResourceCategory, modalOfferedResourceName);
+
+			// trigger sending of acceptance to user
+			String notification_message = "Congratulations!";
+			notification_message += "%n";
+			notification_message += "%n";
+			notification_message += "The project creator of " + modalProjName
+					+ " has accepted your offer to help in the project.";
+			notification_message += "%n";
+			notification_message += "%n";
+			notification_message += "Proceed to your Requests Tabs to confirm your acceptance into the project.";
+
+			Notification notification = new Notification(modalOfferer, "admin",
+					"Your request to help " + modalProjName + " was accepted by the Project Creator!",
+					notification_message, "message");
+
+			notificationService.sendNotification(notification);
+			
+		} else {
+			requestService.rejectRequest(modalProjName, modalResourceCategory, modalRequestedResourceName,
+					modalProjectProposer, modalOfferer, modalResourceCategory, modalOfferedResourceName);
+
+			// trigger sending of rejection to user
+			String notification_message = "Sorry!";
+			notification_message += "%n";
+			notification_message += "%n";
+			notification_message += "The project creator of " + modalProjName
+					+ " has unfortunately decided to decline your offer to help in the project.";
+
+			Notification notification = new Notification(modalOfferer, "admin",
+					"Your request to help " + modalProjName + " was rejected by the Project Creator!",
+					notification_message, "message");
+
+			notificationService.sendNotification(notification);
+		}
+
+		return "redirect:" + "inbox";
+	}
+
+	// AJAX METHODS BELOW
 	@RequestMapping(value = "/obtainUserResources", method = RequestMethod.POST)
 	public void obtainUserResources(@RequestParam String selected_resource_category, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws IOException {
@@ -137,7 +184,6 @@ public class RequestController {
 		response.getWriter().write(json);
 	}
 
-
 	@RequestMapping(value = "/getResourceDescription", method = RequestMethod.POST)
 	public void getResourceDescriptionAjax(@RequestParam String resourceName, @RequestParam String resourceCategory,
 			HttpServletRequest request, ModelMap model, HttpServletResponse response) throws IOException {
@@ -152,5 +198,5 @@ public class RequestController {
 
 		response.getWriter().write(desc);
 	}
-	
+
 }

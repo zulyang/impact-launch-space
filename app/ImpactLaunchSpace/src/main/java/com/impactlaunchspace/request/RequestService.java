@@ -99,12 +99,21 @@ public class RequestService {
 
 	}
 	
-	public void acceptRequest(String project_name, String project_proposer,
-			String username) {
+	public void acceptRequest(String project_name, String requested_resource_category, String requested_resource_name, 
+			String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
 
-		projectUserRequestDAO.retrieveProjectRequestsOfUser(project_name, project_proposer, username);
+		projectUserRequestDAO.acceptRequest(project_name, requested_resource_category, requested_resource_name, project_proposer, resource_offerer, offered_resource_category, offered_resource_name);
+
+	}
+	
+	public void rejectRequest(String project_name, String requested_resource_category, String requested_resource_name, 
+			String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+
+		projectUserRequestDAO.rejectRequest(project_name, requested_resource_category, requested_resource_name, project_proposer, resource_offerer, offered_resource_category, offered_resource_name);
 
 	}
 

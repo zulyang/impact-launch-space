@@ -143,8 +143,8 @@
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="status<%=id%>" type="text" value="${item.getRequest_status() }"
-																		disabled="true" />
+																		id="status<%=id%>" type="text"
+																		value="${item.getRequest_status() }" disabled="true" />
 																</p></td>
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
@@ -160,6 +160,11 @@
 														<input class="editable-field form-control"
 															id="offercomments<%=id%>" type="hidden"
 															value="${item.getOffer_comments() }" disabled="true" />
+															
+														<input class="editable-field form-control"
+															id="proposer<%=id%>" type="hidden"
+															value="${item.getProject_proposer() }" disabled="true" />
+															
 													</c:forEach>
 												</tbody>
 											</table>
@@ -182,14 +187,13 @@
 				</div>
 
 
-
 				<!-- View Request modal-->
 				<div class="modal fade" tabindex="-1" role="dialog"
 					id="viewRequestModal">
 					<div class="modal-dialog">
 						<div class="modal-content">
 
-							<form action="view-notification" role="form" method="post">
+							<form action="process-request" role="form" method="post">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
 										aria-label="Close">
@@ -217,6 +221,13 @@
 												<input id="modalProjName" name="modalProjName"
 													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="text" readonly />
+
+												<p>
+													<b>Resource Category</b>
+												</p>
+												<input id="modalResourceCategory" name="modalResourceCategory"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Resource Category" type="text" readonly />
 
 												<p>
 													<b>Requested Resource Name</b>
@@ -248,11 +259,15 @@
 												</p>
 												<input id="modalPersonalNote" name="modalPersonalNote"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Personal note" type="text" readonly />
-												
-												<input id="modalRequestStatus" name="modalRequestStatus"
+													placeholder="Personal note" type="text" readonly /> 
+													<input
+													id="modalRequestStatus" name="modalRequestStatus"
 													class="form-control col-md-4 modalNotificationsField"
 													placeholder="Project name" type="hidden" readonly />
+													 <input
+													id="modalProjectProposer" name="modalProjectProposer"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Project Proposer" type="hidden" readonly />
 											</div>
 										</div>
 									</div>
@@ -261,11 +276,11 @@
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
 									<button id="declinebtn" type="submit" class="btn btn-danger"
-										data-dismiss="modal">
+										name="actiontype" value="decline">
 										<i class="fa fa-times"></i> Decline
 									</button>
-									<button id="approvebtn"type="submit" class="btn btn-success"
-										data-dismiss="modal">
+									<button id="approvebtn" type="submit" class="btn btn-success"
+										name="actiontype" value="approve">
 										<i class="fa fa-check"></i> Approve
 									</button>
 
@@ -284,7 +299,9 @@
 		var disabledStatus = $('.editable-field').attr('disabled');
 		var newId = id.substring(4);
 		var offerer = $('#offerer' + newId).val();
+		var proposer = $('#proposer' + newId).val();
 		var projname = $('#projname' + newId).val();
+		var resourcecategory = $('#resourcecategory' + newId).val();
 		var requestedresourcename = $('#requestedresourcename' + newId).val();
 		var offeredresourcename = $('#offeredresourcename' + newId).val();
 		var offeredresourcedesc = $('#offeredresourcedesc' + newId).val();
@@ -293,17 +310,20 @@
 
 		$('#modalOfferer').val(offerer);
 		$('#modalProjName').val(projname);
+		$('#modalResourceCategory').val(resourcecategory);
 		$('#modalRequestedResourceName').val(requestedresourcename);
 		$('#modalOfferedResourceName').val(offeredresourcename);
 		$('#modalOfferedResourceDesc').val(offeredresourcedesc);
 		$('#modalPersonalNote').val(offercomments);
 		$('#modalRequestStatus').val(status);
+		$('#modalProjectProposer').val(proposer);
+		
 
 		$('#viewRequestModal').modal('show');
-		if(status != "Pending"){
+		if (status != "Pending") {
 			$('#declinebtn').hide();
 			$('#approvebtn').hide();
-		}else{
+		} else {
 			$('#declinebtn').show();
 			$('#approvebtn').show();
 		}

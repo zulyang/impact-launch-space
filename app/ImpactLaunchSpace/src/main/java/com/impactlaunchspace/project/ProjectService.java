@@ -186,4 +186,10 @@ public class ProjectService {
 		DocumentsProjectDAO documentProjectDAO = (DocumentsProjectDAO) context.getBean("documentsProjectDAO");
 		documentProjectDAO.delete(project_name, project_proposer, file);
 	}
+	
+	public void addNewMemberToTeam(ProjectMemberList projectMemberList) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
+		projectMemberListDAO.insert(projectMemberList);
+	}
 }
