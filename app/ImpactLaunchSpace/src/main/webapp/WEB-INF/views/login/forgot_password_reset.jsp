@@ -24,29 +24,32 @@
 
 				<%@include file="../common/navigationLogin.jspf"%>
 
-				<div class="col-lg-12 form_container">
-					<h4 class="welcome">Forgot your password?</h4>
-					<form action="forgot-password" method="POST"
-						class="form-horizontal forgot_form" id="forgotPasswordForm">
+				<div class="col-lg-12 form_container" id="changePasswordForm"
+					style="display: none;">
+					<h4 class="welcome">Set your new password</h4>
+					<form action="resetpassword" method="POST" class="form-horizontal">
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="email" required id="usernameemail"
-									name="usernameemail" class="form-control" id="inputEmail3"
-									placeholder="Enter your email address">
+								<input type="password" name="password1"
+									class="form-control field" id="password1"
+									placeholder="Enter your new password">
 							</div>
 						</div>
-
 						<div class="form-group">
 							<div class="col-lg-12">
-								<button type="submit" class="btn btn-info field"
-									id="forgotPWSendEmailButton">Send Verification Email</button>
+								<input type="password" name="password2"
+									class="form-control field" id="password2"
+									placeholder="Repeat your password"> <input
+									type="hidden" name="username" value="${username}" />
 							</div>
 						</div>
-						<p id="forgotPasswordCheck">${forgotPasswordCheck}</p>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<button type="submit" class="btn btn-success field">CONFIRM</button>
+							</div>
+						</div>
+						<p id="passwordUnmatchMsg">${passwordError}</p>
 					</form>
-
-					<a href="/login1" class="btn btn-default returnLogin" role="button">
-						Return to Login</a>
 				</div>
 			</div>
 		</div>

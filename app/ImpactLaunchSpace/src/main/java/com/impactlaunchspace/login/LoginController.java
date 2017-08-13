@@ -448,7 +448,7 @@ public class LoginController {
 			rtService.regenerateResetCode(username, email);
 			model.addAttribute("username", username);
 			model.addAttribute("email", email);
-			return "login/" + "forgot_password";
+			return "login/" + "forgot_password_token";
 		}
 		// FRONT END TO PRINT AN ACCOUNT WITH THAT EMAIL DOESN NOT EXIST
 		// else error at current page
@@ -457,20 +457,32 @@ public class LoginController {
 
 	}
 
+	@RequestMapping(value = "/forgot-password-token", method = RequestMethod.GET)
+	public String showForgotPasswordEnterTokenPage(ModelMap model) {
+		return "login/" + "forgot_password_token";
+	}
+	
 	@RequestMapping(value = "/verifyreset", method = RequestMethod.POST)
 	public String verifyResetCode(@RequestParam String resetcode, @RequestParam String username,
-			@RequestParam String email, ModelMap model) {
+			@RequestParam String email, ModelMap model) {		
 		boolean isResetCode = rtService.verifyToken(resetcode, username);
 		if (isResetCode) {
 			model.addAttribute("username", username);
 			model.addAttribute("email", email);
 			model.addAttribute("correctPin", "correctPin");
 			rtService.unlock(username);
-			return "login/" + "forgot_password";
+			return "login/" + "forgot_password_reset";
 		}
 		// FRONT END TO PRINT PIN IS WRONG
+		model.addAttribute("username", username);
+		model.addAttribute("email", email);
 		model.addAttribute("pinWrongMessage", "You have entered an incorrect PIN.");
-		return "login/" + "forgot_password";
+		return "login/" + "forgot_password_token";
+	}
+	
+	@RequestMapping(value = "/forgot-password-reset", method = RequestMethod.GET)
+	public String showForgotPasswordResetPasswordPage(ModelMap model) {
+		return "login/" + "forgot_password_reset";
 	}
 
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
@@ -495,7 +507,7 @@ public class LoginController {
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
 			model.addAttribute("passwordError",
 					"Password must contain letters, digits, symbols and have at least 6 characters.");
-			return "login/" + "change_password";
+			return "login/" + "forgot_password_reset";
 		}
 
 		if (password1.equals(password2)) {
@@ -508,7 +520,7 @@ public class LoginController {
 		}
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		model.addAttribute("passwordError", "Your passwords do not match.");
-		return "login/" + "change_password";
+		return "login/" + "forgot_password_reset";
 	}
 
 	@ExceptionHandler(value = Exception.class)

@@ -247,10 +247,6 @@ html, body {
 	width: 90%;
 }
 
-.forgot_form {
-	margin-top: -10rem;
-}
-
 .welcome, .createAccount, .register_success_message,
 	.verifyAccountMessage, .unlockAccountMessage, .unlockAccountPinMessage
 	{
@@ -377,32 +373,6 @@ html, body {
 	max-width: 130%;
 	max-height: 130%;
 	margin-left: 2rem;
-}
-
-#resetcode {
-	float: left;
-	width: 15rem;
-	margin-right: 2rem;
-}
-
-#submitPIN {
-	float: left;
-	width: 12rem;
-	margin-left: 1rem;
-}
-
-#verify_pin {
-	margin-top: 8rem;
-}
-
-#email_sent_prompt {
-	width: 30rem;
-	position: absolute;
-}
-
-#wait_prompt {
-	margin-top: 8rem;
-	position: absolute;
 }
 
 .org_profile_display_container {
