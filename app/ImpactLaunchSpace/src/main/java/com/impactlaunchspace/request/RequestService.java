@@ -31,7 +31,7 @@ public class RequestService {
 
 		ProjectUserRequest checkForExistingObject = projectUserRequestDAO.retrieveParticularUserRequest(project_name,
 				project_proposer, resource_offerer, requested_resource_category, requested_resource_name,
-				offered_resource_category, offered_resource_name);
+				offered_resource_category, offered_resource_name, "Pending");
 
 		if (checkForExistingObject == null) {
 			projectUserRequestDAO.insert(projectUserRequest);
@@ -66,12 +66,12 @@ public class RequestService {
 
 	public ProjectUserRequest retrieveParticularUserRequest(String project_name, String project_proposer,
 			String resource_offerer, String requested_resource_category, String requested_resource_name,
-			String offered_resource_category, String offered_resource_name) {
+			String offered_resource_category, String offered_resource_name, String request_status) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
 
 		return projectUserRequestDAO.retrieveParticularUserRequest(project_name, project_proposer, resource_offerer,
-				requested_resource_category, requested_resource_name, offered_resource_category, offered_resource_name);
+				requested_resource_category, requested_resource_name, offered_resource_category, offered_resource_name, request_status);
 	}
 
 	public ArrayList<ProjectUserRequest> retrieveProjectRequestsOfUser(String project_name, String project_proposer,
@@ -80,6 +80,15 @@ public class RequestService {
 		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
 
 		return projectUserRequestDAO.retrieveProjectRequestsOfUser(project_name, project_proposer, username);
+
+	}
+	
+	public ArrayList<ProjectUserRequest> retrieveNonRejectedProjectRequestsOfUser(String project_name, String project_proposer,
+			String username) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+
+		return projectUserRequestDAO.retrieveNonRejectedProjectRequestsOfUser(project_name, project_proposer, username);
 
 	}
 	
@@ -117,4 +126,21 @@ public class RequestService {
 
 	}
 
+	public void confirmRequest(String project_name, String requested_resource_category, String requested_resource_name, 
+			String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+
+		projectUserRequestDAO.confirmRequest(project_name, requested_resource_category, requested_resource_name, project_proposer, resource_offerer, offered_resource_category, offered_resource_name);
+
+	}
+	
+	public void cancelRequest(String project_name, String requested_resource_category, String requested_resource_name, 
+			String project_proposer, String resource_offerer, String offered_resource_category, String offered_resource_name){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+
+		projectUserRequestDAO.cancelRequest(project_name, requested_resource_category, requested_resource_name, project_proposer, resource_offerer, offered_resource_category, offered_resource_name);
+
+	}
 }

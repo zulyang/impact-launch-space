@@ -255,10 +255,10 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 
 	public ProjectUserRequest retrieveParticularUserRequest(String project_name, String project_proposer,
 			String resource_offerer, String requested_resource_category, String requested_resource_name,
-			String offered_resource_category, String offered_resource_name) {
+			String offered_resource_category, String offered_resource_name, String request_status) {
 		ProjectUserRequest projectUserRequest = null;
 
-		String sql = "SELECT * FROM PROJECT_USER_REQUESTS WHERE project_name = ? AND project_proposer = ? AND resource_offerer = ? AND requested_resource_category = ? AND requested_resource_name = ? AND offered_resource_category = ? AND offered_resource_name = ?";
+		String sql = "SELECT * FROM PROJECT_USER_REQUESTS WHERE project_name = ? AND project_proposer = ? AND resource_offerer = ? AND requested_resource_category = ? AND requested_resource_name = ? AND offered_resource_category = ? AND offered_resource_name = ? AND request_status = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -270,6 +270,7 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			ps.setString(5, requested_resource_name);
 			ps.setString(6, offered_resource_category);
 			ps.setString(7, offered_resource_name);
+			ps.setString(8, request_status);
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -304,6 +305,44 @@ public class JdbcProjectUserRequestDAO implements ProjectUserRequestDAO {
 			ps.setString(1, project_name);
 			ps.setString(2, project_proposer);
 			ps.setString(3, username);
+			ProjectUserRequest projectUserRequest = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				projectUserRequest = new ProjectUserRequest(rs.getString(1), rs.getString(2), rs.getString(3),
+						rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
+						rs.getString(9), rs.getString(10));
+				output.add(projectUserRequest);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+
+	public ArrayList<ProjectUserRequest> retrieveNonRejectedProjectRequestsOfUser(String project_name, String project_proposer,
+			String username) {
+		ArrayList<ProjectUserRequest> output = new ArrayList<ProjectUserRequest>();
+
+		String sql = "SELECT * FROM PROJECT_USER_REQUESTS WHERE project_name = ? AND project_proposer = ? AND resource_offerer = ? AND NOT request_status = ? AND NOT request_status = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.setString(3, username);
+			ps.setString(4, "Rejected");
+			ps.setString(5, "Cancelled");
 			ProjectUserRequest projectUserRequest = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {

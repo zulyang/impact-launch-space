@@ -192,4 +192,18 @@ public class ProjectService {
 		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
 		projectMemberListDAO.insert(projectMemberList);
 	}
+	
+	public ArrayList<ProjectMemberList> retrieveMemberList(String project_name, String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
+		return projectMemberListDAO.retrieveMemberList(project_name, project_proposer);
+	}
+	
+	public ProjectMemberList retrieveSpecificMember(String project_name, String project_proposer,
+			String project_member_username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
+		return projectMemberListDAO.retrieveSpecificMember(project_name, project_proposer,
+				project_member_username);
+	}
 }

@@ -113,7 +113,7 @@
 														<tr id="row<%=++id%>">
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="offerer<%=id%>" type="text"
+																		id="proposer<%=id%>" type="text"
 																		value="${item.getProject_proposer() }" disabled="true" />
 
 																</p></td>
@@ -158,12 +158,12 @@
 															disabled="true" />
 
 														<input class="editable-field form-control"
-															id="proposer<%=id%>" type="hidden"
-															value="${item.getProject_proposer() }" disabled="true" />
-
-														<input class="editable-field form-control"
 															id="offercomments<%=id%>" type="hidden"
 															value="${item.getOffer_comments() }" disabled="true" />
+															
+														<input class="editable-field form-control"
+															id="resourceofferer<%=id%>" type="hidden"
+															value="${item.getResource_offerer() }" disabled="true" />
 													</c:forEach>
 												</tbody>
 											</table>
@@ -193,7 +193,7 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 
-							<form action="view-notification" role="form" method="post">
+							<form action="process-confirmation" role="form" method="post">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal"
 										aria-label="Close">
@@ -219,17 +219,24 @@
 												<p>
 													<b>Project Proposer</b>
 												</p>
-												<input id="modalProjProposer" name="modalProjProposer"
+												<input id="modalProjectProposer" name="modalProjectProposer"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly />
+													placeholder="Project Proposer" type="text" readonly />
 
+												<p>
+													<b>Resource Category</b>
+												</p>
+												<input id="modalResourceCategory" name="modalResourceCategory"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Resource Category" type="text" readonly />
+												
 												<p>
 													<b>Requested Resource Name</b>
 												</p>
 												<input id="modalRequestedResourceName"
 													name="modalRequestedResourceName"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly />
+													placeholder="Requested Resource Name" type="text" readonly />
 
 												<p>
 													<b>Offered Resource Name</b>
@@ -237,7 +244,7 @@
 												<input id="modalOfferedResourceName"
 													name="modalOfferedResourceName"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly />
+													placeholder="Offered Resource Name" type="text" readonly />
 
 
 												<p>
@@ -246,19 +253,24 @@
 												<input id="modalOfferedResourceDesc"
 													name="modalOfferedResourceDesc"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly />
+													placeholder="Resource Desc" type="text" readonly />
 
 												<p>
 													<b>Your Note to Project Proposer</b>
 												</p>
 												<input id="modalPersonalNote" name="modalPersonalNote"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly /> 
+													placeholder="Personal Note" type="text" readonly /> 
 													
 													<input
 													id="modalRequestStatus" name="modalRequestStatus"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="hidden" readonly />
+													placeholder="Request Status" type="hidden" readonly />
+													
+													<input
+													id="modalOfferer" name="modalOfferer"
+													class="form-control col-md-4 modalNotificationsField"
+													placeholder="Resource Offerer" type="hidden" readonly />
 											</div>
 										</div>
 									</div>
@@ -266,12 +278,12 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
-									<button id="cancelbtn" type="submit" class="btn btn-danger"
-										data-dismiss="modal">
+									<button id="cancelbtn" type="submit" class="btn btn-danger" name = "actiontype"
+										value = "cancel">
 										<i class="fa fa-times"></i> Cancel Offer
 									</button>
-									<button id="confirmbtn" type="submit" class="btn btn-success"
-										data-dismiss="modal">
+									<button id="confirmbtn" type="submit" class="btn btn-success" name = "actiontype"
+										value="confirm">
 										<i class="fa fa-check"></i> Confirm Offer
 									</button>
 
@@ -291,19 +303,23 @@
 		var newId = id.substring(4);
 		var proposer = $('#proposer' + newId).val();
 		var projname = $('#projname' + newId).val();
+		var resourcecategory = $('#resourcecategory' + newId).val();
 		var requestedresourcename = $('#requestedresourcename' + newId).val();
 		var offeredresourcename = $('#offeredresourcename' + newId).val();
 		var offeredresourcedesc = $('#offeredresourcedesc' + newId).val();
 		var offercomments = $('#offercomments' + newId).val();
 		var status = $('#status' + newId).val();
+		var resourceofferer = $('#resourceofferer' + newId).val();
 
-		$('#modalProjProposer').val(proposer);
+		$('#modalProjectProposer').val(proposer);
 		$('#modalProjName').val(projname);
+		$('#modalResourceCategory').val(resourcecategory);
 		$('#modalRequestedResourceName').val(requestedresourcename);
 		$('#modalOfferedResourceName').val(offeredresourcename);
 		$('#modalOfferedResourceDesc').val(offeredresourcedesc);
 		$('#modalPersonalNote').val(offercomments);
 		$('#modalRequestStatus').val(status);
+		$('#modalOfferer').val(resourceofferer);
 
 		$('#viewRequestModal').modal('show');
 		if (status != "Accepted") {

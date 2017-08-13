@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.impactlaunchspace.entity.Notification;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
+import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
@@ -122,7 +123,7 @@ public class RequestController {
 	}
 
 	@RequestMapping(value = "/notifications/requests/process-request", method = RequestMethod.POST)
-	public String acceptRequest(@RequestParam String actiontype, @RequestParam String modalOfferedResourceName,
+	public String processRequest(@RequestParam String actiontype, @RequestParam String modalOfferedResourceName,
 			@RequestParam String modalRequestedResourceName, @RequestParam String modalProjName,
 			@RequestParam String modalOfferer, @RequestParam String modalResourceCategory,
 			@RequestParam String modalProjectProposer, HttpServletRequest request, ModelMap model) {
@@ -166,6 +167,60 @@ public class RequestController {
 		}
 
 		return "redirect:" + "inbox";
+	}
+	
+	@RequestMapping(value = "/notifications/requests/process-confirmation", method = RequestMethod.POST)
+	public String processResourceConfirmation(@RequestParam String actiontype, @RequestParam String modalOfferedResourceName,
+			@RequestParam String modalRequestedResourceName, @RequestParam String modalProjName,
+			@RequestParam String modalOfferer, @RequestParam String modalResourceCategory,
+			@RequestParam String modalProjectProposer, HttpServletRequest request, ModelMap model) {
+		
+		if (actiontype.equals("confirm")) {
+			requestService.confirmRequest(modalProjName, modalResourceCategory, modalRequestedResourceName,
+					modalProjectProposer, modalOfferer, modalResourceCategory, modalOfferedResourceName);
+
+			// trigger sending of confirmation to proposer
+			String notification_message = "Congratulations, you have a new team member for " + modalProjName + "!";
+			notification_message += "%n";
+			notification_message += "%n";
+			notification_message += "The user: " + modalOfferer + " has successfully confirmed his enrollment in your project! He has now basic member privileges to your project.";
+			notification_message += "%n";
+			notification_message += "%n";
+			notification_message += "You can manage his rights/privileges in the Project Management page.";
+
+			Notification notification = new Notification(modalProjectProposer, "admin",
+					"The user: " + modalOfferer + " has successfully confirmed his enrollment in your project : " + modalProjName + ".",
+					notification_message, "message");
+
+			notificationService.sendNotification(notification);
+			
+			//adds new member to team, if he isnt am member before
+			if(projectService.retrieveSpecificMember(modalProjName, modalProjectProposer, modalOfferer) == null){
+				ProjectMemberList projectMemberList = new ProjectMemberList(modalProjName, modalProjectProposer, modalOfferer,
+					"member");
+				projectService.addNewMemberToTeam(projectMemberList);
+			}
+				
+			
+		} else {
+			requestService.cancelRequest(modalProjName, modalResourceCategory, modalRequestedResourceName,
+					modalProjectProposer, modalOfferer, modalResourceCategory, modalOfferedResourceName);
+
+			// trigger sending of rejection to user
+			String notification_message = "Sorry!";
+			notification_message += "%n";
+			notification_message += "%n";
+			notification_message += "The resource offerer: " + modalOfferer
+					+ " has unfortunately decided to cancel his offer to help in the project.";
+
+			Notification notification = new Notification(modalProjectProposer, "admin",
+					"Your request to recruit " + modalOfferer + " was rejected.",
+					notification_message, "message");
+
+			notificationService.sendNotification(notification);
+		}
+		
+		return "redirect:" + "sent";
 	}
 
 	// AJAX METHODS BELOW

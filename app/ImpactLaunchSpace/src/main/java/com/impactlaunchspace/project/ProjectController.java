@@ -334,33 +334,53 @@ public class ProjectController {
 			projectRequestedResources.put(projectResourceCategoryObj.getResource_category(), resourcenames);
 		}
 
-		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService.retrieveProjectRequestsOfUser(project_name, project_proposer, username); 
+		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService.retrieveNonRejectedProjectRequestsOfUser(project_name, project_proposer, username); 
     	ArrayList<String> userRequestsForProject = new ArrayList<String>(); 
      
    	 	for(ProjectUserRequest userRequestsForProjectObj : userRequestsForProjectObjs){ 
       		userRequestsForProject.add(userRequestsForProjectObj.getRequested_resource_name()); 
     	} 
-     
-    	model.addAttribute("userRequestsForProject", userRequestsForProject); 
+   	 
+   	 
+    	model.addAttribute("userRequestsForProject", userRequestsForProject);
+    	model.addAttribute("userRequestsForProjectObjs", userRequestsForProjectObjs); 
+    	
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);
 		model.addAttribute("project_resource_categories", projectResourceCategories);
 		model.addAttribute("project_requested_resources", projectRequestedResources);
+		
+		if(selected_project.getOrganization() != null){
+			OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
+			model.addAttribute("project_organization", organizationAccount.getUsername());
+		}
 
 		if (projectPrivacy.equals("hidden")) {
 			if (request.getSession().getAttribute("username").equals(project_proposer)) {
 				return "project/" + "view_project_public"; 
+			} else if(selected_project.getOrganization() != null) {
+				OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
+				if(request.getSession().getAttribute("username").equals(organizationAccount.getUsername())){
+					return "project/" + "view_project_public"; 
+				}
+						
 			} else {
 				return "project/" + "view_project_private"; 
 			}
 		}
 
-		// for now if u are not the project creator u will see the private page
+		// for now if u are not the project creator or organization u will see the private page
 		if (projectPrivacy.equals("private")) {
 			if (request.getSession().getAttribute("username").equals(project_proposer)) {
 				return "project/" + "view_project_public"; 
-			} else {
+			} else if(selected_project.getOrganization() != null) {
+				OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
+				if(request.getSession().getAttribute("username").equals(organizationAccount.getUsername())){
+					return "project/" + "view_project_public"; 
+				}
+						
+			}else{
 				return "project/" + "view_project_private"; 
 			}
 		}

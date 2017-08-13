@@ -174,7 +174,9 @@
 								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
 							</ul>
 							<!--/social links-->
-							<a href="/view-profile?username=${selected_project.getProject_proposer()}" class="btn btn-contact"><i class="fa fa-user"></i>VIEW
+							<a
+								href="/view-profile?username=${selected_project.getProject_proposer()}"
+								class="btn btn-contact"><i class="fa fa-user"></i>VIEW
 								PROFILE</a>
 						</div>
 					</div>
@@ -202,15 +204,44 @@
 											<br>
 											<span><i class="fa fa-users"></i> 180 backers</span>
 											<c:choose>
+												
+												<c:when
+													test="${username.equals(selected_project.getProject_proposer())}">
+
+												</c:when>
+												
+												<c:when
+													test="${project_organization != null && username.equals(project_organization)}">
+
+												</c:when>
+
 												<c:when
 													test="${userRequestsForProject.contains(item1.get(0))}">
-													<button onClick="apply()" type="button"
-														id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
+													<c:choose>
+														<c:when test="${userRequestsForProjectObjs.get(userRequestsForProject.indexOf(item1.get(0))).getRequest_status().equals(\"Accepted\")}">
+															<button onClick="apply()" type="button"
+																id="applyForResource" class="btn btn-success" disabled>ACCEPTED</button>
+														</c:when>
+														
+														<c:when test="${userRequestsForProjectObjs.get(userRequestsForProject.indexOf(item1.get(0))).getRequest_status().equals(\"Confirmed\")}">
+															<button onClick="apply()" type="button"
+																id="applyForResource" class="btn btn-success" disabled>CONFIRMED</button>
+														</c:when>
+														
+														<c:otherwise>
+															<button onClick="apply()" type="button"
+																id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
+														</c:otherwise>
+													
+													</c:choose>
+													
 												</c:when>
+
 												<c:otherwise>
 													<button onClick="apply(${count})" type="button"
 														id="applyForResource" class="btn btn-reward applyButton">APPLY</button>
 												</c:otherwise>
+												
 											</c:choose>
 
 

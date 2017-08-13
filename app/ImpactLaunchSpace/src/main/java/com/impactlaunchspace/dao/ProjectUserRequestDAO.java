@@ -23,10 +23,13 @@ public interface ProjectUserRequestDAO {
 
 	public ProjectUserRequest retrieveParticularUserRequest(String project_name, String project_proposer,
 			String resource_offerer, String requested_resource_category, String requested_resource_name,
-			String offered_resource_category, String offered_resource_name);
+			String offered_resource_category, String offered_resource_name, String request_status);
 
 	public ArrayList<ProjectUserRequest> retrieveProjectRequestsOfUser(String project_name, String project_proposer,
 			String username);
+
+	public ArrayList<ProjectUserRequest> retrieveNonRejectedProjectRequestsOfUser(String project_name,
+			String project_proposer, String username);
 
 	public void acceptRequest(String project_name, String requested_resource_category, String requested_resource_name,
 			String project_proposer, String resource_offerer, String offered_resource_category,

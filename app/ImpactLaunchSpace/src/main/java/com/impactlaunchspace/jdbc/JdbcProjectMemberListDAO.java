@@ -116,5 +116,35 @@ public class JdbcProjectMemberListDAO implements ProjectMemberListDAO {
 			}
 		}
 	}
+	
+	public ProjectMemberList retrieveSpecificMember(String project_name, String project_proposer, String project_member_username) {
+		ProjectMemberList output = null;
+
+		String sql = "SELECT * FROM PROJECT_MEMBER_LIST WHERE project_name = ? AND project_proposer = ? AND project_member_username = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.setString(3, project_member_username);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				output = new ProjectMemberList(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString());
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 
 }
