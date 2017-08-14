@@ -24,8 +24,7 @@
 
 				<%@include file="../common/navigationLogin.jspf"%>
 
-				<div class="col-lg-12 form_container" id="changePasswordForm"
-					style="display: none;">
+				<div class="col-lg-12 form_container" id="changePasswordForm">
 					<h4 class="welcome">Set your new password</h4>
 					<form action="resetpassword" method="POST" class="form-horizontal">
 						<div class="form-group">
