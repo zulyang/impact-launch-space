@@ -30,7 +30,7 @@
 						<div class="panel-heading">Edit Individual Profile Form</div>
 						<div class="panel-body">
 							<div class="edit_org_pic" style="display: inline-block">
-								<form onsubmit="return checkFields();" action="edit-individual-profile-pic" method="post"
+								<form action="edit-individual-profile-pic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${username}"
 										class="circle_edit_ind_profile_image" height="64" width="64">
@@ -47,7 +47,7 @@
 								</form>
 							</div>
 
-							<form class="form-horizontal edit_ind_profile_container"
+							<form onsubmit="return checkFields();" class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
 									<label for="editIndFirstName" class="col-sm-3 control-label">First
@@ -225,7 +225,7 @@
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-							</select> <input type="number" placeholder="Years of Experience"
+							</select> <input type="text" placeholder="Years of Experience"
 								id="js1experience" name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}" style = "width : 49%" >
 
@@ -248,7 +248,7 @@
 										</c:forEach>
 									</select>
 
-									<input type="number" id="js2experienceA"
+									<input type="text" id="js2experienceA"
 										placeholder="Years of Experience"
 										name="selected_jobsector2_years"
 										value="${jobSectorIndividual2.getYearsOfExperience()}" style = "width : 49%">
@@ -264,7 +264,7 @@
 
 										</c:forEach>
 									</select>
-									<input type="number" id="js2experienceB"
+									<input type="text" id="js2experienceB"
 										placeholder="Years of Experience"
 										name="selected_jobsector2_years" style = "width : 49%">
 								</c:otherwise>
@@ -289,7 +289,7 @@
 										</c:forEach>
 									</select>
 
-									<input type="number" id="js3experienceA"
+									<input type="text" id="js3experienceA"
 										placeholder="Years of Experience"
 										name="selected_jobsector3_years"
 										value="${jobSectorIndividual3.getYearsOfExperience()}" style = "width : 49%">
@@ -305,7 +305,7 @@
 
 										</c:forEach>
 									</select>
-									<input type="number" id="js3experienceB"
+									<input type="text" id="js3experienceB"
 										placeholder="Years of Experience"
 										name="selected_jobsector3_years" style = "width : 49%">
 								</c:otherwise>
@@ -408,6 +408,7 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
 							<input type="submit" class="btn btn-success edit_org_profile_save" value="Update details" />
+							<input type="button" onclick="return checkFields();" class="btn btn-success edit_org_profile_save" value="Check fields" />
 						</div>
 					</div>
 
@@ -460,11 +461,18 @@
 			var jobTitle = document.getElementById("editJobTitle");
 
 			var organization = document.getElementById("editOrg");
-
-			if (jobTitle.value !== "" && organization.value === "") {
-				alert('Please choose your organization.')
+			
+			var contactNumber = document.getElementById("editContact").value;
+			
+			if(/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
+				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
 				return false;
 			}
+
+			/*if (jobTitle.value !== "" && organization.value === "") {
+				alert('Please choose your organization.')
+				return false;
+			}*/
 
 			if (jobTitle.value === "" && organization.value !== "") {
 				alert('Please input your job title at your current organization.')
@@ -493,6 +501,24 @@
 					alert('Your minimum hours cannot be greater than maximum hours.')
 					return false;
 				}
+			}
+			
+			console.log("min hours value: " + minHours.value);
+			console.log("min hours first char value: " + minHours.value.charAt(0));
+			if(minHours.value.charAt(0) == '+'){
+				console.log("here");
+				alert('Please enter only numbers for the minimum hours that you can volunteer for.')
+				return false;
+			}
+			
+			if(minHours.value.match(/[-!$%^&*()_+|~=`{}\[\]:''"";<>?,.\/\D]/)) {
+				alert('Please enter only positive numbers for the minimum hours that you can volunteer for.')
+				return false;
+			}
+			
+			if(maxHours.value.match(/[-!$%^&*()_+|~=`{}\[\]:''"";<>?,.\/\D]/)) {
+				alert('Please enter only positive numbers for the maximum hours that you can volunteer for.')
+				return false;
 			}
 
 			var skillsets = document.getElementById("skillsets");
@@ -594,7 +620,7 @@
 					return false;
 				}
 			}
-
+			
 			var preferredCountries = document
 					.getElementById("preferredCountries");
 

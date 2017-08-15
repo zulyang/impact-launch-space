@@ -10,14 +10,23 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 
 </head>
 <body class="profile">
@@ -34,8 +43,7 @@
 						<div class="panel-body">
 
 							<div class="edit_org_pic" style="display: inline-block">
-								<form action="edit-organization-profile-pic" method="post"
-									enctype="multipart/form-data">
+								<form action="edit-organization-profile-pic" method="post" enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${organization.getUsername()}"
 										class="circle_edit_org_profile_image" height="64" width="64">
 
@@ -51,8 +59,7 @@
 								</form>
 							</div>
 
-							<form class="form-horizontal edit_org_profile_container"
-								action="editprofile-organization" method="post">
+							<form class="form-horizontal edit_org_profile_container" onsubmit="return checkFields();" action="editprofile-organization" method="post">
 								<div class="form-group">
 									<label for="editOrgName" class="col-sm-2 control-label">Company
 										Name</label>
@@ -84,8 +91,8 @@
 									<label for="editOrgBio" class="col-sm-2 control-label">Company
 										Bio</label>
 									<div class="col-sm-10">
-										<textarea id="editOrgBio" rows="4"
-											name="companyBio" class="form-control edit_profileField"
+										<textarea id="editOrgBio" rows="4" name="companyBio"
+											class="form-control edit_profileField"
 											value="${organization.getCompanyBio()}">${organization.getCompanyBio()}
 										</textarea>
 									</div>
@@ -121,8 +128,9 @@
 									<label for="editJobSectors" class="col-sm-2 control-label">Job
 										Sectors</label>
 									<div class="col-sm-10">
-										<select id="editJobSectors" class="js-example-basic-multiple2 edit_profileField" multiple="multiple"
-											name="selected_jobsectors" required>
+										<select id="editJobSectors"
+											class="js-example-basic-multiple2 edit_profileField"
+											multiple="multiple" name="selected_jobsectors" required>
 											<c:forEach items="${job_sector_list}" var="item">
 												<c:choose>
 													<c:when
@@ -138,7 +146,7 @@
 										</select>
 									</div>
 								</div>
-								
+
 								<div class="form-group">
 									<div class="col-sm-10">
 										<input class="btn btn-success edit_org_profile_save"
@@ -156,6 +164,17 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function checkFields() {
+			var contactNumber = document.getElementById("editOrgContact").value;
+			
+			if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
+				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+				return false;
+			}
+		}
+	</script>
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple").select2({

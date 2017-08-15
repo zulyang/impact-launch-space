@@ -201,7 +201,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="contactDetails" type="text"
+								<input name="contactDetails" type="text" id="contactNumber"
 									class="form-control profileField" placeholder="Mobile Number">
 							</div>
 						</div>
@@ -292,6 +292,13 @@
 			
 			if (jobTitle.value === "") {
 				alert('Please input your job title.')
+				return false;
+			}
+			
+			var contactNumber = document.getElementById("contactNumber").value;
+			
+			if(/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
+				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
 				return false;
 			}
 			

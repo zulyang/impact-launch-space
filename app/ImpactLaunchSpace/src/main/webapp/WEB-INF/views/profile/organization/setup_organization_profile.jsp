@@ -7,14 +7,23 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="stylesheet" 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 </head>
 
 <body class="profile">
@@ -25,44 +34,44 @@
 				<%@include file="../../common/navigation.jspf"%>
 
 				<div class="col-lg-12 form_container org_profile_container">
-					<form method="post" action="setup-organization"
+					<form method="post" action="setup-organization" onsubmit="return checkFields();"
 						enctype="multipart/form-data"
 						class="form-horizontal org_profile_form">
 						<div class="form-group">
 							<div class="col-lg-12">
-								<div id="profile_upload_button" onclick="uploadFile()">Upload
-									a display picture</div>
+								<div id="profile_upload_button"
+									style="margin-left: auto; margin-right: auto;"
+									onclick="uploadFile()">Upload a display picture</div>
 								<div style='height: 0px; width: 0px; overflow: hidden;'>
 									<input id="uploadFile" name="profilePicture" type="file"
-										value="upload" onchange="sub(this)" style = "width : 100%" />
+										value="upload" onchange="sub(this)" style="width: 100%" />
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="text" name="username" value="${username}" readonly
-									class="form-control profileField"
-									style = "width : 100%">
+									class="form-control profileField" style="width: 100%">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="text" name="email" value="${email}" readonly
-									class="form-control profileField"
-									style = "width : 100%">
+									class="form-control profileField" style="width: 100%">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input name="companyName" required type="text"
 									class="form-control profileField" placeholder="Company name"
-									style = "width : 100%">
+									style="width: 100%">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<select class="js-example-basic-multiple" required multiple="multiple"
-									name="countriesOfOperation" style = "width : 100%">
+								<select class="js-example-basic-multiple" required
+									multiple="multiple" name="countriesOfOperation"
+									style="width: 100%">
 									<c:forEach items="${country_list}" var="item">
 										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
 									</c:forEach>
@@ -72,7 +81,7 @@
 						<div class="form-group">
 							<div class="col-lg-12">
 								<select class="js-example-basic-multiple2" multiple="multiple"
-									name="selected_jobsectors" style = "width : 100%" required>
+									name="selected_jobsectors" style="width: 100%" required>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>
@@ -83,15 +92,14 @@
 							<div class="col-lg-12">
 								<textarea rows="4" name="companyBio"
 									class="form-control companyBio"
-									placeholder="A short company bio" style = "width : 100%"></textarea>
+									placeholder="A short company bio" style="width: 100%"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input name="contactDetails" required="required" type="text"
-									class="form-control profileField"
-									placeholder="Office telephone number"
-									style = "width : 100%">
+									id="contactNumber" class="form-control profileField"
+									placeholder="Office telephone number" style="width: 100%">
 							</div>
 						</div>
 						<div class="form-group">
@@ -117,6 +125,15 @@
 			var fileName = file.split("\\");
 			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
 			event.preventDefault();
+		}
+
+		function checkFields() {
+			var contactNumber = document.getElementById("contactNumber").value;
+
+			if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
+				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+				return false;
+			}
 		}
 	</script>
 
