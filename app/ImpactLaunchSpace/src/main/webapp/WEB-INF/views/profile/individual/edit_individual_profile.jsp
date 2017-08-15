@@ -7,14 +7,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Your Individual Profile</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 
 </head>
 <body class="profile">
@@ -36,8 +45,8 @@
 										class="circle_edit_ind_profile_image" height="64" width="64">
 
 									<label for="editChooseIndPic"
-										class="form-control btn btn-info edit_org_profile_save">Choose
-										A New Picture</label> <input type="file" name="profilePicture"
+										class="form-control btn btn-info edit_org_profile_save">Update
+										your profile picture</label> <input type="file" name="profilePicture"
 										style="display: inline-block; visibility: hidden;"
 										id="editChooseIndPic" /> <label for="editUploadIndPic"
 										class="form-control btn btn-info edit_org_profile_save">Upload</label>
@@ -47,7 +56,8 @@
 								</form>
 							</div>
 
-							<form onsubmit="return checkFields();" class="form-horizontal edit_ind_profile_container"
+							<form onsubmit="return checkFields();"
+								class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
 									<label for="editIndFirstName" class="col-sm-3 control-label">First
@@ -82,12 +92,14 @@
 								<div class="form-group">
 									<label for="editOrg" class="col-sm-3 control-label">Organization</label>
 									<div class="col-sm-9">
-										<select class="js-example-basic-single-organization form-control edit_profileField"
+										<select
+											class="js-example-basic-single-organization form-control edit_profileField"
 											name="organization" id="editOrg">
 											<option></option>
 											<c:forEach items="${organization_list}" var="item">
 												<c:choose>
-													<c:when test="${individual.getOrganization().equals(item) }">
+													<c:when
+														test="${individual.getOrganization().equals(item) }">
 														<option value="${item}" selected="selected">${item}</option>
 													</c:when>
 												</c:choose>
@@ -189,7 +201,8 @@
 						<div class="panel-body">
 							My Skills: <br> <select
 								class="js-example-basic-multiple-skills" multiple="multiple"
-								name="selected_skillsets" required id="skillsets" style = "width : 100%" >
+								name="selected_skillsets" required id="skillsets"
+								style="width: 100%">
 								<c:forEach items="${skillset_list}" var="item">
 									<c:choose>
 										<c:when
@@ -212,7 +225,7 @@
 						<div class="panel-body">
 							<br> I have expertise in these Job Sectors: <br> <select
 								class="js-example-basic-single-jobsectorindividual-required"
-								name="selected_jobsector1" id="jsIndi1Value" style = "width : 49%">
+								name="selected_jobsector1" id="jsIndi1Value" style="width: 49%">
 								<option value=""></option>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
@@ -225,15 +238,17 @@
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-							</select> <input type="text" placeholder="Years of Experience"
+							</select> <input type="number" placeholder="Years of Experience"
 								id="js1experience" name="selected_jobsector1_years"
-								value="${jobSectorIndividual1.getYearsOfExperience()}" style = "width : 49%" >
+								value="${jobSectorIndividual1.getYearsOfExperience()}"
+								style="width: 49%">
 
 							<c:choose>
 								<c:when test="${jobSectorIndividual2 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector2" id="jsIndi2aValue" style = "width : 49%">
+										name="selected_jobsector2" id="jsIndi2aValue"
+										style="width: 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
@@ -248,15 +263,17 @@
 										</c:forEach>
 									</select>
 
-									<input type="text" id="js2experienceA"
+									<input type="number" id="js2experienceA"
 										placeholder="Years of Experience"
 										name="selected_jobsector2_years"
-										value="${jobSectorIndividual2.getYearsOfExperience()}" style = "width : 49%">
+										value="${jobSectorIndividual2.getYearsOfExperience()}"
+										style="width: 49%">
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector2" id="jsIndi2bValue" style = "width : 49%">
+										name="selected_jobsector2" id="jsIndi2bValue"
+										style="width: 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -264,9 +281,9 @@
 
 										</c:forEach>
 									</select>
-									<input type="text" id="js2experienceB"
+									<input type="number" id="js2experienceB"
 										placeholder="Years of Experience"
-										name="selected_jobsector2_years" style = "width : 49%">
+										name="selected_jobsector2_years" style="width: 49%">
 								</c:otherwise>
 							</c:choose>
 
@@ -274,7 +291,8 @@
 								<c:when test="${jobSectorIndividual3 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector3" id="jsIndi3aValue" style = "width : 49%">
+										name="selected_jobsector3" id="jsIndi3aValue"
+										style="width: 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
@@ -289,15 +307,17 @@
 										</c:forEach>
 									</select>
 
-									<input type="text" id="js3experienceA"
+									<input type="number" id="js3experienceA"
 										placeholder="Years of Experience"
 										name="selected_jobsector3_years"
-										value="${jobSectorIndividual3.getYearsOfExperience()}" style = "width : 49%">
+										value="${jobSectorIndividual3.getYearsOfExperience()}"
+										style="width: 49%">
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
-										name="selected_jobsector3" id="jsIndi3bValue" style = "width : 49%">
+										name="selected_jobsector3" id="jsIndi3bValue"
+										style="width: 49%">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -305,9 +325,9 @@
 
 										</c:forEach>
 									</select>
-									<input type="text" id="js3experienceB"
+									<input type="number" id="js3experienceB"
 										placeholder="Years of Experience"
-										name="selected_jobsector3_years" style = "width : 49%">
+										name="selected_jobsector3_years" style="width: 49%">
 								</c:otherwise>
 							</c:choose>
 
@@ -321,7 +341,7 @@
 							I prefer to work in: <select
 								class="js-example-basic-multiple-preferredcountries edit_profileField"
 								multiple="multiple" name="selected_preferredcountries"
-								id="preferredCountries" style = "width : 100%" required>
+								id="preferredCountries" style="width: 100%" required>
 								<c:forEach items="${country_list}" var="item">
 									<c:choose>
 										<c:when
@@ -336,8 +356,8 @@
 
 							</select> <br> Preferred Project Areas: <br> <select
 								class="js-example-basic-multiple-preferredprojectareas edit_profileField"
-								multiple="multiple" name="selected_preferredprojectareas" style = "width : 100%" 
-								id="preferredAreas" required>
+								multiple="multiple" name="selected_preferredprojectareas"
+								style="width: 100%" id="preferredAreas" required>
 								<c:forEach items="${project_area_list}" var="item">
 									<c:choose>
 										<c:when
@@ -354,7 +374,7 @@
 							</select> <br> Preferred Job Sectors: <br> <select
 								class="js-example-basic-multiple-preferredjobsectors edit_profileField"
 								multiple="multiple" name="selected_preferredjobsectors"
-								id="preferredJobSectors" style = "width : 100%" required>
+								id="preferredJobSectors" style="width: 100%" required>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
 										<c:when
@@ -392,13 +412,13 @@
 								</c:forEach>
 								<tr>
 									<div class="col-lg-12 custom-file-upload" id="documents">
-									<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
-									<div style='height: 0px; width: 0px; overflow: hidden;'>
-										<input id=uploadFile name="documents" multiple type="file"
-											value="upload" onchange="docSub(this)" />
-									</div>
+										<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
+										<div style='height: 0px; width: 0px; overflow: hidden;'>
+											<input id=uploadFile name="documents" multiple type="file"
+												value="upload" onchange="docSub(this)" />
+										</div>
 								</tr>
-							</div>
+								</div>
 							</table>
 						</div>
 					</div>
@@ -407,8 +427,9 @@
 					<br> <br>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
-							<input type="submit" class="btn btn-success edit_org_profile_save" value="Update details" />
-							<input type="button" onclick="return checkFields();" class="btn btn-success edit_org_profile_save" value="Check fields" />
+							<input type="submit"
+								class="btn btn-success edit_org_profile_save"
+								value="Update details" />
 						</div>
 					</div>
 
@@ -426,23 +447,23 @@
 	</div>
 
 	<script type="text/javascript">
-	
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
 		}
 		function docSub(obj) {
 			var fileList = document.getElementById("uploadFile").files;
 			var allFileNames;
-			
-			for(var i = 0; i < fileList.length; i++) {
+
+			for (var i = 0; i < fileList.length; i++) {
 				var fileName = fileList[i].name.split("\\");
 				allFileNames += (fileName + "<br>");
 			}
-			
-			document.getElementById("document_upload_button").innerHTML = allFileNames.substring(9);
-			event.preventDefault();	
+
+			document.getElementById("document_upload_button").innerHTML = allFileNames
+					.substring(9);
+			event.preventDefault();
 		}
-	
+
 		function checkFields() {
 			var firstName = document.getElementById("editIndFirstName");
 
@@ -461,10 +482,11 @@
 			var jobTitle = document.getElementById("editJobTitle");
 
 			var organization = document.getElementById("editOrg");
-			
+
 			var contactNumber = document.getElementById("editContact").value;
-			
-			if(/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
+
+			if (/^\d+$/.test(contactNumber) === false
+					|| contactNumber.length > 20) {
 				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
 				return false;
 			}
@@ -492,7 +514,7 @@
 				var min = parseInt(minHours.value);
 				var max = parseInt(maxHours.value);
 
-				if (min < 0 || max < 0) {
+				if (min <= 0 || max <= 0) {
 					alert('Please enter numbers greater than 0 for hours to volunteer.')
 					return false;
 				}
@@ -501,24 +523,6 @@
 					alert('Your minimum hours cannot be greater than maximum hours.')
 					return false;
 				}
-			}
-			
-			console.log("min hours value: " + minHours.value);
-			console.log("min hours first char value: " + minHours.value.charAt(0));
-			if(minHours.value.charAt(0) == '+'){
-				console.log("here");
-				alert('Please enter only numbers for the minimum hours that you can volunteer for.')
-				return false;
-			}
-			
-			if(minHours.value.match(/[-!$%^&*()_+|~=`{}\[\]:''"";<>?,.\/\D]/)) {
-				alert('Please enter only positive numbers for the minimum hours that you can volunteer for.')
-				return false;
-			}
-			
-			if(maxHours.value.match(/[-!$%^&*()_+|~=`{}\[\]:''"";<>?,.\/\D]/)) {
-				alert('Please enter only positive numbers for the maximum hours that you can volunteer for.')
-				return false;
 			}
 
 			var skillsets = document.getElementById("skillsets");
@@ -546,6 +550,21 @@
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
+
+				if (jsIndiEx1.value !== "") {
+
+					var js1yearsOfEx = parseInt(jsIndiEx1.value);
+
+					if (js1yearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js1yearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+				}
 			}
 
 			var jsIndi2A = document.getElementById("jsIndi2aValue");
@@ -565,6 +584,21 @@
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
+
+				if (jsIndiEx2A.value !== "") {
+
+					var js2yearsOfEx = parseInt(jsIndiEx2A.value);
+
+					if (js2yearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js2yearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+				}
 			}
 
 			var jsIndi2B = document.getElementById("jsIndi2bValue");
@@ -582,6 +616,21 @@
 					change('jsIndi2bValue', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
+				}
+				
+				if (jsIndiEx2B.value !== "") {
+
+					var js2byearsOfEx = parseInt(jsIndiEx2B.value);
+
+					if (js2byearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js2byearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
 				}
 			}
 
@@ -601,6 +650,21 @@
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
+				
+				if (jsIndiEx3A.value !== "") {
+
+					var js3ayearsOfEx = parseInt(jsIndiEx3A.value);
+
+					if (js3ayearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js3ayearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+				}
 			}
 
 			var jsIndi3B = document.getElementById("jsIndi3bValue");
@@ -619,8 +683,23 @@
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
+				
+				if (jsIndiEx3B.value !== "") {
+
+					var js3byearsOfEx = parseInt(jsIndiEx3B.value);
+
+					if (js3byearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js3byearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+				}
 			}
-			
+
 			var preferredCountries = document
 					.getElementById("preferredCountries");
 

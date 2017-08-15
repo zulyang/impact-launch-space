@@ -10,14 +10,23 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" rel="stylesheet" />
-<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -25,7 +34,8 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<%@include file="../../common/navigation.jspf"%>
 				<div class="col-lg-12 form_container indi_profile_container">
-					<form method="post" onsubmit="return checkFields();" action="setup-individual" enctype="multipart/form-data"
+					<form method="post" onsubmit="return checkFields();"
+						action="setup-individual" enctype="multipart/form-data"
 						class="form-horizontal indi_profile_form">
 						<h3>Personal information</h3>
 						<div class="form-group">
@@ -57,11 +67,12 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="date" name="dateOfBirth" required
-									placeholder="Date of Birth (dd/mm/yyyy)" class="form-control profileField">
+									placeholder="Date of Birth (dd/mm/yyyy)"
+									class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
@@ -85,7 +96,9 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<select id="organization" class="js-example-basic-single-organization profileField"	name="organization">
+								<select id="organization"
+									class="js-example-basic-single-organization profileField"
+									name="organization">
 									<option></option>
 									<c:forEach items="${organization_list}" var="item">
 										<option value="${item}">${item}</option>
@@ -175,8 +188,8 @@
 							<div class="col-lg-12">
 								<input type="number" name="minimumHours" min="1" max="100"
 									id="minHours" class="form-control profileField"
-									placeholder="Minimum Hours per week" required> 
-								<input type="number" name="maximumHours" id="maxHours" min="1"
+									placeholder="Minimum Hours per week" required> <input
+									type="number" name="maximumHours" id="maxHours" min="1"
 									max="100" class="form-control profileField"
 									placeholder="Maximum Hours per week" required>
 							</div>
@@ -206,8 +219,10 @@
 							</div>
 						</div>
 						<br>
-						<h3 style="display: inline-block; margin-right: 5px;">Privacy </h3>
-						<i class="fa fa-info-circle info_tooltip" rel="tooltip" title="A public profile will show users your email address and contact number."></i>
+						<h3 style="display: inline-block; margin-right: 5px;">Privacy
+						</h3>
+						<i class="fa fa-info-circle info_tooltip" rel="tooltip"
+							title="A public profile will show users your email address and contact number."></i>
 						<div class="form-radio center">
 							<!-- <div class="radio_public">
 								<input name="isPublicProfile" required="required" value="true"
@@ -217,21 +232,19 @@
 								<input name="isPublicProfile" required="required" value="false"
 									type="radio" value="Private Profile">Private Profile
 							</div> -->
-							
-                            <ul class="radio_as_button">
-                        <li>
-                        <input type="radio" id="public" name="isPublicProfile" required="required" value="true">
-                        <label for="public">Public</label>
-                        </li>
-                        
-                        <li>
-                        <input type="radio" id="private" name="isPublicProfile" required="required" value="false">
-                        <label for="private">Private</label>
-                        </li>
-                        
-                        </ul>
-							
-							
+
+							<ul class="radio_as_button">
+								<li><input type="radio" id="public" name="isPublicProfile"
+									required="required" value="true"> <label for="public">Public</label>
+								</li>
+
+								<li><input type="radio" id="private" name="isPublicProfile"
+									required="required" value="false"> <label for="private">Private</label>
+								</li>
+
+							</ul>
+
+
 						</div>
 						<br>
 						<div class="form-group">
@@ -266,65 +279,40 @@
 			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
 			event.preventDefault();
 		}
-		
+
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
 		}
 		function docSub(obj) {
 			var fileList = document.getElementById("uploadFile").files;
 			var allFileNames;
-			
-			for(var i = 0; i < fileList.length; i++) {
+
+			for (var i = 0; i < fileList.length; i++) {
 				var fileName = fileList[i].name.split("\\");
 				allFileNames += (fileName + "<br>");
 			}
-			
-			document.getElementById("document_upload_button").innerHTML = allFileNames.substring(9);
-			event.preventDefault();	
+
+			document.getElementById("document_upload_button").innerHTML = allFileNames
+					.substring(9);
+			event.preventDefault();
 		}
 	</script>
 
 	<script type="text/javascript">
 		function checkFields() {
 			var jobTitle = document.getElementById("jobTitle");
-			
+
 			var organization = document.getElementById("organization");
-			
-			if (jobTitle.value === "") {
+
+			/*if (jobTitle.value === "") {
 				alert('Please input your job title.')
 				return false;
-			}
-			
-			var contactNumber = document.getElementById("contactNumber").value;
-			
-			if(/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
-				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
-				return false;
-			}
-			
-			var minHours = document.getElementById("minHours");
-
-			var maxHours = document.getElementById("maxHours");
-
-			if (minHours !== "" && maxHours !== "") {
-				var min = parseInt(minHours.value);
-				var max = parseInt(maxHours.value);
-
-				if (min < 0 || max < 0) {
-					alert('Please enter numbers greater than 0 for hours to volunteer.')
-					return false;
-				}
-
-				if (min > max) {
-					alert('Your minimum hours cannot be greater than maximum hours.')
-					return false;
-				}
-			}
+			}*/
 
 			var jsIndi1A = document.getElementById("jsIndi1Value");
 
 			var jsIndiEx1B = document.getElementById("js1experience");
-			
+
 			if (jsIndi1A !== null) {
 				if (jsIndi1A.value !== "" && jsIndiEx1B.value === "") {
 					change('js1experience', 'required');
@@ -336,6 +324,23 @@
 					change('jsIndi1Value', 'required');
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
+				}
+			}
+
+			if (jsIndiEx1B !== null) {
+				if (jsIndiEx1B.value !== "") {
+					
+					var js1yearsOfEx = parseInt(jsIndiEx1B.value);
+					
+					if (js1yearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js1yearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
 				}
 			}
 
@@ -357,6 +362,23 @@
 				}
 			}
 
+			if (jsIndiEx2B !== null) {
+				if (jsIndiEx2B.value !== "") {
+					
+					var js2yearsOfEx = parseInt(jsIndiEx2B.value);
+					
+					if (js2yearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js2yearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+				}
+			}
+
 			var jsIndi3A = document.getElementById("jsIndi3Value");
 
 			var jsIndiEx3B = document.getElementById("js3experience");
@@ -373,6 +395,56 @@
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
+			}
+			
+			if (jsIndiEx3B !== null) {
+				if (jsIndiEx3B.value !== "") {
+					
+					var js3yearsOfEx = parseInt(jsIndiEx3B.value);
+					
+					if (js3yearsOfEx <= 0) {
+						alert('Please enter numbers greater than 0 for your years of experience.')
+						return false;
+					}
+
+					if (isNaN(js3yearsOfEx)) {
+						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+				}
+			}
+
+			var minHours = document.getElementById("minHours");
+			var maxHours = document.getElementById("maxHours");
+			
+			if (minHours !== null && maxHours !== null) {
+				var min = minHours.value;				
+				var max = maxHours.value;
+				
+				if (min !== "" && max !== "") {
+					if (isNaN(min) || isNaN(max)) {
+						alert('Please enter only numbers for the minimum and maximum hours that you want to volunteer.')
+						return false;
+					}
+
+					if (min <= 0 || max <= 0) {
+						alert('Please enter numbers greater than 0 for hours to volunteer.')
+						return false;
+					}
+
+					if (min > max) {
+						alert('Your minimum hours cannot be greater than maximum hours.')
+						return false;
+					}
+				}
+			}
+
+			var contactNumber = document.getElementById("contactNumber").value;
+
+			if (/^\d+$/.test(contactNumber) === false
+					|| contactNumber.length > 20) {
+				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+				return false;
 			}
 
 			return true;
@@ -441,13 +513,15 @@
 			});
 		});
 	</script>
-	
-	    
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("[rel=tooltip]").tooltip({ placement: 'right'});
-        });    
-</script>
-	
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("[rel=tooltip]").tooltip({
+				placement : 'right'
+			});
+		});
+	</script>
+
 </body>
 </html>
