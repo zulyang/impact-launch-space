@@ -70,7 +70,7 @@
 
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="date" name="dateOfBirth" required
+								<input type="date" name="dateOfBirth" required id="dateOfBirth"
 									placeholder="Date of Birth (dd/mm/yyyy)"
 									class="form-control profileField">
 							</div>
@@ -309,6 +309,13 @@
 				return false;
 			}*/
 
+			var dob = document.getElementById("dateOfBirth").value;
+			var year = dob.substring(0, 4);
+			
+			var birthYear = parseInt(year);
+			var currentYear = new Date().getFullYear();
+			var age = currentYear - birthYear;
+			
 			var jsIndi1A = document.getElementById("jsIndi1Value");
 
 			var jsIndiEx1B = document.getElementById("js1experience");
@@ -339,6 +346,11 @@
 
 					if (isNaN(js1yearsOfEx)) {
 						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+					
+					if(js1yearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}
@@ -376,6 +388,11 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
+					
+					if(js2yearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
+						return false;
+					}
 				}
 			}
 
@@ -409,6 +426,11 @@
 
 					if (isNaN(js3yearsOfEx)) {
 						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+					
+					if(js3yearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}

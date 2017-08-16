@@ -482,6 +482,13 @@
 			var jobTitle = document.getElementById("editJobTitle");
 
 			var organization = document.getElementById("editOrg");
+			
+			var dob = document.getElementById("dateOfBirth").value;
+			var year = dob.substring(0, 4);
+			
+			var birthYear = parseInt(year);
+			var currentYear = new Date().getFullYear();
+			var age = currentYear - birthYear;
 
 			var contactNumber = document.getElementById("editContact").value;
 
@@ -564,6 +571,11 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
+					
+					if(js1yearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
+						return false;
+					}
 				}
 			}
 
@@ -596,6 +608,11 @@
 
 					if (isNaN(js2yearsOfEx)) {
 						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+					
+					if(js2yearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}
@@ -631,6 +648,11 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
+					
+					if(js2byearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
+						return false;
+					}
 				}
 			}
 
@@ -664,6 +686,11 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
+					
+					if(js3ayearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
+						return false;
+					}
 				}
 			}
 
@@ -695,6 +722,11 @@
 
 					if (isNaN(js3byearsOfEx)) {
 						alert('Please enter only numbers for the number of years of experience you possess.')
+						return false;
+					}
+					
+					if(js3byearsOfEx > age){
+						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}
