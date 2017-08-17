@@ -52,7 +52,7 @@
 								<button type="submit" class="btn btn-success field">Login</button>
 							</div>
 						</div>
-						<p class="loginValidation">${loginValidation}</p>
+						<p style="color:red;" class="loginValidation">${loginValidation}</p>
 
 						<div class="forget">
 							<a href="/forgot-password">Forget your password?</a>
