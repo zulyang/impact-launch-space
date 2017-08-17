@@ -54,7 +54,7 @@
 					style="display: none;">
 					<h4 class="verify_success_message">Verification Successful</h4>
 					<p>Hi ${usernameemail}, your account has been verified!</p>
-					<a href="/login1" class="btn btn-success signInNowBox">SIGN IN NOW</a>
+					<a href="/login" class="btn btn-success signInNowBox">SIGN IN NOW</a>
 					<a href="/" class="btn btn-default returnHome" role="button">Return
 						to Home</a>
 				</div>
