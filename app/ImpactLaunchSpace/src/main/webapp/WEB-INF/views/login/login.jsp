@@ -56,6 +56,8 @@
 
 						<div class="forget">
 							<a href="/forgot-password">Forget your password?</a>
+							<br>
+							Account locked?<a href="/unlock-account">Click here</a>
 						</div>
 					</form>
 				</div>

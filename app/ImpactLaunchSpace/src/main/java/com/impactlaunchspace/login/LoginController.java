@@ -50,7 +50,7 @@ public class LoginController {
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
 
-	// Unlocking locked accounts
+	// Verifying token for locked accounts to unlock them
 	@RequestMapping(value = "/unlock-account", method = RequestMethod.GET)
 	public String showUnlockPage(ModelMap model) {
 		return "login/" + "unlock_account";
@@ -82,6 +82,12 @@ public class LoginController {
 			return "login/" + "unlock_account";
 
 		}
+	}
+
+	// Unlocking locked accounts
+	@RequestMapping(value = "/unlock-account-pin", method = RequestMethod.GET)
+	public String showUnlockAccountPage(ModelMap model) {
+		return "login/" + "unlock_account_pin";
 	}
 
 	@RequestMapping(value = "/processunlockaccount", method = RequestMethod.POST)
@@ -190,8 +196,8 @@ public class LoginController {
 
 	@RequestMapping(value = "/verify-account", method = RequestMethod.POST)
 	public String verifyAccount(@RequestParam String usernameemail, @RequestParam String password,
-			@RequestParam String verificationcode, ModelMap model, 
-			HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam String verificationcode, ModelMap model, HttpServletRequest request,
+			HttpServletResponse response) {
 		boolean isUser = loginService.authenticate(usernameemail, password);
 		String username = loginService.returnUsernameFromEmail(usernameemail);
 		String email = loginService.returnEmailFromUsername(usernameemail);
@@ -375,14 +381,14 @@ public class LoginController {
 				}
 
 				if (isFirstTimeLogin == false) {
-					
+
 					request.getSession().setAttribute("username", username);
 					if (userType.equals("organization")) {
 						// add a cookie to the response.
 						if (c != null) {
 							response.addCookie(c);
 						}
-						
+
 						request.getSession().setAttribute("organization",
 								profileService.getOrganizationAccountDetails(username));
 						request.getSession().setAttribute("myacccount-organization",
@@ -423,7 +429,7 @@ public class LoginController {
 					model.addAttribute("country_list", profileService.retrieveCountryList());
 					model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
 					request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
-					request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());		
+					request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
 
 					if (userType.equals("organization")) {
 						if (c != null) {
@@ -480,16 +486,16 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/forgot-password-token", method = RequestMethod.GET)
-	public String showForgotPasswordEnterTokenPage(@RequestParam("username") String username, @RequestParam("email") String email,
-			ModelMap model) {
+	public String showForgotPasswordEnterTokenPage(@RequestParam("username") String username,
+			@RequestParam("email") String email, ModelMap model) {
 		model.addAttribute("username", username);
 		model.addAttribute("email", email);
 		return "login/" + "forgot_password_token";
 	}
-	
+
 	@RequestMapping(value = "/verifyreset", method = RequestMethod.POST)
 	public String verifyResetCode(@RequestParam String resetcode, @RequestParam String username,
-			@RequestParam String email, ModelMap model) {		
+			@RequestParam String email, ModelMap model) {
 		boolean isResetCode = rtService.verifyToken(resetcode, username);
 		if (isResetCode) {
 			model.addAttribute("username", username);
@@ -504,7 +510,7 @@ public class LoginController {
 		model.addAttribute("pinWrongMessage", "You have entered an incorrect PIN.");
 		return "login/" + "forgot_password_token";
 	}
-	
+
 	@RequestMapping(value = "/forgot-password-reset", method = RequestMethod.GET)
 	public String showForgotPasswordResetPasswordPage(ModelMap model) {
 		return "login/" + "forgot_password_reset";
@@ -512,8 +518,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
 	public String setNewPassword(@RequestParam String password1, @RequestParam String password2,
-			@RequestParam String username, ModelMap model,
-			HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam String username, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		int passLength = password1.length();
 		boolean hasLetters = false;
 		boolean hasDigits = false;
@@ -541,7 +546,7 @@ public class LoginController {
 			model.addAttribute("username", username);
 			model.addAttribute("passwordMatch", "passwordMatch");
 			model.addAttribute("loginValidation", "You have successfully reset your password.");
-			return authenticate(username, password1, model, request, response);//"login1";
+			return authenticate(username, password1, model, request, response);// "login1";
 		}
 		// FRONT END TO PRINT THE 2 PASSWORDS ENTERED DONT MATCH
 		model.addAttribute("passwordError", "Your passwords do not match.");
@@ -577,28 +582,27 @@ public class LoginController {
 		}
 		return "false";
 	}
-	
+
 	// Register Users
 	@RequestMapping(value = "/change-password", method = RequestMethod.GET)
 	public String showChangePWPage(ModelMap model) {
 		return "login/" + "change_password";
 	}
-	
+
 	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
-	public String changePassword(@RequestParam String username, @RequestParam String existingPassword, @RequestParam String password1,
-			@RequestParam String password2, ModelMap model) {
+	public String changePassword(@RequestParam String username, @RequestParam String existingPassword,
+			@RequestParam String password1, @RequestParam String password2, ModelMap model) {
 		boolean isCorrectPW = loginService.authenticate(username, existingPassword);
 		int passLength = password1.length();
 		boolean hasLetters = false;
 		boolean hasDigits = false;
 		boolean hasSomethingElse = false;
 
-		if(!isCorrectPW){
-			model.addAttribute("passwordError",
-					"Existing Password is incorrect");
+		if (!isCorrectPW) {
+			model.addAttribute("passwordError", "Existing Password is incorrect");
 			return "login/" + "change_password";
 		}
-		
+
 		for (int i = 0; i < passLength; i++) {
 			char c = password1.charAt(i);
 			if (Character.isLetter(c))
@@ -626,7 +630,7 @@ public class LoginController {
 		model.addAttribute("passwordError", "Your passwords do not match.");
 		return "login/" + "change_password";
 	}
-	
+
 	@RequestMapping(value = "/search-project", method = RequestMethod.GET)
 	public String searchProject(ModelMap model) {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
@@ -639,7 +643,7 @@ public class LoginController {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
 		ArrayList<Skillset> skillset = profileService.retrieveSkillsetList();
 		model.addAttribute("countries", countries);
-		model.addAttribute("skillset",skillset);
+		model.addAttribute("skillset", skillset);
 		return "search/" + "search_resource";
 	}
 
