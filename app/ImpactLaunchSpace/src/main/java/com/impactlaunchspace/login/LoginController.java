@@ -458,7 +458,10 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/forgot-password-token", method = RequestMethod.GET)
-	public String showForgotPasswordEnterTokenPage(ModelMap model) {
+	public String showForgotPasswordEnterTokenPage(@RequestParam("username") String username, @RequestParam("email") String email,
+			ModelMap model) {
+		model.addAttribute("username", username);
+		model.addAttribute("email", email);
 		return "login/" + "forgot_password_token";
 	}
 	
