@@ -198,11 +198,11 @@ public class ResetTokenService {
 				+ "<table class='module' role='module' data-type='button' border='0' cellpadding='0' cellspacing='0' width='100%' style='table-layout: fixed;' data-attributes='%7B%22dropped%22%3Atrue%2C%22borderradius%22%3A0%2C%22buttonpadding%22%3A%2214%2C56%2C13%2C56%22%2C%22text%22%3A%22Unlock%2520Account%22%2C%22alignment%22%3A%22center%22%2C%22fontsize%22%3A15%2C%22url%22%3A%22localhost%253A8080/unlockaccount%22%2C%22height%22%3A%22%22%2C%22width%22%3A%22%22%2C%22containerbackground%22%3A%22%23ffffff%22%2C%22padding%22%3A%220%2C0%2C51%2C0%22%2C%22buttoncolor%22%3A%22%232f8646%22%2C%22textcolor%22%3A%22%23ffffff%22%2C%22bordercolor%22%3A%22%232f8646%22%7D'>"
 				+ "<tr><td style='padding: 0px 0px 51px 0px;' align='center' bgcolor='#ffffff'><table border='0' cellpadding='0' cellspacing='0' class='wrapper-mobile'><tr>"
 				+ "<td align='center' style='-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; font-size: 15px;' bgcolor='#2f8646'>"
-				+ "<a href='http://localhost:8080/unlock-account-pin?'"
+				+ "<a href='http://localhost:8080/unlock-account-pin?username="
 				+ username 
 				+ "&email="
 				+ email
-				+ " class='bulletproof-button' target='_blank' style='height: px; width: px; font-size: 15px; line-height: px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; padding: 14px 56px 13px 56px; text-decoration: none; color: #ffffff; text-decoration: none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; border: 1px solid #2f8646; display: inline-block;'>Unlock Account</a>"
+				+ "' class='bulletproof-button' target='_blank' style='height: px; width: px; font-size: 15px; line-height: px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; padding: 14px 56px 13px 56px; text-decoration: none; color: #ffffff; text-decoration: none; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; border: 1px solid #2f8646; display: inline-block;'>Unlock Account</a>"
 				+ "</td></tr></table></td></tr></table>"
 				+ "<table class='module' role='module' data-type='spacer' border='0' cellpadding='0' cellspacing='0' width='100%' style='table-layout: fixed;' data-attributes='%7B%22dropped%22%3Atrue%2C%22spacing%22%3A3%2C%22containerbackground%22%3A%22%23151b3b%22%7D'>"
 				+ "<tr><td role='module-content' style='padding: 0px 0px 3px 0px;' bgcolor='#151b3b'></td></tr></table>"
