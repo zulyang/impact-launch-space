@@ -86,7 +86,11 @@ public class LoginController {
 
 	// Unlocking locked accounts
 	@RequestMapping(value = "/unlock-account-pin", method = RequestMethod.GET)
-	public String showUnlockAccountPage(ModelMap model) {
+	public String showUnlockAccountPage(@RequestParam("username") String username,
+			@RequestParam("email") String email, ModelMap model) {
+		model.addAttribute("username", username);
+		model.addAttribute("email", email);
+		
 		return "login/" + "unlock_account_pin";
 	}
 
