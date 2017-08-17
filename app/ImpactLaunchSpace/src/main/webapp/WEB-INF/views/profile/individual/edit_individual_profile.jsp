@@ -102,8 +102,11 @@
 														test="${individual.getOrganization().equals(item) }">
 														<option value="${item}" selected="selected">${item}</option>
 													</c:when>
+													<c:otherwise>
+														<option value="${item}">${item}</option>
+													</c:otherwise>
 												</c:choose>
-												<option value="${item}">${item}</option>
+												
 											</c:forEach>
 										</select>
 

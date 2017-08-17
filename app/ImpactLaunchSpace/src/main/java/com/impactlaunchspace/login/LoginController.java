@@ -69,7 +69,7 @@ public class LoginController {
 				model.addAttribute("username", username);
 				model.addAttribute("email", email);
 				model.addAttribute("accountUnlockValidation", "Please check your email for your verification token");
-				rtService.regenerateResetCode(username, email);
+				rtService.regenerateUnlockCode(username, email);
 				return "login/" + "unlock_account_pin";
 			} else {
 				// FRONT END TO PRINT ERROR THAT THE USERNAME/PW IS WRONG
@@ -280,7 +280,29 @@ public class LoginController {
 				// account locked or verified, do not increase login attempts
 				model.addAttribute("loginValidation", "This account is locked or unverified.");
 				return "login/" + "login"; // lockedlogin
-			} else if (isEnabled && !isUser) {
+			} else if(!isEnabled && !isUser){
+				loginAttempts = loginService.getLoginAttempts(username);
+
+				// if wrong but still within max login threshold, increase
+				// attempts
+				// and redirect to page
+				if (loginAttempts < MAX_LOGIN_ATTEMPTS - 1) {
+					// FRONT END TO PRINT USERNAME/PW IS WRONG
+					model.addAttribute("loginValidation", "Username/password is incorrect.");
+					loginService.increaseLoginAttempts(username);
+					return "login/" + "login";
+				} else {
+					// FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS
+					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
+					// else lock the account
+					model.addAttribute("accountLockedValidation",
+							"Your account has been locked. You may unlock it here. ");
+					loginService.lockAccount(username);
+					return "login/" + "unlock_account";
+				}
+			}	
+			else if (isEnabled && !isUser) {
+			
 				loginAttempts = loginService.getLoginAttempts(username);
 
 				// if wrong but still within max login threshold, increase

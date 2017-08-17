@@ -118,7 +118,7 @@ public class VerificationTokenService {
 				+ "<table class='module' role='module' data-type='button' border='0' cellpadding='0' cellspacing='0' width='100%' style='table-layout: fixed;'><tr>"
 				+ "<td style='padding: 0px 0px 51px 0px;' align='center' bgcolor='#ffffff'><table border='0' cellpadding='0' cellspacing='0' class='wrapper-mobile'> <tr>"
 				+ "<td align='center' style='-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; font-size: 25px;'>"
-				+ "<a href='http://localhost:8080/verifyaccount' target='_blank'>Activate My Account</a>"
+				+ "<a href='http://localhost:8080/verify-account' target='_blank'>Activate My Account</a>"
 				+ "</td></tr></table></td></tr></table>"
 				+ "<table border='0' cellpadding='0' cellspacing='0' align='center' width='100%' class='module footer' role='module' data-type='footer' data-attributes='%7B%22dropped%22%3Atrue%2C%22columns%22%3A%222%22%2C%22padding%22%3A%2248%2C34%2C17%2C34%22%2C%22containerbackground%22%3A%22%23151b3b%22%7D'>"
 				+ "<tr><td style='padding: 48px 34px 17px 34px;' bgcolor='#151b3b'><table border='0' cellpadding='0' cellspacing='0' align='center' width='100%'><tr role='module-content'>"
