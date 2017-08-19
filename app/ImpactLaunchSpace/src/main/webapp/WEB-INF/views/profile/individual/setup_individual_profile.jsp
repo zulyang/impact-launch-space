@@ -355,9 +355,9 @@
 					}
 				}
 			}
-
+			
 			var jsIndi2A = document.getElementById("jsIndi2Value");
-
+			
 			var jsIndiEx2B = document.getElementById("js2experience");
 
 			if (jsIndi2A !== null) {
@@ -399,7 +399,7 @@
 			var jsIndi3A = document.getElementById("jsIndi3Value");
 
 			var jsIndiEx3B = document.getElementById("js3experience");
-
+			
 			if (jsIndi3A !== null) {
 				if (jsIndi3A.value !== "" && jsIndiEx3B.value === "") {
 					change('js3experience', 'required');
@@ -433,6 +433,18 @@
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
+				}
+			}
+			
+
+			if(jsIndi1A !== null && jsIndi2A !== null && jsIndi3A !== null){
+				var job_sector_1 = jsIndi1A.value;
+				var job_sector_2 = jsIndi2A.value;
+				var job_sector_3 = jsIndi3A.value;
+				
+				if(job_sector_1 === job_sector_2 || job_sector_1 === job_sector_3 || job_sector_2 === job_sector_3) {
+					alert('Please do not select the same job sector more than once.');
+					return false;
 				}
 			}
 

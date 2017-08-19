@@ -106,7 +106,7 @@
 														<option value="${item}">${item}</option>
 													</c:otherwise>
 												</c:choose>
-												
+
 											</c:forEach>
 										</select>
 
@@ -485,10 +485,10 @@
 			var jobTitle = document.getElementById("editJobTitle");
 
 			var organization = document.getElementById("editOrg");
-			
-			var dob = document.getElementById("dateOfBirth").value;
+
+			var dob = document.getElementById("editDob").value;
 			var year = dob.substring(0, 4);
-			
+
 			var birthYear = parseInt(year);
 			var currentYear = new Date().getFullYear();
 			var age = currentYear - birthYear;
@@ -574,8 +574,8 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js1yearsOfEx > age){
+
+					if (js1yearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
@@ -613,8 +613,8 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js2yearsOfEx > age){
+
+					if (js2yearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
@@ -637,7 +637,7 @@
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
-				
+
 				if (jsIndiEx2B.value !== "") {
 
 					var js2byearsOfEx = parseInt(jsIndiEx2B.value);
@@ -651,8 +651,8 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js2byearsOfEx > age){
+
+					if (js2byearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
@@ -675,7 +675,7 @@
 					alert('Please fill in the years of experience you have for the sector(s) chosen.')
 					return false;
 				}
-				
+
 				if (jsIndiEx3A.value !== "") {
 
 					var js3ayearsOfEx = parseInt(jsIndiEx3A.value);
@@ -689,8 +689,8 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js3ayearsOfEx > age){
+
+					if (js3ayearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
@@ -713,7 +713,7 @@
 					alert('Please select a sector for the number of years of experience that you have for.')
 					return false;
 				}
-				
+
 				if (jsIndiEx3B.value !== "") {
 
 					var js3byearsOfEx = parseInt(jsIndiEx3B.value);
@@ -727,12 +727,36 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js3byearsOfEx > age){
+
+					if (js3byearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}
+			}
+
+			var job_sector_1;
+			if(jsIndi1 !== null){
+				job_sector_1 = jsIndi1.value;
+			}
+			
+			var job_sector_2;
+			if(jsIndi2A === null){
+				job_sector_2 = jsIndi2B.value;
+			} else {
+				job_sector_2 = jsIndi2A.value;
+			}
+			
+			var job_sector_3;
+			if(jsIndi3A === null){
+				job_sector_3 = jsIndi3B.value;
+			} else {
+				job_sector_3 = jsIndi3A.value;
+			}
+
+			if (job_sector_1 === job_sector_2 || job_sector_1 === job_sector_3 || job_sector_2 === job_sector_3) {
+				alert('Please do not select the same job sector more than once.');
+				return false;
 			}
 
 			var preferredCountries = document
