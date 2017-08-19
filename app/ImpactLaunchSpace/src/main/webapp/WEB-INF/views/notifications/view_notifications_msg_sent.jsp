@@ -111,16 +111,16 @@
 															<td><p>
 																	<c:choose>
 																		<c:when
-																			test="${item.getSender_username().equals(\"admin\")}">
+																			test="${item.getRecipient_username().equals(\"admin\")}">
 																			<b> <input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
+																				id="recipient<%=id%>" type="text"
 																				value="ImpactLaunch.Space Admin" disabled="true" />
 																			</b>
 																		</c:when>
 																		<c:otherwise>
 																			<input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
-																				value="${item.getSender_username()}" disabled="true" />
+																				id="recipient<%=id%>" type="text"
+																				value="${item.getRecipient_username()}" disabled="true" />
 																		</c:otherwise>
 																	</c:choose>
 
@@ -196,11 +196,11 @@
 										<div id="resourcesNeeded" class="form-group row col-md-5">
 											<div class="col-md-12">
 												<p>
-													<b>From:</b>
+													<b>To:</b>
 												</p>
-												<input id="modalSender" name="modalSender"
+												<input id="modalRecipient" name="modalRecipient"
 													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Sender Username here" type="text" readonly />
+													placeholder="Recipient Username here" type="text" readonly />
 												<p>
 													<b>Subject:</b>
 												</p>
@@ -258,12 +258,12 @@
 	function view(id) {
 		var disabledStatus = $('.editable-field').attr('disabled');
 		var newId = id.substring(4);
-		var sender = $('#sender' + newId).val();
+		var recipient = $('#recipient' + newId).val();
 		var subj = $('#subj' + newId).val();
 		var sent = $('#sent' + newId).val();
 		var message = $('#message' + newId).val();
 
-		$('#modalSender').val(sender);
+		$('#modalRecipient').val(recipient);
 		$('#modalNotificationSubject').val(subj);
 		$('#modalNotificationsMessage').val(message);
 		$('#modalNotificationsMessage').val().replace(/\r\n|\r|\n/g, "<br />")

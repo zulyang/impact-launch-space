@@ -20,6 +20,7 @@
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -45,7 +46,8 @@
 									${individual.getLast_name()}</h1>
 
 								<div class="btn-group">
-									<a class="btn btn-default" onClick="sendMessage()"> Leave A Message </a>
+									<a class="btn btn-default" onClick="sendMessage()"> Leave A
+										Message </a>
 								</div>
 
 								<hr>
@@ -144,7 +146,7 @@
 				</div>
 			</div>
 		</div>
-				
+
 		<!-- Leave message modal-->
 		<div class="modal fade" tabindex="-1" role="dialog" id="messageModal">
 			<div class="modal-dialog">
@@ -156,14 +158,22 @@
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
-							<h4 class="modal-title">Send Message To ${individual.getUsername() }</h4>
+							<h4 class="modal-title">Send Message To
+								${individual.getUsername() }</h4>
 						</div>
 						<div class="modal-body">
 							<div class="container">
 								<div class="form-group row col-md-5">
 									<div class="col-md-12 col-xs-9">
-										<textarea id=""	name="modalMessage"	class="form-control col-md-4 create-project-add"
+										<input class="form-control col-md-4 create-project-add"
+											type="text" id="modalSubject" name="modalSubject"
+											placeholder="Write a title here" required />
+
+										<textarea id="modalMessage" name="modalMessage"
+											class="form-control col-md-4 create-project-add"
 											placeholder="Leave your message here"></textarea>
+										<input type="hidden" id="recipient" name="recipient"
+											value="${individual.getUsername()}" />
 									</div>
 								</div>
 							</div>
@@ -171,7 +181,8 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Cancel</button>
-							<button type="submit" id="send" class="btn btn-success">Send</button>
+							<button type="button" id="send" onclick="sendAjaxMsg()"
+								class="btn btn-success">Send</button>
 						</div>
 					</form>
 				</div>
@@ -182,9 +193,36 @@
 </body>
 
 <script type="text/javascript">
-	function sendMessage(){
+	$(document).ready(function() {
+
+		
+	});
+</script>
+
+<script>
+	function sendMessage() {
 		$('#messageModal').modal('show');
 	}
-	</script>
-	
+</script>
+<script>
+	function sendAjaxMsg() {
+		var modalMessage = $('#modalMessage').val();
+		var recipient = $('#recipient').val();
+		var modalSubject = $('#modalSubject').val();
+
+		$.post('send-message', {
+			modalMessage : modalMessage,
+			recipient : recipient,
+			modalSubject : modalSubject
+		});
+
+		$('#messageModal').modal('hide');
+		
+		$('#messageModal').on('hidden.bs.modal', function() {
+			$(this).find("textarea").val('').end();
+		});
+
+	}
+</script>
+
 </html>

@@ -286,6 +286,8 @@ public class ProjectController {
 	@RequestMapping(value = "/view-project", method = RequestMethod.GET)
 	public String showProjectViewPage(@RequestParam("project-name") String project_name,
 			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
+		String username = (String)request.getSession().getAttribute("username");
+		
 		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		model.addAttribute("country_list", profileService.retrieveCountryList());
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
@@ -294,7 +296,7 @@ public class ProjectController {
 
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
 		String projectPrivacy = "public";
-		String username = (String)request.getSession().getAttribute("username");
+		
 
 		if (selected_project.isHiddenToAll()) {
 			projectPrivacy = "hidden";
@@ -303,6 +305,8 @@ public class ProjectController {
 		if (selected_project.isHiddenToOutsiders()) {
 			projectPrivacy = "private";
 		}
+		
+		
 
 		ArrayList<ProjectTargetArea> projectTargetAreasObj = projectService.retrieveTargetProjectAreas(project_name,
 				project_proposer);
@@ -357,12 +361,16 @@ public class ProjectController {
 		}
 
 		if (projectPrivacy.equals("hidden")) {
-			if (request.getSession().getAttribute("username").equals(project_proposer)) {
+			if (username.equals(project_proposer)) {
 				return "project/" + "view_project_public"; 
 			} else if(selected_project.getOrganization() != null) {
+				System.out.println("username now: " + username);
 				OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
-				if(request.getSession().getAttribute("username").equals(organizationAccount.getUsername())){
+
+				if(username.equals(organizationAccount.getUsername())){
 					return "project/" + "view_project_public"; 
+				}else{
+					return "project/" + "view_project_private"; 
 				}
 						
 			} else {
@@ -371,13 +379,15 @@ public class ProjectController {
 		}
 
 		// for now if u are not the project creator or organization u will see the private page
-		if (projectPrivacy.equals("private")) {
-			if (request.getSession().getAttribute("username").equals(project_proposer)) {
+		else if (projectPrivacy.equals("private")) {
+			if (username.equals(project_proposer)) {
 				return "project/" + "view_project_public"; 
 			} else if(selected_project.getOrganization() != null) {
 				OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
-				if(request.getSession().getAttribute("username").equals(organizationAccount.getUsername())){
+				if(username.equals(organizationAccount.getUsername())){
 					return "project/" + "view_project_public"; 
+				}else{
+					return "project/" + "view_project_private"; 
 				}
 						
 			}else{
@@ -385,7 +395,7 @@ public class ProjectController {
 			}
 		}
 
-		if (projectPrivacy.equals("public")) {
+		else if (projectPrivacy.equals("public")) {
 			return "project/" + "view_project_public"; 
 		}
 		return "project/" + "view_project_public"; 

@@ -57,7 +57,7 @@
 									<div class="col-sm-9">
 										<input type="text" id="projectTitle" required
 											value="${sample_project.getProject_name()}"
-											name="projectTitle" class="form-control">
+											name="projectTitle" readonly class="form-control">
 									</div>
 								</div>
 

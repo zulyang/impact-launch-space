@@ -315,8 +315,21 @@ public class ProfileController {
 	@RequestMapping(value = "/view-profile", method = RequestMethod.GET)
 	public String showMyProfilePage(@RequestParam("username") String username, HttpServletRequest request, ModelMap model) {
 		User user = userService.retrieveUser(username);
+		String loggedin_username = (String) request.getSession().getAttribute("username");
+		
 		if(user != null){
 			String userType = user.getUser_type();
+			
+			if(username.equals(loggedin_username)){
+				
+				User me = userService.retrieveUser(loggedin_username);
+				
+				if(me.getUser_type().equals("organization")){
+					return "profile/organization/" + "view_own_organization_profile";
+				}else{
+					return "profile/individual/" + "view_own_individual_profile";
+				}
+			}
 			
 			if(userType.equals("organization")){
 				OrganizationAccount organization = profileService.getOrganizationAccountDetails(username);

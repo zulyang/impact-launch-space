@@ -107,9 +107,13 @@ public class NotificationController {
 	}
 	
 	@RequestMapping(value = "/send-message", method = RequestMethod.POST)
-	public void sendPersonalMessage(@RequestParam String to_username, HttpServletResponse response,
-			HttpServletRequest request) throws ServletException {
+	public void sendPersonalMessage(@RequestParam String recipient,@RequestParam String modalMessage,@RequestParam String modalSubject,
+			HttpServletResponse response,HttpServletRequest request){
 		
+		String sender = (String) request.getSession().getAttribute("username");
+		Notification message = new Notification(recipient, sender, modalSubject,
+				modalMessage, "message");
+		notificationService.sendNotification(message);
 
 	}
 }
