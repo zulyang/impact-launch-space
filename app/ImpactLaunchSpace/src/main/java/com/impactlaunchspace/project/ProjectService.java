@@ -48,7 +48,7 @@ public class ProjectService {
 		String organization = project.getOrganization();
 		if(organization != null){
 			String organizationAccountUsername = organizationAccountDAO.findByCompanyName(organization).getUsername();
-			if(projectMemberListDAO.retrieveMemberList(project.getProject_name(), organizationAccountUsername) == null){ 
+			if(projectMemberListDAO.retrieveSpecificMember(project.getProject_name(), project.getProject_proposer(), organizationAccountUsername) == null){ 
 		        projectMemberListDAO.insert(new ProjectMemberList(project.getProject_name(), project.getProject_proposer(), 
 		        		organizationAccountUsername,"admin",new Timestamp(Calendar.getInstance().getTime().getTime()).toString())); 
 		    } 
@@ -88,6 +88,7 @@ public class ProjectService {
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
 		ProjectBanListDAO projectBanListDAO = (ProjectBanListDAO) context.getBean("projectBanListDAO");
 		ProjectTargetAreaDAO projectTargetAreaDAO = (ProjectTargetAreaDAO) context.getBean("projectTargetAreaDAO");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
 
 		projectDAO.updateProject(project_name, description, purpose, duration, location, isPublic, hiddenToOutsiders,
 				hiddenToAll, old_project_name, project_proposer);
@@ -100,6 +101,13 @@ public class ProjectService {
 				projectBanListDAO.insert(projectBanList);
 			}
 		}
+		
+		ArrayList<ProjectMemberList> currentMembers = projectMemberListDAO.retrieveMemberList(old_project_name, project_proposer);
+		
+		for(ProjectMemberList member : currentMembers){
+			
+		}
+		
 
 		for (ProjectTargetArea projectTargetArea : updated_targetAreas) {
 			projectTargetAreaDAO.insert(projectTargetArea);

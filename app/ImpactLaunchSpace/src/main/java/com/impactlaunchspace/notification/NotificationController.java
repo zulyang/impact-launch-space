@@ -3,6 +3,7 @@ package com.impactlaunchspace.notification;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.impactlaunchspace.entity.Notification;
 import com.impactlaunchspace.entity.ProjectUserRequest;
@@ -102,5 +105,11 @@ public class NotificationController {
 		
 		return "notifications/" + "view_notifications_req_sent";
 	}
+	
+	@RequestMapping(value = "/send-message", method = RequestMethod.POST)
+	public void sendPersonalMessage(@RequestParam String to_username, HttpServletResponse response,
+			HttpServletRequest request) throws ServletException {
+		
 
+	}
 }

@@ -47,6 +47,9 @@ public class ProfileService {
 		CountryOfOperationDAO countryOfOperationDAO = (CountryOfOperationDAO) context.getBean("countryOfOperationDAO");
 		JobSectorOrganizationDAO jobSectorOrganizationDAO = (JobSectorOrganizationDAO) context
 				.getBean("jobSectorOrganizationDAO");
+		
+		organizationAccountDAO.insert(organizationAccount);
+		
 		for (CountryOfOperation countryOfOperation : countriesOfOperation) {
 			if (countryOfOperation != null) {
 				countryOfOperationDAO.insert(countryOfOperation);
@@ -59,7 +62,6 @@ public class ProfileService {
 			}
 		}
 
-		organizationAccountDAO.insert(organizationAccount);
 	}
 
 	public void firstSetupIndividual(IndividualAccount individualAccount,
@@ -77,6 +79,8 @@ public class ProfileService {
 				.getBean("preferredProjectAreaDAO");
 		UserSkillDAO userSkillDAO = (UserSkillDAO) context.getBean("userSkillDAO");
 
+		individualAccountDAO.insert(individualAccount);
+		
 		for (JobSectorIndividual jobSectorIndividual : jobSectorsIndividual) {
 			if (jobSectorIndividual != null) {
 				jobSectorIndividualDAO.insert(jobSectorIndividual);
@@ -107,7 +111,6 @@ public class ProfileService {
 			}
 		}
 
-		individualAccountDAO.insert(individualAccount);
 	}
 
 	public OrganizationAccount getOrganizationAccountDetails(String username) {

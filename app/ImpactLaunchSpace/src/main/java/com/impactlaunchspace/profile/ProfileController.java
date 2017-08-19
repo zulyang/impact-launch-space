@@ -299,8 +299,17 @@ public class ProfileController {
 
 	// Dashboard and Edit Pages for Individual Profiles
 	@RequestMapping(value = "/view-my-profile", method = RequestMethod.GET)
-	public String showIndividualProfilePage(HttpServletRequest request, ModelMap model) {
-		return "profile/individual/" + "view_own_individual_profile";
+	public String showOwnProfile(HttpServletRequest request, ModelMap model) {
+		String username = (String)request.getSession().getAttribute("username");
+		
+		User user = userService.retrieveUser(username);
+		
+		if(user.getUser_type().equals("organization")){
+			return "profile/organization/" + "view_own_organization_profile";
+		}else{
+			return "profile/individual/" + "view_own_individual_profile";
+		}
+		
 	}
 	
 	@RequestMapping(value = "/view-profile", method = RequestMethod.GET)
@@ -727,4 +736,5 @@ public class ProfileController {
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
 		return "profile/individual/" + "edit_individual_profile";
 	}
+	
 }

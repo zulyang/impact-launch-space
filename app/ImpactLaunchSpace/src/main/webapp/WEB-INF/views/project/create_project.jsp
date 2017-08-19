@@ -72,7 +72,7 @@
 							</ul>
 						</div>
 
-						<form action="create-project" method="post">
+						<form action="create-project" method="post" enctype="multipart/form-data">
 							<input type="submit" id="createProject" style="display: none" />
 							<div class="tab-content">
 								<div class="tab-pane active" role="tabpanel" id="step1">

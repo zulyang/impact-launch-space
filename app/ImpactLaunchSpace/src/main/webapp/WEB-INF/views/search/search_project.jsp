@@ -37,7 +37,20 @@
 						$.each(responseJson,function(key,value) {
 							var val = value
 							var res = val.split(",");
-							trHTML += '<div class="col m4"><div class="card"><div class="card-image"><img src="https://st.depositphotos.com/1724125/1373/v/950/depositphotos_13739151-stock-illustration-cartoon-astronaut.jpg"><span class="card-title">'
+							trHTML += '<div class="col m4"><div class="card"><div class="card-image">';
+						
+							if(res[13] !== null){
+								trHTML += '<img src="/projectImageDisplay?project-name='
+									+ res[0]
+									+ '&project-proposer='
+									+ res[5]
+									+ '">';	
+								
+							}else{
+								trHTML += '<img src="https://st.depositphotos.com/1724125/1373/v/950/depositphotos_13739151-stock-illustration-cartoon-astronaut.jpg">';
+							}
+							
+							trHTML += '<span class="card-title">'
 							+ res[0] + '</span></div><div class="projectStatus">' + res[4]
 							+ '</div><div class="card-content"><p>'+ res[1]
 							+ '<hr/><i class="fa fa-clock-o"></i> ' + res[2] + ' day(s)<br><i class="fa fa-globe"></i> '+ res[3]
