@@ -54,7 +54,7 @@
 							</a></li>
 							
 							<li class="profileIcons"><a class="navbar-brand"
-								href="/profile">${username}</a></li>
+								href="/view-my-profile">${username}</a></li>
 							
 							<li class="dropdown"><a href="#" class="navbar-brand"
 								data-toggle="dropdown" aria-haspopup="true"
