@@ -7,7 +7,6 @@ html, body {
 	background-repeat: repeat;
 	z-index: -100;
 	font-family: "Open Sans";
-	
 }
 
 .signin, .unlockaccount {
@@ -187,18 +186,18 @@ html, body {
 	min-height: 100%;
 }
 
-.profile_img{
-	position: relative; 
-	width: 250px; 
-	height: 250px; 
-	overflow: hidden; 
-	border-radius: 50%; 
+.profile_img {
+	position: relative;
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	border-radius: 50%;
 	display: inline-block;
 }
 
-.profile_bio{
-	display: inline-block; 
-	float: right; 
+.profile_bio {
+	display: inline-block;
+	float: right;
 	width: 65%;
 }
 
@@ -246,9 +245,8 @@ html, body {
 	width: 90%;
 }
 
-.welcome, .createAccount, .register_success_message,
-	.verifyAccountMessage, .unlockAccountMessage, .unlockAccountPinMessage
-	{
+.welcome, .register_success_message, .verifyAccountMessage,
+	.unlockAccountMessage, .unlockAccountPinMessage {
 	justify-content: center;
 	display: flex;
 	align-items: center;
@@ -257,6 +255,17 @@ html, body {
 	position: absolute;
 	margin-top: -16rem;
 	padding-bottom: 5rem;
+}
+
+.createAccount {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: absolute;
+	margin-top: -16rem;
+	padding-bottom: 8rem;
 }
 
 .verify_success_message {
@@ -393,7 +402,7 @@ html, body {
 }
 
 .circle_org_profile_image {
-/* 	margin-top: -16rem;
+	/* 	margin-top: -16rem;
 	margin-right: 1rem;
 	border-radius: 50%;
 	width: 250px;
@@ -414,7 +423,6 @@ html, body {
 }
 
 .circle_edit_ind_profile_image {
-	margin-right: 1rem;
 	border-radius: 50%;
 	width: 250px;
 	height: 250px;
@@ -468,12 +476,12 @@ html, body {
 }
 
 .indi_public_profile_display_container {
-	margin-top: 30rem; 
+	margin-top: 30rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 }
 
-.indi_private_profile_display_container{
+.indi_private_profile_display_container {
 	margin-top: -30rem;
 	margin-bottom: 5rem;
 	width: 85rem;
@@ -502,7 +510,6 @@ html, body {
 	height: 100%;
 	display: inline-block;
 	float: left;
-	
 }
 
 .indi_bio {
@@ -620,64 +627,65 @@ textarea {
 	resize: vertical;
 }
 
-
-.modalNotificationsField{
+.modalNotificationsField {
 	margin-bottom: 2rem;
 	background: none !important;
 }
 
-.list-group-item-selected{
+.list-group-item-selected {
 	position: relative;
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
-    background-color: aliceblue;
-    border: 1px solid #ddd
+	display: block;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	background-color: aliceblue;
+	border: 1px solid #ddd
 }
+
 .radio_as_button {
-     list-style-type:none;
-     margin:25px 0 0 0;
-     padding:0;
+	list-style-type: none;
+	margin: 25px 0 0 0;
+	padding: 0;
 }
 
 .radio_as_button li {
-     float:left;
-     margin:0 5px 0 0;
-    width:100px;
-    height:40px;
-    position:relative;
+	float: left;
+	margin: 0 5px 0 0;
+	width: 100px;
+	height: 40px;
+	position: relative;
 }
 
 .radio_as_button label, .radio_as_button input {
-    display:block;
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 
 .radio_as_button input[type="radio"] {
-    opacity:0.011;
-    z-index:100;
+	opacity: 0.011;
+	z-index: 100;
 }
 
-.radio_as_button input[type="radio"]:checked + label {
-    background:yellow;
+.radio_as_button input[type="radio"]:checked+label {
+	background: yellow;
 }
 
 .radio_as_button label {
-     padding:5px;
-     border:1px solid #CCC;
-     border-radius: 3px; 
-     cursor:pointer;
-    z-index:90;
+	padding: 5px;
+	border: 1px solid #CCC;
+	border-radius: 3px;
+	cursor: pointer;
+	z-index: 90;
 }
 
 .radio_as_button label:hover {
-     background:#DDD;
+	background: #DDD;
 }
 
-.info_tooltip{
-	color: #07C; display: inline-block;
+.info_tooltip {
+	color: #07C;
+	display: inline-block;
 }
