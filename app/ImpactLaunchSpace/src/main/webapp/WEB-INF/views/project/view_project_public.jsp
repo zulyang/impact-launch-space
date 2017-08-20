@@ -162,11 +162,10 @@
 						<h1 class="section-title">OWNER</h1>
 						<div class="profile-contents">
 							<h2 class="position">${creator_name }</h2>
-							<div class="profile-image">
-								<img
-									src="/imageDisplay?username=${selected_project.getProject_proposer()}"
-									class="img responsive" alt="John Smith Profile Photo">
-							</div>
+							<img
+								src="/imageDisplay?username=${selected_project.getProject_proposer()}"
+								class="project_proposer_img responsive"
+								alt="John Smith Profile Photo">
 							<!--social links-->
 							<ul class="list-inline">
 								<li><a href="#"><i class="fa fa-twitter"></i></a></li>

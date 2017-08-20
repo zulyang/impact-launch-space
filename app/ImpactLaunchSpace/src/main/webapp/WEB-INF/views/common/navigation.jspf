@@ -48,7 +48,7 @@
 							</a></li>
 							
 							<li class="profileIcons"><a class="navbar-brand"
-								href="/profile"> <img alt="profilePicture"
+								href="/view-my-profile"> <img alt="profilePicture"
 									class="profilePictureIcon"
 									src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
 							</a></li>

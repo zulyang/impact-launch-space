@@ -141,7 +141,7 @@ public class LoginController {
 
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
 			model.addAttribute("passwordCheck",
-					"Password must contain letters, digits, symbols and have at least 6 characters.");
+					"Your password did not meet all requirements.");
 			return "login/" + "register";
 		}
 
@@ -582,7 +582,7 @@ public class LoginController {
 					break;
 				}
 			}
-			return "redirect:" + "login";
+			return "redirect:" + "/";
 		}
 		return "false";
 	}

@@ -42,8 +42,7 @@
 								<form action="edit-individual-profile-pic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${username}"
-										class="circle_edit_ind_profile_image" height="64" width="64">
-
+										class="circle_edit_ind_profile_image">
 									<label for="editChooseIndPic"
 										class="form-control btn btn-info edit_org_profile_save">Update
 										your profile picture</label> <input type="file" name="profilePicture"
@@ -226,7 +225,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> <select
+							<br> I have expertise in these Job Sectors: <br> <select required
 								class="js-example-basic-single-jobsectorindividual-required"
 								name="selected_jobsector1" id="jsIndi1Value" style="width: 49%">
 								<option value=""></option>
@@ -492,19 +491,31 @@
 			var birthYear = parseInt(year);
 			var currentYear = new Date().getFullYear();
 			var age = currentYear - birthYear;
-
-			var contactNumber = document.getElementById("editContact").value;
-
-			if (/^\d+$/.test(contactNumber) === false
-					|| contactNumber.length > 20) {
-				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+			
+			if(age > 117) {
+				alert('Your age cannot be greater than 100 years.');
+				return false;
+			}
+			
+			var date = new Date();
+			var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+			
+			var currentDate = Date.parse(today.replace(/-/g, " "));
+			var pickedDate = Date.parse(dob.replace(/-/g, " "));
+			
+			if (pickedDate >= currentDate) {
+				alert('Your birth date cannot today or a future date.');
 				return false;
 			}
 
-			/*if (jobTitle.value !== "" && organization.value === "") {
-				alert('Please choose your organization.')
-				return false;
-			}*/
+			var contactNumber = document.getElementById("editContact").value;
+			
+			if(contactNumber !== ""){
+				if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20 || contactNumber.length < 8) {
+					alert('Please enter a minimum of 8 numbers and a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+					return false;
+				}
+			}
 
 			if (jobTitle.value === "" && organization.value !== "") {
 				alert('Please input your job title at your current organization.')
@@ -754,9 +765,25 @@
 				job_sector_3 = jsIndi3A.value;
 			}
 
-			if (job_sector_1 === job_sector_2 || job_sector_1 === job_sector_3 || job_sector_2 === job_sector_3) {
-				alert('Please do not select the same job sector more than once.');
-				return false;
+			if (job_sector_1 !== "" && job_sector_2 !== "") {
+				if (job_sector_1 === job_sector_2) {
+					alert('Please do not select the same job sector.');
+					return false;
+				}
+			}
+			
+			if (job_sector_1 !== "" && job_sector_3 !== "") {
+				if (job_sector_1 === job_sector_3) {
+					alert('Please do not select the same job sector.');
+					return false;
+				}
+			}
+			
+			if (job_sector_3 !== "" && job_sector_2 !== "") {
+				if (job_sector_3 === job_sector_2) {
+					alert('Please do not select the same job sector.');
+					return false;
+				}
 			}
 
 			var preferredCountries = document

@@ -111,14 +111,14 @@
 
 						<div class="form-group">
 							<div class="col-lg-12">
-								<select
+								<select required
 									class="js-example-basic-single-jobsector-required profileField"
 									name="jobSector1" id="jsIndi1Value">
 									<option></option>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>
-								</select> <input name="js1Years" type="number" id="js1experience"
+								</select> <input required name="js1Years" type="number" id="js1experience"
 									class="form-control profileField"
 									placeholder="Years of experience">
 							</div>
@@ -258,7 +258,8 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="submit" class="btn btn-success profile_save"
+								<input type="submit"
+									class="btn btn-success profile_save"
 									value="Set Account Details">
 							</div>
 						</div>
@@ -300,22 +301,29 @@
 
 	<script type="text/javascript">
 		function checkFields() {
-			var jobTitle = document.getElementById("jobTitle");
-
-			var organization = document.getElementById("organization");
-
-			/*if (jobTitle.value === "") {
-				alert('Please input your job title.')
-				return false;
-			}*/
-
 			var dob = document.getElementById("dateOfBirth").value;
 			var year = dob.substring(0, 4);
-			
+
 			var birthYear = parseInt(year);
 			var currentYear = new Date().getFullYear();
 			var age = currentYear - birthYear;
+
+			if(age > 117) {
+				alert('Your age cannot be greater than 100 years.');
+				return false;
+			}
 			
+			var date = new Date();
+			var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+			
+			var currentDate = Date.parse(today.replace(/-/g, " "));
+			var pickedDate = Date.parse(dob.replace(/-/g, " "));
+			
+			if (pickedDate >= currentDate) {
+				alert('Your birth date cannot today or a future date.');
+				return false;
+			}
+
 			var jsIndi1A = document.getElementById("jsIndi1Value");
 
 			var jsIndiEx1B = document.getElementById("js1experience");
@@ -336,9 +344,9 @@
 
 			if (jsIndiEx1B !== null) {
 				if (jsIndiEx1B.value !== "") {
-					
+
 					var js1yearsOfEx = parseInt(jsIndiEx1B.value);
-					
+
 					if (js1yearsOfEx <= 0) {
 						alert('Please enter numbers greater than 0 for your years of experience.')
 						return false;
@@ -348,16 +356,16 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js1yearsOfEx > age){
+
+					if (js1yearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}
 			}
-			
+
 			var jsIndi2A = document.getElementById("jsIndi2Value");
-			
+
 			var jsIndiEx2B = document.getElementById("js2experience");
 
 			if (jsIndi2A !== null) {
@@ -376,9 +384,9 @@
 
 			if (jsIndiEx2B !== null) {
 				if (jsIndiEx2B.value !== "") {
-					
+
 					var js2yearsOfEx = parseInt(jsIndiEx2B.value);
-					
+
 					if (js2yearsOfEx <= 0) {
 						alert('Please enter numbers greater than 0 for your years of experience.')
 						return false;
@@ -388,8 +396,8 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js2yearsOfEx > age){
+
+					if (js2yearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
@@ -399,7 +407,7 @@
 			var jsIndi3A = document.getElementById("jsIndi3Value");
 
 			var jsIndiEx3B = document.getElementById("js3experience");
-			
+
 			if (jsIndi3A !== null) {
 				if (jsIndi3A.value !== "" && jsIndiEx3B.value === "") {
 					change('js3experience', 'required');
@@ -413,12 +421,12 @@
 					return false;
 				}
 			}
-			
+
 			if (jsIndiEx3B !== null) {
 				if (jsIndiEx3B.value !== "") {
-					
+
 					var js3yearsOfEx = parseInt(jsIndiEx3B.value);
-					
+
 					if (js3yearsOfEx <= 0) {
 						alert('Please enter numbers greater than 0 for your years of experience.')
 						return false;
@@ -428,33 +436,48 @@
 						alert('Please enter only numbers for the number of years of experience you possess.')
 						return false;
 					}
-					
-					if(js3yearsOfEx > age){
+
+					if (js3yearsOfEx > age) {
 						alert('Your years of experience cannot be greater than your age.');
 						return false;
 					}
 				}
 			}
-			
 
-			if(jsIndi1A !== null && jsIndi2A !== null && jsIndi3A !== null){
+			if (jsIndi1A !== null && jsIndi2A !== null && jsIndi3A !== null) {
 				var job_sector_1 = jsIndi1A.value;
 				var job_sector_2 = jsIndi2A.value;
 				var job_sector_3 = jsIndi3A.value;
+
+				if (job_sector_1 !== "" && job_sector_2 !== "") {
+					if (job_sector_1 === job_sector_2) {
+						alert('Please do not select the same job sector.');
+						return false;
+					}
+				}
 				
-				if(job_sector_1 === job_sector_2 || job_sector_1 === job_sector_3 || job_sector_2 === job_sector_3) {
-					alert('Please do not select the same job sector more than once.');
-					return false;
+				if (job_sector_1 !== "" && job_sector_3 !== "") {
+					if (job_sector_1 === job_sector_3) {
+						alert('Please do not select the same job sector.');
+						return false;
+					}
+				}
+				
+				if (job_sector_3 !== "" && job_sector_2 !== "") {
+					if (job_sector_3 === job_sector_2) {
+						alert('Please do not select the same job sector.');
+						return false;
+					}
 				}
 			}
 
 			var minHours = document.getElementById("minHours");
 			var maxHours = document.getElementById("maxHours");
-			
+
 			if (minHours !== null && maxHours !== null) {
-				var min = minHours.value;				
+				var min = minHours.value;
 				var max = maxHours.value;
-				
+
 				if (min !== "" && max !== "") {
 					if (isNaN(min) || isNaN(max)) {
 						alert('Please enter only numbers for the minimum and maximum hours that you want to volunteer.')
@@ -475,10 +498,11 @@
 
 			var contactNumber = document.getElementById("contactNumber").value;
 
-			if (/^\d+$/.test(contactNumber) === false
-					|| contactNumber.length > 20) {
-				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
-				return false;
+			if(contactNumber !== ""){
+				if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20 || contactNumber.length < 8) {
+					alert('Please enter a minimum of 8 numbers and a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+					return false;
+				}
 			}
 
 			return true;
