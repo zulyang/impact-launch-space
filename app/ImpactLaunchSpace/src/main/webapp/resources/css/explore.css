@@ -186,17 +186,10 @@
 	flex-grow: 1
 }
 
-.card.sticky-action .card-action {
-	z-index: 2
-}
-
-.card.sticky-action .card-reveal {
-	z-index: 1;
-	padding-bottom: 64px
-}
-
 .card .card-image {
-	position: relative
+	position: relative;
+	max-height: 100%;
+	height: 30rem;
 }
 
 .card .card-image img {
@@ -207,7 +200,8 @@
 	right: 0;
 	top: 0;
 	bottom: 0;
-	width: 100%
+	width: 100%;
+	height: 30rem;
 }
 
 .card .card-image .card-title {

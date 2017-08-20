@@ -111,7 +111,7 @@ public class SearchController {
 			String resourceCategory = resource.get(i).getResourceCategory();
 			String username = resource.get(i).getUsername();
 
-			String toReturn = resourceName + "@," + resourceDescription + "@," + resourceCategory  + "@," + username;
+			String toReturn = resourceName + "," + resourceDescription + "," + resourceCategory  + "," + username;
 			list.put(i+1, toReturn);
 		}
 
