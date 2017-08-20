@@ -582,7 +582,7 @@ public class LoginController {
 					break;
 				}
 			}
-			return "redirect:" + "login";
+			return "redirect:" + "/";
 		}
 		return "false";
 	}
