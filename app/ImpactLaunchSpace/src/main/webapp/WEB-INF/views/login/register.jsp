@@ -9,9 +9,14 @@
 <title>ImpactLaunch.Space</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css"/>
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/password-rules-helper/dist/css/passwordRulesHelper.min.css" />
 <script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
 <script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/lib/password-rules-helper/dist/js/passwordRulesHelper.min.js"></script>
+
 </head>
 
 <body class="signup">
@@ -20,8 +25,8 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
 
-				<div class="col-lg-12 form_container" id="register_container">
-					<h4 class="createAccount">Create a new account</h4>
+				<div class="col-lg-12 register_container" id="register_container">
+					<h4 class="create_account">Create a new account</h4>
 					<form method="post" action="registernewuser"
 						class="form-horizontal">
 						<br>
@@ -42,17 +47,19 @@
 									class="form-control field" placeholder="Username">
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" style="margin-bottom: 0px;">
 							<div class="col-lg-12">
-								<input name="password1" required="required" type="password"
+								<input name="password1" id="password1" required="required" type="password"
 									class="form-control field" placeholder="Password">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="password2" required="required" type="password"
-									class="form-control field" placeholder="Repeat your password">
+								<input name="password2" id="password2" required="required" type="password"
+									class="form-control field" placeholder="Repeat your password" onChange="checkPasswordMatch();">
 							</div>
+							
+							<div class="col-lg-12 password_match_message" id="divCheckPasswordMatch"></div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
@@ -97,7 +104,7 @@
 
 </body>
 <script type="text/javascript">
-	window.onload = function() {
+		window.onload = function() {
 		var registerCheckStatus = document.getElementById("registerSuccess").value;
 
 		if (registerCheckStatus.length > 0) {
@@ -108,5 +115,27 @@
 		}
 
 	}
+</script>
+
+<script type="text/javascript">
+$(function() {
+    $('#password1').passwordRulesValidator();
+});	
+
+
+function checkPasswordMatch() {
+    var password = $("#password1").val();
+    var confirmPassword = $("#password2").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("Passwords do not match!").css('color', 'red');
+    else
+        $("#divCheckPasswordMatch").html("Passwords match.").css('color','green');
+}
+
+$(document).ready(function () {
+   $("#password1, #password2").keyup(checkPasswordMatch);
+});
+
 </script>
 </html>

@@ -25,6 +25,7 @@ html, body {
 	background-image: url("../img/signup.jpeg");
 	background-repeat: no-repeat;
 	background-size: 100% 100vh;
+	padding-bottom: 40px;
 }
 
 .profile {
@@ -139,6 +140,19 @@ html, body {
 	width: 60rem;
 	position: relative;
 	background: rgba(255, 255, 255, 0.8);
+}
+
+.register_container{
+	justify-content: center;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10rem;
+    height: 55rem;
+    width: 60rem;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .org_profile_container {
