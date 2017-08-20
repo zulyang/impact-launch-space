@@ -10,12 +10,18 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 
 </head>
 <body class="profile">
@@ -23,16 +29,14 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="../../common/navigation.jspf" %>
-					
+				<%@include file="../../common/navigation.jspf"%>
+
 
 				<div class="indi_public_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="profile_img">
-								<img src="/imageDisplay?username=${individual.getUsername()}"
-									class="circle_indi_profile_image">
-							</div>
+							<img src="/imageDisplay?username=${individual.getUsername()}"
+								class="circle_indi_profile_image">
 
 							<div class="profile_bio">
 								<h1>${individual.getFirst_name()}
@@ -46,14 +50,25 @@
 								<hr>
 								<p class="indi_bio">${individual.getPersonalBio()}</p>
 								<hr>
-								<p><i class="fa fa-briefcase"></i> ${individual.getJobTitle()}</p>
+								<p>
+									<i class="fa fa-briefcase"></i> ${individual.getJobTitle()}
+								</p>
 								<c:if test="${individual.getOrganization().length() > 0}">
-									<p><i class="fa fa-building"></i> ${individual.getOrganization()}</p>
+									<p>
+										<i class="fa fa-building"></i> ${individual.getOrganization()}
+									</p>
 								</c:if>
 								<hr>
-								<p style="display: inline-block"><i class="fa fa-envelope"></i> ${user.getEmail()}</p><br/>
-								<p style="display: inline-block"><i class="fa fa-phone"></i> ${individual.getContactDetails()}</p>
-								<p><i class="fa fa-globe"></i> ${individual.getCountry()}</p>
+								<p style="display: inline-block">
+									<i class="fa fa-envelope"></i> ${user.getEmail()}
+								</p>
+								<br />
+								<p style="display: inline-block">
+									<i class="fa fa-phone"></i> ${individual.getContactDetails()}
+								</p>
+								<p>
+									<i class="fa fa-globe"></i> ${individual.getCountry()}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -114,10 +129,9 @@
 								<c:forEach items="${individual.getDocumentList()}"
 									var="document">
 									<tr>
-										<td><a href="/downloadFile?file=${document}"> 
-											<img src="<%=request.getContextPath()%>/resources/img/file.png"/>
-											</a>
-										</td>
+										<td><a href="/downloadFile?file=${document}"> <img
+												src="<%=request.getContextPath()%>/resources/img/file.png" />
+										</a></td>
 										<td><a href="/downloadFile?file=${document}">${document.getName()}</a></td>
 									<tr>
 								</c:forEach>
@@ -128,11 +142,11 @@
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 	</div>
 
 </body>
 
-	
+
 </html>

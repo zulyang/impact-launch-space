@@ -10,12 +10,18 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body class="profile">
@@ -23,33 +29,36 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-<%@include file="../../common/navigation.jspf" %>
-					
+				<%@include file="../../common/navigation.jspf"%>
+
 				<div class="org_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="profile_img">
-								<img src="/imageDisplay?username=${organization.getUsername()}"
-									class="circle_org_profile_image">
-							</div>
+							<img src="/imageDisplay?username=${organization.getUsername()}"
+								class="circle_org_profile_image">
 
 							<div class="profile_bio">
 								<h1>${organization.getCompanyName()}</h1>
 
 								<div class="btn-group">
 									<a href="edit-organization-profile" class="btn btn-default">
-										Edit Profile </a> 
+										Edit Profile </a>
 								</div>
 
 								<hr>
 								<p class="org_bio">${organization.getCompanyBio()}</p>
 								<hr>
-								<p style="display: inline-block;"><i class="fa fa-envelope"></i> ${user.getEmail()}</p><br/>
-								<p style="display: inline-block;"><i class="fa fa-phone"></i> ${organization.getContactDetails()}</p>
+								<p style="display: inline-block;">
+									<i class="fa fa-envelope"></i> ${user.getEmail()}
+								</p>
+								<br />
+								<p style="display: inline-block;">
+									<i class="fa fa-phone"></i> ${organization.getContactDetails()}
+								</p>
 								<hr>
-								
+
 								<div class="org_profile_display_countries">
-								<i class="fa fa-globe"></i> 
+									<i class="fa fa-globe"></i>
 									<c:forEach items="${countriesOfOperation}" var="item">
 										<p class="org_countries">${item.getCountry_name()}</p>
 									</c:forEach>
@@ -71,7 +80,7 @@
 				</div>
 			</div>
 		</div>
-				
+
 	</div>
 
 </body>

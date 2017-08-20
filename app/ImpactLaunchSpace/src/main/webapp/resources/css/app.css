@@ -416,20 +416,17 @@ html, body {
 }
 
 .circle_org_profile_image {
-	/* 	margin-top: -16rem;
-	margin-right: 1rem;
 	border-radius: 50%;
 	width: 250px;
 	height: 250px;
-	min-height: 100%; */
-	width: auto;
+	min-height: 100%; 
+	/*width: auto;
 	height: 100%;
 	display: inline-block;
-	float: left;
+	float: left;*/
 }
 
 .circle_edit_org_profile_image {
-	margin-right: 1rem;
 	border-radius: 50%;
 	width: 250px;
 	height: 250px;
@@ -441,6 +438,18 @@ html, body {
 	width: 250px;
 	height: 250px;
 	min-height: 100%;
+}
+
+.circle_indi_profile_image {
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%; 
+	display: inline-block;
+	/*width: auto;
+	height: 100%;
+	display: inline-block;
+	float: left;*/
 }
 
 .edit_org_pic {
@@ -490,7 +499,7 @@ html, body {
 }
 
 .indi_public_profile_display_container {
-	margin-top: 50rem; 
+	margin-top: 30rem; 
 	margin-bottom: 5rem;
 	width: 85rem;
 }
@@ -511,19 +520,6 @@ html, body {
 
 .panel-body {
 	height: 100%;
-}
-
-.circle_indi_profile_image {
-	/* margin-top: -25rem;
-	margin-right: 1rem;
-	border-radius: 50%;
-	width: 250px;
-	height: 250px;
-	min-height: 100%; */
-	width: auto;
-	height: 100%;
-	display: inline-block;
-	float: left;
 }
 
 .indi_bio {

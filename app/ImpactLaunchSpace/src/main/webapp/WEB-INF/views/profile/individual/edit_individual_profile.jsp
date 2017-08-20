@@ -42,8 +42,7 @@
 								<form action="edit-individual-profile-pic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${username}"
-										class="circle_edit_ind_profile_image" height="64" width="64">
-
+										class="circle_edit_ind_profile_image">
 									<label for="editChooseIndPic"
 										class="form-control btn btn-info edit_org_profile_save">Update
 										your profile picture</label> <input type="file" name="profilePicture"
@@ -226,7 +225,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> <select
+							<br> I have expertise in these Job Sectors: <br> <select required
 								class="js-example-basic-single-jobsectorindividual-required"
 								name="selected_jobsector1" id="jsIndi1Value" style="width: 49%">
 								<option value=""></option>

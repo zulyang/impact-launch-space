@@ -36,10 +36,8 @@
 				<div class="indi_public_profile_display_container ">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="profile_img">
-								<img src="/imageDisplay?username=${individual.getUsername()}"
+							<img src="/imageDisplay?username=${individual.getUsername()}"
 									class="circle_indi_profile_image">
-							</div>
 
 							<div class="profile_bio">
 								<h1 style="display: inline-block">${individual.getFirst_name()}
