@@ -200,16 +200,6 @@
 										</div>
 									</div>
 									
-									<div class="form-group row">
-										<label for="projectImage" class="col-sm-3 col-form-label">Image</label>
-										<div class="col-sm-9">
-											<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
-											<div style='height: 0px; width: 0px; overflow: hidden;'>
-												<input id=uploadFile name="documents" multiple type="file"
-													value="upload" onchange="docSub(this)" />
-											</div>
-										</div>
-									</div>
 									
 									<hr />
 									<ul class="list-inline pull-right">

@@ -380,9 +380,9 @@
 								<div id="resourcesNeeded" class="form-group row col-md-5">
 									<div class="col-md-12">
 										<select required id="modalResourceCategory"
-											name="modalResourceCategory" style="width: 20rem;"
-											class="col-md-4 js-example-basic-single-resourcecategory">
-											<option></option>
+											name="modalResourceCategory" style="width: 100%;"
+											class="col-md-4 form-control">
+											<option value="" disabled selected>Select an expertise/category:</option>
 											<c:forEach items="${resource_category_list}" var="item">
 												<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 											</c:forEach>

@@ -163,14 +163,14 @@
 									<div class="col-md-12">
 										<select id="modalResourceCategory"
 											name="modalResourceCategory"
-											class="col-md-4 js-example-basic-single-resourcecategoryshown" style = "width : 100%">
-											<option></option>
+											class="col-md-4 form-control" style = "width : 100%" required>
+											<option value="" disabled selected>Select an expertise/category:</option>
 											<c:forEach items="${resource_category_list}" var="item">
 												<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 											</c:forEach>
 										</select> <input id="modalResourceName" name="modalResourceName"
 											class="form-control col-md-4 create-project-add"
-											placeholder="What resources can you provide?" type="text" />
+											placeholder="What resources can you provide?" type="text"/>
 										<textarea id="modalResourceDescription"
 											name="modalResourceDescription"
 											class="form-control col-md-4 create-project-add"
@@ -198,6 +198,12 @@
 					var resourceCategory = $('#modalResourceCategory').val();
 					var resourceName = $('#modalResourceName').val();
 					var resourceDescription = $('#modalResourceDescription').val();
+					
+					if(resourceCategory === "" || resourceName === "" || resourceDescription === "") {
+						alert("Please fill up all the fields.");
+						return false;
+					}
+					
 					var newId = $('#userResourceTable tr').length + 1;
 					$('#userResourceTable').append(
 							'<tr id="row'+newId+'"> <td><p><input class="editable-field form-control" id="reso'+newId+'" type="text"value="'+resourceName+'" disabled="true" /> <input type="hidden" id="old_reso'+newId+'" value="'+resourceName+'"/></p></td> <td><p> <input class="editable-field form-control" style="border: 1px solid transparent;background-color: transparent;" id="desc'+newId+'" type="textarea"value="'+resourceDescription+'" disabled="true" /> <input type="hidden" id="old_desc'+newId+'" value="'+resourceDescription+'"/></p></td> <td><p> <input type="hidden" id="old_rc'+newId+'" value="'+resourceCategory+'"/> <select id="resourceCategory'+newId+'"name="resourceCategory"class="col-md-4 js-example-basic-single-resourcecategory resourceCategory"> <option></option> <c:forEach items="${resource_category_list}" var="item"> <c:choose><c:when test="${item.getSkillset().equals('+resourceCategory+')}"> <option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option> </c:when> <c:otherwise> <option value="${item.getSkillset()}">${item.getSkillset()}</option> </c:otherwise> </c:choose> </c:forEach> </select> <span class="label label-success"id="currentResourceCategory'+newId+'">'+resourceCategory+'</span> </p></td> <td class="col-md-2"><p> <button id="edit'+newId+'" type="btn" name="edit"class="btn btn-primary edit" onClick="edit(this.id)"href="#"> <i class="fa fa-pencil"></i> Edit </button> <button id="save'+newId+'" type="button" name="save"class="btn btn-success save" onClick="save(this.id)"href="#"> <i class="fa fa-save"></i> Save </button> <button id="dele'+newId+'" type="submit" name="delete"class="btn btn-danger delete" onClick="del(this.id)"href="#"> <i class="fa fa-trash"></i> Delete </button> <button id="canc'+newId+'" type="btn" name="cancel"class="btn btn-default cancel" onClick="cancel(this.id)"href="#"> <i class="fa fa-close"></i> Cancel </button> </p></td></tr>');
@@ -208,9 +214,8 @@
 						modalResourceName : resourceName,
 						modalResourceDescription : resourceDescription
 					});
-
+					
 					$('#myModal').modal('hide');
-
 					$('.resourceCategory').hide();
 				});
 
@@ -319,11 +324,5 @@
 	});
 </script>
 
-	<script type="text/javascript">
-		$(".js-example-basic-single-resourcecategoryshown").select2({
-			placeholder : "Select an expertise/category: ",
-			allowClear : true
-		});
-	</script>
 
 </html>

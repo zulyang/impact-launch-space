@@ -46,8 +46,8 @@ public class ProjectController {
 	@Autowired
 	UserService userService;
 
-	@Autowired 
-  	RequestService requestService; 
+	@Autowired
+	RequestService requestService;
 
 	// Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
@@ -80,12 +80,12 @@ public class ProjectController {
 		return "project/" + "create_project";
 	}
 
-	// Show Create Project Page
+	// Insert Project Record to DB
 	@RequestMapping(value = "/create-project", method = RequestMethod.POST)
 	public String processCreateProject(@RequestParam String projectTitle, @RequestParam String projectPurpose,
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam String projectOwner,
 			@RequestParam String projectLocation, @RequestParam String projectDescription,
-			@RequestParam String projectPrivacy, @RequestParam int projectDuration, 
+			@RequestParam String projectPrivacy, @RequestParam int projectDuration,
 			@RequestParam("projectImage") MultipartFile projectImage,
 			@RequestParam("documents") MultipartFile[] documents,
 			@RequestParam(required = false) ArrayList<String> selected_banlist,
@@ -106,6 +106,8 @@ public class ProjectController {
 		boolean hiddenToAll = false;
 		String project_status = "new";
 
+		System.out.println("1. img is " + projectImage);
+		
 		if (projectPrivacy.equals("public")) {
 			isPublic = true;
 		} else if (projectPrivacy.equals("private")) {
@@ -113,33 +115,34 @@ public class ProjectController {
 		} else if (projectPrivacy.equals("hidden")) {
 			hiddenToAll = true;
 		}
-
+		System.out.println("2. img is " + projectImage);
 		String username = (String) request.getSession().getAttribute("username");
 
 		if (projectOwner.equals("individual")) {
 			project_proposer = username;
 		} else if (projectOwner.equals("organization")) {
 			project_proposer = username;
-			 if(profileService.getIndividualAccountDetails(username) != null){ 
-		        if (profileService.getIndividualAccountDetails(username).getOrganization() != null || profileService.getIndividualAccountDetails(username).getOrganization().length() > 0) { 
-		          organization = profileService.getIndividualAccountDetails(username).getOrganization();                                           
-		        } 
-		      }else{ 
-		        organization = profileService.getOrganizationAccountDetails(username).getCompanyName(); 
-		      } 
+			if (profileService.getIndividualAccountDetails(username) != null) {
+				if (profileService.getIndividualAccountDetails(username).getOrganization() != null
+						|| profileService.getIndividualAccountDetails(username).getOrganization().length() > 0) {
+					organization = profileService.getIndividualAccountDetails(username).getOrganization();
+				}
+			} else {
+				organization = profileService.getOrganizationAccountDetails(username).getCompanyName();
+			}
 		}
-
+		System.out.println("3. img is " + projectImage);
 		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
 		ArrayList<ProjectRequestedResource> selected_requestedResources = new ArrayList<ProjectRequestedResource>();
-		ArrayList<String> resourceCategoryStrings = new ArrayList<String>(); 
+		ArrayList<String> resourceCategoryStrings = new ArrayList<String>();
 
 		for (String resourceCategory_string : resourceCategory) {
 			ProjectResourceCategory projectResourceCategoryObj = new ProjectResourceCategory(project_name,
 					resourceCategory_string, project_proposer);
-			if (!resourceCategoryStrings.contains(resourceCategory_string)) { 
-		        selected_resourceCategories.add(projectResourceCategoryObj); 
-		        resourceCategoryStrings.add(resourceCategory_string); 
-		    } 
+			if (!resourceCategoryStrings.contains(resourceCategory_string)) {
+				selected_resourceCategories.add(projectResourceCategoryObj);
+				resourceCategoryStrings.add(resourceCategory_string);
+			}
 		}
 
 		for (int i = 0; i < resourceName.size(); i++) {
@@ -147,18 +150,24 @@ public class ProjectController {
 					resourceCategory.get(i), resourceName.get(i), resourceDescription.get(i), project_proposer);
 			selected_requestedResources.add(projectRequestedResourceObj);
 		}
-		
-		File projectImageFile = new File(projectImage.getOriginalFilename());
-		try {
-			projectImage.transferTo(projectImageFile);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		File projectImageFile = null;
+		System.out.println("4. img is " + projectImage);
+		if (projectImage.getOriginalFilename().isEmpty()) {
+			projectImageFile = new File("src/main/webapp/resources/img/earth.png");
+		} else {
+			projectImageFile = new File(projectImage.getOriginalFilename());
+			try {
+				projectImage.transferTo(projectImageFile);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		ArrayList<File> documentList = new ArrayList<>();
-		if (documents != null && documents.length > 0) {
+		if (documents != null) {
 			for (MultipartFile document : documents) {
 				File documentFile = new File(document.getOriginalFilename());
 				try {
@@ -173,10 +182,11 @@ public class ProjectController {
 		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
 				new Timestamp(Calendar.getInstance().getTime().getTime()), 0, projectImageFile, documentList);
-		
+
 		projectImageFile.deleteOnExit();
-		
-		projectService.setupProject(project, selected_banlist, selected_projectareas, selected_resourceCategories, selected_requestedResources);
+
+		projectService.setupProject(project, selected_banlist, selected_projectareas, selected_resourceCategories,
+				selected_requestedResources);
 
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
@@ -192,8 +202,8 @@ public class ProjectController {
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
-		
-		String username = (String)request.getSession().getAttribute("username");
+
+		String username = (String) request.getSession().getAttribute("username");
 
 		profileService.retrieveJobSectorList();
 		profileService.retrieveSkillsetList();
@@ -208,8 +218,8 @@ public class ProjectController {
 
 		// populates the edit profile page with project areas its project areas
 		// in the DB
-		ArrayList<ProjectTargetArea> project_target_areas_objs = projectService
-				.retrieveTargetProjectAreas(project_name, project_proposer);
+		ArrayList<ProjectTargetArea> project_target_areas_objs = projectService.retrieveTargetProjectAreas(project_name,
+				project_proposer);
 		ArrayList<String> project_target_areas = new ArrayList<String>();
 
 		for (ProjectTargetArea project_target_area : project_target_areas_objs) {
@@ -220,8 +230,8 @@ public class ProjectController {
 
 		// populates the edit profile page with the list of banned users its
 		// banned user in the DB
-		ArrayList<ProjectBanList> project_ban_list_objs = projectService
-			.retrieveProjectBanList(project_name, project_proposer);
+		ArrayList<ProjectBanList> project_ban_list_objs = projectService.retrieveProjectBanList(project_name,
+				project_proposer);
 		ArrayList<String> project_ban_list = new ArrayList<String>();
 
 		for (ProjectBanList project_ban_username : project_ban_list_objs) {
@@ -286,8 +296,8 @@ public class ProjectController {
 	@RequestMapping(value = "/view-project", method = RequestMethod.GET)
 	public String showProjectViewPage(@RequestParam("project-name") String project_name,
 			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
-		String username = (String)request.getSession().getAttribute("username");
-		
+		String username = (String) request.getSession().getAttribute("username");
+
 		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		model.addAttribute("country_list", profileService.retrieveCountryList());
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
@@ -296,7 +306,6 @@ public class ProjectController {
 
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
 		String projectPrivacy = "public";
-		
 
 		if (selected_project.isHiddenToAll()) {
 			projectPrivacy = "hidden";
@@ -305,8 +314,6 @@ public class ProjectController {
 		if (selected_project.isHiddenToOutsiders()) {
 			projectPrivacy = "private";
 		}
-		
-		
 
 		ArrayList<ProjectTargetArea> projectTargetAreasObj = projectService.retrieveTargetProjectAreas(project_name,
 				project_proposer);
@@ -319,14 +326,14 @@ public class ProjectController {
 		ArrayList<ProjectResourceCategory> projectResourceCategoriesObj = projectService
 				.retrieveProjectResourceCategories(project_name, project_proposer);
 		ArrayList<String> projectResourceCategories = new ArrayList<String>();
-		
+
 		HashMap<String, ArrayList<ArrayList<String>>> projectRequestedResources = new HashMap<String, ArrayList<ArrayList<String>>>();
 
 		for (ProjectResourceCategory projectResourceCategoryObj : projectResourceCategoriesObj) {
 			projectResourceCategories.add(projectResourceCategoryObj.getResource_category());
 			ArrayList<ProjectRequestedResource> requestedResourceObjs = projectService.retrieveRequestedResources(
 					project_name, projectResourceCategoryObj.getResource_category(), project_proposer);
-			
+
 			ArrayList<ArrayList<String>> resourcenames = new ArrayList<ArrayList<String>>();
 
 			for (ProjectRequestedResource requestedResource : requestedResourceObjs) {
@@ -338,67 +345,71 @@ public class ProjectController {
 			projectRequestedResources.put(projectResourceCategoryObj.getResource_category(), resourcenames);
 		}
 
-		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService.retrieveNonRejectedProjectRequestsOfUser(project_name, project_proposer, username); 
-    	ArrayList<String> userRequestsForProject = new ArrayList<String>(); 
-     
-   	 	for(ProjectUserRequest userRequestsForProjectObj : userRequestsForProjectObjs){ 
-      		userRequestsForProject.add(userRequestsForProjectObj.getRequested_resource_name()); 
-    	} 
-   	 
-   	 
-    	model.addAttribute("userRequestsForProject", userRequestsForProject);
-    	model.addAttribute("userRequestsForProjectObjs", userRequestsForProjectObjs); 
-    	
+		ArrayList<ProjectUserRequest> userRequestsForProjectObjs = requestService
+				.retrieveNonRejectedProjectRequestsOfUser(project_name, project_proposer, username);
+		ArrayList<String> userRequestsForProject = new ArrayList<String>();
+
+		for (ProjectUserRequest userRequestsForProjectObj : userRequestsForProjectObjs) {
+			userRequestsForProject.add(userRequestsForProjectObj.getRequested_resource_name());
+		}
+
+		model.addAttribute("userRequestsForProject", userRequestsForProject);
+		model.addAttribute("userRequestsForProjectObjs", userRequestsForProjectObjs);
+
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);
 		model.addAttribute("project_resource_categories", projectResourceCategories);
 		model.addAttribute("project_requested_resources", projectRequestedResources);
-		
-		if(selected_project.getOrganization() != null){
-			OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
+
+		if (selected_project.getOrganization() != null) {
+			OrganizationAccount organizationAccount = profileService
+					.findByCompanyName(selected_project.getOrganization());
 			model.addAttribute("project_organization", organizationAccount.getUsername());
 		}
 
 		if (projectPrivacy.equals("hidden")) {
 			if (username.equals(project_proposer)) {
-				return "project/" + "view_project_public"; 
-			} else if(selected_project.getOrganization() != null) {
+				return "project/" + "view_project_public";
+			} else if (selected_project.getOrganization() != null) {
 				System.out.println("username now: " + username);
-				OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
+				OrganizationAccount organizationAccount = profileService
+						.findByCompanyName(selected_project.getOrganization());
 
-				if(username.equals(organizationAccount.getUsername())){
-					return "project/" + "view_project_public"; 
-				}else{
-					return "project/" + "view_project_private"; 
+				if (username.equals(organizationAccount.getUsername())) {
+					return "project/" + "view_project_public";
+				} else {
+					return "project/" + "view_project_private";
 				}
-						
+
 			} else {
-				return "project/" + "view_project_private"; 
+				return "project/" + "view_project_private";
 			}
 		}
 
-		// for now if u are not the project creator or organization u will see the private page
+		// for now if u are not the project creator or organization u will see
+		// the private page
 		else if (projectPrivacy.equals("private")) {
 			if (username.equals(project_proposer)) {
-				return "project/" + "view_project_public"; 
-			} else if(selected_project.getOrganization() != null) {
-				OrganizationAccount organizationAccount = profileService.findByCompanyName(selected_project.getOrganization());
-				if(username.equals(organizationAccount.getUsername())){
-					return "project/" + "view_project_public"; 
-				}else{
-					return "project/" + "view_project_private"; 
+				return "project/" + "view_project_public";
+			} else if (selected_project.getOrganization() != null) {
+				OrganizationAccount organizationAccount = profileService
+						.findByCompanyName(selected_project.getOrganization());
+				if (username.equals(organizationAccount.getUsername())) {
+					return "project/" + "view_project_public";
+				} else {
+					return "project/" + "view_project_private";
 				}
-						
-			}else{
-				return "project/" + "view_project_private"; 
+
+			} else {
+				return "project/" + "view_project_private";
 			}
 		}
 
 		else if (projectPrivacy.equals("public")) {
-			return "project/" + "view_project_public"; 
+			return "project/" + "view_project_public";
 		}
-		return "project/" + "view_project_public"; 
+		return "project/" + "view_project_public";
 	}
 
 	@RequestMapping(value = "/view-privateproject", method = RequestMethod.GET)
@@ -410,7 +421,7 @@ public class ProjectController {
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
 
-		return "project/" + "view_project_private"; 
+		return "project/" + "view_project_private";
 	}
 
 	@RequestMapping(value = "/edward-processajax", method = RequestMethod.GET)
@@ -427,65 +438,77 @@ public class ProjectController {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(name);
 	}
-	
+
 	@RequestMapping(value = "/saveProjectResource", method = RequestMethod.POST)
-	public void saveUserResource(@RequestParam String oldProjectTitle, @RequestParam String resourceName, @RequestParam String resourceCategory, 
-			@RequestParam String resourceDescription, @RequestParam String oldResourceCategory, 
-			@RequestParam String oldResourceName, @RequestParam String oldResourceDescription, HttpServletRequest request){
-		String project_proposer = (String)request.getSession().getAttribute("username");
-		
-		//this handles logic if the update removes an existing category the user has or if it creates a new one
+	public void saveUserResource(@RequestParam String oldProjectTitle, @RequestParam String resourceName,
+			@RequestParam String resourceCategory, @RequestParam String resourceDescription,
+			@RequestParam String oldResourceCategory, @RequestParam String oldResourceName,
+			@RequestParam String oldResourceDescription, HttpServletRequest request) {
+		String project_proposer = (String) request.getSession().getAttribute("username");
+
+		// this handles logic if the update removes an existing category the
+		// user has or if it creates a new one
 		boolean isSame = resourceCategory.equals(oldResourceCategory);
-		int resourceCategorySizeFrom = projectService.retrieveRequestedResources(oldProjectTitle, oldResourceCategory, project_proposer).size();
-		int resourceCategorySizeTo = projectService.retrieveRequestedResources(oldProjectTitle, resourceCategory, project_proposer).size();
-		
-		if(!isSame){
-			//if the update removes from the category with only 1 resource in it
-			if(resourceCategorySizeFrom == 1){
+		int resourceCategorySizeFrom = projectService
+				.retrieveRequestedResources(oldProjectTitle, oldResourceCategory, project_proposer).size();
+		int resourceCategorySizeTo = projectService
+				.retrieveRequestedResources(oldProjectTitle, resourceCategory, project_proposer).size();
+
+		if (!isSame) {
+			// if the update removes from the category with only 1 resource in
+			// it
+			if (resourceCategorySizeFrom == 1) {
 				projectService.closeResourceCategory(oldProjectTitle, project_proposer, oldResourceCategory);
 			}
-			
-			//if the update involves a new category
-			if(resourceCategorySizeTo == 0){
+
+			// if the update involves a new category
+			if (resourceCategorySizeTo == 0) {
 				projectService.openNewResourceCategory(oldProjectTitle, project_proposer, resourceCategory);
 			}
 		}
-		projectService.updateProjectRequestedResource(resourceName, resourceCategory, resourceDescription, oldProjectTitle, oldResourceName, oldResourceCategory, project_proposer);
-		
+		projectService.updateProjectRequestedResource(resourceName, resourceCategory, resourceDescription,
+				oldProjectTitle, oldResourceName, oldResourceCategory, project_proposer);
+
 	}
 
 	@RequestMapping(value = "/deleteProjectResource", method = RequestMethod.POST)
-	public void processAjaxDelete(@RequestParam String resourceName, @RequestParam String resourceCategory, 
-			@RequestParam String resourceDescription, @RequestParam String oldProjectTitle, HttpServletRequest request) throws IOException {
-		
-		String project_proposer = (String)request.getSession().getAttribute("username");
-		
-		//this validation checks if the resource category would be empty upon deletion, if yes... close the reso category as well
-		int resourceCategorySize = projectService.retrieveRequestedResources(oldProjectTitle, resourceCategory, project_proposer).size();
-		
-		if(resourceCategorySize == 1){
+	public void processAjaxDelete(@RequestParam String resourceName, @RequestParam String resourceCategory,
+			@RequestParam String resourceDescription, @RequestParam String oldProjectTitle, HttpServletRequest request)
+			throws IOException {
+
+		String project_proposer = (String) request.getSession().getAttribute("username");
+
+		// this validation checks if the resource category would be empty upon
+		// deletion, if yes... close the reso category as well
+		int resourceCategorySize = projectService
+				.retrieveRequestedResources(oldProjectTitle, resourceCategory, project_proposer).size();
+
+		if (resourceCategorySize == 1) {
 			projectService.closeResourceCategory(oldProjectTitle, project_proposer, resourceCategory);
 		}
 		projectService.remove(oldProjectTitle, project_proposer, resourceCategory, resourceName);
 
 	}
-	
+
 	@RequestMapping(value = "/addProjectResource", method = RequestMethod.POST)
-	public void addProjectResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory, 
-			@RequestParam String modalResourceDescription, @RequestParam String oldProjectTitle, HttpServletRequest request){
-		String project_proposer = (String)request.getSession().getAttribute("username");
-		
-		int resourceCategorySize = projectService.retrieveRequestedResources(oldProjectTitle, modalResourceCategory, project_proposer).size();
-		
-		if(resourceCategorySize == 0){
+	public void addProjectResource(@RequestParam String modalResourceName, @RequestParam String modalResourceCategory,
+			@RequestParam String modalResourceDescription, @RequestParam String oldProjectTitle,
+			HttpServletRequest request) {
+		String project_proposer = (String) request.getSession().getAttribute("username");
+
+		int resourceCategorySize = projectService
+				.retrieveRequestedResources(oldProjectTitle, modalResourceCategory, project_proposer).size();
+
+		if (resourceCategorySize == 0) {
 			projectService.openNewResourceCategory(oldProjectTitle, project_proposer, modalResourceCategory);
 		}
-		
-		projectService.addProjectRequestedResource(oldProjectTitle, project_proposer, modalResourceCategory, modalResourceName, modalResourceDescription);
+
+		projectService.addProjectRequestedResource(oldProjectTitle, project_proposer, modalResourceCategory,
+				modalResourceName, modalResourceDescription);
 	}
-	
+
 	@RequestMapping(value = "/projectImageDisplay", method = RequestMethod.GET)
-	public void showImage(@RequestParam("project-name") String project_name, 
+	public void showImage(@RequestParam("project-name") String project_name,
 			@RequestParam("project-proposer") String project_proposer, HttpServletResponse response,
 			HttpServletRequest request) throws ServletException, IOException {
 		Project project = projectService.retrieveProject(project_name, project_proposer);
@@ -498,7 +521,7 @@ public class ProjectController {
 		response.getOutputStream().write(bytesArray);
 		response.getOutputStream().close();
 	}
-	
+
 	@RequestMapping(value = "/downloadProjectFile", method = RequestMethod.GET)
 	public void showFiles(@RequestParam File file, HttpServletResponse response, HttpServletRequest request)
 			throws ServletException {
@@ -517,10 +540,10 @@ public class ProjectController {
 
 	@RequestMapping(value = "/deleteProjectFile", method = RequestMethod.GET)
 	public String deleteFile(@RequestParam("project-name") String project_name,
-			@RequestParam("project-proposer") String project_proposer, @RequestParam File file, HttpServletResponse response,
-			HttpServletRequest request) throws ServletException {
+			@RequestParam("project-proposer") String project_proposer, @RequestParam File file,
+			HttpServletResponse response, HttpServletRequest request) throws ServletException {
 		projectService.deleteDocument(project_name, project_proposer, file);
 		return "editIndiProfileForm";
 	}
-	
+
 }

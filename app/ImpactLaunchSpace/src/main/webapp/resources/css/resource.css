@@ -25,12 +25,18 @@
 	display: none;
 }
 
-/* .editable-field{
-	background: transparent;
-} */
-
 .editable-field:disabled,
 .editable-field[disabled]{
   border: 1px solid transparent;
   background-color: transparent;
+}
+
+select:required:invalid {
+  color: #999999;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
 }
