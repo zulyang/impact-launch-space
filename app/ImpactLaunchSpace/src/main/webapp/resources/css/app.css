@@ -28,6 +28,10 @@ html, body {
 	padding-bottom: 40px;
 }
 
+.password_match_message{
+	width: 150px;
+}
+
 .profile {
 	display: flex;
 	align-items: center;
@@ -145,7 +149,6 @@ html, body {
 .register_container{
 	justify-content: center;
     display: flex;
-    align-items: center;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10rem;
@@ -297,10 +300,6 @@ html, body {
 	font-style: italic;
 }
 
-.field {
-	width: 30rem;
-}
-
 .signInNowBox {
 	position: absolute;
 	width: 20rem;
@@ -398,12 +397,13 @@ html, body {
 }
 
 .org_profile_display_container {
-	/* margin-top: 15rem; */
+	margin-top: -10rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 }
 
 .edit_org_profile_display_container {
+	margin-top: -15rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 	height: 65rem;
@@ -499,13 +499,13 @@ html, body {
 }
 
 .indi_public_profile_display_container {
-	margin-top: 30rem; 
+	margin-top: 50rem; 
 	margin-bottom: 5rem;
 	width: 85rem;
 }
 
 .indi_private_profile_display_container {
-	margin-top: -30rem;
+	margin-top: 50rem;
 	margin-bottom: 5rem;
 	width: 85rem;
 }
