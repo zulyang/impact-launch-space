@@ -117,7 +117,7 @@ public class ResetTokenService {
 			+ "<table class='module' role='module' data-type='button' border='0' cellpadding='0' cellspacing='0' width='100%' style='table-layout: fixed;' data-attributes='%7B%22dropped%22%3Atrue%2C%22borderradius%22%3A0%2C%22buttonpadding%22%3A%2214%2C56%2C13%2C56%22%2C%22text%22%3A%22Reset%2520Password%22%2C%22alignment%22%3A%22center%22%2C%22fontsize%22%3A15%2C%22url%22%3A%22localhost%253A8080/verifyaccount%22%2C%22height%22%3A%22%22%2C%22width%22%3A%22%22%2C%22containerbackground%22%3A%22%23ffffff%22%2C%22padding%22%3A%220%2C0%2C51%2C0%22%2C%22buttoncolor%22%3A%22%232f8646%22%2C%22textcolor%22%3A%22%23ffffff%22%2C%22bordercolor%22%3A%22%232f8646%22%7D'>"
 			+ "<tr><td style='padding: 0px 0px 51px 0px;' align='center' bgcolor='#ffffff'><table border='0' cellpadding='0' cellspacing='0' class='wrapper-mobile'>"
 			+ "<tr><td align='center' style='-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; font-size: 15px;' bgcolor='#2f8646'>"
-			+ "<a href='http://localhost:8080/forgot-password-token?username="
+			+ "<a href='http://34.212.129.103/forgot-password-token?username="
 			+ username 
 			+ "&email="
 			+ email
@@ -198,7 +198,7 @@ public class ResetTokenService {
 				+ "<table class='module' role='module' data-type='button' border='0' cellpadding='0' cellspacing='0' width='100%' style='table-layout: fixed;' data-attributes='%7B%22dropped%22%3Atrue%2C%22borderradius%22%3A0%2C%22buttonpadding%22%3A%2214%2C56%2C13%2C56%22%2C%22text%22%3A%22Unlock%2520Account%22%2C%22alignment%22%3A%22center%22%2C%22fontsize%22%3A15%2C%22url%22%3A%22localhost%253A8080/unlockaccount%22%2C%22height%22%3A%22%22%2C%22width%22%3A%22%22%2C%22containerbackground%22%3A%22%23ffffff%22%2C%22padding%22%3A%220%2C0%2C51%2C0%22%2C%22buttoncolor%22%3A%22%232f8646%22%2C%22textcolor%22%3A%22%23ffffff%22%2C%22bordercolor%22%3A%22%232f8646%22%7D'>"
 				+ "<tr><td style='padding: 0px 0px 51px 0px;' align='center' bgcolor='#ffffff'><table border='0' cellpadding='0' cellspacing='0' class='wrapper-mobile'><tr>"
 				+ "<td align='center' style='-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; font-size: 15px;' bgcolor='#2f8646'>"
-				+ "<a href='http://localhost:8080/unlock-account-pin?username="
+				+ "<a href='http://34.212.129.103/unlock-account-pin?username="
 				+ username 
 				+ "&email="
 				+ email
