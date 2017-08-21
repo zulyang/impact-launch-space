@@ -26,9 +26,9 @@
 
 
 				<div class="col-lg-12 register_container" id="register_container">
-					<h4 class="create_account">Create a new account</h4>
+					<h4 style="position: relative;">Create a new account</h4>
 					<form method="post" action="registernewuser"
-						class="form-horizontal">
+						class="form-horizontal" style="padding-top: 2rem;">
 						<br>
 						<div class="form-radio center">
 							<div class="radio_indi">
@@ -69,7 +69,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="submit" class="btn btn-success field"
+								<input type="submit" style="width: 100%;" class="btn btn-success field"
 									value="Register" id="register_button">
 							</div>
 						</div>

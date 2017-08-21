@@ -26,15 +26,15 @@
 					<form class="form-horizontal" action="authenticate" method="POST">
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="usernameemail" type="text"
-									class="form-control field" id="inputEmail3"
+								<input name="usernameemail" type="text" style="width:30rem"
+									class="form-control" id="inputEmail3"
 									placeholder="Username or Email">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="password" type="password"
-									class="form-control field" id="inputPassword3"
+								<input name="password" type="password" style="width:30rem"
+									class="form-control" id="inputPassword3"
 									placeholder="Password">
 							</div>
 						</div>
@@ -49,7 +49,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<button type="submit" class="btn btn-success field">Login</button>
+								<button type="submit" class="btn btn-success" style="width:30rem">Login</button>
 							</div>
 						</div>
 						<p style="color:red;" class="loginValidation">${loginValidation}</p>
