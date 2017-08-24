@@ -20,6 +20,8 @@
 	href="<%=request.getContextPath()%>/resources/css/resource.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project.css" />
+	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/notifications.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
@@ -195,27 +197,27 @@
 								</div>
 								<div class="modal-body">
 									<div class="container">
-										<div id="resourcesNeeded" class="form-group row col-md-5">
+										<div id="resourcesNeeded" class="form-group row col-md-6 col-lg-6 col-xs-9">
 											<div class="col-md-12">
-												<p>
-													<b>From:</b>
+												<p class="modalSubheading">
+													From:
 												</p>
 												<input id="modalSender" name="modalSender"
-													class="form-control col-md-4 modalNotificationsField"
+													class="form-control  modalNotificationsField"
 													placeholder="Sender Username here" type="text" readonly />
 												<p>
 													<b>Subject:</b>
 												</p>
 												<input id="modalNotificationSubject"
 													name="modalNotificationSubject"
-													class="form-control col-md-4 modalNotificationsField"
+													class="form-control  modalNotificationsField"
 													placeholder="Message subject here" type="text" readonly />
 												<p>
 													<b>Message:</b>
 												</p>
 												<textarea id="modalNotificationsMessage"
 													name="modalNotificationsMessage"
-													class="form-control col-md-4 modalNotificationsField"
+													class="form-control  modalNotificationsField"
 													placeholder="Grab message from db and paste here" rows="10"
 													readonly></textarea>
 											</div>

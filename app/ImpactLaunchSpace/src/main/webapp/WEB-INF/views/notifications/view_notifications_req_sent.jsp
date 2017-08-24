@@ -20,6 +20,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/notifications.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
@@ -160,7 +162,7 @@
 														<input class="editable-field form-control"
 															id="offercomments<%=id%>" type="hidden"
 															value="${item.getOffer_comments() }" disabled="true" />
-															
+
 														<input class="editable-field form-control"
 															id="resourceofferer<%=id%>" type="hidden"
 															value="${item.getResource_offerer() }" disabled="true" />
@@ -203,74 +205,59 @@
 								</div>
 								<div class="modal-body">
 									<div class="container">
-										<div id="resourcesNeeded" class="form-group row col-md-5">
+										<div id="resourcesNeeded"
+											class="form-group row col-md-6 col-lg-6 col-xs-9">
 											<div class="col-md-12">
 
 												<!-- Project name, resource category, resource name, request description, project proposer -->
+												<div class="modalResourceRequested col-md-12">
+													<p class="modalSubheading">Project Name</p>
+													<div id="modalProjName" class="modalProjName"></div>
 
-												<p>
-													<b>Project Name</b>
-												</p>
-												<input id="modalProjName" name="modalProjName"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly />
-
-												<p>
-												<p>
-													<b>Project Proposer</b>
-												</p>
-												<input id="modalProjectProposer" name="modalProjectProposer"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project Proposer" type="text" readonly />
-
-												<p>
-													<b>Resource Category</b>
-												</p>
-												<input id="modalResourceCategory" name="modalResourceCategory"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Resource Category" type="text" readonly />
-												
-												<p>
-													<b>Requested Resource Name</b>
-												</p>
-												<input id="modalRequestedResourceName"
-													name="modalRequestedResourceName"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Requested Resource Name" type="text" readonly />
-
-												<p>
-													<b>Offered Resource Name</b>
-												</p>
-												<input id="modalOfferedResourceName"
-													name="modalOfferedResourceName"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Offered Resource Name" type="text" readonly />
+													<p class="modalSubheading">Project Proposer</p>
+													<div id="modalProjectProposer" class="modalProjName"></div>
 
 
-												<p>
-													<b>Offered Resource Description</b>
-												</p>
-												<input id="modalOfferedResourceDesc"
-													name="modalOfferedResourceDesc"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Resource Desc" type="text" readonly />
+													<p class="modalSubheading">Requested Resource Name</p>
 
-												<p>
-													<b>Your Note to Project Proposer</b>
-												</p>
-												<input id="modalPersonalNote" name="modalPersonalNote"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Personal Note" type="text" readonly /> 
-													
-													<input
-													id="modalRequestStatus" name="modalRequestStatus"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Request Status" type="hidden" readonly />
-													
-													<input
-													id="modalOfferer" name="modalOfferer"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Resource Offerer" type="hidden" readonly />
+													<div id="modalRequestedResourceName" class="modalProjName"></div>
+													<span class="label label-success"
+														id="modalResourceCategory" name="modalResourceCategory"></span>
+
+												</div>
+
+
+												<div
+													class="modalResourceOffered col-xs-12 col-md-12 col-lg-12">
+													<p class="modalSubheading">Offered Resource Name</p>
+													<input id="modalOfferedResourceName"
+														name="modalOfferedResourceName"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Offered Resource Name" type="text" readonly disabled/>
+
+
+													<p class="modalSubheading">Offered Resource Description</p>
+<!-- 													<input id="modalOfferedResourceDesc"
+														name="modalOfferedResourceDesc"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Resource Desc" type="text" readonly /> -->
+														
+														<textarea id="modalOfferedResourceDesc" name="modalOfferedResourceDesc" class="form-control modalNotificationsField" readonly disabled /></textarea>
+
+													<p class="modalSubheading">Your Note to Project
+														Proposer</p>
+													<!-- <input id="modalPersonalNote" name="modalPersonalNote"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Personal Note" type="text" readonly />  -->
+														<textarea id="modalPersonalNote" name="modalPersonalNote" class="form-control modalNotificationsField" readonly disabled /></textarea>														
+														<input
+														id="modalRequestStatus" name="modalRequestStatus"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Request Status" type="hidden" readonly /> <input
+														id="modalOfferer" name="modalOfferer"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Resource Offerer" type="hidden" readonly />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -278,12 +265,12 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
-									<button id="cancelbtn" type="submit" class="btn btn-danger" name = "actiontype"
-										value = "cancel">
+									<button id="cancelbtn" type="submit" class="btn btn-danger"
+										name="actiontype" value="cancel">
 										<i class="fa fa-times"></i> Cancel Offer
 									</button>
-									<button id="confirmbtn" type="submit" class="btn btn-success" name = "actiontype"
-										value="confirm">
+									<button id="confirmbtn" type="submit" class="btn btn-success"
+										name="actiontype" value="confirm">
 										<i class="fa fa-check"></i> Confirm Offer
 									</button>
 
@@ -311,13 +298,14 @@
 		var status = $('#status' + newId).val();
 		var resourceofferer = $('#resourceofferer' + newId).val();
 
-		$('#modalProjectProposer').val(proposer);
-		$('#modalProjName').val(projname);
-		$('#modalResourceCategory').val(resourcecategory);
-		$('#modalRequestedResourceName').val(requestedresourcename);
+		document.getElementById('modalProjectProposer').innerHTML = proposer;
+		document.getElementById('modalProjName').innerHTML = projname;
+		document.getElementById('modalRequestedResourceName').innerHTML = requestedresourcename;
+		document.getElementById('modalResourceCategory').innerHTML = resourcecategory;
+		
 		$('#modalOfferedResourceName').val(offeredresourcename);
-		$('#modalOfferedResourceDesc').val(offeredresourcedesc);
-		$('#modalPersonalNote').val(offercomments);
+		document.getElementById('modalOfferedResourceDesc').innerHTML = offeredresourcedesc;
+		document.getElementById('modalPersonalNote').innerHTML = offercomments;
 		$('#modalRequestStatus').val(status);
 		$('#modalOfferer').val(resourceofferer);
 

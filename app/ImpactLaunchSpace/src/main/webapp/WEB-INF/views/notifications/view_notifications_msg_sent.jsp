@@ -193,27 +193,27 @@
 								</div>
 								<div class="modal-body">
 									<div class="container">
-										<div id="resourcesNeeded" class="form-group row col-md-5">
+										<div id="resourcesNeeded" class="form-group row col-lg-6 col-md-6 col-xs-9">
 											<div class="col-md-12">
 												<p>
 													<b>To:</b>
 												</p>
 												<input id="modalRecipient" name="modalRecipient"
-													class="form-control col-md-4 modalNotificationsField"
+													class="form-control modalNotificationsField"
 													placeholder="Recipient Username here" type="text" readonly />
 												<p>
 													<b>Subject:</b>
 												</p>
 												<input id="modalNotificationSubject"
 													name="modalNotificationSubject"
-													class="form-control col-md-4 modalNotificationsField"
+													class="form-control modalNotificationsField"
 													placeholder="Message subject here" type="text" readonly />
 												<p>
 													<b>Message:</b>
 												</p>
 												<textarea id="modalNotificationsMessage"
 													name="modalNotificationsMessage"
-													class="form-control col-md-4 modalNotificationsField"
+													class="form-control modalNotificationsField"
 													placeholder="Grab message from db and paste here" rows="10"
 													readonly></textarea>
 											</div>
