@@ -15,7 +15,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/setup_individual_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/individual/setup_individual_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
@@ -109,7 +109,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="organization" class="col-sm-3 font_labels">Organization*</label>
+							<label for="organization" class="col-sm-3 font_labels">Organization</label>
 							<div class="col-lg-9">
 								<select id="organization" style="width: 100%"
 									class="js-example-basic-single-organization profileField"

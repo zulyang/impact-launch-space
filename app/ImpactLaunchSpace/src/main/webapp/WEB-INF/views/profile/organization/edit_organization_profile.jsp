@@ -15,6 +15,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/organisation/edit_organisation_profile.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -61,7 +63,7 @@
 
 							<form class="form-horizontal edit_org_profile_container" onsubmit="return checkFields();" action="editprofile-organization" method="post">
 								<div class="form-group">
-									<label for="editOrgName" class="col-sm-2 control-label">Company
+									<label for="editOrgName" class="col-sm-2">Company
 										Name</label>
 									<div class="col-sm-10">
 										<input type="text" id="editOrgName"
@@ -70,7 +72,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgEmail" class="col-sm-2 control-label">Email</label>
+									<label for="editOrgEmail" class="col-sm-2">Email</label>
 									<div class="col-sm-10">
 										<input class="form-control edit_profileField"
 											id="editOrgEmail" type="text" value="${user.getEmail()}"
@@ -78,7 +80,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgContact" class="col-sm-2 control-label">Contact
+									<label for="editOrgContact" class="col-sm-2">Contact
 										Details</label>
 									<div class="col-sm-10">
 										<input id="editOrgContact"
@@ -88,7 +90,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgBio" class="col-sm-2 control-label">Company
+									<label for="editOrgBio" class="col-sm-2">Company
 										Bio</label>
 									<div class="col-sm-10">
 										<textarea id="editOrgBio" rows="4" name="companyBio"
@@ -99,10 +101,10 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editCountry" class="col-sm-2 control-label">Countries
+									<label for="editCountry" class="col-sm-2">Countries
 										Of Operation</label>
 									<div class="col-sm-10">
-										<select id="editCountry"
+										<select id="editCountry" style="width: 100%"
 											class="js-example-basic-multiple edit_profileField"
 											multiple="multiple" name="selected_countryofoperation"
 											required>
@@ -125,10 +127,10 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editJobSectors" class="col-sm-2 control-label">Job
+									<label for="editJobSectors" class="col-sm-2">Job
 										Sectors</label>
 									<div class="col-sm-10">
-										<select id="editJobSectors"
+										<select id="editJobSectors" style="width: 100%"
 											class="js-example-basic-multiple2 edit_profileField"
 											multiple="multiple" name="selected_jobsectors" required>
 											<c:forEach items="${job_sector_list}" var="item">
@@ -148,7 +150,7 @@
 								</div>
 
 								<div class="form-group">
-									<div class="col-sm-10">
+									<div class="col-lg-12">
 										<input class="btn btn-success edit_org_profile_save"
 											type="submit" value="Update details" />
 									</div>

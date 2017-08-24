@@ -12,7 +12,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/edit_individual_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/individual/edit_individual_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
@@ -61,7 +61,7 @@
 								class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
-									<label for="editIndFirstName" class="col-sm-3 control-label font_labels">First Name*</label>
+									<label for="editIndFirstName" class="col-sm-3 font_labels">First Name*</label>
 									<div class="col-sm-9">
 										<input type="text" id="editIndFirstName" required
 											value="${individual.getFirst_name()}" name="firstName"
@@ -70,7 +70,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editIndLastName" class="col-sm-3 control-label font_labels">Last Name*</label>
+									<label for="editIndLastName" class="col-sm-3 font_labels">Last Name*</label>
 									<div class="col-sm-9">
 										<input type="text" required
 											value="${individual.getLast_name()}" name="lastName"
@@ -79,7 +79,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editJobTitle" class="col-sm-3 control-label font_labels">Job Title*</label>
+									<label for="editJobTitle" class="col-sm-3 font_labels">Job Title*</label>
 									<div class="col-sm-9">
 										<input type="text" value="${individual.getJobTitle()}"
 											name="jobTitle" class="form-control edit_profileField"
@@ -88,7 +88,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editOrg" class="col-sm-3 control-label">Organization</label>
+									<label for="editOrg" class="col-sm-3">Organization</label>
 									<div class="col-sm-9">
 										<select
 											class="js-example-basic-single-organization form-control edit_profileField"
@@ -112,7 +112,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editDob" class="col-sm-3 control-label font_labels">Date Of Birth*</label>
+									<label for="editDob" class="col-sm-3 font_labels">Date Of Birth*</label>
 									<div class="col-sm-9">
 										<input type="date" value="${individual.getDateOfBirth()}"
 											name="dateOfBirth" required
@@ -121,7 +121,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editCountry" class="col-sm-3 control-label font_labels">Country*</label>
+									<label for="editCountry" class="col-sm-3 font_labels">Country*</label>
 									<div class="col-sm-9">
 										<select
 											class="js-example-basic-single-country form-control edit_profileField"
@@ -143,7 +143,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editEmail" class="col-sm-3 control-label font_labels">Email*</label>
+									<label for="editEmail" class="col-sm-3 font_labels">Email*</label>
 									<div class="col-sm-9">
 										<input type="text" value="${user.getEmail()}" name="email"
 											class="form-control edit_profileField" id="editEmail"
@@ -152,7 +152,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editContactDetails" class="col-sm-3 control-label">Phone</label>
+									<label for="editContactDetails" class="col-sm-3">Phone</label>
 									<div class="col-sm-9">
 										<input type="text" value="${individual.getContactDetails()}"
 											name="contactDetails" class="form-control edit_profileField"
@@ -162,7 +162,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editPersonalBio" class="col-sm-3 control-label">Personal
+									<label for="editPersonalBio" class="col-sm-3">Personal
 										Bio</label>
 									<div class="col-sm-9">
 										<input type="text" value="${individual.getPersonalBio()}"
@@ -173,7 +173,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editMinHour" class="col-sm-3 control-label font_labels">Min	Hours*</label>
+									<label for="editMinHour" class="col-sm-3 font_labels">Min	Hours*</label>
 									<div class="col-sm-9">
 										<input type="number" required
 											value="${individual.getMinimumVolunteerHours()}"
@@ -183,7 +183,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editMaxHour" class="col-sm-3 control-label font_labels">Max	Hours*</label>
+									<label for="editMaxHour" class="col-sm-3 font_labels">Max	Hours*</label>
 									<div class="col-sm-9">
 										<input type="number" required
 											value="${individual.getMaximumVolunteerHours()}"
