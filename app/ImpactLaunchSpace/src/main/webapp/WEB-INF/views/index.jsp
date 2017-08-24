@@ -64,28 +64,21 @@
 		</div>
 		<!--#second-->
 		<div id="third">
-			<div class="bg"></div>
-			<div class="story">
+			<div class="explore_story">
 				<div class="float-left">
 					<h2>Explore</h2>
 					<p>Browse social impact projects near you.</p>
-					<button type="button" class="btn-learn click" name="learnMore">Explore Projects</button>
-					<!--  
-						<a href="/search-project" class="btn-learn">Register Now</a>
-					-->
+					<a href="/search-project" class="btn-learn">Explore Projects</a>
 				</div>
 			</div>
 			<!--.story-->
 		</div>
 		<!--#third-->
 		<div id="fourth">
-			<div class="story">
+			<div class="linked_story">
 				<div class="float-right">
-					<h2>Get Started</h2>
-					<button type="button" class="btn-learn click" name="learnMore">Register Now</button>
-					<!--  
-						<a href="/register" class="btn-learn">Register Now</a>
-					-->
+					<h2 style="padding-bottom: 20px;">Get Started</h2>
+					<a href="/register" class="btn-learn">Register Now</a>
 				</div>
 			</div>
 		</div>
