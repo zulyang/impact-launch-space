@@ -15,6 +15,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/setup_individual_profile.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -33,28 +35,37 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<%@include file="../../common/navigation.jspf"%>
-				<div class="col-lg-12 form_container indi_profile_container">
+				
+				<div class="form_container indi_profile_container">
 					<form method="post" onsubmit="return checkFields();"
 						action="setup-individual" enctype="multipart/form-data"
 						class="form-horizontal indi_profile_form">
 						<h3>Personal information</h3>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="username" value="${username}" readonly
+							<label for="username" class="col-sm-3 font_labels">Username*</label>
+							<div class="col-lg-9">
+								<input type="text" id="username" name="username" value="${username}" readonly
 									class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="email" value="${email}" readonly
+							<label for="email" style="text-align: left;" class="col-sm-3">Email*</label>
+							<div class="col-lg-9">
+								<input type="text" id="email" name="email" value="${email}" readonly
 									class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="text" name="firstName" placeholder="First name"
-									required class="form-control profileField"> <input
-									type="text" name="lastName" placeholder="Last name" required
+							<label for="firstName" class="col-sm-3 font_labels">First Name*</label>
+							<div class="col-lg-9">
+								<input type="text" id="firstName" name="firstName" placeholder="First name*"
+									required class="form-control profileField">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastName" class="col-sm-3 font_labels">Last Name*</label>
+							<div class="col-lg-9"> 
+								<input type="text" id="lastName" name="lastName" placeholder="Last name*" required
 									class="form-control profileField">
 							</div>
 						</div>
@@ -69,15 +80,17 @@
 						</div>
 
 						<div class="form-group">
-							<div class="col-lg-12">
-								<input type="date" name="dateOfBirth" required id="dateOfBirth"
-									placeholder="Date of Birth (dd/mm/yyyy)"
+							<label for="lastName" class="col-sm-3 font_labels">Date of Birth*</label>
+							<div class="col-lg-9">
+								<input type="date" name="dateOfBirth" required id="dateOfBirth" onfocus="(this.type='date')"
+									placeholder="Date of Birth (dd/mm/yyyy)*"
 									class="form-control profileField">
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select class="js-example-basic-single-country" name="country"
+							<label for="country" class="col-sm-3 font_labels">Base Country*</label>
+							<div class="col-lg-9">
+								<select id="country" class="js-example-basic-single-country" name="country" style="width: 100%"
 									required>
 									<option></option>
 									<c:forEach items="${country_list}" var="item">
@@ -88,15 +101,17 @@
 						</div>
 						<h3>Work</h3>
 						<div class="form-group">
-							<div class="col-lg-12">
+							<label for="country" style="text-align: left;" class="col-sm-3 control-label font_labels">Job Title*</label>
+							<div class="col-lg-9">
 								<input name="jobTitle" id="jobTitle" type="text" required
 									class="form-control profileField"
 									placeholder="Current job title">
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select id="organization"
+							<label for="organization" class="col-sm-3 font_labels">Organization*</label>
+							<div class="col-lg-9">
+								<select id="organization" style="width: 100%"
 									class="js-example-basic-single-organization profileField"
 									name="organization">
 									<option></option>
@@ -110,51 +125,79 @@
 						</div>
 
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select required
+							<label for="jsIndi1Value" class="col-sm-3 font_labels">Primary Job Sector*</label>
+							<div class="col-lg-9">
+								<select required style="width: 100%"
 									class="js-example-basic-single-jobsector-required profileField"
 									name="jobSector1" id="jsIndi1Value">
 									<option></option>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>
-								</select> <input required name="js1Years" type="number" id="js1experience"
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="js1experience" class="col-sm-3 font_labels">Years of Experience*</label>
+							<div class="col-lg-9">
+								<input required name="js1Years" type="number" id="js1experience"
 									class="form-control profileField"
 									placeholder="Years of experience">
 							</div>
 						</div>
+						
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select
+							<label for="jsIndi2Value" class="col-sm-3 font_labels">Additional Job Sector</label>
+							<div class="col-lg-9">
+								<select style="width: 100%"
 									class="js-example-basic-single-jobsector-optional profileField"
 									name="jobSector2" id="jsIndi2Value">
 									<option></option>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>
-								</select> <input name="js2Years" type="number" id="js2experience"
+								</select> 
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="js2experience" class="col-sm-3 font_labels">Years of Experience</label>
+							<div class="col-lg-9">
+								<input name="js2Years" type="number" id="js2experience"
 									class="form-control profileField"
 									placeholder="Years of experience">
 							</div>
 						</div>
+						
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select
+							<label for="jsIndi3Value" class="col-sm-3 font_labels">Additional Job Sector</label>
+							<div class="col-lg-9">
+								<select style="width: 100%"
 									class="js-example-basic-single-jobsector-optional profileField"
 									name="jobSector3" id="jsIndi3Value">
 									<option></option>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
 									</c:forEach>
-								</select> <input name="js3Years" type="number" id="js3experience"
+								</select> 
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="js3experience" class="col-sm-3 font_labels">Years of Experience</label>
+							<div class="col-lg-9">
+								<input name="js3Years" type="number" id="js3experience"
 									class="form-control profileField"
 									placeholder="Years of experience">
 							</div>
 						</div>
+						
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select class="js-example-basic-multiple-skills profileField"
-									multiple="multiple" name="selected_skillsets" required>
+							<label for="skills" class="col-sm-3 font_labels">Your Skills*</label>
+							<div class="col-lg-9">
+								<select class="js-example-basic-multiple-skills profileField" style="width: 100%"
+									multiple="multiple" name="selected_skillsets" id="skills" required>
 									<c:forEach items="${skillset_list}" var="item">
 										<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 									</c:forEach>
@@ -162,10 +205,11 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select
+							<label for="job_sectors" class="col-sm-3 font_labels">Job Sectors*</label>
+							<div class="col-lg-9">
+								<select style="width: 100%"
 									class="js-example-basic-multiple-preferredjobsector profileField"
-									multiple="multiple" name="selected_preferredjobsectors"
+									multiple="multiple" id="job_sectors" name="selected_preferredjobsectors"
 									required>
 									<c:forEach items="${job_sector_list}" var="item">
 										<option value="${item.getJob_sector()}">${item.getJob_sector()}</option>
@@ -174,10 +218,11 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select
+							<label for="project_areas" class="col-sm-3 font_labels">Project Areas*</label>
+							<div class="col-lg-9">
+								<select style="width: 100%"
 									class="js-example-basic-multiple-projectareas profileField"
-									multiple="multiple" name="selected_projectareas" required>
+									id="project_areas" multiple="multiple" name="selected_projectareas" required>
 									<c:forEach items="${project_area_list}" var="item">
 										<option value="${item.getProject_area()}">${item.getProject_area()}</option>
 									</c:forEach>
@@ -188,16 +233,17 @@
 							<div class="col-lg-12">
 								<input type="number" name="minimumHours" min="1" max="100"
 									id="minHours" class="form-control profileField"
-									placeholder="Minimum Hours per week" required> <input
+									placeholder="Minimum Hours to commit per week*" required> <input
 									type="number" name="maximumHours" id="maxHours" min="1"
 									max="100" class="form-control profileField"
-									placeholder="Maximum Hours per week" required>
+									placeholder="Maximum Hours to commit per week*" required>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-12">
-								<select
-									class="js-example-basic-multiple-preferredcountries profileField"
+							<label for="preferred_countries" class="col-sm-3 font_labels">Preferred Countries*</label>
+							<div class="col-lg-9">
+								<select style="width: 100%"
+									id="preferred_countries" class="js-example-basic-multiple-preferredcountries profileField"
 									multiple="multiple" name="selected_preferredcountries" required>
 									<c:forEach items="${country_list}" var="item">
 										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
@@ -218,7 +264,7 @@
 									class="form-control profileField" placeholder="Mobile Number">
 							</div>
 						</div>
-						<br>
+						<p style="color: red">* fields are required.</p>
 						<h3 style="display: inline-block; margin-right: 5px;">Privacy
 						</h3>
 						<i class="fa fa-info-circle info_tooltip" rel="tooltip"
@@ -243,8 +289,6 @@
 								</li>
 
 							</ul>
-
-
 						</div>
 						<br>
 						<div class="form-group">
@@ -260,7 +304,7 @@
 							<div class="col-lg-12">
 								<input type="submit"
 									class="btn btn-success profile_save"
-									value="Set Account Details">
+									value="Save Account Details">
 							</div>
 						</div>
 					</form>

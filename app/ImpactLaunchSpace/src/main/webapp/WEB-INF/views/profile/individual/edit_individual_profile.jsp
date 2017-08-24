@@ -12,6 +12,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/edit_individual_profile.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -59,8 +61,7 @@
 								class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
-									<label for="editIndFirstName" class="col-sm-3 control-label">First
-										Name</label>
+									<label for="editIndFirstName" class="col-sm-3 control-label font_labels">First Name*</label>
 									<div class="col-sm-9">
 										<input type="text" id="editIndFirstName" required
 											value="${individual.getFirst_name()}" name="firstName"
@@ -69,8 +70,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editIndLastName" class="col-sm-3 control-label">Last
-										Name</label>
+									<label for="editIndLastName" class="col-sm-3 control-label font_labels">Last Name*</label>
 									<div class="col-sm-9">
 										<input type="text" required
 											value="${individual.getLast_name()}" name="lastName"
@@ -79,8 +79,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editJobTitle" class="col-sm-3 control-label">Job
-										Title</label>
+									<label for="editJobTitle" class="col-sm-3 control-label font_labels">Job Title*</label>
 									<div class="col-sm-9">
 										<input type="text" value="${individual.getJobTitle()}"
 											name="jobTitle" class="form-control edit_profileField"
@@ -113,8 +112,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editDob" class="col-sm-3 control-label">Date
-										Of Birth</label>
+									<label for="editDob" class="col-sm-3 control-label font_labels">Date Of Birth*</label>
 									<div class="col-sm-9">
 										<input type="date" value="${individual.getDateOfBirth()}"
 											name="dateOfBirth" required
@@ -123,7 +121,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editCountry" class="col-sm-3 control-label">Country</label>
+									<label for="editCountry" class="col-sm-3 control-label font_labels">Country*</label>
 									<div class="col-sm-9">
 										<select
 											class="js-example-basic-single-country form-control edit_profileField"
@@ -145,7 +143,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editEmail" class="col-sm-3 control-label">Email</label>
+									<label for="editEmail" class="col-sm-3 control-label font_labels">Email*</label>
 									<div class="col-sm-9">
 										<input type="text" value="${user.getEmail()}" name="email"
 											class="form-control edit_profileField" id="editEmail"
@@ -175,8 +173,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editMinHour" class="col-sm-3 control-label">Min
-										Hours</label>
+									<label for="editMinHour" class="col-sm-3 control-label font_labels">Min	Hours*</label>
 									<div class="col-sm-9">
 										<input type="number" required
 											value="${individual.getMinimumVolunteerHours()}"
@@ -186,8 +183,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editMaxHour" class="col-sm-3 control-label">Max
-										Hours</label>
+									<label for="editMaxHour" class="col-sm-3 control-label font_labels">Max	Hours*</label>
 									<div class="col-sm-9">
 										<input type="number" required
 											value="${individual.getMaximumVolunteerHours()}"
@@ -199,7 +195,7 @@
 					</div>
 
 					<div class="panel panel-default">
-						<div class="panel-heading">Skills</div>
+						<div class="panel-heading font_labels">Skills</div>
 						<div class="panel-body">
 							My Skills: <br> <select
 								class="js-example-basic-multiple-skills" multiple="multiple"
@@ -223,7 +219,7 @@
 					<br> <br>
 
 					<div class="panel panel-default">
-						<div class="panel-heading">Experience</div>
+						<div class="panel-heading font_labels">Experience</div>
 						<div class="panel-body">
 							<br> I have expertise in these Job Sectors: <br> <select required
 								class="js-example-basic-single-jobsectorindividual-required"
@@ -340,7 +336,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Interests</div>
 						<div class="panel-body">
-							I prefer to work in: <select
+							I prefer to work in:* <select
 								class="js-example-basic-multiple-preferredcountries edit_profileField"
 								multiple="multiple" name="selected_preferredcountries"
 								id="preferredCountries" style="width: 100%" required>
@@ -356,7 +352,7 @@
 									</c:choose>
 								</c:forEach>
 
-							</select> <br> Preferred Project Areas: <br> <select
+							</select> <br> Preferred Project Areas:* <br> <select
 								class="js-example-basic-multiple-preferredprojectareas edit_profileField"
 								multiple="multiple" name="selected_preferredprojectareas"
 								style="width: 100%" id="preferredAreas" required>
@@ -373,7 +369,7 @@
 								</c:forEach>
 
 
-							</select> <br> Preferred Job Sectors: <br> <select
+							</select> <br> Preferred Job Sectors:* <br> <select
 								class="js-example-basic-multiple-preferredjobsectors edit_profileField"
 								multiple="multiple" name="selected_preferredjobsectors"
 								id="preferredJobSectors" style="width: 100%" required>
@@ -424,7 +420,7 @@
 							</table>
 						</div>
 					</div>
-
+					<p style="color: red">* fields are required.</p>
 
 					<br> <br>
 					<div class="form-group">
@@ -832,7 +828,7 @@
 	</script>
 	<script type="text/javascript">
 		$(".js-example-basic-multiple-skills").select2({
-			placeholder : "Select Your Skills"
+			placeholder : "Select Your Skills*"
 		});
 	</script>
 	<script type="text/javascript">

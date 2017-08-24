@@ -165,7 +165,7 @@ html, body {
 	border: 0.125rem solid gray;
 }
 
-.companyBio, .personalBio {
+.companyBio {
 	margin-top: 1rem;
 	width: 40rem;
 	margin-left: auto;
@@ -193,16 +193,6 @@ html, body {
 	display: inline-block;
 	float: right;
 	width: 65%;
-}
-
-.profile_save {
-	justify-content: center;
-	display: flex;
-	align-items: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 1rem;
-	width: 15rem;
 }
 
 .edit_org_profile_save {
@@ -568,23 +558,6 @@ html, body {
 	.navbar-default .navbar-nav>.open>a:hover {
 	color: #1f2d5d !important;
 	background-color: white;
-}
-
-#profile_upload_button {
-	position: relative;
-	padding: 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border: 1px solid #ccc;
-	text-align: center;
-	background-color: #5199ff;
-	cursor: pointer;
-	max-width: 400px;
-	white-space: pre-wrap; /* CSS3 */
-	white-space: -moz-pre-wrap; /* Firefox */
-	white-space: -pre-wrap; /* Opera <7 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word;
 }
 
 #document_upload_button {
