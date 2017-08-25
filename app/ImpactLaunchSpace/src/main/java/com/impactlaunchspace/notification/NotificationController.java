@@ -112,8 +112,21 @@ public class NotificationController {
 		
 		String sender = (String) request.getSession().getAttribute("username");
 		Notification message = new Notification(recipient, sender, modalSubject,
-				modalMessage, "message");
+				modalMessage, "message", "inbox");
+		Notification message2 = new Notification(recipient, sender, modalSubject,
+				modalMessage, "message", "sent");
 		notificationService.sendNotification(message);
+		notificationService.sendNotification(message2);
+
+	}
+	
+
+	@RequestMapping(value = "/notifications/messages/delete-notification", method = RequestMethod.POST)
+	public void deleteNotification(@RequestParam String senderUsername,@RequestParam String subj,
+			@RequestParam String time, @RequestParam String copy_type, HttpServletResponse response,HttpServletRequest request){
+		String recipient = (String) request.getSession().getAttribute("username");
+		
+		notificationService.deleteNotificationFromInbox(recipient, senderUsername, subj, time, copy_type);
 
 	}
 }

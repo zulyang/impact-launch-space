@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.ArrayList"%>
@@ -20,7 +20,7 @@
 	href="<%=request.getContextPath()%>/resources/css/resource.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project.css" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/notifications.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
@@ -145,6 +145,10 @@
 																value="${item.getNotification_message()}"
 																disabled="true" />
 
+															<input class="editable-field form-control"
+																id="senderUsername<%=id%>" type="hidden"
+																value="${item.getSender_username()}" disabled="true" />
+
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
 																		class="btn btn-primary edit" onClick="view(this.id)"
@@ -197,11 +201,10 @@
 								</div>
 								<div class="modal-body">
 									<div class="container">
-										<div id="resourcesNeeded" class="form-group row col-md-6 col-lg-6 col-xs-9">
+										<div id="resourcesNeeded"
+											class="form-group row col-md-6 col-lg-6 col-xs-9">
 											<div class="col-md-12">
-												<p class="modalSubheading">
-													From:
-												</p>
+												<p class="modalSubheading">From:</p>
 												<input id="modalSender" name="modalSender"
 													class="form-control  modalNotificationsField"
 													placeholder="Sender Username here" type="text" readonly />
@@ -238,23 +241,15 @@
 	</div>
 </body>
 <script>
-	$(document)
-			.ready(
-					function() {
-						$('#add')
-								.click(
-										function(event) {
-											$('#notificationsModal').modal(
-													'hide');
-										});
+	$(document).ready(function() {
+		$('#add').click(function(event) {
+			$('#notificationsModal').modal('hide');
+		});
 
-						$('#notificationsModal').on(
-								'hidden.bs.modal',
-								function() {
-									$(this).find("input,textarea,select").val(
-											'').end();
-								});
-					});
+		$('#notificationsModal').on('hidden.bs.modal', function() {
+			$(this).find("input,textarea,select").val('').end();
+		});
+	});
 </script>
 <script type="text/javascript">
 	function view(id) {
@@ -262,19 +257,30 @@
 		var newId = id.substring(4);
 		var sender = $('#sender' + newId).val();
 		var subj = $('#subj' + newId).val();
-		var sent = $('#sent' + newId).val();
 		var message = $('#message' + newId).val();
 		var message2 = message.replace(/%n/g, "\n");
 
-		
 		$('#modalSender').val(sender);
 		$('#modalNotificationSubject').val(subj);
 		$('#modalNotificationsMessage').val(message2);
-		
-		
-		
+
 		document.getElementById("modalNotificationsMessage").innerHtml = message2;
 		$('#notificationsModal').modal('show');
+	};
+
+	function del(id) {
+		var newId = id.substring(4);
+		var senderUsername = $('#senderUsername' + newId).val();
+		var subj = $('#subj' + newId).val();
+		var time = $('#time' + newId).val();
+
+		$.post('delete-notification', {
+			senderUsername : senderUsername,
+			subj : subj,
+			time : time
+		});
+
+		$("#row" + newId).hide();
 	};
 </script>
 

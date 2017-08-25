@@ -25,7 +25,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 
 	public void insert(Notification notification) {
 		String sql = "INSERT INTO NOTIFICATIONS "
-				+ "(recipient_username, sender_username, notification_subject, notification_message, sent_time, isRead, notification_type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				+ "(recipient_username, sender_username, notification_subject, notification_message, sent_time, isRead, notification_type, copy_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -43,6 +43,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			ps.setTimestamp(5, new Timestamp(time));
 			ps.setBoolean(6, notification.isRead());
 			ps.setString(7, notification.getNotification_type());
+			ps.setString(8, notification.getCopy_type());
 			ps.executeUpdate();
 			ps.close();
 
@@ -62,22 +63,23 @@ public class JdbcNotificationDAO implements NotificationDAO {
 		}
 	}
 
-	public void remove(Notification notification) {
-		String sql = "DELETE FROM NOTIFICATIONS WHERE recipient_username = ? AND sender_username = ? AND notification_subject = ? and sent_time = ?";
+	public void remove(String recipient_username, String sender_username, String notification_subject, String sent_time, String copy_type) {
+		String sql = "DELETE FROM NOTIFICATIONS WHERE recipient_username = ? AND sender_username = ? AND notification_subject = ? and sent_time = ? AND copy_type = ?";
 		Connection conn = null;
 
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			java.util.Date utilDate = dateFormat.parse(notification.getSent_time());
+			java.util.Date utilDate = dateFormat.parse(sent_time);
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 			long time = sqlDate.getTime();
 
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, notification.getRecipient_username());
-			ps.setString(2, notification.getSender_username());
-			ps.setString(3, notification.getNotification_subject());
+			ps.setString(1, recipient_username);
+			ps.setString(2, sender_username);
+			ps.setString(3, notification_subject);
 			ps.setTimestamp(4, new Timestamp(time));
+			ps.setString(5, copy_type);
 			ps.executeUpdate();
 			ps.close();
 
@@ -101,16 +103,17 @@ public class JdbcNotificationDAO implements NotificationDAO {
 	public ArrayList<Notification> retrieveReceivedNotificationsOfUser(String username) {
 		ArrayList<Notification> output = new ArrayList<Notification>();
 
-		String sql = "SELECT * FROM NOTIFICATIONS WHERE recipient_username = ?";
+		String sql = "SELECT * FROM NOTIFICATIONS WHERE recipient_username = ? AND copy_type = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
+			ps.setString(1, "inbox");
 			Notification notification = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6), rs.getString(7));
+				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6), rs.getString(7), rs.getString(8));
 				output.add(notification);
 			}
 			rs.close();
@@ -140,7 +143,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			Notification notification = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6) , rs.getString(7));
+				notification = new Notification(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getTimestamp(5).toString(), rs.getBoolean(6) , rs.getString(7), rs.getString(8));
 				output.add(notification);
 			}
 			rs.close();

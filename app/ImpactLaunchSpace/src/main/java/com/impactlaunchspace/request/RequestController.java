@@ -97,8 +97,7 @@ public class RequestController {
 		}
 
 		Notification notification = new Notification(project_proposer, "admin",
-				"A user has applied to offer his support for " + project_name, notification_message, "message");
-
+				"A user has applied to offer his support for " + project_name, notification_message, "message", "inbox");
 		notificationService.sendNotification(notification);
 
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
@@ -109,7 +108,7 @@ public class RequestController {
 						.findByCompanyName(selected_project.getOrganization());
 
 				Notification notification2 = new Notification(organizationObj.getUsername(), "admin",
-						"A user has applied to offer his support for " + project_name, notification_message, "message");
+						"A user has applied to offer his support for " + project_name, notification_message, "message", "inbox");
 
 				notificationService.sendNotification(notification2);
 			}
@@ -144,7 +143,7 @@ public class RequestController {
 
 			Notification notification = new Notification(modalOfferer, "admin",
 					"Your request to help " + modalProjName + " was accepted by the Project Creator!",
-					notification_message, "message");
+					notification_message, "message", "inbox");
 
 			notificationService.sendNotification(notification);
 			
@@ -161,7 +160,7 @@ public class RequestController {
 
 			Notification notification = new Notification(modalOfferer, "admin",
 					"Your request to help " + modalProjName + " was rejected by the Project Creator!",
-					notification_message, "message");
+					notification_message, "message", "inbox");
 
 			notificationService.sendNotification(notification);
 		}
@@ -190,7 +189,7 @@ public class RequestController {
 
 			Notification notification = new Notification(modalProjectProposer, "admin",
 					"The user: " + modalOfferer + " has successfully confirmed his enrollment in your project : " + modalProjName + ".",
-					notification_message, "message");
+					notification_message, "message", "inbox");
 
 			notificationService.sendNotification(notification);
 			
@@ -215,7 +214,7 @@ public class RequestController {
 
 			Notification notification = new Notification(modalProjectProposer, "admin",
 					"Your request to recruit " + modalOfferer + " was rejected.",
-					notification_message, "message");
+					notification_message, "message", "inbox");
 
 			notificationService.sendNotification(notification);
 		}
