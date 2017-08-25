@@ -39,6 +39,12 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8"
+	src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -95,12 +101,15 @@
 									</div>
 									<div class="panel-body">
 										<div class="table-responsive col-md-12">
-											<table class="table table-striped table-hover">
+											<table class="table table-striped table-hover"
+												id="inboxtable">
 												<thead>
 													<tr>
 														<th>Sender</th>
 														<th>Message Subject</th>
 														<th>Sent Time</th>
+														<th></th>
+														
 													</tr>
 												</thead>
 												<tbody id="userNotificationsTable">
@@ -111,43 +120,61 @@
 
 
 														<tr id="row<%=++id%>">
-															<td><p>
+															
 																	<c:choose>
 																		<c:when
 																			test="${item.getSender_username().equals(\"admin\")}">
-																			<b> <input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
+																			<td><p>
+																			<b> 
+																			<input class="editable-field form-control"
+																				id="sender<%=id%>" type="hidden"
 																				value="ImpactLaunch.Space Admin" disabled="true" />
+																				ImpactLaunch.Space Admin
 																			</b>
+																			</p></td>
 																		</c:when>
 																		<c:otherwise>
+																		<td ><p>
 																			<input class="editable-field form-control"
-																				id="sender<%=id%>" type="text"
+																				id="sender<%=id%>" type="hidden"
 																				value="${item.getSender_username()}" disabled="true" />
+																				${item.getSender_username()}
+																				</p></td>
 																		</c:otherwise>
 																	</c:choose>
 
-																</p></td>
+																
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="subj<%=id %>" type="textarea"
+																		id="subj<%=id %>" type="hidden"
 																		value="${item.getNotification_subject()}"
-																		disabled="true" />
-																</p></td>
+																		disabled="true" />${item.getNotification_subject()}
+																</p></td>	
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="time<%=id%>" type="text"
+																		id="time<%=id%>" type="hidden"
 																		value="${item.getSent_time() }" disabled="true" />
+																		${item.getSent_time() }
 																</p></td>
 
-															<input class="editable-field form-control"
-																id="message<%=id%>" type="hidden"
-																value="${item.getNotification_message()}"
-																disabled="true" />
+															
+																	<input class="editable-field form-control"
+																		id="message<%=id%>" type="hidden"
+																		value="${item.getNotification_message()}"
+																		disabled="true" />
+																
 
-															<input class="editable-field form-control"
-																id="senderUsername<%=id%>" type="hidden"
-																value="${item.getSender_username()}" disabled="true" />
+															
+																	<input class="editable-field form-control"
+																		id="senderUsername<%=id%>" type="hidden"
+																		value="${item.getSender_username()}" disabled="true" />
+																
+
+															
+																	<input class="editable-field form-control"
+																		id="copyType<%=id%>" type="hidden" value="inbox"
+																		disabled="true" />
+																
 
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
@@ -159,6 +186,7 @@
 																		<i class="fa fa-trash"></i> Delete
 																	</button>
 																</p></td>
+
 														</tr>
 
 													</c:forEach>
@@ -249,6 +277,19 @@
 		$('#notificationsModal').on('hidden.bs.modal', function() {
 			$(this).find("input,textarea,select").val('').end();
 		});
+		
+	
+		$('#inboxtable').DataTable( {
+			"order": [[ 2, "desc" ]],
+		
+			 "columnDefs": [
+	            {
+	                "targets": [ 3 ],
+	                "orderable": false
+	            }
+	        ]
+	    } );
+		
 	});
 </script>
 <script type="text/javascript">
@@ -273,11 +314,13 @@
 		var senderUsername = $('#senderUsername' + newId).val();
 		var subj = $('#subj' + newId).val();
 		var time = $('#time' + newId).val();
+		var copy_type = $('#copyType' + newId).val();
 
 		$.post('delete-notification', {
 			senderUsername : senderUsername,
 			subj : subj,
-			time : time
+			time : time,
+			copy_type : copy_type
 		});
 
 		$("#row" + newId).hide();

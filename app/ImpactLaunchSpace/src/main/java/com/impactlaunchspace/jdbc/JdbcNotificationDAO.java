@@ -109,7 +109,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
-			ps.setString(1, "inbox");
+			ps.setString(2, "inbox");
 			Notification notification = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -134,12 +134,13 @@ public class JdbcNotificationDAO implements NotificationDAO {
 	public ArrayList<Notification> retrieveSentNotificationsOfUser(String username) {
 		ArrayList<Notification> output = new ArrayList<Notification>();
 
-		String sql = "SELECT * FROM NOTIFICATIONS WHERE sender_username = ?";
+		String sql = "SELECT * FROM NOTIFICATIONS WHERE sender_username = ? AND copy_type = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
+			ps.setString(2, "sent");
 			Notification notification = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
