@@ -37,6 +37,12 @@
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 </head>
+<link rel="stylesheet" type="text/css"
+	href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8"
+	src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+</head>
 
 <body>
 	<div class="container-fluid">
@@ -92,12 +98,13 @@
 									</div>
 									<div class="panel-body">
 										<div class="table-responsive col-md-12">
-											<table class="table table-striped table-hover">
+											<table id="senttable" class="table table-striped table-hover">
 												<thead>
 													<tr>
 														<th>Recipient</th>
 														<th>Message Subject</th>
 														<th>Sent Time</th>
+														<th></th>
 													</tr>
 												</thead>
 												<tbody id="userNotificationsTable">
@@ -113,33 +120,42 @@
 																		<c:when
 																			test="${item.getRecipient_username().equals(\"admin\")}">
 																			<b> <input class="editable-field form-control"
-																				id="recipient<%=id%>" type="text"
+																				id="recipient<%=id%>" type="hidden"
 																				value="ImpactLaunch.Space Admin" disabled="true" />
+																				ImpactLaunch.Space Admin
 																			</b>
 																		</c:when>
 																		<c:otherwise>
 																			<input class="editable-field form-control"
-																				id="recipient<%=id%>" type="text"
-																				value="${item.getRecipient_username()}" disabled="true" />
+																				id="recipient<%=id%>" type="hidden"
+																				value="${item.getRecipient_username()}"
+																				disabled="true" />
+																				${item.getRecipient_username()}
 																		</c:otherwise>
 																	</c:choose>
 
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="subj<%=id %>" type="textarea"
+																		id="subj<%=id %>" type="hidden"
 																		value="${item.getNotification_subject()}"
 																		disabled="true" />
+																		${item.getNotification_subject()}
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="time<%=id%>" type="text"
+																		id="time<%=id%>" type="hidden"
 																		value="${item.getSent_time() }" disabled="true" />
+																		${item.getSent_time() }
 																</p></td>
 
 															<input class="editable-field form-control"
 																id="message<%=id%>" type="hidden"
 																value="${item.getNotification_message()}"
+																disabled="true" />
+
+															<input class="editable-field form-control"
+																id="copyType<%=id%>" type="hidden" value="sent"
 																disabled="true" />
 
 															<td class="col-md-2"><p>
@@ -193,7 +209,8 @@
 								</div>
 								<div class="modal-body">
 									<div class="container">
-										<div id="resourcesNeeded" class="form-group row col-lg-6 col-md-6 col-xs-9">
+										<div id="resourcesNeeded"
+											class="form-group row col-lg-6 col-md-6 col-xs-9">
 											<div class="col-md-12">
 												<p>
 													<b>To:</b>
@@ -234,25 +251,28 @@
 	</div>
 </body>
 <script>
-	$(document)
-			.ready(
-					function() {
-						$('#add')
-								.click(
-										function(event) {
-											$('#notificationsModal').modal(
-													'hide');
+	$(document).ready(function() {
+		$('#add').click(function(event) {
+			$('#notificationsModal').modal('hide');
 
-											$('.resourceCategory').hide();
-										});
+			$('.resourceCategory').hide();
+		});
 
-						$('#notificationsModal').on(
-								'hidden.bs.modal',
-								function() {
-									$(this).find("input,textarea,select").val(
-											'').end();
-								});
-					});
+		$('#notificationsModal').on('hidden.bs.modal', function() {
+			$(this).find("input,textarea,select").val('').end();
+		});
+		
+		$('#senttable').DataTable({
+			"order" : [ [ 2, "desc" ] ],
+
+			"columnDefs" : [ {
+				"targets" : [ 3 ],
+				"orderable" : false
+			} ]
+		});
+	});
+
+	
 </script>
 <script type="text/javascript">
 	function view(id) {
@@ -268,6 +288,23 @@
 		$('#modalNotificationsMessage').val(message);
 		$('#modalNotificationsMessage').val().replace(/\r\n|\r|\n/g, "<br />")
 		$('#notificationsModal').modal('show');
+	};
+
+	function del(id) {
+		var newId = id.substring(4);
+		var recipientUsername = $('#recipient' + newId).val();
+		var subj = $('#subj' + newId).val();
+		var time = $('#time' + newId).val();
+		var copy_type = $('#copyType' + newId).val();
+
+		$.post('delete-notification', {
+			recipientUsername : recipientUsername,
+			subj : subj,
+			time : time,
+			copy_type : copy_type
+		});
+
+		$("#row" + newId).hide();
 	};
 </script>
 

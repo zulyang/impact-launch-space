@@ -122,11 +122,20 @@ public class NotificationController {
 	
 
 	@RequestMapping(value = "/notifications/messages/delete-notification", method = RequestMethod.POST)
-	public void deleteNotification(@RequestParam String senderUsername,@RequestParam String subj,
-			@RequestParam String time, @RequestParam String copy_type, HttpServletResponse response,HttpServletRequest request){
-		String recipient = (String) request.getSession().getAttribute("username");
+	public void deleteNotification(@RequestParam(required = false) String senderUsername,@RequestParam(required = false) String recipientUsername,
+			@RequestParam String subj,	@RequestParam String time, @RequestParam String copy_type, HttpServletResponse response,HttpServletRequest request){
+		String recipient = null;
+		String sender = null;
 		
-		notificationService.deleteNotificationFromInbox(recipient, senderUsername, subj, time, copy_type);
+		if(senderUsername != null){
+			recipient = (String) request.getSession().getAttribute("username");
+			sender = senderUsername;
+		}else if (recipientUsername != null){
+			sender = (String) request.getSession().getAttribute("username");
+			recipient = recipientUsername;
+		}
+
+		notificationService.deleteNotification(recipient, sender, subj, time, copy_type);
 
 	}
 }

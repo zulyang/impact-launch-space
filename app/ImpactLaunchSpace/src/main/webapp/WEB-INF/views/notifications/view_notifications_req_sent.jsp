@@ -38,6 +38,12 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+	
+<link rel="stylesheet" type="text/css"
+	href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8"
+	src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -94,7 +100,7 @@
 									</div>
 									<div class="panel-body">
 										<div class="table-responsive col-md-12">
-											<table class="table table-striped table-hover">
+											<table id="requesttable" class="table table-striped table-hover">
 												<thead>
 													<tr>
 														<th>Project Proposer</th>
@@ -103,6 +109,7 @@
 														<th>Requested Resource</th>
 														<th>Offered Resource</th>
 														<th>Status</th>
+														<th></th>
 													</tr>
 												</thead>
 												<tbody id="userNotificationsTable">
@@ -115,45 +122,51 @@
 														<tr id="row<%=++id%>">
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="proposer<%=id%>" type="text"
+																		id="proposer<%=id%>" type="hidden"
 																		value="${item.getProject_proposer() }" disabled="true" />
+																		${item.getProject_proposer() }
 
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="projname<%=id %>" type="textarea"
+																		id="projname<%=id %>" type="hidden"
 																		value="${item.getProject_name()}" disabled="true" />
+																		${item.getProject_name()}
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="resourcecategory<%=id%>" type="text"
+																		id="resourcecategory<%=id%>" type="hidden"
 																		value="${item.getRequested_resource_category() }"
 																		disabled="true" />
+																		${item.getRequested_resource_category() }
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="requestedresourcename<%=id%>" type="text"
+																		id="requestedresourcename<%=id%>" type="hidden"
 																		value="${item.getRequested_resource_name() }"
 																		disabled="true" />
+																		${item.getRequested_resource_name() }
 																</p></td>
 
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="offeredresourcename<%=id%>" type="text"
+																		id="offeredresourcename<%=id%>" type="hidden"
 																		value="${item.getOffered_resource_name() }"
 																		disabled="true" />
+																		${item.getOffered_resource_name() }
 																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
-																		id="status<%=id%>" type="text"
+																		id="status<%=id%>" type="hidden"
 																		value="${item.getRequest_status() }" disabled="true" />
+																		${item.getRequest_status() }
 																</p></td>
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
 																		class="btn btn-primary edit" onClick="view(this.id)"
 																		href="#">View</button>
 																</p></td>
-														</tr>
+														
 														<input class="editable-field form-control"
 															id="offeredresourcedesc<%=id%>" type="hidden"
 															value="${item.getOffered_request_description() }"
@@ -166,6 +179,8 @@
 														<input class="editable-field form-control"
 															id="resourceofferer<%=id%>" type="hidden"
 															value="${item.getResource_offerer() }" disabled="true" />
+															
+														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
@@ -212,17 +227,17 @@
 												<!-- Project name, resource category, resource name, request description, project proposer -->
 												<div class="modalResourceRequested col-md-12">
 													<p class="modalSubheading">Project Name</p>
-													<div id="modalProjName" class="modalProjName"></div>
+													<div id="modalProjName1" class="modalProjName"></div>
 
 													<p class="modalSubheading">Project Proposer</p>
-													<div id="modalProjectProposer" class="modalProjName"></div>
+													<div id="modalProjectProposer1" class="modalProjName"></div>
 
 
 													<p class="modalSubheading">Requested Resource Name</p>
 
-													<div id="modalRequestedResourceName" class="modalProjName"></div>
+													<div id="modalRequestedResourceName1" class="modalProjName"></div>
 													<span class="label label-success"
-														id="modalResourceCategory" name="modalResourceCategory"></span>
+														id="modalResourceCategory1" name="modalResourceCategory1"></span>
 
 												</div>
 
@@ -233,7 +248,7 @@
 													<input id="modalOfferedResourceName"
 														name="modalOfferedResourceName"
 														class="form-control col-md-4 modalNotificationsField"
-														placeholder="Offered Resource Name" type="text" readonly disabled/>
+														placeholder="Offered Resource Name" type="text" readonly/>
 
 
 													<p class="modalSubheading">Offered Resource Description</p>
@@ -242,21 +257,43 @@
 														class="form-control col-md-4 modalNotificationsField"
 														placeholder="Resource Desc" type="text" readonly /> -->
 														
-														<textarea id="modalOfferedResourceDesc" name="modalOfferedResourceDesc" class="form-control modalNotificationsField" readonly disabled /></textarea>
+														<textarea id="modalOfferedResourceDesc" name="modalOfferedResourceDesc" class="form-control modalNotificationsField" readonly /></textarea>
 
 													<p class="modalSubheading">Your Note to Project
 														Proposer</p>
 													<!-- <input id="modalPersonalNote" name="modalPersonalNote"
 														class="form-control col-md-4 modalNotificationsField"
 														placeholder="Personal Note" type="text" readonly />  -->
-														<textarea id="modalPersonalNote" name="modalPersonalNote" class="form-control modalNotificationsField" readonly disabled /></textarea>														
+														<textarea id="modalPersonalNote" name="modalPersonalNote" class="form-control modalNotificationsField" readonly /></textarea>														
 														<input
 														id="modalRequestStatus" name="modalRequestStatus"
 														class="form-control col-md-4 modalNotificationsField"
-														placeholder="Request Status" type="hidden" readonly /> <input
+														placeholder="Request Status" type="hidden" readonly /> 
+														
+														<input
 														id="modalOfferer" name="modalOfferer"
 														class="form-control col-md-4 modalNotificationsField"
 														placeholder="Resource Offerer" type="hidden" readonly />
+														
+														<input
+														id="modalProjectProposer" name="modalProjectProposer"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Project Proposer" type="hidden" readonly />
+														
+														<input
+														id="modalProjName" name="modalProjName"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Project Name" type="hidden" readonly />
+														
+														<input
+														id="modalRequestedResourceName" name="modalRequestedResourceName"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Requested Resource Name" type="hidden" readonly />
+														
+														<input
+														id="modalResourceCategory" name="modalResourceCategory"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Resource Category" type="hidden" readonly />
 												</div>
 											</div>
 										</div>
@@ -283,6 +320,20 @@
 		</div>
 	</div>
 </body>
+<script>
+	$(document).ready(function() {
+		$('#requesttable').DataTable({
+			"order" : [ [ 1, "desc" ] ],
+
+			"columnDefs" : [ {
+				"targets" : [ 6 ],
+				"orderable" : false
+			} ]
+		});
+	});
+
+	
+</script>
 
 <script type="text/javascript">
 	function view(id) {
@@ -298,12 +349,17 @@
 		var status = $('#status' + newId).val();
 		var resourceofferer = $('#resourceofferer' + newId).val();
 
-		document.getElementById('modalProjectProposer').innerHTML = proposer;
-		document.getElementById('modalProjName').innerHTML = projname;
-		document.getElementById('modalRequestedResourceName').innerHTML = requestedresourcename;
-		document.getElementById('modalResourceCategory').innerHTML = resourcecategory;
+		document.getElementById('modalProjectProposer1').innerHTML = proposer;
+		document.getElementById('modalProjName1').innerHTML = projname;
+		document.getElementById('modalRequestedResourceName1').innerHTML = requestedresourcename;
+		document.getElementById('modalResourceCategory1').innerHTML = resourcecategory;
 		
 		$('#modalOfferedResourceName').val(offeredresourcename);
+		$('#modalProjectProposer').val(proposer);
+		$('#modalProjName').val(projname);
+		$('#modalRequestedResourceName').val(requestedresourcename);
+		$('#modalResourceCategory').val(resourcecategory);
+		
 		document.getElementById('modalOfferedResourceDesc').innerHTML = offeredresourcedesc;
 		document.getElementById('modalPersonalNote').innerHTML = offercomments;
 		$('#modalRequestStatus').val(status);

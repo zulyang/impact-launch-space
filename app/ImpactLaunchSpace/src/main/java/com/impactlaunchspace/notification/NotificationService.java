@@ -46,7 +46,7 @@ public class NotificationService {
 		return notificationDAO.retrieveSentNotificationsOfUser(username);
 	}
 	
-	public void deleteNotificationFromInbox(String recipient_username, String sender_username, String notification_subject, String sent_time, String copy_type) {
+	public void deleteNotification(String recipient_username, String sender_username, String notification_subject, String sent_time, String copy_type) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		NotificationDAO notificationDAO = (NotificationDAO) context.getBean("notificationDAO");
 		notificationDAO.remove(recipient_username, sender_username,notification_subject, sent_time, copy_type);
