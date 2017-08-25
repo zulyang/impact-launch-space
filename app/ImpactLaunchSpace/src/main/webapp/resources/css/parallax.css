@@ -152,7 +152,13 @@ h2{
 .story{
         margin: 0 auto;
         min-width: 980px;
-        overflow: auto;
+        overflow: hidden;
+        width: 980px;
+}
+
+.linked_story{
+        margin: 0 auto;
+        min-width: 980px;
         width: 980px;
 }
 

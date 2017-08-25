@@ -1,0 +1,13 @@
+.font_labels{
+	white-space: nowrap;
+}
+
+.edit_profileField {
+	width: 26rem;
+}
+
+.edit_ind_profile_display_container {
+	margin-top: 90rem;
+	margin-bottom: 5rem;
+	width: 85rem;
+}

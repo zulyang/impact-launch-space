@@ -165,30 +165,7 @@ html, body {
 	border: 0.125rem solid gray;
 }
 
-.indi_profile_container {
-	margin-top: 100rem;
-	margin-bottom: 5rem;
-	height: 170rem;
-	width: 75rem;
-	border: 0.125rem solid gray;
-}
-
-.indi_profile_form {
-	margin-top: -2rem;
-}
-
-.profileField {
-	margin-top: 1rem;
-	width: 40rem;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.edit_profileField {
-	width: 26rem;
-}
-
-.companyBio, .personalBio {
+.companyBio {
 	margin-top: 1rem;
 	width: 40rem;
 	margin-left: auto;
@@ -216,16 +193,6 @@ html, body {
 	display: inline-block;
 	float: right;
 	width: 65%;
-}
-
-.profile_save {
-	justify-content: center;
-	display: flex;
-	align-items: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 1rem;
-	width: 15rem;
 }
 
 .edit_org_profile_save {
@@ -407,12 +374,6 @@ html, body {
 	margin-bottom: 5rem;
 	width: 85rem;
 	height: 65rem;
-}
-
-.edit_ind_profile_display_container {
-	margin-top: 90rem;
-	margin-bottom: 5rem;
-	width: 85rem;
 }
 
 .circle_org_profile_image {
@@ -597,40 +558,6 @@ html, body {
 	.navbar-default .navbar-nav>.open>a:hover {
 	color: #1f2d5d !important;
 	background-color: white;
-}
-
-#profile_upload_button {
-	position: relative;
-	padding: 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border: 1px solid #ccc;
-	text-align: center;
-	background-color: #5199ff;
-	cursor: pointer;
-	max-width: 400px;
-	white-space: pre-wrap; /* CSS3 */
-	white-space: -moz-pre-wrap; /* Firefox */
-	white-space: -pre-wrap; /* Opera <7 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word;
-}
-
-#document_upload_button {
-	position: relative;
-	padding: 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border: 1px solid #ccc;
-	text-align: center;
-	background-color: #5199ff;
-	cursor: pointer;
-	max-width: 400px;
-	white-space: pre-wrap; /* CSS3 */
-	white-space: -moz-pre-wrap; /* Firefox */
-	white-space: -pre-wrap; /* Opera <7 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word;
 }
 
 textarea {

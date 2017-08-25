@@ -20,6 +20,9 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/notifications.css" />
+
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
@@ -160,11 +163,11 @@
 														<input class="editable-field form-control"
 															id="offercomments<%=id%>" type="hidden"
 															value="${item.getOffer_comments() }" disabled="true" />
-															
+
 														<input class="editable-field form-control"
 															id="proposer<%=id%>" type="hidden"
 															value="${item.getProject_proposer() }" disabled="true" />
-															
+
 													</c:forEach>
 												</tbody>
 											</table>
@@ -203,71 +206,54 @@
 								</div>
 								<div class="modal-body">
 									<div class="container">
-										<div id="resourcesNeeded" class="form-group row col-md-5">
+										<div id="resourcesNeeded"
+											class="form-group row col-md-6 col-lg-6 col-xs-9">
 											<div class="col-md-12">
 
 												<!-- Project name, resource category, resource name, request description, project proposer -->
+												<div class="modalResourceRequested col-md-12">
+													<p class="modalSubheading">Project Name</p>
+													<div id="modalProjName" class="modalProjName"></div>
 
-												<p>
-													<b>Resource Offered By: </b>
-												</p>
-												<input id="modalOfferer" name="modalOfferer"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Offerer Username here" type="text" readonly />
+												
+													<p class="modalSubheading">Resource Offerer</p>
 
-												<p>
-													<b>Project Name</b>
-												</p>
-												<input id="modalProjName" name="modalProjName"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="text" readonly />
+													<div id="modalOfferer" class="modalProjName"></div>
 
-												<p>
-													<b>Resource Category</b>
-												</p>
-												<input id="modalResourceCategory" name="modalResourceCategory"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Resource Category" type="text" readonly />
+													<p class="modalSubheading">Requested Resource Name</p>
 
-												<p>
-													<b>Requested Resource Name</b>
-												</p>
-												<input id="modalRequestedResourceName"
-													name="modalRequestedResourceName"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Requested Resource Name" type="text" readonly />
-
-												<p>
-													<b>Offered Resource Name</b>
-												</p>
-												<input id="modalOfferedResourceName"
-													name="modalOfferedResourceName"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Offered Resource Name" type="text" readonly />
+													<div id="modalRequestedResourceName" class="modalProjName"></div>
+													<span class="label label-success"
+														id="modalResourceCategory" name="modalResourceCategory"></span>
+												</div>
+												<div
+													class="modalResourceOffered col-xs-12 col-md-12 col-lg-12">
+													<p class="modalSubheading">Offered Resource Name</p>
+													<input id="modalOfferedResourceName"
+														name="modalOfferedResourceName"
+														class="form-control modalNotificationsField"
+														placeholder="Offered Resource Name" type="text" readonly
+														disabled />
 
 
-												<p>
-													<b>Offered Resource Description</b>
-												</p>
-												<input id="modalOfferedResourceDesc"
-													name="modalOfferedResourceDesc"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Resource Description" type="text" readonly />
-
-												<p>
-													<b>Personal Note from Offerer</b>
-												</p>
-												<input id="modalPersonalNote" name="modalPersonalNote"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Personal note" type="text" readonly /> 
-													<input
-													id="modalRequestStatus" name="modalRequestStatus"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project name" type="hidden" readonly />
-													 <input
-													id="modalProjectProposer" name="modalProjectProposer"
-													class="form-control col-md-4 modalNotificationsField"
-													placeholder="Project Proposer" type="hidden" readonly />
+													<p class="modalSubheading">Offered Resource Description
+													</p>
+											
+													<textarea id="modalOfferedResourceDesc"
+														name="modalOfferedResourceDesc"
+														class="form-control modalNotificationsField" readonly
+														disabled /></textarea>
+													<p class="modalSubheading">Personal Note from Offerer</p>
+													<textarea id="modalPersonalNote" name="modalPersonalNote"
+														class="form-control modalNotificationsField" readonly
+														disabled /></textarea>
+													<input id="modalRequestStatus" name="modalRequestStatus"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Project name" type="hidden" readonly /> <input
+														id="modalProjectProposer" name="modalProjectProposer"
+														class="form-control col-md-4 modalNotificationsField"
+														placeholder="Project Proposer" type="hidden" readonly />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -308,16 +294,16 @@
 		var offercomments = $('#offercomments' + newId).val();
 		var status = $('#status' + newId).val();
 
-		$('#modalOfferer').val(offerer);
-		$('#modalProjName').val(projname);
-		$('#modalResourceCategory').val(resourcecategory);
-		$('#modalRequestedResourceName').val(requestedresourcename);
+		document.getElementById('modalOfferer').innerHTML = offerer;
+		document.getElementById('modalProjName').innerHTML = projname;
+		document.getElementById('modalResourceCategory').innerHTML = resourcecategory;
+		document.getElementById('modalRequestedResourceName').innerHTML = requestedresourcename;
+
 		$('#modalOfferedResourceName').val(offeredresourcename);
-		$('#modalOfferedResourceDesc').val(offeredresourcedesc);
-		$('#modalPersonalNote').val(offercomments);
+		document.getElementById('modalOfferedResourceDesc').innerHTML = offeredresourcedesc;
+		document.getElementById('modalPersonalNote').innerHTML = offercomments;
 		$('#modalRequestStatus').val(status);
 		$('#modalProjectProposer').val(proposer);
-		
 
 		$('#viewRequestModal').modal('show');
 		if (status != "Pending") {
