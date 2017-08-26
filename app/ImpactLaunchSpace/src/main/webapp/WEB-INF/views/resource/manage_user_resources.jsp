@@ -87,7 +87,7 @@
 												<td><p>
 														<textarea class="editable-field form-control"
 															id="reso<%=id%>" type="text"
-															value="${uro.getResourceName()}" disabled="true" ${uro.getResourceName()}/textarea>>
+															value="${uro.getResourceName()}" disabled="true"> ${uro.getResourceName()}</textarea>
 															
 															<input
 															type="hidden" id="old_reso<%=id%>"
@@ -267,7 +267,7 @@
 					
 					var newId = $('#userResourceTable tr').length + 1;
 					$('#userResourceTable').append(
-							'<tr id="row'+newId+'"><td><p><textarea class="editable-field form-control"id="reso'+newId+'" type="text"	value="'+resourceName+'"disabled="true" '+resourceName+'/textarea>><input type="hidden" id="old_reso'+newId+'"value="'+resourceName+'" /></p></td><td><p>'+resourceName+'</p></td><td><p><textarea class="editable-field form-control"id="desc'+newId+'" rows="4" value="'+resourceDescription+'" disabled="true">'+resourceDescription+'</textarea><input type="hidden" id="old_desc'+newId+'"value="'+resourceDescription+'" /></p></td><td><p><input type="hidden" id="old_rc'+newId+'"value="'+resourceCategory+'" />  <span class="label label-success"	id="currentResourceCategory'+newId+'">'+resourceCategory+'</span><select id="resourceCategory'+newId+'" name="resourceCategory"	class="col-md-4 resourceCategory"><option></option><c:forEach items="${resource_category_list}" var="item"><c:choose><c:when test="${item.getSkillset().equals('+resourceCategory+')}"><option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option></c:when><c:otherwise><option value="${item.getSkillset()}">${item.getSkillset()}</option></c:otherwise></c:choose></c:forEach></select></p></td><td>'+resourceCategory+'</td><td class="col-md-2"><p><button id="edit'+newId+'" type="btn" name="edit" class="btn btn-primary edit" onClick="edit(this.id)" href="#"><i class="fa fa-pencil"></i> Edit</button><button id="save'+newId+'" type="button" name="save" class="btn btn-success save" onClick="save(this.id)"	href="#"><i class="fa fa-save"></i> Save</button><button id="dele'+newId+'" type="submit" name="delete"	class="btn btn-danger delete" onClick="del(this.id)" href="#"><i class="fa fa-trash"></i> Delete</button><button id="canc'+newId+'" type="btn" name="cancel" class="btn btn-default cancel" onClick="cancel(this.id)" href="#"><i class="fa fa-close"></i> Cancel</button></p></td></tr>');
+							'<tr id="row'+newId+'"><td><p><textarea class="editable-field form-control"id="reso'+newId+'" type="text"	value="'+resourceName+'"disabled="true"> '+resourceName+'</textarea><input type="hidden" id="old_reso'+newId+'"value="'+resourceName+'" /></p></td><td><p>'+resourceName+'</p></td><td><p><textarea class="editable-field form-control"id="desc'+newId+'" rows="4" value="'+resourceDescription+'" disabled="true">'+resourceDescription+'</textarea><input type="hidden" id="old_desc'+newId+'"value="'+resourceDescription+'" /></p></td><td><p><input type="hidden" id="old_rc'+newId+'"value="'+resourceCategory+'" />  <span class="label label-success"	id="currentResourceCategory'+newId+'">'+resourceCategory+'</span><select id="resourceCategory'+newId+'" name="resourceCategory"	class="col-md-4 resourceCategory"><option></option><c:forEach items="${resource_category_list}" var="item"><c:choose><c:when test="${item.getSkillset().equals('+resourceCategory+')}"><option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option></c:when><c:otherwise><option value="${item.getSkillset()}">${item.getSkillset()}</option></c:otherwise></c:choose></c:forEach></select></p></td><td>'+resourceCategory+'</td><td class="col-md-2"><p><button id="edit'+newId+'" type="btn" name="edit" class="btn btn-primary edit" onClick="edit(this.id)" href="#"><i class="fa fa-pencil"></i> Edit</button><button id="save'+newId+'" type="button" name="save" class="btn btn-success save" onClick="save(this.id)"	href="#"><i class="fa fa-save"></i> Save</button><button id="dele'+newId+'" type="submit" name="delete"	class="btn btn-danger delete" onClick="del(this.id)" href="#"><i class="fa fa-trash"></i> Delete</button><button id="canc'+newId+'" type="btn" name="cancel" class="btn btn-default cancel" onClick="cancel(this.id)" href="#"><i class="fa fa-close"></i> Cancel</button></p></td></tr>');
 					
 					var t = $('#resourcetable').DataTable();
 				 
@@ -283,6 +283,8 @@
 					$('#myModal').modal('hide');
 					$('#resourceCategory' + newId).val(resourceCategory);
 					$('.resourceCategory').hide();
+					
+					t.rows().invalidate().draw();
 				});
 
 	$('#myModal').on(
@@ -343,7 +345,7 @@
 		var newId = $('#userResourceTable tr').length + 1;
 		 
 		$('tr#row' + oldId).after(
-				'<tr id="row'+newId+'"> <td><p><textarea class="editable-field form-control" id="reso'+newId+'" type="text"value="'+resourceName+'" disabled="true" '+resourceName+'/textarea>> <input type="hidden" id="old_reso'+newId+'" value="${uro.getResourceName()}"/></p></td> <td><p> <textarea rows="4" class="editable-field form-control" style="border: 1px solid transparent;background-color: transparent;" id="desc'+newId+'" value="'+resourceDescription+'" disabled="true">' + resourceDescription + '</textarea> <input type="hidden" id="old_desc'+newId+'" value="'+resourceDescription+'"/></p></td> <td><p> <input type="hidden" id="old_rc'+newId+'" value="'+resourceCategory+'"/> <select id="resourceCategory'+newId+'"name="resourceCategory"class="col-md-4 js-example-basic-single-resourcecategory resourceCategory"> <option></option> <c:forEach items="${resource_category_list}" var="item"> <c:choose> <c:when test="${item.getSkillset().equals('+resourceCategory+')}"> <option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option> </c:when> <c:otherwise> <option value="${item.getSkillset()}">${item.getSkillset()}</option> </c:otherwise> </c:choose> </c:forEach> </select> <span class="label label-success"id="currentResourceCategory'+newId+'">'+resourceCategory+'</span> </p></td><td class="col-md-2"><p> <button id="edit'+newId+'" type="btn" name="edit"class="btn btn-primary edit" onClick="edit(this.id)"href="#"> <i class="fa fa-pencil"></i> Edit </button> <button id="save'+newId+'" type="button" name="save"class="btn btn-success save" onClick="save(this.id)"href="#"> <i class="fa fa-save"></i> Save </button> <button id="dele'+newId+'" type="submit" name="delete"class="btn btn-danger delete" onClick="del(this.id)"href="#"> <i class="fa fa-trash"></i> Delete </button> <button id="canc'+newId+'" type="btn" name="cancel"class="btn btn-default cancel" onClick="cancel(this.id)"href="#"> <i class="fa fa-close"></i> Cancel </button> </p></td></tr>');
+				'<tr id="row'+newId+'"> <td><p><textarea class="editable-field form-control" id="reso'+newId+'" type="text"value="'+resourceName+'" disabled="true"> '+resourceName+'</textarea> <input type="hidden" id="old_reso'+newId+'" value="${uro.getResourceName()}"/></p></td> <td><p> <textarea rows="4" class="editable-field form-control" style="border: 1px solid transparent;background-color: transparent;" id="desc'+newId+'" value="'+resourceDescription+'" disabled="true">' + resourceDescription + '</textarea> <input type="hidden" id="old_desc'+newId+'" value="'+resourceDescription+'"/></p></td> <td><p> <input type="hidden" id="old_rc'+newId+'" value="'+resourceCategory+'"/> <select id="resourceCategory'+newId+'"name="resourceCategory"class="col-md-4 js-example-basic-single-resourcecategory resourceCategory"> <option></option> <c:forEach items="${resource_category_list}" var="item"> <c:choose> <c:when test="${item.getSkillset().equals('+resourceCategory+')}"> <option value="${item.getSkillset()}"selected="selected">${item.getSkillset()}</option> </c:when> <c:otherwise> <option value="${item.getSkillset()}">${item.getSkillset()}</option> </c:otherwise> </c:choose> </c:forEach> </select> <span class="label label-success"id="currentResourceCategory'+newId+'">'+resourceCategory+'</span> </p></td><td class="col-md-2"><p> <button id="edit'+newId+'" type="btn" name="edit"class="btn btn-primary edit" onClick="edit(this.id)"href="#"> <i class="fa fa-pencil"></i> Edit </button> <button id="save'+newId+'" type="button" name="save"class="btn btn-success save" onClick="save(this.id)"href="#"> <i class="fa fa-save"></i> Save </button> <button id="dele'+newId+'" type="submit" name="delete"class="btn btn-danger delete" onClick="del(this.id)"href="#"> <i class="fa fa-trash"></i> Delete </button> <button id="canc'+newId+'" type="btn" name="cancel"class="btn btn-default cancel" onClick="cancel(this.id)"href="#"> <i class="fa fa-close"></i> Cancel </button> </p></td></tr>');
 		$('#resourceCategory' + newId).hide();
 		
 		$('#resourceCategory' + newId).val(resourceCategory);
@@ -351,6 +353,7 @@
 		$('#old_rc' + newId).val(resourceCategory);
 		$('#old_reso' + newId).val(resourceName);
 		$('#old_desc' + newId).val(resourceDescription);
+		
 	};
 
 	function cancel(id) {
@@ -381,6 +384,7 @@
 			});
 			
 			$("#row" + newId).hide();
+			
 			return true;
 		} else {
 			return false;
