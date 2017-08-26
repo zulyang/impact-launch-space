@@ -13,16 +13,10 @@
                             'message': '8 characters',
                             'enable': true
                         },
-                        'lowercase' :{
-                            'regex': '[a-z]{1,}',
-                            'name': 'lowercase',
-                            'message': '1 lowercase',
-                            'enable': true
-                        },
-                        'uppercase' : {
-                            'regex': '[A-Z]{1,}',
-                            'name': 'uppercase',
-                            'message': '1 uppercase',
+                        'letter' :{
+                            'regex': '[a-zA-Z]{1,}',
+                            'name': 'letter',
+                            'message': '1 uppercase/lowercase letter',
                             'enable': true
                         },
                         'number' : {
