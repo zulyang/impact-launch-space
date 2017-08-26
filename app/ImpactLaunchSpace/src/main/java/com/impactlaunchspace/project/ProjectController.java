@@ -545,5 +545,7 @@ public class ProjectController {
 		projectService.deleteDocument(project_name, project_proposer, file);
 		return "editIndiProfileForm";
 	}
+	
+	
 
 }
