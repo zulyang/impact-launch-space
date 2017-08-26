@@ -545,7 +545,8 @@ public class ProjectController {
 		projectService.deleteDocument(project_name, project_proposer, file);
 		return "editIndiProfileForm";
 	}
-	
-	
-
+	@RequestMapping(value = "/my-projects", method = RequestMethod.GET)
+	public String showMyProjects(ModelMap model) {
+		return "project/" + "my_projects";
+	}
 }

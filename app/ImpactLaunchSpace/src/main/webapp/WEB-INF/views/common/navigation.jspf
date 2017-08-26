@@ -21,6 +21,8 @@
 									<li><a href="/create-project">Create Project</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="/search-project">Explore Projects</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="/my-projects">My Projects</a></li>
 								</ul></li>
 								
 							<li class="dropdown"><a href="#" class="dropdown-toggle"

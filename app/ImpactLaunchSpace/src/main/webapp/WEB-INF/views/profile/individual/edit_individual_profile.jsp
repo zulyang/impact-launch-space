@@ -12,7 +12,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/individual/edit_individual_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/profile/individual/edit_individual_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
