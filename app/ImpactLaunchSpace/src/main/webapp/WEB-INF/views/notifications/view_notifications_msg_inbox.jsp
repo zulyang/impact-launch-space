@@ -16,16 +16,16 @@
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/resource.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/project.css" />
+
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/notifications.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
+	
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
@@ -39,12 +39,8 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
-
-<link rel="stylesheet" type="text/css"
-	href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
-
 <script type="text/javascript" charset="utf8"
-	src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+	src="<%=request.getContextPath()%>/resources/lib/datatables/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -53,13 +49,13 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<%@include file="../common/navigation.jspf"%>
 
-				<div class="manage-resource-container">
+				<div class="notifications-container">
 					<div class="container">
 						<div class="row">
 							<h2>My Notifications</h2>
 							<hr>
 							<div class="col-xs-6 col-sm-3">
-								<div id="accordion" class="panel panel-primary behclick-panel">
+								<div id="accordion" class="panel panel-primary">
 									<div class="panel-heading">
 										<h3 class="panel-title">Impact Launch.Space</h3>
 									</div>
@@ -183,7 +179,7 @@
 																	<button id="dele<%=id%>" type="submit" name="delete"
 																		class="btn btn-danger delete" onClick="del(this.id)"
 																		href="#">
-																		<i class="fa fa-trash"></i> Delete
+																		<i class="fa fa-trash" style="padding: 3px;"></i> 
 																	</button>
 																</p></td>
 
@@ -193,15 +189,7 @@
 												</tbody>
 											</table>
 
-											<div class="pull-right">
-												<ul class="pagination">
-													<li><a href="#">&laquo;</a></li>
-													<li><a href="#">1</a></li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">&raquo;</a></li>
-												</ul>
-											</div>
+											
 										</div>
 									</div>
 								</div>
