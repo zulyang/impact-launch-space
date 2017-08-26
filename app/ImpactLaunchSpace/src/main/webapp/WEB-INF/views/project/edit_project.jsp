@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/resource.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project/project.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
