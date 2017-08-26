@@ -11,20 +11,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create New Project</title>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project/project.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/project.js"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"/>
-<script src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
 
 </head>
 <body class="project">
@@ -72,13 +85,14 @@
 							</ul>
 						</div>
 
-						<form action="create-project" method="post" enctype="multipart/form-data">
+						<form action="create-project" method="post"
+							enctype="multipart/form-data">
 							<input type="submit" id="createProject" style="display: none" />
 							<div class="tab-content">
 								<div class="tab-pane active" role="tabpanel" id="step1">
 									<h3>Step 1</h3>
 									<p>Fill in basic information of new project</p>
-									
+
 									<div class="form-group row">
 										<label for="projectImage" class="col-sm-3 col-form-label">Image</label>
 										<div class="col-sm-9">
@@ -89,7 +103,7 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
 										<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
 										<div class="col-sm-9">
@@ -156,7 +170,7 @@
 										<div class="col-sm-9">
 											<textarea required id="projectDescription" value=""
 												name="projectDescription" class="form-control"
-												placeholder="A short summary of project" rows = "4"></textarea>
+												placeholder="A short summary of project" rows="4"></textarea>
 										</div>
 									</div>
 
@@ -199,8 +213,8 @@
 											</select> <br>
 										</div>
 									</div>
-									
-									
+
+
 									<hr />
 									<ul class="list-inline pull-right">
 										<li><button type="button" onclick="return checkStep1();"
@@ -216,8 +230,7 @@
 										<label for="projectVideo" class="col-sm-3 control-label">Project
 											Video</label>
 										<div class="col-sm-9">
-											<button type="btn" class="btn btn-info" value="submit">Upload
-												a video</button>
+											<button type="btn" class="btn btn-info" value="submit">Upload a video</button>
 										</div>
 										<br> <br>
 									</div>
@@ -243,9 +256,10 @@
 									<p>Indicate the resource(s) your project need</p>
 
 									<div id="resourcesNeeded" class="form-group row col-sm-9">
-										<div class="col-md-12" style="padding-top: 3rem;">
+										<div class="col-md-12" id="resourceRow1" style="padding-top: 3rem;">
 											<select required id="resourceCategory1"
-												name="resourceCategory" class="col-md-4 resourceCat" style= "width: 100%">
+												name="resourceCategory" class="col-md-4 resourceCat"
+												style="width: 100%">
 												<option value="" disabled selected>Select your
 													resource category</option>
 												<c:forEach items="${resource_category_list}" var="item">
@@ -259,8 +273,13 @@
 												style="padding-top: 3rem;" name="resourceDescription"
 												class="form-control col-md-4 resourceDes"
 												placeholder="Describe your resource here..."></textarea>
+											<button id="dele1" type="button" name="delete"
+												class="btn btn-danger delete" onClick="del(this.id)">
+												<i class="fa fa-trash"></i> Delete resource
+											</button>
 										</div>
 									</div>
+
 
 									<div class="col-sm-12">
 										<input id="addResource" class="btn btn-info" type="button"
@@ -272,7 +291,10 @@
 									<ul class="list-inline pull-right">
 										<li><button type="button"
 												class="btn btn-default prev-step">Previous</button></li>
-										<li><button type="submit" id="createProject" onclick="checkAllFields();" class="btn btn-success next-step createProject">Create Project</button></li>
+										<li><button type="submit" id="createProject"
+												onclick="checkAllFields();"
+												class="btn btn-success next-step createProject">Create
+												Project</button></li>
 									</ul>
 								</div>
 								<div class="tab-pane" role="tabpanel" id="complete">
@@ -292,11 +314,11 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			window.setInterval(function(){
+			window.setInterval(function() {
 				checkAllFields();
-				}, 1000);
+			}, 1000);
 		});
-		
+
 		function uploadPicture() {
 			document.getElementById("uploadPicture").click();
 		}
@@ -306,21 +328,22 @@
 			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
 			event.preventDefault();
 		}
-		
+
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
 		}
 		function docSub(obj) {
 			var fileList = document.getElementById("uploadFile").files;
 			var allFileNames;
-			
-			for(var i = 0; i < fileList.length; i++) {
+
+			for (var i = 0; i < fileList.length; i++) {
 				var fileName = fileList[i].name.split("\\");
 				allFileNames += (fileName + "<br>");
 			}
-			
-			document.getElementById("document_upload_button").innerHTML = allFileNames.substring(9);
-			event.preventDefault();	
+
+			document.getElementById("document_upload_button").innerHTML = allFileNames
+					.substring(9);
+			event.preventDefault();
 		}
 	</script>
 
@@ -335,21 +358,25 @@
 			var totalRows = id.substring(16);
 
 			for (count = 1; count <= totalRows; count++) {
-				var resourceCat = document.getElementById("resourceCategory" + count).value;
-				var resourceName = document.getElementById("resourceName" + count).value;
-				var resourceDes = document.getElementById("resourceDescription" + count).value;
+				var resourceCat = document.getElementById("resourceCategory"
+						+ count).value;
+				var resourceName = document.getElementById("resourceName"
+						+ count).value;
+				var resourceDes = document.getElementById("resourceDescription"
+						+ count).value;
 
-				if(resourceCat === "" || resourceName === "" || resourceDes === ""){
+				if (resourceCat === "" || resourceName === ""
+						|| resourceDes === "") {
 					emptyResourceFields = true;
 					$('.createProject').prop('disabled', true);
 					return false;
 				}
 			}
-			
-			if(!emptyResourceFields) {
+
+			if (!emptyResourceFields) {
 				$('.createProject').prop('disabled', false);
 			}
-			
+
 			return true;
 		}
 
@@ -429,9 +456,12 @@
 						function() {
 							var lastRow = $('#resourcesNeeded').closest(
 									'#resourcesNeeded').find("div:last-child");
+							var rowID = lastRow.attr('id').substring(11);
+							
 							var lastRowInputs = lastRow.find('input');
 							var lastRowSelect = lastRow.find('select');
 							var lastRowTextarea = lastRow.find('textarea');
+							var lastRowButton = lastRow.find('button');
 
 							var isClone = false;
 
@@ -458,15 +488,15 @@
 									checkTextarea = true;
 								}
 							});
-							
-							if(!checkInput || !checkSelect || !checkTextarea){
+
+							if (!checkInput || !checkSelect || !checkTextarea) {
 								alert("Please fill in all the fields for the resources you need.");
 								return false;
 							}
 
 							var cloned = lastRow.clone();
 							cloned
-									.find('input, select, textarea')
+									.find('input, select, textarea, button')
 									.each(
 											function() {
 												var id = $(this).attr('id');
@@ -484,9 +514,33 @@
 							cloned.find("input[type='text']").val('');
 							cloned.find("select").val('');
 							cloned.find("textarea").val('');
+							cloned.attr('id', "resourceRow" + (parseInt(rowID, 10) + 1));
 							cloned.insertAfter(lastRow);
 
 						});
+		
+		function del(id){
+			var num = id.substring(4);
+			
+			var resourceCat = document.getElementById("resourceCategory"
+					+ num).value;
+			var resourceName = document.getElementById("resourceName"
+					+ num).value;
+			var resourceDes = document.getElementById("resourceDescription"
+					+ num).value;
+			
+			if (resourceCat === "" || resourceName === "" || resourceDes === "") {
+				alert("You cannot delete a resource with empty fields.");
+				return false;
+			}
+			
+			if (confirm("Are you sure you want to delete this resource?") == true) {
+				$('#resourceRow' + num).remove();
+				return true;
+			} else {
+				return false;
+			}
+		}
 	</script>
 
 	<script>
