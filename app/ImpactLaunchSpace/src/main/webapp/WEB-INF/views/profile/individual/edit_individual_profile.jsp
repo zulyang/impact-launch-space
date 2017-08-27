@@ -40,12 +40,15 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit Individual Profile Form</div>
 						<div class="panel-body">
+							<div class="col-lg-12 required" style="float: right !important;">*
+								fields are required</div>
+
 							<div class="edit_org_pic" style="display: inline-block">
 								<form action="edit-individual-profile-pic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${username}"
-										class="circle_edit_ind_profile_image">
-									<label for="editChooseIndPic"
+										class="circle_edit_ind_profile_image"> <label
+										for="editChooseIndPic"
 										class="form-control btn btn-info edit_org_profile_save">Update
 										your profile picture</label> <input type="file" name="profilePicture"
 										style="display: inline-block; visibility: hidden;"
@@ -61,7 +64,10 @@
 								class="form-horizontal edit_ind_profile_container"
 								action="editprofile-individual" method="post">
 								<div class="form-group">
-									<label for="editIndFirstName" class="col-sm-3 font_labels">First Name*</label>
+									<label for="editIndFirstName" class="col-sm-3 font_labels">First
+										Name<span class="required">*</span>
+									</label>
+
 									<div class="col-sm-9">
 										<input type="text" id="editIndFirstName" required
 											value="${individual.getFirst_name()}" name="firstName"
@@ -70,7 +76,10 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editIndLastName" class="col-sm-3 font_labels">Last Name*</label>
+									<label for="editIndLastName" class="col-sm-3 font_labels">Last
+										Name<span class="required">*</span>
+									</label>
+
 									<div class="col-sm-9">
 										<input type="text" required
 											value="${individual.getLast_name()}" name="lastName"
@@ -79,7 +88,10 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editJobTitle" class="col-sm-3 font_labels">Job Title*</label>
+									<label for="editJobTitle" class="col-sm-3 font_labels">Job
+										Title<span class="required">*</span>
+									</label>
+
 									<div class="col-sm-9">
 										<input type="text" value="${individual.getJobTitle()}"
 											name="jobTitle" class="form-control edit_profileField"
@@ -112,7 +124,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editDob" class="col-sm-3 font_labels">Date Of Birth*</label>
+                                    <label for="editDob" class="col-sm-3 font_labels">Date Of Birth<span class="required">*</span></label>
+
 									<div class="col-sm-9">
 										<input type="date" value="${individual.getDateOfBirth()}"
 											name="dateOfBirth" required
@@ -121,7 +134,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editCountry" class="col-sm-3 font_labels">Country*</label>
+                                    <label for="editCountry" class="col-sm-3 font_labels">Country<span class="required">*</span></label>
+
 									<div class="col-sm-9">
 										<select
 											class="js-example-basic-single-country form-control edit_profileField"
@@ -143,7 +157,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editEmail" class="col-sm-3 font_labels">Email*</label>
+                                    <label for="editEmail" class="col-sm-3 font_labels">Email<span class="required">*</span></label>
+
 									<div class="col-sm-9">
 										<input type="text" value="${user.getEmail()}" name="email"
 											class="form-control edit_profileField" id="editEmail"
@@ -173,7 +188,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editMinHour" class="col-sm-3 font_labels">Min	Hours*</label>
+                                    <label for="editMinHour" class="col-sm-3 font_labels">Min    Hours<span class="required">*</span></label>
+
 									<div class="col-sm-9">
 										<input type="number" required
 											value="${individual.getMinimumVolunteerHours()}"
@@ -183,7 +199,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editMaxHour" class="col-sm-3 font_labels">Max	Hours*</label>
+                                    <label for="editMaxHour" class="col-sm-3 font_labels">Max    Hours<span class="required">*</span></label>
+
 									<div class="col-sm-9">
 										<input type="number" required
 											value="${individual.getMaximumVolunteerHours()}"
@@ -221,9 +238,11 @@
 					<div class="panel panel-default">
 						<div class="panel-heading font_labels">Experience</div>
 						<div class="panel-body">
-							<br> I have expertise in these Job Sectors: <br> <select required
+							<br> I have expertise in these Job Sectors: <br> <select
+								required
 								class="js-example-basic-single-jobsectorindividual-required"
-								name="selected_jobsector1" id="jsIndi1Value" style="width: 49%">
+                                name="selected_jobsector1" id="jsIndi1Value" style="width: 49%; margin-bottom: 2rem;">
+
 								<option value=""></option>
 								<c:forEach items="${job_sector_list}" var="item">
 									<c:choose>
@@ -239,14 +258,16 @@
 							</select> <input type="number" placeholder="Years of Experience"
 								id="js1experience" name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}"
-								style="width: 49%">
+                                style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+
 
 							<c:choose>
 								<c:when test="${jobSectorIndividual2 != null }">
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
 										name="selected_jobsector2" id="jsIndi2aValue"
-										style="width: 49%">
+                                        style="width: 49%; margin-bottom: 2rem;">
+
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
@@ -265,13 +286,14 @@
 										placeholder="Years of Experience"
 										name="selected_jobsector2_years"
 										value="${jobSectorIndividual2.getYearsOfExperience()}"
-										style="width: 49%">
+                                        style="width: 49%; margin-bottom: 2rem;">
+
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
 										name="selected_jobsector2" id="jsIndi2bValue"
-										style="width: 49%">
+										style="width: 49%; margin-bottom: 2rem;">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -281,7 +303,8 @@
 									</select>
 									<input type="number" id="js2experienceB"
 										placeholder="Years of Experience"
-										name="selected_jobsector2_years" style="width: 49%">
+                                        name="selected_jobsector2_years" style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+
 								</c:otherwise>
 							</c:choose>
 
@@ -290,7 +313,7 @@
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
 										name="selected_jobsector3" id="jsIndi3aValue"
-										style="width: 49%">
+										style="width: 49%; margin-bottom: 2rem;">
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 											<c:choose>
@@ -309,13 +332,15 @@
 										placeholder="Years of Experience"
 										name="selected_jobsector3_years"
 										value="${jobSectorIndividual3.getYearsOfExperience()}"
-										style="width: 49%">
+                                        style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
 										name="selected_jobsector3" id="jsIndi3bValue"
-										style="width: 49%">
+                                        style="width: 49%; margin-bottom: 2rem;">
+
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
 
@@ -325,7 +350,8 @@
 									</select>
 									<input type="number" id="js3experienceB"
 										placeholder="Years of Experience"
-										name="selected_jobsector3_years" style="width: 49%">
+                                        name="selected_jobsector3_years" style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+
 								</c:otherwise>
 							</c:choose>
 
@@ -336,10 +362,13 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Interests</div>
 						<div class="panel-body">
-							I prefer to work in:* <select
+                            I prefer to work in:<span class="required">*</span> 
+                            <select
+
 								class="js-example-basic-multiple-preferredcountries edit_profileField"
 								multiple="multiple" name="selected_preferredcountries"
-								id="preferredCountries" style="width: 100%" required>
+                                id="preferredCountries" style="width: 100%; margin-bottom: 2rem;" required>
+
 								<c:forEach items="${country_list}" var="item">
 									<c:choose>
 										<c:when
@@ -352,7 +381,8 @@
 									</c:choose>
 								</c:forEach>
 
-							</select> <br> Preferred Project Areas:* <br> <select
+                            </select> <br> Preferred Project Areas:<span class="required">*</span> <br> <select
+
 								class="js-example-basic-multiple-preferredprojectareas edit_profileField"
 								multiple="multiple" name="selected_preferredprojectareas"
 								style="width: 100%" id="preferredAreas" required>
@@ -369,7 +399,8 @@
 								</c:forEach>
 
 
-							</select> <br> Preferred Job Sectors:* <br> <select
+                            </select> <br> Preferred Job Sectors:<span class="required">*</span> <br> <select
+
 								class="js-example-basic-multiple-preferredjobsectors edit_profileField"
 								multiple="multiple" name="selected_preferredjobsectors"
 								id="preferredJobSectors" style="width: 100%" required>
@@ -410,7 +441,8 @@
 								</c:forEach>
 								<tr>
 									<div class="col-lg-12 custom-file-upload" id="documents">
-										<div id="document_upload_button" onclick="uploadFile()">Upload your documents</div>
+                                        <div id="document_upload_button" class="document_upload_button" onclick="uploadFile()">Upload your documents</div>
+
 										<div style='height: 0px; width: 0px; overflow: hidden;'>
 											<input id=uploadFile name="documents" multiple type="file"
 												value="upload" onchange="docSub(this)" />
@@ -420,11 +452,10 @@
 							</table>
 						</div>
 					</div>
-					<p style="color: red">* fields are required.</p>
 
-					<br> <br>
+					<br>
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-9">
+                        <div class="col-lg-12">
 							<input type="submit"
 								class="btn btn-success edit_org_profile_save"
 								value="Update details" />
@@ -487,27 +518,30 @@
 			var birthYear = parseInt(year);
 			var currentYear = new Date().getFullYear();
 			var age = currentYear - birthYear;
-			
-			if(age > 117) {
+
+			if (age > 117) {
 				alert('Your age cannot be greater than 100 years.');
 				return false;
 			}
-			
+
 			var date = new Date();
-			var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-			
+			var today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-"
+					+ date.getDate();
+
 			var currentDate = Date.parse(today.replace(/-/g, " "));
 			var pickedDate = Date.parse(dob.replace(/-/g, " "));
-			
+
 			if (pickedDate >= currentDate) {
 				alert('Your birth date cannot today or a future date.');
 				return false;
 			}
 
 			var contactNumber = document.getElementById("editContact").value;
-			
-			if(contactNumber !== ""){
-				if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20 || contactNumber.length < 8) {
+
+			if (contactNumber !== "") {
+				if (/^\d+$/.test(contactNumber) === false
+						|| contactNumber.length > 20
+						|| contactNumber.length < 8) {
 					alert('Please enter a minimum of 8 numbers and a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
 					return false;
 				}
@@ -743,19 +777,19 @@
 			}
 
 			var job_sector_1;
-			if(jsIndi1 !== null){
+			if (jsIndi1 !== null) {
 				job_sector_1 = jsIndi1.value;
 			}
-			
+
 			var job_sector_2;
-			if(jsIndi2A === null){
+			if (jsIndi2A === null) {
 				job_sector_2 = jsIndi2B.value;
 			} else {
 				job_sector_2 = jsIndi2A.value;
 			}
-			
+
 			var job_sector_3;
-			if(jsIndi3A === null){
+			if (jsIndi3A === null) {
 				job_sector_3 = jsIndi3B.value;
 			} else {
 				job_sector_3 = jsIndi3A.value;
@@ -767,14 +801,14 @@
 					return false;
 				}
 			}
-			
+
 			if (job_sector_1 !== "" && job_sector_3 !== "") {
 				if (job_sector_1 === job_sector_3) {
 					alert('Please do not select the same job sector.');
 					return false;
 				}
 			}
-			
+
 			if (job_sector_3 !== "" && job_sector_2 !== "") {
 				if (job_sector_3 === job_sector_2) {
 					alert('Please do not select the same job sector.');

@@ -92,11 +92,13 @@
 								<div class="tab-pane active" role="tabpanel" id="step1">
 									<h3>Step 1</h3>
 									<p>Fill in basic information of new project</p>
+                                    <p class="required">* fields are required </p>
 
 									<div class="form-group row">
 										<label for="projectImage" class="col-sm-3 col-form-label">Image</label>
 										<div class="col-sm-9">
-											<div id="profile_upload_button" onclick="uploadPicture()">Upload a profile picture</div>
+                                            <div id="profile_upload_button" class="profile_upload_button" onclick="uploadPicture()">Upload a project display picture</div>
+
 											<div style='height: 0px; width: 0px; overflow: hidden;'>
 												<input id="uploadPicture" name="projectImage" type="file"
 													value="upload" onchange="sub(this)" />
@@ -105,7 +107,8 @@
 									</div>
 
 									<div class="form-group row">
-										<label for="projectTitle" class="col-sm-3 col-form-label">Title</label>
+                                        <label for="projectTitle" class="col-sm-3 col-form-label">Title<span class="required">*</span></label>
+
 										<div class="col-sm-9">
 											<input required type="text" id="projectTitle"
 												name="projectTitle" class="form-control">
@@ -113,7 +116,8 @@
 									</div>
 
 									<div class="form-group row">
-										<label for="projectPurpose" class="col-sm-3 col-form-label">Purpose</label>
+                                        <label for="projectPurpose" class="col-sm-3 col-form-label">Purpose<span class="required">*</span></label>
+
 										<div class="col-sm-9">
 											<input required type="text" id="projectPurpose"
 												name="projectPurpose" class="form-control"
@@ -123,7 +127,8 @@
 
 									<div class="form-group row">
 										<label for="socialImpactType" class="col-sm-3 col-form-label">Social
-											Impact Type</label>
+                                            Impact Type<span class="required">*</span></label>
+
 										<div class="col-sm-9">
 											<select required id="socialImpact"
 												class="js-example-basic-multiple-targetprojectareas create-new-project-select2 form-control"
@@ -137,7 +142,8 @@
 
 									<div class="form-group row">
 										<label for="projectOwner" class="col-sm-3 col-form-label">Project
-											Owner</label>
+                                            Owner<span class="required">*</span></label>
+
 										<div class="col-sm-9" style="display: block; height: 34px;">
 											<input required type="radio" id="radio_indi"
 												value="individual" name="projectOwner" /> Myself <input
@@ -151,7 +157,8 @@
 
 									<div class="form-group row">
 										<label for="projectLocation" class="col-sm-3 col-form-label">Project
-											Location</label>
+                                            Location<span class="required">*</span></label>
+
 										<div class="col-sm-9">
 											<select required id="projectLocation"
 												class="js-example-basic-single-projectlocation"
@@ -166,7 +173,8 @@
 
 									<div class="form-group row">
 										<label for="projectDescription"
-											class="col-sm-3 col-form-label">Project Description</label>
+                                            class="col-sm-3 col-form-label">Project Description<span class="required">*</span></label>
+
 										<div class="col-sm-9">
 											<textarea required id="projectDescription" value=""
 												name="projectDescription" class="form-control"
@@ -176,20 +184,24 @@
 
 									<div class="form-group row">
 										<label for="projectPrivacy" class="col-sm-3 col-form-label">Project
-											Privacy</label>
+                                            Privacy<span class="required">*</span> <i class="fa fa-info-circle info_tooltip" rel="tooltip" title="A secret project hides it from everyone except project owner and it cannot be searched. A closed project hides it from outsiders (only project members can access). "></i></label>
+
 										<div class="col-sm-9" style="display: block; height: 34px;">
 											<input required type="radio" id="projectPrivacy1"
 												value="public" name="projectPrivacy" /> Public <input
 												required type="radio" id="projectPrivacy2" value="hidden"
-												name="projectPrivacy" /> Hide from All <input required
+                                                name="projectPrivacy" /> Secret <input required
+
 												type="radio" id="projectPrivacy3" value="private"
-												name="projectPrivacy" /> Hide from Outsiders
+                                                name="projectPrivacy" /> Closed
+
 										</div>
 									</div>
 
 									<div class="form-group row">
 										<label for="projectDuration" class="col-sm-3 col-form-label">Estimated
-											Duration</label>
+                                            Duration<span class="required">*</span>    </label>
+
 										<div class="col-sm-9">
 											<input required type="number" id="projectDuration" value=""
 												name="projectDuration" class="form-control"
@@ -223,7 +235,8 @@
 									</ul>
 								</div>
 								<div class="tab-pane" role="tabpanel" id="step2">
-									<h3>Step 2</h3>
+                                    <h3>Step 2 (optional)</h3>
+
 									<p>Upload relevant materials for others to know more about
 										your project</p>
 									<div class="form-group row">
@@ -258,24 +271,24 @@
 									<div id="resourcesNeeded" class="form-group row col-sm-9">
 										<div class="col-md-12" id="resourceRow1" style="padding-top: 3rem;">
 											<select required id="resourceCategory1"
-												name="resourceCategory" class="col-md-4 resourceCat"
-												style="width: 100%">
+                                                name="resourceCategory" class="col-md-4 form-control resourceCat" style= "width: 100%; margin-bottom: 2rem;">
+
 												<option value="" disabled selected>Select your
 													resource category</option>
 												<c:forEach items="${resource_category_list}" var="item">
 													<option value="${item.getSkillset()}">${item.getSkillset()}</option>
 												</c:forEach>
 											</select> <input required id="resourceName1" name="resourceName"
-												style="padding-top: 1rem;"
+												style="padding-top: 1rem; margin-bottom: 2rem;"
 												class="form-control col-md-4 resourceName"
 												placeholder="What resources do you need?" type="text" />
 											<textarea required id="resourceDescription1"
-												style="padding-top: 3rem;" name="resourceDescription"
+												style="padding-top: 3rem; margin-bottom: 2rem;" name="resourceDescription"
 												class="form-control col-md-4 resourceDes"
 												placeholder="Describe your resource here..."></textarea>
 											<button id="dele1" type="button" name="delete"
-												class="btn btn-danger delete" onClick="del(this.id)">
-												<i class="fa fa-trash"></i> Delete resource
+												class="btn btn-danger pull-right delete" onClick="del(this.id)">
+												<i class="fa fa-trash"></i> Remove this resource
 											</button>
 										</div>
 									</div>
@@ -593,6 +606,14 @@
 			$(".js-example-basic-single-resourcecategory").select2({
 				placeholder : "Select an expertise/category: ",
 				allowClear : true
+			});
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("[rel=tooltip]").tooltip({
+				placement : 'right'
 			});
 		});
 	</script>

@@ -39,9 +39,13 @@
 					<form method="post" action="setup-organization" onsubmit="return checkFields();"
 						enctype="multipart/form-data"
 						class="form-horizontal org_profile_form">
+						                        
+                        <h3 class="info_header">Company Information</h3>
+						
 						<div class="form-group">
 							<div class="col-lg-12">
-								<div id="profile_upload_button"
+                                <div id="profile_upload_button" class="profile_upload_button"
+
 									style="margin-left: auto; margin-right: auto;"
 									onclick="uploadFile()">Upload a display picture</div>
 								<div style='height: 0px; width: 0px; overflow: hidden;'>
@@ -141,7 +145,8 @@
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple").select2({
-			placeholder : "Select a country"
+            placeholder : "Select country of operation"
+
 		});
 	</script>
 	<script type="text/javascript">

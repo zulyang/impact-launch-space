@@ -95,7 +95,7 @@ span.round-tab:hover {
 .wizard li.active:after {
 	content: " ";
 	position: absolute;
-	left: 50%;
+	left: 53%;
 	opacity: 1;
 	margin: 0 auto;
 	bottom: 0px;
@@ -469,20 +469,3 @@ span.round-tab:hover {
 textarea {
 	resize: vertical;
 }
-
-#profile_upload_button { 
-  position: relative; 
-  padding: 10px; 
-  -webkit-border-radius: 5px; 
-  -moz-border-radius: 5px; 
-  border: 1px solid #ccc; 
-  text-align: center; 
-  background-color: #5199ff; 
-  cursor: pointer; 
-  max-width: 400px; 
-  white-space: pre-wrap; /* CSS3 */ 
-  white-space: -moz-pre-wrap; /* Firefox */ 
-  white-space: -pre-wrap; /* Opera <7 */ 
-  white-space: -o-pre-wrap; /* Opera 7 */ 
-  word-wrap: break-word; 
-} 

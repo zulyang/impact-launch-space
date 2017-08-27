@@ -7,18 +7,10 @@
 	margin-top: 1rem;
 }
 
-#profile_upload_button {
-	position: relative;
-	padding: 10px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border: 1px solid #ccc;
-	text-align: center;
-	background-color: #5199ff;
-	cursor: pointer;
-	white-space: pre-wrap; /* CSS3 */
-	white-space: -moz-pre-wrap; /* Firefox */
-	white-space: -pre-wrap; /* Opera <7 */
-	white-space: -o-pre-wrap; /* Opera 7 */
-	word-wrap: break-word;
+.info_header{
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #ccc;
+	text-transform: uppercase;
+	font-size: 15pt;
+	font-weight: bold;
 }
