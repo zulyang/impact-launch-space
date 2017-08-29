@@ -45,6 +45,12 @@
 
 <body>
 Hi ${username} , welcome to the Project Management Space for ${projectName}
+
+value="${todoList.size()}"
+<%
+
+
+%>
 <div>
 <ul id="sortable1" class="connectedSortable">
   <li class="ui-state-default">Item 1</li>

@@ -61,6 +61,34 @@ public class ProjectManagementController {
 		model.addAttribute("user", username);
 		model.addAttribute("cards", projectCards);
 		model.addAttribute("projectName", project_name);
+		int size = projectCards.size(); 
+		
+		//Check the cards attribute and sort by status
+		ArrayList<Card> todoList = new ArrayList<Card>();
+		ArrayList<Card> inprogressList = new ArrayList<Card>();
+		ArrayList<Card> doneList = new ArrayList<Card>();
+		
+		for(int i = 0; i< projectCards.size(); i++){
+			Card c = projectCards.get(i);
+			if(c.getStatus().equals("todo")){
+				todoList.add(c);
+			}
+			
+			if(c.getStatus().equals("inprogress")){
+				inprogressList.add(c);
+			}
+			
+			if(c.getStatus().equals("done")){
+				doneList.add(c);
+			}
+			
+		}
+		
+		//Check the ordering of the card and display based on ordering. 
+		model.addAttribute("todoList", todoList);
+		model.addAttribute("inprogressList", inprogressList);
+		model.addAttribute("doneList", doneList);
+		
 		return "projectmanagement";
 	}
 	
