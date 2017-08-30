@@ -151,11 +151,11 @@
 																		disabled="true" />
 																		${item.getOffered_resource_name() }
 																</p></td>
-															<td><p><%-- 
+															<td><p>
 																	<input class="editable-field form-control"
 																		id="status<%=id%>" type="hidden"
 																		value="${item.getRequest_status() }" disabled="true" />
-																		${item.getRequest_status() } --%>
+																		
 																		<c:choose>
     <c:when test="${item.getRequest_status()=='Cancelled'}">
          <span class="label label-warning" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>

@@ -152,9 +152,9 @@
 																		${item.getOffered_resource_name() }
 																</p></td>
 															<td><p>
-																	<%-- <input class="editable-field form-control"
+																	<input class="editable-field form-control"
 																		id="status<%=id%>" type="hidden"
-																		value="${item.getRequest_status() }" disabled="true" />${item.getRequest_status() } --%>
+																		value="${item.getRequest_status() }" disabled="true" />
 															
 															
 															<c:choose>
