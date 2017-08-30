@@ -269,7 +269,7 @@
 	
 		$('#inboxtable').DataTable( {
 			"order": [[ 2, "desc" ]],
-		
+			responsive: true,
 			 "columnDefs": [
 	            {
 	                "targets": [ 3 ],
