@@ -220,20 +220,16 @@
 										<div id="resourcesNeeded"
 											class="form-group row col-md-6 col-lg-6 col-xs-9">
 											<div class="col-md-12">
-												<p class="modalSubheading">From:</p>
+												<p class="modalSubheading">From</p>
 												<input id="modalSender" name="modalSender"
 													class="form-control  modalNotificationsField"
 													placeholder="Sender Username here" type="text" readonly />
-												<p>
-													<b>Subject:</b>
-												</p>
+												<p class="modalSubheading">Subject</p>
 												<input id="modalNotificationSubject"
 													name="modalNotificationSubject"
 													class="form-control  modalNotificationsField"
 													placeholder="Message subject here" type="text" readonly />
-												<p>
-													<b>Message:</b>
-												</p>
+												<p class="modalSubheading">Message</p>
 												<textarea id="modalNotificationsMessage"
 													name="modalNotificationsMessage"
 													class="form-control  modalNotificationsField"
@@ -269,7 +265,7 @@
 	
 		$('#inboxtable').DataTable( {
 			"order": [[ 2, "desc" ]],
-		
+			responsive: true,
 			 "columnDefs": [
 	            {
 	                "targets": [ 3 ],

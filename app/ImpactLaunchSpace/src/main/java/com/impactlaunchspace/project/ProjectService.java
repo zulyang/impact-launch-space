@@ -119,7 +119,13 @@ public class ProjectService {
 		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
 		return projectDAO.retrieveProject(project_name, project_proposer);
 	}
-
+	
+	public ArrayList<Project> retrieveProjectByUser(String username) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
+		return projectDAO.retrieveProjectByUser(username);
+	}
+	
 	public ArrayList<ProjectTargetArea> retrieveTargetProjectAreas(String project_name, String project_proposer) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectTargetAreaDAO projectTargetAreaDAO = (ProjectTargetAreaDAO) context.getBean("projectTargetAreaDAO");

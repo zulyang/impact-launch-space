@@ -143,4 +143,11 @@ public class RequestService {
 		projectUserRequestDAO.cancelRequest(project_name, requested_resource_category, requested_resource_name, project_proposer, resource_offerer, offered_resource_category, offered_resource_name);
 
 	}
+	
+	public void tagProjectRequestedResource(String resource_name, String confirmed_offerer, String project_name, String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
+		projectRequestedResourceDAO.tagResourceOfferer(project_name, resource_name, project_proposer, confirmed_offerer);
+		
+	}
 }
