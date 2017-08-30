@@ -92,22 +92,34 @@ public class ProjectManagementController {
 		return "projectmanagement";
 	}
 	
-	@RequestMapping(value = "/create-card", method = RequestMethod.GET)
-	public String createCard(@RequestParam("project-name") String project_name,
-			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model){
-		String username = (String) request.getSession().getAttribute("username");
-		//retrieve cards from database. 
-		return "projectmanagement";
+	
+	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
+	public void addCard(@RequestParam String modalCardTitle,
+			@RequestParam String modalCardDescription, @RequestParam String tags, @RequestParam int board_id, 
+			@RequestParam int card_order, HttpServletRequest request, ModelMap model){
+		
+		String username = (String) request.getSession().getAttribute("username"); //owner
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); //timestamp
+		
+		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, board_id, card_order, username, timestamp);
 	}
 	
 	@RequestMapping(value = "/edit-card", method = RequestMethod.GET)
-	public String editCard(@RequestParam("project-name") String project_name,
-			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model){
-		String username = (String) request.getSession().getAttribute("username");
-		//retrieve cards from database. 
-		return "projectmanagement";
+	public void editCard(@RequestParam String modalCardTitle,
+			@RequestParam String modalCardDescription, @RequestParam String status, @RequestParam String tags, 
+			@RequestParam int card_order, HttpServletRequest request, ModelMap model){
+		
+		String username = (String) request.getSession().getAttribute("username"); //owner
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); //timestamp
+	
 	}
 	
+	@RequestMapping(value = "/delete-card", method = RequestMethod.GET)
+	public void deleteCard(@RequestParam Card c, HttpServletRequest request, ModelMap model){		
+		
+		int card_id = c.getCard_id();
+		pmService.deleteCard(card_id);
+	}
 	
 
 }

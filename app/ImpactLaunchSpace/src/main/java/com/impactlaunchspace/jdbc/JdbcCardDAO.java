@@ -39,7 +39,7 @@ public class JdbcCardDAO implements CardDAO{
 		// TODO Auto-generated method stub
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		String sql = "INSERT INTO PROJECT_CARD "
-				+ "(board_id, title, description, owner, date_created, tags, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				+ "(board_id, title, description, owner, date_created, tags, status, order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		
 		try {
@@ -52,6 +52,7 @@ public class JdbcCardDAO implements CardDAO{
 			ps.setTimestamp(5, card.getDate_created());
 			ps.setString(6,card.getTags());
 			ps.setString(7, card.getStatus());
+			ps.setInt(8, card.getCard_order());
 			ps.close();
 			
 		} catch (SQLException e) {
@@ -110,10 +111,10 @@ public class JdbcCardDAO implements CardDAO{
 			Card card = null;
 			ResultSet rs = ps.executeQuery();
 	
-			if (rs.next()) {
+			while (rs.next()) {
 				card = new Card(rs.getInt("card_id"), rs.getInt("board_id"),
 						rs.getString("title"), rs.getString("description"), rs.getString("owner"),
-						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("status")
+						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("status"), rs.getInt("order")
 						);
 				
 				toReturn.add(card);
@@ -133,5 +134,31 @@ public class JdbcCardDAO implements CardDAO{
 			}
 		}
 	}
+	
+	//Delete Card 
+	@Override
+	public void delete(int card_id) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		String sql = "DELETE FROM project_card WHERE card_id = ?";
+		Connection conn = null;
 
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, card_id);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }
