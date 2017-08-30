@@ -5,11 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Search For Project</title>
+<title>My Projects Page</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
+	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/explore.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project/my_projects.css" />
 <link rel="stylesheet"
@@ -32,34 +34,63 @@
 				<!--navigation bar  -->
 				<%@include file="../common/navigation.jspf"%>
 
-				<main>
-  
-				  <input id="tab1" type="radio" name="tabs" checked>
-				  <label for="tab1">Created Projects</label>
-				    
-				  <input id="tab2" type="radio" name="tabs">
-				  <label for="tab2">Joined Projects</label>
-				    
-				    
-				  <section id="content1">
-				    <p>
-				      Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
-				    </p>
-				    <p>
-				      Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin meatloaf swine ground round venison.
-				    </p>
-				  </section>
-				    
-				  <section id="content2">
-				    <p>
-				      Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
-				    </p>
-				    <p>
-				      Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
-				    </p>
-				  </section>
-				        
-				</main>
+				<main> <input id="tab1" type="radio" name="tabs" checked>
+				<label for="tab1">Created Projects</label> <input id="tab2"
+					type="radio" name="tabs"> <label for="tab2">Joined
+					Projects</label> 
+					
+				<section id="content1">
+				<c:if test="${projectsByUser.size() == 0 }">
+					<p>
+						You have not created any projects yet.
+					</p>
+				</c:if>
+				<c:forEach items="${projectsByUser}" var="item"> 
+				<p>
+				<div class="col m4">
+					<div class="card">
+						<div class="card-image">
+							<img src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+							<span class="card-title">${item.getProject_name()}</span>
+						</div>
+						<div class="projectStatus">${item.getProject_status()}</div>
+						<div class="card-content">${item.getDescription()}
+							<p>
+							<hr />
+							<i class="fa fa-clock-o"></i>${item.getDuration()}<br>
+							<i class="fa fa-globe"></i>${item.getLocation()}<br>
+							<i class="fa fa-user-circle-o">${item.getProject_proposer()}</i>
+							</p>
+						</div>
+						<a
+							href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+							<div class="card-action">View Project</div>
+						</a>
+					</div>
+				</div>
+				</p>
+				</c:forEach>
+
+				</section> <section id="content2">
+				<p>Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky
+					drumstick fatback boudin ball tip turducken. Pork belly meatball
+					t-bone bresaola tail filet mignon kevin turkey ribeye shank flank
+					doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin
+					turkey rump ball tip sirloin frankfurter meatloaf boudin brisket
+					ham hock. Hamburger venison brisket tri-tip andouille pork belly
+					ball tip short ribs biltong meatball chuck. Pork chop ribeye tail
+					short ribs, beef hamburger meatball kielbasa rump corned beef
+					porchetta landjaeger flank. Doner rump frankfurter meatball
+					meatloaf, cow kevin pork pork loin venison fatback spare ribs
+					salami beef ribs.</p>
+				<p>Jerky jowl pork chop tongue, kielbasa shank venison. Capicola
+					shank pig ribeye leberkas filet mignon brisket beef kevin
+					tenderloin porchetta. Capicola fatback venison shank kielbasa,
+					drumstick ribeye landjaeger beef kevin tail meatball pastrami
+					prosciutto pancetta. Tail kevin spare ribs ground round ham ham
+					hock brisket shoulder. Corned beef tri-tip leberkas flank sausage
+					ham hock filet mignon beef ribs pancetta turkey.</p>
+				</section> </main>
 
 			</div>
 		</div>

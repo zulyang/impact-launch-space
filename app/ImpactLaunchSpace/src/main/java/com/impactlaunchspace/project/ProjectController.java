@@ -424,21 +424,6 @@ public class ProjectController {
 		return "project/" + "view_project_private";
 	}
 
-	@RequestMapping(value = "/edward-processajax", method = RequestMethod.GET)
-	public void showAjaxPage2(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			RedirectAttributes redirectAttributes) throws IOException {
-		String name = null;
-		name = "Hello " + request.getParameter("user");
-		if (request.getParameter("user") != null) {
-			if (request.getParameter("user").toString().equals("")) {
-				name = "Hello User";
-			}
-		}
-		response.setContentType("text/plain");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(name);
-	}
-
 	@RequestMapping(value = "/saveProjectResource", method = RequestMethod.POST)
 	public void saveUserResource(@RequestParam String oldProjectTitle, @RequestParam String resourceName,
 			@RequestParam String resourceCategory, @RequestParam String resourceDescription,
@@ -546,7 +531,13 @@ public class ProjectController {
 		return "editIndiProfileForm";
 	}
 	@RequestMapping(value = "/my-projects", method = RequestMethod.GET)
-	public String showMyProjects(ModelMap model) {
+	public String showMyProjects(HttpServletRequest request, ModelMap model) {
+		String username = (String) request.getSession().getAttribute("username");
+
+		ArrayList<Project> projectsByUser = new ArrayList<Project>(); 
+		projectsByUser = projectService.retrieveProjectByUser(username);
+		model.put("projectsByUser", projectsByUser);
+		
 		return "project/" + "my_projects";
 	}
 }

@@ -29,7 +29,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 	
 	public void insert(ProjectRequestedResource projectRequestedResource){
 		String sql = "INSERT INTO PROJECT_REQUESTED_RESOURCES "
-				+ "(project_name, resource_category, resource_name, request_description, project_proposer) VALUES (?, ?, ?, ?, ?)";
+				+ "(project_name, resource_category, resource_name, request_description, project_proposer, confirmed_offerer) VALUES (?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -40,6 +40,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			ps.setString(3, projectRequestedResource.getResource_name());
 			ps.setString(4, projectRequestedResource.getRequest_description());
 			ps.setString(5, projectRequestedResource.getProject_proposer());
+			ps.setString(6, projectRequestedResource.getConfirmed_offerer());
 
 			ps.executeUpdate();
 			ps.close();
@@ -72,7 +73,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				projectRequestedResource = new ProjectRequestedResource(rs.getString("project_name"), rs.getString("resource_category"),
-						rs.getString("resource_name"), rs.getString("request_description"), rs.getString("project_proposer"));
+						rs.getString("resource_name"), rs.getString("request_description"), rs.getString("project_proposer"), rs.getString("confirmed_offerer"));
 				output.add(projectRequestedResource);
 			}
 			rs.close();
@@ -104,7 +105,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				projectRequestedResource = new ProjectRequestedResource(rs.getString("project_name"), rs.getString("resource_category"),
-						rs.getString("resource_name"), rs.getString("request_description"), rs.getString("project_proposer"));
+						rs.getString("resource_name"), rs.getString("request_description"), rs.getString("project_proposer"), rs.getString("confirmed_offerer"));
 				output.add(projectRequestedResource);
 			}
 			rs.close();
@@ -165,6 +166,32 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			ps.setString(5, old_resource_category);
 			ps.setString(6, old_resource_name);
 			ps.setString(7, project_proposer);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	public void tagResourceOfferer(String project_name,String resource_name, String project_proposer, String confirmed_offerer) {
+		String sql = "UPDATE PROJECT_REQUESTED_RESOURCES SET "
+				+ "confirmed_offerer = ? WHERE project_name = ? AND resource_category = ? AND resource_name = ? AND project_proposer = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, confirmed_offerer);
+			ps.setString(2, project_name);
+			ps.setString(3, resource_name);
+			ps.setString(4, project_proposer);
 			ps.executeUpdate();
 			ps.close();
 

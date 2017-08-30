@@ -192,6 +192,7 @@ public class RequestController {
 					notification_message, "message", "inbox");
 
 			notificationService.sendNotification(notification);
+			requestService.tagProjectRequestedResource(modalRequestedResourceName, modalOfferer, modalProjName, modalProjectProposer);
 			
 			//adds new member to team, if he isnt am member before
 			if(projectService.retrieveSpecificMember(modalProjName, modalProjectProposer, modalOfferer) == null){

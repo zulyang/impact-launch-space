@@ -18,4 +18,5 @@ public interface ProjectDAO {
 			String project_proposer);
 	
 	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location, String searchbox);
+	
 }
