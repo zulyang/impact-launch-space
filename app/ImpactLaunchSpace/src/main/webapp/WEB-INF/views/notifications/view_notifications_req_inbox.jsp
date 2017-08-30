@@ -152,10 +152,46 @@
 																		${item.getOffered_resource_name() }
 																</p></td>
 															<td><p>
-																	<input class="editable-field form-control"
+																	<%-- <input class="editable-field form-control"
 																		id="status<%=id%>" type="hidden"
-																		value="${item.getRequest_status() }" disabled="true" />
-																		${item.getRequest_status() }
+																		value="${item.getRequest_status() }" disabled="true" />${item.getRequest_status() } --%>
+															
+															
+															<c:choose>
+    <c:when test="${item.getRequest_status()=='Cancelled'}">
+         <span class="label label-warning" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>
+    <c:when test="${item.getRequest_status()=='Rejected'}">
+         <span class="label label-danger" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>
+    <c:when test="${item.getRequest_status()=='Confirmed'}">
+         <span class="label label-info" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>
+    <c:when test="${item.getRequest_status()=='Accepted'}">
+         <span class="label label-success" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>        
+    <c:otherwise>
+         <span class="label label-default" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:otherwise>
+</c:choose>
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															
+															<%-- <span class="label label-success" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+															 --%>		
 																</p></td>
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
