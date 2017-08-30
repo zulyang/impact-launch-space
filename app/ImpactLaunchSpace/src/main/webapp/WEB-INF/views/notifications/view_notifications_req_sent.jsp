@@ -92,7 +92,7 @@
 							<div class="col-xs-6 col-sm-9">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<h3 class="panel-title">Requests Inbox</h3>
+										<h3 class="panel-title">Requests Sent</h3>
 									</div>
 									<div class="panel-body">
 										<div class="table-responsive col-md-12">
@@ -151,11 +151,33 @@
 																		disabled="true" />
 																		${item.getOffered_resource_name() }
 																</p></td>
-															<td><p>
+															<td><p><%-- 
 																	<input class="editable-field form-control"
 																		id="status<%=id%>" type="hidden"
 																		value="${item.getRequest_status() }" disabled="true" />
-																		${item.getRequest_status() }
+																		${item.getRequest_status() } --%>
+																		<c:choose>
+    <c:when test="${item.getRequest_status()=='Cancelled'}">
+         <span class="label label-warning" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>
+    <c:when test="${item.getRequest_status()=='Rejected'}">
+         <span class="label label-danger" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>
+    <c:when test="${item.getRequest_status()=='Confirmed'}">
+         <span class="label label-info" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>
+    <c:when test="${item.getRequest_status()=='Accepted'}">
+         <span class="label label-success" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:when>        
+    <c:otherwise>
+         <span class="label label-default" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
+        <br />
+    </c:otherwise>
+</c:choose>
 																</p></td>
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"

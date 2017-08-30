@@ -18,11 +18,13 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/resource.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/project.css" />
+	href="<%=request.getContextPath()%>/resources/css/project/project.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
@@ -31,12 +33,8 @@
 	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
-
 <script type="text/javascript" charset="utf8"
-	src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
-</head>
+	src="<%=request.getContextPath()%>/resources/lib/datatables/js/jquery.dataTables.js"></script>
 </head>
 
 
@@ -159,15 +157,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="pull-right">
-								<ul class="pagination">
-									<li><a href="#">&laquo;</a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
-							</div>
+							
 						</div>
 					</div>
 				</div>
