@@ -336,7 +336,7 @@
 	$(document).ready(function() {
 		$('#requesttable').DataTable({
 			"order" : [ [ 1, "desc" ] ],
-
+			responsive: true,
 			"columnDefs" : [ {
 				"targets" : [ 6 ],
 				"orderable" : false
