@@ -34,11 +34,16 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<script>
+function loader() {
+	$(".se-pre-con").fadeOut("slow");
+};
+</script>
 </head>
 
-<body class="project">
+<body onload="loader()" class="project">
+	<div class="se-pre-con"></div>
 	<%@include file="../common/navigation.jspf"%>
-
 
 	<!--main content-->
 	<div class="main-content">

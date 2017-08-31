@@ -10,7 +10,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create New Project</title>
-
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet"
@@ -38,10 +37,14 @@
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
-
+<script>
+	function loader() {
+		$(".se-pre-con").fadeOut("slow");
+	};
+</script>
 </head>
-<body class="project">
-
+<body onload="loader()" class="project">
+	<div class="se-pre-con"></div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
@@ -305,9 +308,10 @@
 										<li><button type="button"
 												class="btn btn-default prev-step">Previous</button></li>
 										<li><button type="submit" id="createProject"
-												onclick="checkAllFields();"
 												class="btn btn-success next-step createProject">Create
-												Project</button></li>
+												Project
+											</button>
+										</li>
 									</ul>
 								</div>
 								<div class="tab-pane" role="tabpanel" id="complete">
