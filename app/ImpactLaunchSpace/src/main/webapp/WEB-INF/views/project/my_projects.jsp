@@ -10,8 +10,6 @@
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
-	<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/explore.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project/my_projects.css" />
 <link rel="stylesheet"
@@ -34,7 +32,8 @@
 				<!--navigation bar  -->
 				<%@include file="../common/navigation.jspf"%>
 
-				<main> <input id="tab1" type="radio" name="tabs" checked>
+				<main> 
+				<input id="tab1" type="radio" name="tabs" checked>
 				<label for="tab1">Created Projects</label> <input id="tab2"
 					type="radio" name="tabs"> <label for="tab2">Joined
 					Projects</label> 
@@ -45,8 +44,9 @@
 						You have not created any projects yet.
 					</p>
 				</c:if>
+				
+				<div>
 				<c:forEach items="${projectsByUser}" var="item"> 
-				<p>
 				<div class="col m4">
 					<div class="card">
 						<div class="card-image">
@@ -54,23 +54,21 @@
 							<span class="card-title">${item.getProject_name()}</span>
 						</div>
 						<div class="projectStatus">${item.getProject_status()}</div>
-						<div class="card-content">${item.getDescription()}
+						<div class="card-content">
 							<p>
 							<hr />
-							<i class="fa fa-clock-o"></i>${item.getDuration()}<br>
-							<i class="fa fa-globe"></i>${item.getLocation()}<br>
-							<i class="fa fa-user-circle-o">${item.getProject_proposer()}</i>
+							<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
+							<i class="fa fa-globe"></i> ${item.getLocation()}<br>
 							</p>
 						</div>
-						<a
-							href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+						<a href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
 							<div class="card-action">View Project</div>
 						</a>
 					</div>
 				</div>
-				</p>
 				</c:forEach>
-
+				</div>
+				
 				</section> <section id="content2">
 				<p>Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky
 					drumstick fatback boudin ball tip turducken. Pork belly meatball
