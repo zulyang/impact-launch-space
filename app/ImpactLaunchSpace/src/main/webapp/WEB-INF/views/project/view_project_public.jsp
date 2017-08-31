@@ -201,7 +201,16 @@
 											</p>
 											<c:set var="count" value="${count + 1}" scope="page" />
 											<br>
-											<span><i class="fa fa-users"></i> 180 backers</span>
+											
+											<!-- Amanda, this if loop is if theres is someone in the position -->
+											<c:if test="${!item1.get(2).equals(\"Unfilled Position\")}">
+												<span><i class="fa fa-users"></i> ${item1.get(2)}</span>
+											</c:if>
+											
+											<!-- Amanda, this if loop is if theres is noone filling the position -->
+											<c:if test="${item1.get(2).equals(\"Unfilled Position\")}">
+												<span><i class="fa fa-users"></i><b> ${item1.get(2)} </b></span>
+											</c:if>											
 											<c:choose>
 												
 												<c:when
@@ -235,10 +244,14 @@
 													</c:choose>
 													
 												</c:when>
-
-												<c:otherwise>
+												
+												<c:when test="${item1.get(2).equals(\"Unfilled Position\")}">
 													<button onClick="apply(${count})" type="button"
 														id="applyForResource" class="btn btn-reward applyButton">APPLY</button>
+												</c:when>
+
+												<c:otherwise>
+													
 												</c:otherwise>
 												
 											</c:choose>

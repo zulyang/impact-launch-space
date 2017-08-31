@@ -181,7 +181,7 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 		}
 	}
 	
-	public void tagResourceOfferer(String project_name,String resource_name, String project_proposer, String confirmed_offerer) {
+	public void tagResourceOfferer(String project_name,String resource_name, String resource_category, String project_proposer, String confirmed_offerer) {
 		String sql = "UPDATE PROJECT_REQUESTED_RESOURCES SET "
 				+ "confirmed_offerer = ? WHERE project_name = ? AND resource_category = ? AND resource_name = ? AND project_proposer = ?";
 		Connection conn = null;
@@ -190,8 +190,9 @@ public class JdbcProjectRequestedResourceDAO implements ProjectRequestedResource
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, confirmed_offerer);
 			ps.setString(2, project_name);
-			ps.setString(3, resource_name);
-			ps.setString(4, project_proposer);
+			ps.setString(3, resource_category);
+			ps.setString(4, resource_name);
+			ps.setString(5, project_proposer);
 			ps.executeUpdate();
 			ps.close();
 
