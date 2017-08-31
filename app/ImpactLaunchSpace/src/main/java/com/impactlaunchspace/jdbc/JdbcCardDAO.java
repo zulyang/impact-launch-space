@@ -73,7 +73,7 @@ public class JdbcCardDAO implements CardDAO{
 		// TODO Auto-generated method stub
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		String sql = "UPDATE PROJECT_CARD SET "
-				+ "card_title = ?,  description = ?, tags = ?, status = ?";
+				+ "card_title = ?, description = ?, tags = ?, status = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -95,7 +95,6 @@ public class JdbcCardDAO implements CardDAO{
 				}
 			}
 		}
-	
 	}
 	
 	@Override
@@ -108,6 +107,44 @@ public class JdbcCardDAO implements CardDAO{
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, board_id);
+			Card card = null;
+			ResultSet rs = ps.executeQuery();
+	
+			while (rs.next()) {
+				card = new Card(rs.getInt("card_id"), rs.getInt("board_id"),
+						rs.getString("title"), rs.getString("description"), rs.getString("owner"),
+						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("status"), rs.getInt("order")
+						);
+				
+				toReturn.add(card);
+			}
+			
+			rs.close();
+			ps.close();
+			return toReturn;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	@Override
+	public ArrayList<Card> retrieveCardsByStatus(int board_id, String status) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ArrayList<Card> toReturn = new ArrayList<Card>();
+		String sql = "SELECT * FROM `project_card` WHERE `board_id`= ? AND `status`= ? ORDER BY `order`";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, board_id);
+			ps.setString(2, status);
 			Card card = null;
 			ResultSet rs = ps.executeQuery();
 	
@@ -160,5 +197,33 @@ public class JdbcCardDAO implements CardDAO{
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void updateOrder(int card_id, String status, int order) {
+		// TODO Auto-generated method stub
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		String sql = "UPDATE PROJECT_CARD SET `order` = ?, `status` = ? WHERE `card_id` = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, order);
+			ps.setString(2, status);
+			ps.setInt(3, card_id);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	
 	}
 }

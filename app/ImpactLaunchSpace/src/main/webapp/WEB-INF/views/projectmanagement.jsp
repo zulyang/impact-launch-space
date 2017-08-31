@@ -43,23 +43,43 @@
   $(function() {
       $("#sortableToDo").sortable({
     	  update: function(event, ui) {
-    		  var id = ui.item.attr("id");
-    	      $("span#result").html($("span#result").html() + "<b>update to do</b><br>");
- 	      
+    	      var list = document.getElementById("sortableToDo").getElementsByTagName("li");
+    	      for (var i=0; i < list.length; i++) {
+        	      console.log(list[i].id);
+    	    	  $.post('update-card-order',{
+      					id : list[i].id,
+      					status: "todo",
+      					order : i,
+      				});
+    	    	}
     	    },
           connectWith: "#sortableInProgress, #sortableDone"
       }).disableSelection();
 
       $("#sortableInProgress").sortable({
     	  update: function(event, ui) {
-    	      $("span#result").html($("span#result").html() + "	<b>update in progress</b><br>");
+    	      var list = document.getElementById("sortableInProgress").getElementsByTagName("li");
+    	      for (var i=0; i < list.length; i++) {
+    	    	  $.post('update-card-order',{
+      					id : list[i].id,
+      					status: "inprogress",
+      					order : i,
+      				});
+    	    	}
     	    },
           connectWith: "#sortableToDo, #sortableDone"
       }).disableSelection();
 
       $("#sortableDone").sortable({
     	  update: function(event, ui) {
-    	      $("span#result").html($("span#result").html() + "	<b>update done</b><br>");
+    	      var list = document.getElementById("sortableDone").getElementsByTagName("li");
+    	      for (var i=0; i < list.length; i++) {
+    	    	  $.post('update-card-order',{
+      					id : list[i].id,
+      					status: "done",
+      					order : i,
+      				});
+    	      }
     	    },
           connectWith: "#sortableToDo, #sortableInProgress"
       }).disableSelection();
@@ -91,7 +111,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <div>
 	<ul id="sortableToDo" class="connectedSortable">
 		<c:forEach items="${todoList}" var="todo" varStatus="count">
-			<li id="todo${count.index}" class="ui-state-default">${todo.getCard_title()}</li>
+			<li id="${todo.getCard_id()}" class="ui-state-default">${todo.getCard_title()}</li>
 		</c:forEach>
 	</ul>
 </div>
@@ -99,7 +119,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <div>
 	<ul id="sortableInProgress" class="connectedSortable">
 	  <c:forEach items="${inprogressList}" var="todo">
-			<li class="ui-state-default">${todo.getCard_title()}</li>
+			<li id="${todo.getCard_id()}" class="ui-state-default">${todo.getCard_title()}</li>
 		</c:forEach>
 	</ul>
 </div>
@@ -107,7 +127,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
  <div>
 	 <ul id="sortableDone" class="connectedSortable">
 	  <c:forEach items="${doneList}" var="todo">
-			<li class="ui-state-default">${todo.getCard_title()}</li>
+			<li id="${todo.getCard_id()}" class="ui-state-default">${todo.getCard_title()}</li>
 		</c:forEach>
 	</ul>
 </div>
