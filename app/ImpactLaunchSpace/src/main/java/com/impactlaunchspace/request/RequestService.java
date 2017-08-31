@@ -144,10 +144,10 @@ public class RequestService {
 
 	}
 	
-	public void tagProjectRequestedResource(String resource_name, String confirmed_offerer, String project_name, String project_proposer){
+	public void tagProjectRequestedResource(String resource_name, String confirmed_offerer, String resource_category, String project_name, String project_proposer){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
-		projectRequestedResourceDAO.tagResourceOfferer(project_name, resource_name, project_proposer, confirmed_offerer);
+		projectRequestedResourceDAO.tagResourceOfferer(project_name, resource_name, resource_category, project_proposer, confirmed_offerer);
 		
 	}
 }

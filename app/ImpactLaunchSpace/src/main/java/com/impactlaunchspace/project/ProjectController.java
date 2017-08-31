@@ -340,6 +340,12 @@ public class ProjectController {
 				ArrayList<String> resourceDetails = new ArrayList<String>();
 				resourceDetails.add(requestedResource.getResource_name());
 				resourceDetails.add(requestedResource.getRequest_description());
+				if(requestedResource.getConfirmed_offerer() == null){
+					resourceDetails.add("Unfilled Position");
+				}else{
+					resourceDetails.add(requestedResource.getConfirmed_offerer());
+				}
+				
 				resourcenames.add(resourceDetails);
 			}
 			projectRequestedResources.put(projectResourceCategoryObj.getResource_category(), resourcenames);
