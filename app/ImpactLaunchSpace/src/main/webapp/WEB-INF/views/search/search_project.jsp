@@ -14,7 +14,11 @@
 <script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
 <script	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/lib/materialize/js/materialize.min.js"></script>
-
+<script>
+	function loader() {
+		$(".se-pre-con").fadeOut("slow");
+	};
+</script>
 <script>
 	    $(document).ready(function() {
 						$('#searchbox').add('#causes').add('#location').add('#misc').on('keyup change',function(event) {
@@ -64,13 +68,16 @@
 					});
 </script>
 </head>
-<body>
+<body onload="loader()">
+	<div class="se-pre-con"></div>>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
 				<!--navigation bar  -->
 				<%@include file="../common/navigation.jspf"%>
+				
+				<main>
 				<div class="explore-header col-sm-12">
 
 					<h1 class="explore-title">Search For Project</h1>
@@ -138,6 +145,7 @@
 
 					</div>
 				</div>
+				</main>
 			</div>
 		</div>
 	</div>
