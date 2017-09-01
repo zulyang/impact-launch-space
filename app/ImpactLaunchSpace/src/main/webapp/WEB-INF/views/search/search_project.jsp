@@ -56,7 +56,7 @@
 							
 							trHTML += '<span class="card-title">'
 							+ res[0] + '</span></div><div class="projectStatus">' + res[4]
-							+ '</div><div class="card-content"><p>'+ res[1]
+							+ '</div><div class="card-content"><p class="project_description">'+ res[1]
 							+ '<hr/><i class="fa fa-clock-o"></i> ' + res[2] + ' day(s)<br><i class="fa fa-globe"></i> '+ res[3]
 							+ '<br><i class="fa fa-user-circle-o"></i> ' + res[5] + '</p></div>'
 							+ '<a href ="/view-project?project-name=' + res[0]
@@ -140,7 +140,7 @@
 				<!-- PROJECT RESULTS CARDS -->
 				<div class="container-fluid">
 					<div class="row">
-						<div id="projectResults"></div>
+						<div class="project_results" id="projectResults"></div>
 
 
 					</div>

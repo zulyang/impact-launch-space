@@ -110,10 +110,10 @@
 									</div>
 
 									<div class="form-group row">
-                                        <label for="projectTitle" class="col-sm-3 col-form-label">Title<span class="required">*</span></label>
+                                        <label for="projectTitle" class="col-sm-3 col-form-label">Title (69 characters limit)<span class="required">*</span></label>
 
 										<div class="col-sm-9">
-											<input required type="text" id="projectTitle"
+											<input required type="text" maxlength="69" id="projectTitle"
 												name="projectTitle" class="form-control">
 										</div>
 									</div>
