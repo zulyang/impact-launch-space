@@ -150,4 +150,21 @@ public class RequestService {
 		projectRequestedResourceDAO.tagResourceOfferer(project_name, resource_name, resource_category, project_proposer, confirmed_offerer);
 		
 	}
+	
+	public boolean checkIfHaveAccepted(String project_name, String requested_resource_category, String requested_resource_name,
+			String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context.getBean("projectRequestedResourceDAO");
+		ProjectUserRequestDAO projectUserRequestDAO = (ProjectUserRequestDAO) context.getBean("projectUserRequestDAO");
+		ArrayList<ProjectUserRequest> userRequestsForRequestedResource = projectUserRequestDAO.retrieveAllUserRequestsForRequestedResourceName(project_name, project_proposer, requested_resource_category, requested_resource_name);
+		boolean output = false;
+		
+		for(ProjectUserRequest projectUserRequest : userRequestsForRequestedResource){
+			if(projectUserRequest.getRequest_status().equals("Accepted")){
+				return true;
+			}
+		}
+		
+		return output;
+	}
 }

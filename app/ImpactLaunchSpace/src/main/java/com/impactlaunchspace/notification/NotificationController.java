@@ -76,11 +76,24 @@ public class NotificationController {
 		ArrayList<Notification> sent = notificationService.getSent(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
+		ArrayList<String> isAcceptable = new ArrayList<String>();
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
+		
+		for(ProjectUserRequest projectUserRequest: userRequests){
+			boolean acceptedBefore = requestService.checkIfHaveAccepted(projectUserRequest.getProject_name(), projectUserRequest.getRequested_resource_category(), projectUserRequest.getRequested_resource_name(), projectUserRequest.getProject_proposer());
+			if(acceptedBefore){
+				isAcceptable.add("true");
+				System.out.println("Accepted Before");
+			}else{
+				isAcceptable.add("false");
+				System.out.println("Have not Accepted Before");
+			}
+		}
 		
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
 		model.addAttribute("userRequests", userRequests);
+		model.addAttribute("isAcceptable", isAcceptable);
 		model.addAttribute("userRequestsSize", userRequests.size());
 		model.addAttribute("userSentRequestsSize", userSentRequests.size());
 		

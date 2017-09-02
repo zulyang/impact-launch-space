@@ -112,7 +112,7 @@
 													<%
 														int id = 0;
 													%>
-													<c:forEach items="${userRequests}" var="item">
+													<c:forEach items="${userRequests}" var="item" varStatus="loop">
 
 
 														<tr id="row<%=++id%>">
@@ -155,8 +155,11 @@
 																	<input class="editable-field form-control"
 																		id="status<%=id%>" type="hidden"
 																		value="${item.getRequest_status() }" disabled="true" />
-															
-															
+																
+																	<input class="editable-field form-control"
+																		id="accepted<%=id%>" type="hidden"
+																		value="${isAcceptable.get(loop.index)}" disabled="true" />
+
 															<c:choose>
     <c:when test="${item.getRequest_status()=='Cancelled'}">
          <span class="label label-warning" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
@@ -179,16 +182,7 @@
         <br />
     </c:otherwise>
 </c:choose>
-															
-															
-															
-															
-															
-															
-															
-															
-															
-															
+	
 															
 															<%-- <span class="label label-success" id="status<%=id%>" value="${item.getRequest_status() }">${item.getRequest_status() }</span>
 															 --%>		
@@ -282,6 +276,10 @@
 													<textarea id="modalPersonalNote" name="modalPersonalNote"
 														class="form-control modalNotificationsField" readonly
 														/></textarea>
+													
+													<p id="acceptancelimitmsg"
+													style="color:red"/>NOTE: You have already accepted an offer for this particular request.</p>	
+													
 													<input id="modalRequestStatus" name="modalRequestStatus"
 														class="form-control col-md-4 modalNotificationsField"
 														placeholder="Project name" type="hidden" readonly /> <input
@@ -360,6 +358,7 @@
 		var offeredresourcedesc = $('#offeredresourcedesc' + newId).val();
 		var offercomments = $('#offercomments' + newId).val();
 		var status = $('#status' + newId).val();
+		var accepted = $('#accepted' + newId).val();
 
 		document.getElementById('modalOfferer1').innerHTML = offerer;
 		document.getElementById('modalProjName1').innerHTML = projname;
@@ -381,9 +380,15 @@
 		if (status != "Pending") {
 			$('#declinebtn').hide();
 			$('#approvebtn').hide();
-		} else {
+			$('#acceptancelimitmsg').hide();
+		} else if(accepted == "true") {
+			$('#declinebtn').hide();
+			$('#approvebtn').hide();
+			$('#acceptancelimitmsg').show();
+		}else{
 			$('#declinebtn').show();
 			$('#approvebtn').show();
+			$('#acceptancelimitmsg').hide();
 		}
 	};
 </script>
