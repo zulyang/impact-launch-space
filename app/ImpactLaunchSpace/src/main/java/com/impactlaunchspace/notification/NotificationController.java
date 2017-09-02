@@ -83,10 +83,8 @@ public class NotificationController {
 			boolean acceptedBefore = requestService.checkIfHaveAccepted(projectUserRequest.getProject_name(), projectUserRequest.getRequested_resource_category(), projectUserRequest.getRequested_resource_name(), projectUserRequest.getProject_proposer());
 			if(acceptedBefore){
 				isAcceptable.add("true");
-				System.out.println("Accepted Before");
 			}else{
 				isAcceptable.add("false");
-				System.out.println("Have not Accepted Before");
 			}
 		}
 		

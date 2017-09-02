@@ -19,6 +19,7 @@ import com.impactlaunchspace.entity.Notification;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectMemberList;
+import com.impactlaunchspace.entity.ProjectUserRequest;
 import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
@@ -193,7 +194,28 @@ public class RequestController {
 
 			notificationService.sendNotification(notification);
 			requestService.tagProjectRequestedResource(modalRequestedResourceName, modalOfferer, modalResourceCategory, modalProjName, modalProjectProposer);
-		
+			ArrayList<ProjectUserRequest> userRequestsForRequestedResource = requestService.retrieveAllUserRequestsForRequestedResourceName(modalProjName, modalProjectProposer, modalResourceCategory, modalRequestedResourceName);
+			
+			for(ProjectUserRequest projectUserRequest: userRequestsForRequestedResource){
+				if(projectUserRequest.getRequest_status().equals("Pending")){
+					requestService.rejectRequest(projectUserRequest.getProject_name(), projectUserRequest.getRequested_resource_category(), 
+							projectUserRequest.getRequested_resource_name(), projectUserRequest.getProject_proposer(), 
+							projectUserRequest.getResource_offerer(), projectUserRequest.getOffered_resource_category(), 
+							projectUserRequest.getOffered_resource_name());
+					
+					// trigger sending of auto-rejection to other offerers
+					String notification_message2 = "Sorry, another member has taken up the opening in " + modalProjName + "!";
+					notification_message2 += "%n";
+					notification_message2 += "%n";
+					notification_message2 += "Your offer to help the project in: " + projectUserRequest.getRequested_resource_name() + " has been automatically rejected.";
+
+					Notification notification2 = new Notification(projectUserRequest.getResource_offerer(), "admin",
+							"One of your requests to join a project has been automatically rejected.",
+							notification_message2, "message", "inbox");
+
+					notificationService.sendNotification(notification2);
+				}
+			}
 			
 			//adds new member to team, if he isnt am member before
 			if(projectService.retrieveSpecificMember(modalProjName, modalProjectProposer, modalOfferer) == null){
