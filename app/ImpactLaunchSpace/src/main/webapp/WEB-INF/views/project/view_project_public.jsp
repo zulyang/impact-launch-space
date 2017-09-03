@@ -15,6 +15,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project/project.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project/view_project_public.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
@@ -52,23 +54,36 @@ function loader() {
 				<div class="content col-md-8 col-sm-12 col-xs-12">
 					<div class="section-block">
 						<div class="funding-meta">
-							<h1>${selected_project.getProject_name() }</h1>
+							<h1 id="project_public_title">${selected_project.getProject_name() }</h1>
+							<button onClick="" type="button" class="btn btn-success edit_project_public">Edit Project</button>
+							<br>
+							<br>	
 							<input type="hidden" name="project_name"
-								value="${selected_project.getProject_name() }"> <input
-								type="hidden" name="project_proposer"
-								value="${selected_project.getProject_proposer()}"> <span
-								class="type-meta"><i class="fa fa-user"></i> <c:choose>
-									<c:when test="${selected_project.getOrganization() != null}">
-									${selected_project.getOrganization()}
-								</c:when>
-									<c:otherwise>
-									${selected_project.getProject_proposer()}
-								</c:otherwise>
-								</c:choose></span> <span class="type-meta"><i class="fa fa-tag"></i> <c:forEach
-									items="${project_target_areas}" var="item" varStatus="loop">
-									<a href="#">${item }</a>
-									<c:if test="${!loop.last}">,</c:if>
-								</c:forEach> </span>
+									value="${selected_project.getProject_name() }"> 
+							<input type="hidden" name="project_proposer"
+									value="${selected_project.getProject_proposer()}"> 
+									
+								<span class="type-meta">
+								<i class="fa fa-user"></i> 
+								<c:choose>
+										<c:when test="${selected_project.getOrganization() != null}">
+										${selected_project.getOrganization()}
+									</c:when>
+										<c:otherwise>
+										${selected_project.getProject_proposer()}
+									</c:otherwise>
+								</c:choose>
+								</span> 
+								
+								<span class="type-meta">
+									<i class="fa fa-tag"></i> 
+									<c:forEach
+										items="${project_target_areas}" var="item" varStatus="loop">
+										<a href="#">${item }</a>
+										<c:if test="${!loop.last}">,</c:if>
+									</c:forEach> 
+								</span>				
+								
 							<!--img src="assets/img/image-heartbeat.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding"-->
 							<div class="video-frame">
 								<iframe src="https://player.vimeo.com/video/67938315"

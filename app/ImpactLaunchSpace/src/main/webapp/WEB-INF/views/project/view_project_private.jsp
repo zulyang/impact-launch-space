@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project/project.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project/view_project_private.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
@@ -45,7 +46,10 @@
 				<div class="content col-md-8 col-sm-12 col-xs-12">
 					<div class="section-block">
 						<div class="funding-meta">
-							<h1>${selected_project.getProject_name() }</h1>
+							<h1 id="project_private_title">${selected_project.getProject_name() }</h1>
+							<button onClick="" type="button" class="btn btn-success edit_project_private">Edit Project</button>
+							<br>
+							<br>
 							<span class="type-meta"><i class="fa fa-user"></i> <c:choose>
 									<c:when test="${selected_project.getOrganization() != null}">
 									${selected_project.getOrganization()}
