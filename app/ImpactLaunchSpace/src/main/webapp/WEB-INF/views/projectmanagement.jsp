@@ -104,14 +104,27 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 
 <br>
 
-<!--  value="${todoList.size()}" -->
-
 <br>
 
 <div>
 	<ul id="sortableToDo" class="connectedSortable">
 		<c:forEach items="${todoList}" var="todo" varStatus="count">
-			<li id="${todo.getCard_id()}" class="ui-state-default">${todo.getCard_title()}</li>
+			<li 
+			id="${todo.getCard_id()}" class="ui-state-default">
+			${todo.getCard_title()}
+			<br>
+			${todo.getDescription()}
+			<br>
+			${todo.getTags()}
+			<br>
+			${todo.getAssignees()}
+			<br>
+			<button type="button">Delete</button>
+			<button type="button" class="btn btn-success"
+			onClick="edit()">
+			<i class="fa fa-plus-circle"></i> Edit Card
+			</button>
+			</li>
 		</c:forEach>
 	</ul>
 </div>
@@ -119,7 +132,21 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <div>
 	<ul id="sortableInProgress" class="connectedSortable">
 	  <c:forEach items="${inprogressList}" var="todo">
-			<li id="${todo.getCard_id()}" class="ui-state-default">${todo.getCard_title()}</li>
+			<li id="${todo.getCard_id()}" class="ui-state-default">
+			${todo.getCard_title()}
+			<br>
+			${todo.getDescription()}
+			<br>
+			${todo.getTags()}
+			<br>
+			${todo.getAssignees()}
+			<br>
+			<button type="button">Delete</button>
+			<button type="button" class="btn btn-success"
+			onClick="edit()">
+			<i class="fa fa-plus-circle"></i> Edit Card
+			</button>
+			</li>
 		</c:forEach>
 	</ul>
 </div>
@@ -127,7 +154,21 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
  <div>
 	 <ul id="sortableDone" class="connectedSortable">
 	  <c:forEach items="${doneList}" var="todo">
-			<li id="${todo.getCard_id()}" class="ui-state-default">${todo.getCard_title()}</li>
+			<li id="${todo.getCard_id()}" class="ui-state-default">
+			${todo.getCard_title()}
+			<br>
+			${todo.getDescription()}
+			<br>
+			${todo.getTags()}
+			<br>
+			${todo.getAssignees()}
+			<br>
+			<button type="button">Delete</button>
+			<button type="button" class="btn btn-success"
+				onClick="edit()">
+				<i class="fa fa-plus-circle"></i> Edit Card
+			</button>
+			</li>
 		</c:forEach>
 	</ul>
 </div>
@@ -139,7 +180,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 									
 </div>
 		<!-- Add new card modal (Copied from resources)-->
-		<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+		<div class="modal fade" tabindex="-1" role="dialog" id="AddModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 
@@ -173,10 +214,85 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 										Tags: 
 										<select id="modalCardTags"
 											name="modalCardTags" class="col-md-4 form-control" 
-											style="width: 100%" required>
+											style="width: 100%">
 										 	<option value="" disabled selected>Select a Category:</option>
-											<c:forEach items="${resource_category_list}" var="item">
-												<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+											<c:forEach items="${cat}" var="item">
+												<option value="${item}">${item}</option>
+											</c:forEach>
+										</select>
+										<br> 
+										
+										Assignees:
+										<select id="modalCardAssignees"
+											name="modalCardAssignees" class="col-md-4 form-control" 
+											style="width: 100%">
+										 	<option value="" disabled selected>Select a username:</option>
+											<c:forEach items="${members}" var="item">
+												<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
+											</c:forEach>
+										</select>
+										
+										<input type="hidden" name="board_id"
+										value="${board}">
+										
+										<input type="hidden" name="card_order"
+										value="${todoList.size()}">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancel</button>
+							<button type="submit" id="add" class="btn btn-success">Add</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- Edit card modal (Copied from resources)-->
+		<!-- Replace with placeholders. -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="EditModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<form action="edit-card" role="form" method="post">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Edit Card</h4>
+						</div>
+						<div class="modal-body">
+							<div class="container">
+								<div id="resourcesNeeded" class="form-group row col-md-5">
+									<div class="col-md-12">
+										 Card Title:
+										<textarea id="modalCardTitle" rows="4"
+											name="modalCardTitle"
+											class="form-control col-md-4 create-project-add"
+											placeholder= "${todo.getCard_title()}" ></textarea>
+										</select> 
+										<br> 	
+																									
+										 Description:
+										<textarea id="modalCardDescription" rows="4"
+											name="modalCardDescription"
+											class="form-control col-md-4 create-project-add"
+											placeholder= ${todo.getDescription()}></textarea>
+										<br> 
+										
+										<!-- Tags refer to the all the resource categories in the project -->
+										Tags: 
+										<select id="modalCardTags"
+											name="modalCardTags" class="col-md-4 form-control" 
+											style="width: 100%">
+										 	<option value="" disabled selected>Select a Category:</option>
+											<c:forEach items="${cat}" var="item">
+												<option value="${item}">${item}</option>
 											</c:forEach>
 										</select>
 										<br> 
@@ -186,8 +302,8 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 											name="modalCardAssignees" class="col-md-4 form-control" 
 											style="width: 100%" required>
 										 	<option value="" disabled selected>Select a username:</option>
-											<c:forEach items="${resource_category_list}" var="item">
-												<option value="${item.getSkillset()}">${item.getSkillset()}</option>
+											<c:forEach items="${members}" var="item">
+												<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -197,7 +313,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Cancel</button>
-							<button type="button" id="add" class="btn btn-success">Add</button>
+							<button type="button" id="edit" class="btn btn-success">Edit</button>
 						</div>
 					</form>
 				</div>
@@ -216,7 +332,11 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 
 <script type="text/javascript">
 function add() {
-	$('#myModal').modal('show');
+	$('#AddModal').modal('show');
+};
+
+function edit() {
+	$('#EditModal').modal('show');
 };
 </script>
 </html>

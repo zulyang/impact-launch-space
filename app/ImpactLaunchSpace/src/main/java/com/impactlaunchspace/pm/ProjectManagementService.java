@@ -32,7 +32,7 @@ public class ProjectManagementService {
 		return boardDAO.retrieveBoardId(Project_Name, Project_Proposer);
 	}
 	
-	public void addCard(String modalCardTitle, String modalCardDescription, String status, String tags, int board_id, int card_order, String username, Timestamp timestamp) {
+	public void addCard(String modalCardTitle, String modalCardDescription, String status, String tags, int board_id, int card_order, String username, String assignee, Timestamp timestamp) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDAO cardDAO = (CardDAO) context.getBean("cardDAO");
 		cardDAO.insert(new Card(board_id, modalCardTitle, modalCardDescription, username, timestamp, tags, status, card_order));
@@ -48,5 +48,11 @@ public class ProjectManagementService {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDAO cardDAO = (CardDAO) context.getBean("cardDAO");
 		cardDAO.updateOrder(card_id, status, order);
+	}
+	
+	public void edit(String card_title, String description, String tags, String assignee) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CardDAO cardDAO = (CardDAO) context.getBean("cardDAO");
+		cardDAO.edit(card_title, description, tags, assignee);
 	}
 }

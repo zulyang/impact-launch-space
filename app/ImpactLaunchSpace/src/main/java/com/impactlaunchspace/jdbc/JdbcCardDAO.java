@@ -69,11 +69,11 @@ public class JdbcCardDAO implements CardDAO{
 	}
 	
 	@Override
-	public void update(String card_title, String description, String tags, String status) {
+	public void edit(String card_title, String description, String tags, String assignee) {
 		// TODO Auto-generated method stub
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		String sql = "UPDATE PROJECT_CARD SET "
-				+ "card_title = ?, description = ?, tags = ?, status = ?";
+				+ "card_title = ?, description = ?, tags = ?, assignee = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
@@ -81,7 +81,7 @@ public class JdbcCardDAO implements CardDAO{
 			ps.setString(1, card_title);
 			ps.setString(2, description);
 			ps.setString(3, tags);
-			ps.setString(4, status);
+			ps.setString(4, assignee);
 			ps.executeUpdate();
 			ps.close();
 

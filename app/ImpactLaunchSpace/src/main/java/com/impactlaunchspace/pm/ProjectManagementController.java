@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.impactlaunchspace.entity.Card;
+import com.impactlaunchspace.entity.ProjectMemberList;
+import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.project.ProjectService;
 
@@ -39,9 +41,24 @@ public class ProjectManagementController {
 		int board_id = pmService.retrieveBoardId(project_name, project_proposer);
 		// retrieve cards from database.
 		// probably have to split the cards into 3 seperate arrays.
+		
 		model.addAttribute("user", username);
 		model.addAttribute("projectName", project_name);
-
+		
+		ArrayList<ProjectMemberList> members = projectService.retrieveMemberList(project_name, project_proposer);
+		ArrayList<ProjectRequestedResource> categories = projectService.retrieveAllProjectRequestedResource(project_name, project_proposer);
+		ArrayList<String> cat = new ArrayList<String>();
+		
+		for(int i =0 ; i<categories.size(); i++){
+			cat.add(categories.get(i).getResource_category());
+		}
+		
+		model.addAttribute("user", username);
+		model.addAttribute("projectName", project_name);
+		model.addAttribute("categories", categories);
+		model.addAttribute("members", members);
+		model.addAttribute("board", board_id);
+		
 		// Check the cards attribute and sort by status
 		ArrayList<Card> todoList = pmService.retrieveProjectCardsByStatus(board_id, "todo");
 		ArrayList<Card> inprogressList = pmService.retrieveProjectCardsByStatus(board_id, "inprogress");
@@ -57,21 +74,26 @@ public class ProjectManagementController {
 
 	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
-			@RequestParam String tags, @RequestParam int board_id, @RequestParam int card_order,
+			@RequestParam(required = false) String tags, @RequestParam(required = false) String assignee, @RequestParam int board_id, @RequestParam int card_order,
 			HttpServletRequest request, ModelMap model) {
+		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 
-		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, board_id, card_order, username,
-				timestamp);
+		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, board_id, card_order, username, assignee, timestamp);
+		
 	}
-
+	
+	//Add assignee
+	//Might need to add timestamp to show change in date.
 	@RequestMapping(value = "/edit-card", method = RequestMethod.GET)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
-			@RequestParam String status, @RequestParam String tags, @RequestParam int card_order,
+			 @RequestParam(required = false) String tags, @RequestParam int card_order, @RequestParam(required = false) String assignee,
 			HttpServletRequest request, ModelMap model) {
+		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		pmService.edit(modalCardTitle, modalCardDescription, tags, assignee);
 
 	}
 
