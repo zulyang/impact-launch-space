@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.impactlaunchspace.dao.ProjectDAO;
 import com.impactlaunchspace.dao.ProjectRequestedResourceDAO;
 import com.impactlaunchspace.dao.ProjectUserRequestDAO;
+import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectUserRequest;
 
 @Service
@@ -167,4 +168,6 @@ public class RequestService {
 		
 		return output;
 	}
+	
+
 }

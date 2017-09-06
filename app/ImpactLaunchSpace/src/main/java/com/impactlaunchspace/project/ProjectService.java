@@ -220,4 +220,28 @@ public class ProjectService {
 		return projectMemberListDAO.retrieveSpecificMember(project_name, project_proposer,
 				project_member_username);
 	}
+	
+	public double returnPercentageOfRecruitmentProgress(String project_name, String project_proposer){
+		double count = 0.0;
+		double MIN_PERCENTAGE = Project.MIN_PERCENTAGE;
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectRequestedResourceDAO projectRequestedResourceDAO = (ProjectRequestedResourceDAO) context
+				.getBean("projectRequestedResourceDAO");
+		
+		ArrayList<ProjectRequestedResource> projectRequestedResources = projectRequestedResourceDAO.retrieveAllProjectRequestedResource(project_name, project_proposer);
+		int size = projectRequestedResources.size();
+		
+		for(ProjectRequestedResource requestedResource: projectRequestedResources){
+			if(requestedResource.getConfirmed_offerer() != null){
+				count++;
+			}
+		}
+		
+		if (count==0){
+			return 0.0;
+		}else{
+			return count/size;
+		}
+
+	}
 }

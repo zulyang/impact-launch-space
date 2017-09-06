@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -364,6 +365,10 @@ public class ProjectController {
 
 		model.addAttribute("userRequestsForProject", userRequestsForProject);
 		model.addAttribute("userRequestsForProjectObjs", userRequestsForProjectObjs);
+		
+		DecimalFormat df = new DecimalFormat("#.00"); 
+		double progressPercentage = projectService.returnPercentageOfRecruitmentProgress(project_name, project_proposer);
+		model.addAttribute("progressPercentage",  df.format(progressPercentage));
 
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));

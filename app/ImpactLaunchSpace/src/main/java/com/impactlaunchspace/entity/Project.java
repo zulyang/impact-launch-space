@@ -22,6 +22,7 @@ public class Project{
 	private File projectImage;
 	private ArrayList<File> documentList;
 	private String projectVideo;
+	public static final double MIN_PERCENTAGE = 0.5;
 
 	public Project(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
