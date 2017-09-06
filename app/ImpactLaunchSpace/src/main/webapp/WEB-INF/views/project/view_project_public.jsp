@@ -85,12 +85,13 @@ function loader() {
 								</span>				
 								
 							<!--img src="assets/img/image-heartbeat.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding"-->
+							<!-- https://player.vimeo.com/video/67938315 -->
 							<div class="video-frame">
-								<iframe src="https://player.vimeo.com/video/67938315"
+								<iframe src="${selected_project.getProjectVideo()}"
 									width="500" height="281" frameborder="0" webkitallowfullscreen
 									mozallowfullscreen allowfullscreen></iframe>
 							</div>
-							<p>${selected_project.getPurpose() }</p>
+							<p>${selected_project.getPurpose()}</p>
 							<h2>$10,350</h2>
 							<span class="contribution">raised by <strong>5,234</strong>
 								ready to launch

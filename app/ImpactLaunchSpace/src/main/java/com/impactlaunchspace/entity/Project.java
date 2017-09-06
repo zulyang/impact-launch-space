@@ -21,11 +21,12 @@ public class Project{
 	private int page_views;
 	private File projectImage;
 	private ArrayList<File> documentList;
+	private String projectVideo;
 
 	public Project(String project_name, String description, String purpose, int duration, String location,
 			String project_proposer, String organization, boolean isPublic, boolean hiddenToOutsiders,
 			boolean hiddenToAll, String project_status, Timestamp created_date, int page_views, 
-			File projectImage, ArrayList<File> documentList) {
+			File projectImage, ArrayList<File> documentList, String projectVideo) {
 		super();
 		this.project_name = project_name;
 		this.description = description;
@@ -42,6 +43,7 @@ public class Project{
 		this.page_views = page_views;
 		this.projectImage = projectImage;
 		this.documentList = documentList;
+		this.projectVideo = projectVideo;
 	}
 
 	public String getProject_name() {
@@ -102,6 +104,10 @@ public class Project{
 	
 	public ArrayList<File> getDocumentList() {
 		return documentList;
+	}
+	
+	public String getProjectVideo() {
+		return projectVideo;
 	}
 
 	//Comparator Methods

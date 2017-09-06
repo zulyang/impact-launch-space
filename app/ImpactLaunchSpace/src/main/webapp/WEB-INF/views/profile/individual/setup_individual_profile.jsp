@@ -383,6 +383,7 @@
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
 		}
+		
 		function docSub(obj) {
 			var fileList = document.getElementById("uploadFile").files;
 			var allFileNames;

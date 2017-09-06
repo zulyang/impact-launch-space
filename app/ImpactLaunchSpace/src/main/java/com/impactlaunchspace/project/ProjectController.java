@@ -91,7 +91,8 @@ public class ProjectController {
 			@RequestParam(required = false) ArrayList<String> selected_banlist,
 			@RequestParam(required = false) ArrayList<String> resourceCategory,
 			@RequestParam(required = false) ArrayList<String> resourceName,
-			@RequestParam(required = false) ArrayList<String> resourceDescription, HttpServletRequest request,
+			@RequestParam(required = false) ArrayList<String> resourceDescription,
+			@RequestParam(required = false) String projectVideo, HttpServletRequest request,
 			RedirectAttributes redirectAttributes) {
 
 		String project_name = projectTitle;
@@ -105,9 +106,13 @@ public class ProjectController {
 		boolean hiddenToOutsiders = false;
 		boolean hiddenToAll = false;
 		String project_status = "new";
-
-		System.out.println("1. img is " + projectImage);
 		
+		if(projectVideo.isEmpty()){
+			projectVideo = "";
+		}else{
+			projectVideo = projectVideo.replace("watch?v=", "embed/");
+		}
+
 		if (projectPrivacy.equals("public")) {
 			isPublic = true;
 		} else if (projectPrivacy.equals("private")) {
@@ -115,7 +120,7 @@ public class ProjectController {
 		} else if (projectPrivacy.equals("hidden")) {
 			hiddenToAll = true;
 		}
-		System.out.println("2. img is " + projectImage);
+		
 		String username = (String) request.getSession().getAttribute("username");
 
 		if (projectOwner.equals("individual")) {
@@ -131,7 +136,7 @@ public class ProjectController {
 				organization = profileService.getOrganizationAccountDetails(username).getCompanyName();
 			}
 		}
-		System.out.println("3. img is " + projectImage);
+		
 		ArrayList<ProjectResourceCategory> selected_resourceCategories = new ArrayList<ProjectResourceCategory>();
 		ArrayList<ProjectRequestedResource> selected_requestedResources = new ArrayList<ProjectRequestedResource>();
 		ArrayList<String> resourceCategoryStrings = new ArrayList<String>();
@@ -152,7 +157,6 @@ public class ProjectController {
 		}
 
 		File projectImageFile = null;
-		System.out.println("4. img is " + projectImage);
 		if (projectImage.getOriginalFilename().isEmpty()) {
 			projectImageFile = new File("src/main/webapp/resources/img/earth.png");
 		} else {
@@ -173,7 +177,7 @@ public class ProjectController {
 				try {
 					document.transferTo(documentFile);
 				} catch (IllegalStateException | IOException e) {
-					e.printStackTrace();
+					//first document error
 				}
 				documentList.add(documentFile);
 			}
@@ -181,13 +185,12 @@ public class ProjectController {
 
 		Project project = new Project(project_name, description, purpose, duration, location, project_proposer,
 				organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status,
-				new Timestamp(Calendar.getInstance().getTime().getTime()), 0, projectImageFile, documentList);
-
-		projectImageFile.deleteOnExit();
+				new Timestamp(Calendar.getInstance().getTime().getTime()), 0, projectImageFile, documentList, projectVideo);
 
 		projectService.setupProject(project, selected_banlist, selected_projectareas, selected_resourceCategories,
 				selected_requestedResources);
-
+		
+		projectImageFile.deleteOnExit();
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
 

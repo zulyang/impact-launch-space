@@ -39,7 +39,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 		DocumentsProjectDAO documentsProjectDAO = (DocumentsProjectDAO) context.getBean("documentsProjectDAO");
 		
 		String sql = "INSERT INTO PROJECTS "
-				+ "(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, created_date, page_views, project_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "(project_name, description, purpose, duration, location, project_proposer, organization, isPublic, hiddenToOutsiders, hiddenToAll, project_status, created_date, page_views, project_image, project_video) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 
 		try {
@@ -60,11 +60,13 @@ public class JdbcProjectDAO implements ProjectDAO {
 			ps.setTimestamp(12, project.getCreated_date());
 			ps.setInt(13, project.getPage_Views());
 			ps.setBlob(14, fis);
+			ps.setString(15, project.getProjectVideo());
 
 			ps.executeUpdate();
 			ps.close();
 			// update documents table
 			for (File document : project.getDocumentList()) {
+				System.out.println(project.getProject_name() + " - 1");
 				documentsProjectDAO.insert(project.getProject_name(), project.getProject_proposer(), document);
 			}
 
@@ -122,7 +124,8 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("project_proposer"), rs.getString("organization"), rs.getBoolean("isPublic"),
 						rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getTimestamp("created_date"), 
-						rs.getInt("page_views"), temp, documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")));
+						rs.getInt("page_views"), temp, 
+						documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")), rs.getString("project_video"));
 			}
 			rs.close();
 			ps.close();
@@ -182,7 +185,8 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("project_proposer"), rs.getString("organization"), rs.getBoolean("isPublic"),
 						rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getTimestamp("created_date"), 
-						rs.getInt("page_views"), temp, documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")));
+						rs.getInt("page_views"), temp, 
+						documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")), rs.getString("project_video"));
 				output.add(project);
 			}
 			rs.close();
@@ -244,7 +248,8 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("project_proposer"), rs.getString("organization"), rs.getBoolean("isPublic"),
 						rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getTimestamp("created_date"), 
-						rs.getInt("page_views"), temp, documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")));
+						rs.getInt("page_views"), temp, 
+						documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")), rs.getString("project_video"));
 				output.add(project);
 			}
 			rs.close();
@@ -361,7 +366,8 @@ public class JdbcProjectDAO implements ProjectDAO {
 						rs.getString("project_proposer"), rs.getString("organization"), rs.getBoolean("isPublic"),
 						rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
 						rs.getString("project_status"), rs.getTimestamp("created_date"), 
-						rs.getInt("page_views"), temp, documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")));
+						rs.getInt("page_views"), temp, 
+						documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")), rs.getString("project_video"));
 				output.add(project);
 			}
 			rs.close();

@@ -34,7 +34,7 @@ public class JdbcDocumentsProjectDAO implements DocumentsProjectDAO{
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, projectName);
-			ps.setString(1, projectProposer);
+			ps.setString(2, projectProposer);
 			ps.setBlob(3, new FileInputStream(document));
 			ps.setString(4, document.getName());
 			ps.executeUpdate();

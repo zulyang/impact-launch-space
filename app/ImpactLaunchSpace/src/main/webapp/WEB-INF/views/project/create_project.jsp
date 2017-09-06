@@ -22,8 +22,8 @@
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
-		    <link href="<%=request.getContextPath() %>/resources/lib/smartwizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css" />
-	    <link href="<%=request.getContextPath() %>/resources/lib/smartwizard/dist/css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/resources/lib/smartwizard/dist/css/smart_wizard.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/resources/lib/smartwizard/dist/css/smart_wizard_theme_dots.css" rel="stylesheet" type="text/css" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
@@ -224,21 +224,26 @@
                         <div class="form-group row">
                             <label for="projectVideo" class="col-sm-3 control-label">Project
 											Video</label>
-							<div class="col-sm-9">
-											<button type="btn" class="btn btn-info" value="submit">Upload a video</button>
+										<div class="col-sm-9">
+											<input type="text" maxlength="69" id="projectVideo"
+													name="projectVideo" class="form-control" placeholder="URL link for video">
 										</div>
 										
                             <div class="help-block with-errors"></div>
                         </div>
                         
                         <div class="form-group row ">
-										<label for="projectDocuments" class="col-sm-3 col-form-label">Project
-											Documents</label>
-										<div class="col-sm-9">
-											<button type="btn" class="btn btn-info" value="submit">Upload
-												documents</button>
-										</div>
-									</div>
+							<label for="projectDocuments" class="col-sm-3 col-form-label">Project
+								Documents</label>
+							<div class="col-sm-9">
+								<div id="document_upload_button" class="document_upload_button" onclick="uploadFile()">Upload your supporting document</div>
+		
+								<div style='height: 0px; width: 0px; overflow: hidden;'>
+									<input id=uploadFile name="documents" multiple type="file"
+										value="upload" onchange="docSub(this)" />
+								</div>
+							</div>
+						</div>
 									
                     </div>
                 </div>
@@ -391,6 +396,7 @@
 	function uploadPicture() {
 		document.getElementById("uploadPicture").click();
 	}
+	
     function sub(obj) {
         var file = obj.value;
         var fileName = file.split("\\");
@@ -402,10 +408,10 @@
         event.preventDefault();
     }
 
-
-	function uploadFile() {
+    function uploadFile() {
 		document.getElementById("uploadFile").click();
 	}
+	
 	function docSub(obj) {
 		var fileList = document.getElementById("uploadFile").files;
 		var allFileNames;
@@ -419,7 +425,6 @@
 				.substring(9);
 		event.preventDefault();
 	}
-
     
     </script>
     
