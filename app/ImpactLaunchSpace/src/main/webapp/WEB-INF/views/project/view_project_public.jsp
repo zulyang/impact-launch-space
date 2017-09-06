@@ -55,7 +55,13 @@ function loader() {
 					<div class="section-block">
 						<div class="funding-meta">
 							<h1 id="project_public_title">${selected_project.getProject_name() }</h1>
-							<button onClick="" type="button" class="btn btn-success edit_project_public">Edit Project</button>
+							<c:if test="${username.equals(selected_project.getProject_proposer()) }">
+								<a href ="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }" type="button" class="btn btn-success edit_project_public">Edit Project</a>
+							</c:if>
+							<c:if test="${username.equals(project_organization) }">
+								<a href ="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }" type="button" class="btn btn-success edit_project_public">Edit Project</a>
+							</c:if>
+							
 							<br>
 							<br>	
 							<input type="hidden" name="project_name"
