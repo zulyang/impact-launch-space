@@ -7,24 +7,38 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/login/register.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css" />
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/password-rules-helper/dist/css/passwordRulesHelper.min.css" />
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/password-rules-helper/dist/js/passwordRulesHelper.min.js"></script>
-
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/password-rules-helper/dist/css/passwordRulesHelper.min.css" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/password-rules-helper/dist/js/passwordRulesHelper.min.js"></script>
+<script>
+$(window).load(function() {
+	// Animate loader off screen
+	$(".se-pre-con").fadeOut("slow");;
+});
+</script>
 </head>
-
 <body class="signup">
+	<div class="se-pre-con"></div>
+	<%@include file="../common/navigationLogin.jspf" %>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
-
-
 				<div class="col-lg-12 register_container" id="register_container">
 					<h4 style="position: relative;">Create a new account</h4>
 					<form method="post" action="registernewuser"
@@ -49,17 +63,21 @@
 						</div>
 						<div class="form-group" style="margin-bottom: 0px;">
 							<div class="col-lg-12">
-								<input name="password1" id="password1" required="required" type="password"
-									class="form-control field" placeholder="Password">
+								<input name="password1" id="password1" required="required"
+									type="password" class="form-control field"
+									placeholder="Password">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="password2" id="password2" required="required" type="password"
-									class="form-control field" placeholder="Repeat your password" onChange="checkPasswordMatch();">
+								<input name="password2" id="password2" required="required"
+									type="password" class="form-control field"
+									placeholder="Repeat your password"
+									onChange="checkPasswordMatch();">
 							</div>
-							
-							<div class="col-lg-12 password_match_message" id="divCheckPasswordMatch"></div>
+
+							<div class="col-lg-12 password_match_message"
+								id="divCheckPasswordMatch"></div>
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
@@ -69,8 +87,9 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input type="submit" style="width: 100%;" class="btn btn-success field"
-									value="Register" id="register_button">
+								<input type="submit" style="width: 100%;"
+									class="btn btn-success field" value="Register"
+									id="register_button">
 							</div>
 						</div>
 						<p class="registerError">${registerCheck}</p>
@@ -80,31 +99,29 @@
 					</form>
 				</div>
 
-<%@include file="../common/navigationLogin.jspf" %>
 				<div class="col-lg-12 register_success" id="register_success"
 					style="display: none;">
-					
-<%@include file="../common/navigationLogin.jspf" %>
-					
+
 					<h4 class="register_success_message">Registration Successful</h4>
-					<p class="success_verify_message">You have successfully
-						registered for an account.<br> A verification code has been sent to
-						your email.</p>
-					<a href="/verify-account" class="btn btn-info verify_account" id="verify_account"
-						role="button">Verify My Account</a>
+					<p class="success_verify_message">
+						You have successfully registered for an account.<br> A
+						verification code has been sent to your email.
+					</p>
+					<a href="/verify-account" class="btn btn-info verify_account"
+						id="verify_account" role="button">Verify My Account</a>
 				</div>
 
 
 				<input type="hidden" id="registerSuccess" name="registerSuccess"
-					value="${registerSuccess}"> 
-			</div> 
+					value="${registerSuccess}">
+			</div>
 		</div>
 
 	</div>
 
 </body>
 <script type="text/javascript">
-		window.onload = function() {
+	window.onload = function() {
 		var registerCheckStatus = document.getElementById("registerSuccess").value;
 
 		if (registerCheckStatus.length > 0) {
@@ -118,24 +135,24 @@
 </script>
 
 <script type="text/javascript">
-$(function() {
-    $('#password1').passwordRulesValidator();
-});	
+	$(function() {
+		$('#password1').passwordRulesValidator();
+	});
 
+	function checkPasswordMatch() {
+		var password = $("#password1").val();
+		var confirmPassword = $("#password2").val();
 
-function checkPasswordMatch() {
-    var password = $("#password1").val();
-    var confirmPassword = $("#password2").val();
+		if (password != confirmPassword)
+			$("#divCheckPasswordMatch").html("Passwords do not match!").css(
+					'color', 'red');
+		else
+			$("#divCheckPasswordMatch").html("Passwords match.").css('color',
+					'green');
+	}
 
-    if (password != confirmPassword)
-        $("#divCheckPasswordMatch").html("Passwords do not match!").css('color', 'red');
-    else
-        $("#divCheckPasswordMatch").html("Passwords match.").css('color','green');
-}
-
-$(document).ready(function () {
-   $("#password1, #password2").keyup(checkPasswordMatch);
-});
-
+	$(document).ready(function() {
+		$("#password1, #password2").keyup(checkPasswordMatch);
+	});
 </script>
 </html>

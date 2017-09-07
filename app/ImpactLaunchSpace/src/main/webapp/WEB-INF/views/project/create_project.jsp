@@ -17,6 +17,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project/project.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/project/create_project.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
