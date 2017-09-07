@@ -54,7 +54,7 @@ function loader() {
 				<div class="content col-md-8 col-sm-12 col-xs-12">
 					<div class="section-block">
 						<div class="funding-meta">
-							<h1 id="project_public_title">${selected_project.getProject_name() }</h1>
+							<h1>${selected_project.getProject_name() }</h1>
 							<c:if
 								test="${username.equals(selected_project.getProject_proposer()) }">
 								<a

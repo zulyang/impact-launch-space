@@ -46,7 +46,7 @@
 				<div class="content col-md-8 col-sm-12 col-xs-12">
 					<div class="section-block">
 						<div class="funding-meta">
-							<h1 id="project_private_title">${selected_project.getProject_name() }</h1>
+							<h1>${selected_project.getProject_name() }</h1>
 							<button onClick="" type="button" class="btn btn-success edit_project_private">Edit Project</button>
 							<br>
 							<br>
