@@ -11,3 +11,10 @@
 	margin-bottom: 5rem;
 	width: 85rem;
 }
+
+.circle_edit_ind_profile_image {
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
