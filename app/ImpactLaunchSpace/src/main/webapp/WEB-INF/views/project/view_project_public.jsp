@@ -55,77 +55,80 @@ function loader() {
 					<div class="section-block">
 						<div class="funding-meta">
 							<h1 id="project_public_title">${selected_project.getProject_name() }</h1>
-							<c:if test="${username.equals(selected_project.getProject_proposer()) }">
-								<a href ="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }" type="button" class="btn btn-success edit_project_public">Edit Project</a>
+							<c:if
+								test="${username.equals(selected_project.getProject_proposer()) }">
+								<a
+									href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
+									type="button" class="btn btn-success edit_project_public">Edit
+									Project</a>
 							</c:if>
 							<c:if test="${username.equals(project_organization) }">
-								<a href ="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }" type="button" class="btn btn-success edit_project_public">Edit Project</a>
+								<a
+									href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
+									type="button" class="btn btn-success edit_project_public">Edit
+									Project</a>
 							</c:if>
-							
-							<br>
-							<br>	
-							<input type="hidden" name="project_name"
-									value="${selected_project.getProject_name() }"> 
-							<input type="hidden" name="project_proposer"
-									value="${selected_project.getProject_proposer()}"> 
-									
-								<span class="type-meta">
-								<i class="fa fa-user"></i> 
-								<c:choose>
-										<c:when test="${selected_project.getOrganization() != null}">
+
+							<br> <br> <input type="hidden" name="project_name"
+								value="${selected_project.getProject_name() }"> <input
+								type="hidden" name="project_proposer"
+								value="${selected_project.getProject_proposer()}"> <span
+								class="type-meta"> <i class="fa fa-user"></i> <c:choose>
+									<c:when test="${selected_project.getOrganization() != null}">
 										${selected_project.getOrganization()}
 									</c:when>
-										<c:otherwise>
+									<c:otherwise>
 										${selected_project.getProject_proposer()}
 									</c:otherwise>
 								</c:choose>
-								</span> 
-								
-								<span class="type-meta">
-									<i class="fa fa-tag"></i> 
-									<c:forEach
-										items="${project_target_areas}" var="item" varStatus="loop">
-										<a href="#">${item }</a>
-										<c:if test="${!loop.last}">,</c:if>
-									</c:forEach> 
-								</span>				
-								
-							<!--img src="assets/img/image-heartbeat.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding"-->
-							<!-- https://player.vimeo.com/video/67938315 -->
-							<div class="video-frame">
-								<iframe src="${selected_project.getProjectVideo()}"
-									width="500" height="281" frameborder="0" webkitallowfullscreen
-									mozallowfullscreen allowfullscreen></iframe>
-							</div>
-							<p>${selected_project.getPurpose()}</p>
-							
-							<c:choose>
-							  <c:when test="${progressPercentage == .00}">
-							    <h2><strong>0.00 %</strong></h2>
-								<span class="contribution">of project resources secured</span>
-								<div class="progress">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
-										aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: 0%;">
-										<span class="progress-percentage">0%</span>
-									</div>
-								</div>
-							  </c:when>
+							</span> <span class="type-meta"> <i class="fa fa-tag"></i> <c:forEach
+									items="${project_target_areas}" var="item" varStatus="loop">
+									<a href="#">${item }</a>
+									<c:if test="${!loop.last}">,</c:if>
+								</c:forEach>
+							</span>
 
-							  <c:otherwise>
-							    <h2><strong>${progressPercentage} %</strong></h2>
-								<span class="contribution">of project resources secured</span>
-								<div class="progress">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="${progressPercentage}"
-										aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: ${progressPercentage}%;">
-										<span class="progress-percentage">${progressPercentage}%</span>
+							<div>
+								<img src="/projectImageDisplay?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
+									class="img-responsive project-image">
+							</div>
+
+							<p>${selected_project.getPurpose()}</p>
+
+							<c:choose>
+								<c:when test="${progressPercentage == .00}">
+									<h2>
+										<strong>0.00 %</strong>
+									</h2>
+									<span class="contribution">of project resources secured</span>
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped active"
+											role="progressbar" aria-valuenow="0" aria-valuemin="0"
+											aria-valuemax="100" style="min-width: 2em; width: 0%;">
+											<span class="progress-percentage">0%</span>
+										</div>
 									</div>
-								</div>
-							  </c:otherwise>
+								</c:when>
+
+								<c:otherwise>
+									<h2>
+										<strong>${progressPercentage} %</strong>
+									</h2>
+									<span class="contribution">of project resources secured</span>
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped active"
+											role="progressbar" aria-valuenow="${progressPercentage}"
+											aria-valuemin="0" aria-valuemax="100"
+											style="min-width: 2em;width: ${progressPercentage}%;">
+											<span class="progress-percentage">${progressPercentage}%</span>
+										</div>
+									</div>
+								</c:otherwise>
 							</c:choose>
-							
+
 						</div>
 						<!-- <span class="count-down"><strong>27</strong>Days to go</span> -->
-						
+
 					</div>
 
 					<!--tabs-->
@@ -147,6 +150,11 @@ function loader() {
 								<div class="about-information">
 									<h1 class="section-title">ABOUT LAUNCH</h1>
 									<p>${selected_project.getDescription()}</p>
+									<div class="video-frame">
+										<iframe src="${selected_project.getProjectVideo()}"
+											width="500" height="281" frameborder="0"
+											webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+									</div>
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="updates">
@@ -242,23 +250,24 @@ function loader() {
 											</p>
 											<c:set var="count" value="${count + 1}" scope="page" />
 											<br>
-											
+
 											<!-- Amanda, this if loop is if theres is someone in the position -->
 											<c:if test="${!item1.get(2).equals(\"Unfilled Position\")}">
 												<span><i class="fa fa-users"></i> ${item1.get(2)}</span>
 											</c:if>
-											
+
 											<!-- Amanda, this if loop is if theres is noone filling the position -->
 											<c:if test="${item1.get(2).equals(\"Unfilled Position\")}">
-												<span><i class="fa fa-users"></i><b> ${item1.get(2)} </b></span>
-											</c:if>											
+												<span><i class="fa fa-users"></i><b>
+														${item1.get(2)} </b></span>
+											</c:if>
 											<c:choose>
-												
+
 												<c:when
 													test="${username.equals(selected_project.getProject_proposer())}">
 
 												</c:when>
-												
+
 												<c:when
 													test="${project_organization != null && username.equals(project_organization)}">
 
@@ -267,34 +276,36 @@ function loader() {
 												<c:when
 													test="${userRequestsForProject.contains(item1.get(0))}">
 													<c:choose>
-														<c:when test="${userRequestsForProjectObjs.get(userRequestsForProject.indexOf(item1.get(0))).getRequest_status().equals(\"Accepted\")}">
+														<c:when
+															test="${userRequestsForProjectObjs.get(userRequestsForProject.indexOf(item1.get(0))).getRequest_status().equals(\"Accepted\")}">
 															<button onClick="apply()" type="button"
 																id="applyForResource" class="btn btn-success" disabled>ACCEPTED</button>
 														</c:when>
-														
-														<c:when test="${userRequestsForProjectObjs.get(userRequestsForProject.indexOf(item1.get(0))).getRequest_status().equals(\"Confirmed\")}">
+
+														<c:when
+															test="${userRequestsForProjectObjs.get(userRequestsForProject.indexOf(item1.get(0))).getRequest_status().equals(\"Confirmed\")}">
 															<button onClick="apply()" type="button"
 																id="applyForResource" class="btn btn-success" disabled>CONFIRMED</button>
 														</c:when>
-														
+
 														<c:otherwise>
 															<button onClick="apply()" type="button"
 																id="applyForResource" class="btn btn-reward" disabled>APPLIED</button>
 														</c:otherwise>
-													
+
 													</c:choose>
-													
+
 												</c:when>
-												
+
 												<c:when test="${item1.get(2).equals(\"Unfilled Position\")}">
 													<button onClick="apply(${count})" type="button"
 														id="applyForResource" class="btn btn-reward applyButton">APPLY</button>
 												</c:when>
 
 												<c:otherwise>
-													
+
 												</c:otherwise>
-												
+
 											</c:choose>
 
 

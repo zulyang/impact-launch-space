@@ -125,22 +125,6 @@
 	margin: 30px 0px 10px 0px;
 }
 
-.video-frame {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
-	display: block;
-}
-
-.video-frame iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
 .funding-meta h2, .funding-meta span.contribution {
 	display: inline-block;
 	color: #85AD90;
