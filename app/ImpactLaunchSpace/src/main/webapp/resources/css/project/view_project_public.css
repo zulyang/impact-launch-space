@@ -6,3 +6,7 @@
 	display: inline;
 	float: right;
 }
+
+.progress-percentage {
+	line-height: 30px;
+}

@@ -98,20 +98,34 @@ function loader() {
 									mozallowfullscreen allowfullscreen></iframe>
 							</div>
 							<p>${selected_project.getPurpose()}</p>
-							<h2>$10,350</h2>
-							<span class="contribution">raised by <strong>5,234</strong>
-								ready to launch
-							</span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="45"
-									aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-									<span class="sr-only">45% Complete</span>
+							
+							<c:choose>
+							  <c:when test="${progressPercentage == .00}">
+							    <h2><strong>0.00 %</strong></h2>
+								<span class="contribution">of project resources secured</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0"
+										aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: 0%;">
+										<span class="progress-percentage">0%</span>
+									</div>
 								</div>
-							</div>
-							<span class="goal-progress"><strong>45%</strong> of
-								$23,000 raised</span>
+							  </c:when>
+
+							  <c:otherwise>
+							    <h2><strong>${progressPercentage} %</strong></h2>
+								<span class="contribution">of project resources secured</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="${progressPercentage}"
+										aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: ${progressPercentage}%;">
+										<span class="progress-percentage">${progressPercentage}%</span>
+									</div>
+								</div>
+							  </c:otherwise>
+							</c:choose>
+							
 						</div>
-						<span class="count-down"><strong>27</strong>Days to go</span>
+						<!-- <span class="count-down"><strong>27</strong>Days to go</span> -->
+						
 					</div>
 
 					<!--tabs-->

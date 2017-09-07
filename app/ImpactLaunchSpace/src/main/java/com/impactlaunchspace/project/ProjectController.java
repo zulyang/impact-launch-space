@@ -367,7 +367,8 @@ public class ProjectController {
 		model.addAttribute("userRequestsForProjectObjs", userRequestsForProjectObjs);
 		
 		DecimalFormat df = new DecimalFormat("#.00"); 
-		double progressPercentage = projectService.returnPercentageOfRecruitmentProgress(project_name, project_proposer);
+		double progressPercentage = projectService.returnPercentageOfRecruitmentProgress(project_name, project_proposer) * 100;
+
 		model.addAttribute("progressPercentage",  df.format(progressPercentage));
 
 		model.addAttribute("project_target_areas", projectTargetAreas);
