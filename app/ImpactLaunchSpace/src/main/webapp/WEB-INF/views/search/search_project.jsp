@@ -55,8 +55,17 @@
 							}
 							
 							trHTML += '<span class="card-title">'
-							+ res[0] + '</span></div><div class="projectStatus">' + res[4]
-							+ '</div><div class="card-content"><p class="project_description">'+ res[1]
+							+ res[0] + '</span></div>';
+							
+							if(res[4] == "new"){
+								trHTML += '<span class="label label-primary project_status">new</span>';
+							} else if (res[4] == "started") {
+								trHTML += '<span class="label label-success project_status">started</span>';
+							} else {
+								trHTML += '<span class="label label-default project_status">ended</span>';
+							}
+
+							trHTML += '<div class="card-content"><p class="project_description">'+ res[1]
 							+ '<hr/><i class="fa fa-clock-o"></i> ' + res[2] + ' day(s)<br><i class="fa fa-globe"></i> '+ res[3]
 							+ '<br><i class="fa fa-user-circle-o"></i> ' + res[5] + '</p></div>'
 							+ '<a href ="/view-project?project-name=' + res[0]

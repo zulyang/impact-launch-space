@@ -1,95 +1,102 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import
+	url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+@import
+	url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+	;
 
 *, *:before, *:after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 h1 {
-  padding: 50px 0;
-  font-weight: 400;
-  text-align: center;
+	padding: 50px 0;
+	font-weight: 400;
+	text-align: center;
 }
 
 p {
-  margin: 0 0 20px;
-  line-height: 1.5;
+	margin: 0 0 20px;
+	line-height: 1.5;
 }
 
 main {
-  text-align: center;
-  min-width: 320px;
-  max-width: 1100px;
-  padding: 50px;
-  margin: 8% auto;
-  background: #fff;
+	text-align: center;
+	min-width: 320px;
+	max-width: 1100px;
+	padding: 50px;
+	margin: 8% auto;
+	background: #fff;
 }
 
 section {
-  display: none;
-  padding: 20px 0 0;
-  border-top: 1px solid #ddd;
-  text-align: left;
+	display: none;
+	padding: 20px 0 0;
+	border-top: 1px solid #ddd;
+	text-align: left;
 }
 
 input {
-  display: none;
+	display: none;
 }
 
 label {
-  display: inline-block;
-  margin: 0 0 -1px;
-  padding: 15px 25px;
-  font-weight: 600;
-  text-align: center;
-  color: #bbb;
-  border: 1px solid transparent;
+	display: inline-block;
+	margin: 0 0 -1px;
+	padding: 15px 25px;
+	font-weight: 600;
+	text-align: center;
+	color: #bbb;
+	border: 1px solid transparent;
 }
 
 label:before {
-  font-family: fontawesome;
-  font-weight: normal;
-  margin-right: 10px;
+	font-family: fontawesome;
+	font-weight: normal;
+	margin-right: 10px;
 }
 
-label[for*='1']:before { content: '\f0c0'; }
-label[for*='2']:before { content: '\f0b1'; }
+label[for*='1']:before {
+	content: '\f0c0';
+}
+
+label[for*='2']:before {
+	content: '\f0b1';
+}
 
 label:hover {
-  color: #888;
-  cursor: pointer;
+	color: #888;
+	cursor: pointer;
 }
 
-input:checked + label {
-  color: #555;
-  border: 1px solid #ddd;
-  border-top: 2px solid orange;
-  border-bottom: 1px solid #fff;
+input:checked+label {
+	color: #555;
+	border: 1px solid #ddd;
+	border-top: 2px solid orange;
+	border-bottom: 1px solid #fff;
 }
 
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content2,
-#tab3:checked ~ #content3,
-#tab4:checked ~ #content4 {
-  display: block;
+#tab1:checked ~ #content1, #tab2:checked ~ #content2, #tab3:checked ~
+	#content3, #tab4:checked ~ #content4 {
+	display: block;
 }
 
 @media screen and (max-width: 650px) {
-  label {
-    font-size: 0;
-  }
-  label:before {
-    margin: 0;
-    font-size: 18px;
-  }
+	label {
+		font-size: 0;
+	}
+	label:before {
+		margin: 0;
+		font-size: 18px;
+	}
 }
 
 @media screen and (max-width: 400px) {
-  label {
-    padding: 15px;
-  }
+	label {
+		padding: 15px;
+	}
 }
 
 .row .col.m4 {
@@ -277,7 +284,7 @@ input:checked + label {
 	text-transform: uppercase;
 }
 
-.card .card-action:hover{
+.card .card-action:hover {
 	position: relative;
 	background-color: #091743;
 	border-top: 1px solid rgba(160, 160, 160, 0.2);
@@ -288,7 +295,7 @@ input:checked + label {
 	text-transform: uppercase;
 }
 
-.card a:hover{
+.card a:hover {
 	text-decoration: none;
 }
 
@@ -302,16 +309,12 @@ input:checked + label {
 	text-decoration: none;
 }
 
-.card .projectStatus{
-	background: #5cb85c;
-	color: white;
-	width: 20%;
-    float: right;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    text-align: center;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    font-size: smaller;
-    font-weight: 600;
+.project_status {
+	float: right;
+	margin: 5% 8% 2% 0%;
+	text-align: center;
+	border-radius: 0.5rem;
+	text-transform: uppercase;
+	font-size: smaller;
+	font-weight: 600;
 }

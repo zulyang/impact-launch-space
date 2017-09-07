@@ -53,7 +53,21 @@
 							<img src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
 							<span class="card-title">${item.getProject_name()}</span>
 						</div>
-						<div class="projectStatus">${item.getProject_status()}</div>
+						
+						<c:choose>
+						  <c:when test="${item.getProject_status() == 'new'}">
+						  	<span class="label label-primary project_status">${item.getProject_status()}</span>
+						  </c:when>
+						  
+						  <c:when test="${item.getProject_status() == 'started'}">
+						  	<span class="label label-success project_status">${item.getProject_status()}</span>
+						  </c:when>
+						  
+						  <c:otherwise>
+						  	<span class="label label-default project_status">${item.getProject_status()}</span>
+						  </c:otherwise>
+						</c:choose>
+						
 						<div class="card-content">
 							<p>
 							<hr />

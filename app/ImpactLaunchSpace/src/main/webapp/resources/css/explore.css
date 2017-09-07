@@ -305,18 +305,14 @@ main {
 	text-decoration: none;
 }
 
-.card .projectStatus{
-	background: #5cb85c;
-	color: white;
-	width: 20%;
-    float: right;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    text-align: center;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    font-size: smaller;
-    font-weight: 600;
+.project_status {
+	float: right;
+	margin: 5% 8% 2% 0%;
+	text-align: center;
+	border-radius: 0.5rem;
+	text-transform: uppercase;
+	font-size: smaller;
+	font-weight: 600;
 }
 
 .resourceTable{
