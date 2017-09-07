@@ -65,7 +65,7 @@
 							</div>
 							</nav>
 							<div class="table-responsive col-md-12">
-								<table id="resourcetable" class="table table-striped table-hover">
+								<table id="resourcetable" class="table">
 									<thead>
 										<tr>
 											<th class="col-md-4">Resource Name</th>
@@ -290,7 +290,7 @@
 
 		$('#reso' + newId).prop('disabled', false);
 		$('#desc' + newId).prop('disabled', false);
-		//$('#desc' + newId).css({'border': '1px solid #ccc', 'background-colour': '#fff'});
+		$('#desc' + newId).css({'border': '1px solid #ccc', 'background-colour': '#fff'});
 		
 		$('#edit' + newId).hide();
 		$('#dele' + newId).hide();
