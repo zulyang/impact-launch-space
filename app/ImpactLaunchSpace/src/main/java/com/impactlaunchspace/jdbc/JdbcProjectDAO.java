@@ -388,5 +388,30 @@ public class JdbcProjectDAO implements ProjectDAO {
 		}
 		return output;
 	}
+	
+	public void updateProjectStatus(String project_name, String project_proposer, String project_status){
+		String sql = "UPDATE PROJECTS SET "
+				+ "project_status = ? WHERE project_name = ? AND project_proposer = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, project_status);
+			ps.setString(2, project_name);
+			ps.setString(3, project_proposer);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 
 }

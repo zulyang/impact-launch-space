@@ -244,4 +244,11 @@ public class ProjectService {
 		}
 
 	}
+	
+	public void startProject(String project_name, String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
+		
+		projectDAO.updateProjectStatus(project_name, project_proposer, "started");
+	}
 }

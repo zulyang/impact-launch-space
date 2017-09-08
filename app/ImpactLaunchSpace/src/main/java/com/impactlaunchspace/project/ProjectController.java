@@ -506,6 +506,14 @@ public class ProjectController {
 		projectService.addProjectRequestedResource(oldProjectTitle, project_proposer, modalResourceCategory,
 				modalResourceName, modalResourceDescription);
 	}
+	
+	@RequestMapping(value = "/startProject", method = RequestMethod.POST)
+	public void startProject(@RequestParam String project_name, @RequestParam String project_proposer,
+			HttpServletRequest request) {
+		String proposer = (String) request.getSession().getAttribute("username");
+
+		projectService.startProject(project_name, project_proposer);
+	}
 
 	@RequestMapping(value = "/projectImageDisplay", method = RequestMethod.GET)
 	public void showImage(@RequestParam("project-name") String project_name,

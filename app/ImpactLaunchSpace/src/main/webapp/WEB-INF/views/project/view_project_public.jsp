@@ -68,6 +68,20 @@ function loader() {
 									type="button" class="btn btn-success edit_project_public">Edit
 									Project</a>
 							</c:if>
+							
+							<!-- Start project button here -->
+							<c:if
+								test="${username.equals(selected_project.getProject_proposer()) && progressPercentage >= 50.0 }">
+								<a
+									type="button" onClick="start()" class="btn btn-success edit_project_public">Start
+									Project</a>
+							</c:if>
+							<c:if test="${username.equals(project_organization) && progressPercentage >= 50.0}">
+								<a
+									type="button" onClick="start()" class="btn btn-success edit_project_public">Start
+									Project</a>
+							</c:if>
+							<!-- ends here -->
 
 							<br> <br> <input type="hidden" name="project_name"
 								value="${selected_project.getProject_name() }"> <input
@@ -316,9 +330,9 @@ function loader() {
 
 														<form action="sendApplyRequest" method="post">
 															<!-- These 2 fields are for parsing the attirbutes -->
-															<input type="hidden" name="project_name"
+															<input type="hidden" name="project_name" id="project_name"
 																value="${selected_project.getProject_name() }">
-															<input type="hidden" name="project_proposer"
+															<input type="hidden" name="project_proposer" id="project_proposer"
 																value="${selected_project.getProject_proposer()}">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal"
@@ -444,6 +458,16 @@ function loader() {
 				});
 			});
 		};
+		
+		function start() {
+			var project_name = $('#project_name').val();
+			var project_proposer = $('#project_proposer').val();
+			$.post('startProject', {
+				project_name : project_name,
+				project_proposer : project_proposer
+			})
+			
+		}
 	</script>
 
 	<script type="text/javascript">

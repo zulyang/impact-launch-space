@@ -19,4 +19,5 @@ public interface ProjectDAO {
 	
 	public ArrayList<Project> retrieveProjectsBySearch(String causes, String location, String searchbox);
 	
+	public void updateProjectStatus(String project_name, String project_proposer, String project_status);
 }
