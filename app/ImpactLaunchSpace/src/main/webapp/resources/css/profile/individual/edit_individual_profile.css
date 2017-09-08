@@ -1,4 +1,4 @@
-.font_labels{
+.font_labels {
 	white-space: nowrap;
 }
 
@@ -17,4 +17,29 @@
 	width: 250px;
 	height: 250px;
 	min-height: 100%;
+}
+
+.edit_ind_profile_container {
+	position: relative;
+	display: inline-block;
+	width: 40rem;
+	margin-left: 53%;
+}
+
+.edit_indi_profile_save {
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 20rem;
+}
+
+.edit_indi_profile_picture_btn {
+	position: absolute;
+	margin-top: 5%;
+}
+
+.edit_indi_picture_container {
+	display: inline-block;
+	position: absolute;
 }
