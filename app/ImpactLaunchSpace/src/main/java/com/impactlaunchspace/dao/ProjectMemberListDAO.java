@@ -13,4 +13,6 @@ public interface ProjectMemberListDAO {
 
 	public ProjectMemberList retrieveSpecificMember(String project_name, String project_proposer,
 			String project_member_username);
+	
+	public ArrayList<ArrayList<String>> retrieveJoinedProjects(String username);
 }

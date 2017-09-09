@@ -561,6 +561,16 @@ public class ProjectController {
 		projectsByUser = projectService.retrieveProjectByUser(username);
 		model.put("projectsByUser", projectsByUser);
 		
+		ArrayList<ArrayList<String>> joined_project_string = projectService.retrieveJoinedProjects(username);
+		ArrayList<Project> projectsJoinedByUser = new ArrayList<Project>(); 
+		
+		for(ArrayList<String> project_string : joined_project_string){
+			Project project = projectService.retrieveProject(project_string.get(0), project_string.get(1));
+			projectsJoinedByUser.add(project);
+		}
+		
+		model.put("projectsJoinedByUser", projectsJoinedByUser);
+		
 		return "project/" + "my_projects";
 	}
 }
