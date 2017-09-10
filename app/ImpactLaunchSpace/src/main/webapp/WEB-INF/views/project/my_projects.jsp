@@ -32,100 +32,99 @@
 				<!--navigation bar  -->
 				<%@include file="../common/navigation.jspf"%>
 
-				<main> 
-				<input id="tab1" type="radio" name="tabs" checked>
+				<main> <input id="tab1" type="radio" name="tabs" checked>
 				<label for="tab1">Created Projects</label> <input id="tab2"
 					type="radio" name="tabs"> <label for="tab2">Joined
-					Projects</label> 
-					
-				<section id="content1">
-				<c:if test="${projectsByUser.size() == 0 }">
-					<p>
-						You have not created any projects yet.
-					</p>
+					Projects</label> <section id="content1"> <c:if
+					test="${projectsByUser.size() == 0 }">
+					<p>You have not created any projects yet.</p>
 				</c:if>
-				
+
 				<div>
-				<c:forEach items="${projectsByUser}" var="item"> 
-				<div class="col m4">
-					<div class="card">
-						<div class="card-image">
-							<img src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
-							<span class="card-title">${item.getProject_name()}</span>
+					<c:forEach items="${projectsByUser}" var="item">
+						<div class="col m4">
+							<div class="card">
+								<div class="card-image">
+									<img
+										src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+									<span class="card-title">${item.getProject_name()}</span>
+								</div>
+
+								<div>
+									<c:choose>
+										<c:when test="${item.getProject_status() == 'new'}">
+											<span class="label label-primary project_status">${item.getProject_status()}</span>
+										</c:when>
+
+										<c:when test="${item.getProject_status() == 'started'}">
+											<span class="label label-success project_status">${item.getProject_status()}</span>
+										</c:when>
+
+										<c:otherwise>
+											<span class="label label-default project_status">${item.getProject_status()}</span>
+										</c:otherwise>
+									</c:choose>
+								</div>
+
+								<div class="card-content">
+									<p class="my_projects_description">${item.getPurpose()}
+									<hr />
+									<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
+									<i class="fa fa-globe"></i> ${item.getLocation()}<br>
+									</p>
+								</div>
+								<a
+									href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+									<div class="card-action">View Project</div>
+								</a>
+							</div>
 						</div>
-						
-						<c:choose>
-						  <c:when test="${item.getProject_status() == 'new'}">
-						  	<span class="label label-primary project_status">${item.getProject_status()}</span>
-						  </c:when>
-						  
-						  <c:when test="${item.getProject_status() == 'started'}">
-						  	<span class="label label-success project_status">${item.getProject_status()}</span>
-						  </c:when>
-						  
-						  <c:otherwise>
-						  	<span class="label label-default project_status">${item.getProject_status()}</span>
-						  </c:otherwise>
-						</c:choose>
-						
-						<div class="card-content">
-							<p class="project_description"> ${item.getPurpose()}
-							<hr />
-							<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
-							<i class="fa fa-globe"></i> ${item.getLocation()}<br>
-							</p>
-						</div>
-						<a href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
-							<div class="card-action">View Project</div>
-						</a>
-					</div>
+					</c:forEach>
 				</div>
-				</c:forEach>
-				</div>
-				
-				</section> <section id="content2">
-				<c:if test="${projectsJoinedByUser.size() == 0 }">
-					<p>
-						You have not joined any projects yet.
-					</p>
+
+				</section> <section id="content2"> <c:if
+					test="${projectsJoinedByUser.size() == 0 }">
+					<p>You have not joined any projects yet.</p>
 				</c:if>
-				
+
 				<div>
-				<c:forEach items="${projectsJoinedByUser}" var="item"> 
-				<div class="col m4">
-					<div class="card">
-						<div class="card-image">
-							<img src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
-							<span class="card-title">${item.getProject_name()}</span>
+					<c:forEach items="${projectsJoinedByUser}" var="item">
+						<div class="col m4">
+							<div class="card">
+								<div class="card-image">
+									<img
+										src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+									<span class="card-title">${item.getProject_name()}</span>
+								</div>
+
+								<c:choose>
+									<c:when test="${item.getProject_status() == 'new'}">
+										<span class="label label-primary project_status">${item.getProject_status()}</span>
+									</c:when>
+
+									<c:when test="${item.getProject_status() == 'started'}">
+										<span class="label label-success project_status">${item.getProject_status()}</span>
+									</c:when>
+
+									<c:otherwise>
+										<span class="label label-default project_status">${item.getProject_status()}</span>
+									</c:otherwise>
+								</c:choose>
+
+								<div class="card-content">
+									<p class="project_description">${item.getPurpose()}
+									<hr />
+									<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
+									<i class="fa fa-globe"></i> ${item.getLocation()}<br>
+									</p>
+								</div>
+								<a
+									href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+									<div class="card-action">View Project</div>
+								</a>
+							</div>
 						</div>
-						
-						<c:choose>
-						  <c:when test="${item.getProject_status() == 'new'}">
-						  	<span class="label label-primary project_status">${item.getProject_status()}</span>
-						  </c:when>
-						  
-						  <c:when test="${item.getProject_status() == 'started'}">
-						  	<span class="label label-success project_status">${item.getProject_status()}</span>
-						  </c:when>
-						  
-						  <c:otherwise>
-						  	<span class="label label-default project_status">${item.getProject_status()}</span>
-						  </c:otherwise>
-						</c:choose>
-						
-						<div class="card-content">
-							<p class="project_description"> ${item.getPurpose()}
-							<hr />
-							<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
-							<i class="fa fa-globe"></i> ${item.getLocation()}<br>
-							</p>
-						</div>
-						<a href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
-							<div class="card-action">View Project</div>
-						</a>
-					</div>
-				</div>
-				</c:forEach>
+					</c:forEach>
 				</section> </main>
 
 			</div>
