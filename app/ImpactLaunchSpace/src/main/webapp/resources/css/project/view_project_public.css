@@ -1,5 +1,10 @@
-.edit_project_public {
-	float: right;
+.project_public_btn {
+	width: 100%;
+}
+
+.edit_project_public, .start_project_public {
+	margin-top: 10%;
+	margin-bottom: 10%;
 }
 
 .progress-percentage {

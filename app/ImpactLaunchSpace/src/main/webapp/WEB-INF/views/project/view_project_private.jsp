@@ -47,9 +47,6 @@
 					<div class="section-block">
 						<div class="funding-meta">
 							<h1>${selected_project.getProject_name() }</h1>
-							<button onClick="" type="button" class="btn btn-success edit_project_private">Edit Project</button>
-							<br>
-							<br>
 							<span class="type-meta"><i class="fa fa-user"></i> <c:choose>
 									<c:when test="${selected_project.getOrganization() != null}">
 									${selected_project.getOrganization()}

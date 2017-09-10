@@ -55,33 +55,6 @@ function loader() {
 					<div class="section-block">
 						<div class="funding-meta">
 							<h1>${selected_project.getProject_name() }</h1>
-							<c:if
-								test="${username.equals(selected_project.getProject_proposer()) }">
-								<a
-									href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
-									type="button" class="btn btn-success edit_project_public">Edit
-									Project</a>
-							</c:if>
-							<c:if test="${username.equals(project_organization) }">
-								<a
-									href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
-									type="button" class="btn btn-success edit_project_public">Edit
-									Project</a>
-							</c:if>
-							
-							<!-- Start project button here -->
-							<c:if
-								test="${username.equals(selected_project.getProject_proposer()) && progressPercentage >= 50.0 }">
-								<a
-									type="button" onClick="start()" class="btn btn-success edit_project_public">Start
-									Project</a>
-							</c:if>
-							<c:if test="${username.equals(project_organization) && progressPercentage >= 50.0}">
-								<a
-									type="button" onClick="start()" class="btn btn-success edit_project_public">Start
-									Project</a>
-							</c:if>
-							<!-- ends here -->
 
 							<br> <br> <input type="hidden" name="project_name"
 								value="${selected_project.getProject_name() }"> <input
@@ -103,7 +76,8 @@ function loader() {
 							</span>
 
 							<div>
-								<img src="/projectImageDisplay?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
+								<img
+									src="/projectImageDisplay?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
 									class="img-responsive project-image">
 							</div>
 
@@ -242,6 +216,40 @@ function loader() {
 								PROFILE</a>
 						</div>
 					</div>
+
+					<div class="edit_project_public">
+						<c:if
+							test="${username.equals(selected_project.getProject_proposer()) }">
+							<a
+								href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
+								type="button" class="btn btn-primary project_public_btn">Edit
+								Project</a>
+						</c:if>
+						<c:if test="${username.equals(project_organization) }">
+							<a
+								href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
+								type="button" class="btn btn-primary project_public_btn">Edit
+								Project</a>
+						</c:if>
+					</div>
+
+					<div class="start_project_public">
+						<!-- Start project button here -->
+						<c:if test="${item.getProject_status() == 'new'}">
+							<c:if
+								test="${username.equals(selected_project.getProject_proposer()) && progressPercentage >= 50.0 }">
+								<a type="button" onClick="start()"
+									class="btn btn-success project_public_btn">Start Project</a>
+							</c:if>
+							<c:if
+								test="${username.equals(project_organization) && progressPercentage >= 50.0}">
+								<a type="button" onClick="start()"
+									class="btn btn-success project_public_btn">Start Project</a>
+							</c:if>
+						</c:if>
+					</div>
+					<!-- ends here -->
+
 					<div class="section-block">
 						<h1 class="section-title">WHAT WE NEED</h1>
 						<!--resources-->
@@ -330,9 +338,11 @@ function loader() {
 
 														<form action="sendApplyRequest" method="post">
 															<!-- These 2 fields are for parsing the attirbutes -->
-															<input type="hidden" name="project_name" id="project_name"
+															<input type="hidden" name="project_name"
+																id="project_name"
 																value="${selected_project.getProject_name() }">
-															<input type="hidden" name="project_proposer" id="project_proposer"
+															<input type="hidden" name="project_proposer"
+																id="project_proposer"
 																value="${selected_project.getProject_proposer()}">
 															<div class="modal-header">
 																<button type="button" class="close" data-dismiss="modal"
@@ -460,13 +470,14 @@ function loader() {
 		};
 		
 		function start() {
-			var project_name = $('#project_name').val();
-			var project_proposer = $('#project_proposer').val();
-			$.post('startProject', {
-				project_name : project_name,
-				project_proposer : project_proposer
-			})
-			
+			if(confirm("Starting a project is irreversible. Are you sure?")){
+				var project_name = $('#project_name').val();
+				var project_proposer = $('#project_proposer').val();
+				$.post('startProject', {
+					project_name : project_name,
+					project_proposer : project_proposer
+				})
+			}			
 		}
 	</script>
 
