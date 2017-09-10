@@ -39,54 +39,51 @@
   </style>
 
 <script>
+$(function() {
+    $("#sortableToDo").sortable({
+  	  update: function(event, ui) {
+  	      var list = document.getElementById("sortableToDo").getElementsByTagName("li");
+  	      for (var i=0; i < list.length; i++) {
+  	    	  $.post('update-card-order',{
+    					id : list[i].id,
+    					status: "todo",
+    					order : i,
+    				});
+  	    	}
+  	    },
+        connectWith: "#sortableInProgress, #sortableDone"
+    }).disableSelection();
 
-  $(function() {
-      $("#sortableToDo").sortable({
-    	  update: function(event, ui) {
-    	      var list = document.getElementById("sortableToDo").getElementsByTagName("li");
-    	      for (var i=0; i < list.length; i++) {
-        	      console.log(list[i].id);
-    	    	  $.post('update-card-order',{
-      					id : list[i].id,
-      					status: "todo",
-      					order : i,
-      				});
-    	    	}
-    	    },
-          connectWith: "#sortableInProgress, #sortableDone"
-      }).disableSelection();
+    $("#sortableInProgress").sortable({
+  	  update: function(event, ui) {
+  	      var list = document.getElementById("sortableInProgress").getElementsByTagName("li");
+  	      for (var i=0; i < list.length; i++) {
+  	    	  $.post('update-card-order',{
+    					id : list[i].id,
+    					status: "inprogress",
+    					order : i,
+    				});
+  	    	}
+  	    },
+        connectWith: "#sortableToDo, #sortableDone"
+    }).disableSelection();
 
-      $("#sortableInProgress").sortable({
-    	  update: function(event, ui) {
-    	      var list = document.getElementById("sortableInProgress").getElementsByTagName("li");
-    	      for (var i=0; i < list.length; i++) {
-    	    	  $.post('update-card-order',{
-      					id : list[i].id,
-      					status: "inprogress",
-      					order : i,
-      				});
-    	    	}
-    	    },
-          connectWith: "#sortableToDo, #sortableDone"
-      }).disableSelection();
-
-      $("#sortableDone").sortable({
-    	  update: function(event, ui) {
-    	      var list = document.getElementById("sortableDone").getElementsByTagName("li");
-    	      for (var i=0; i < list.length; i++) {
-    	    	  $.post('update-card-order',{
-      					id : list[i].id,
-      					status: "done",
-      					order : i,
-      				});
-    	      }
-    	    },
-          connectWith: "#sortableToDo, #sortableInProgress"
-      }).disableSelection();
-  });
-  
+    $("#sortableDone").sortable({
+  	  update: function(event, ui) {
+  	      var list = document.getElementById("sortableDone").getElementsByTagName("li");
+  	      for (var i=0; i < list.length; i++) {
+  	    	  $.post('update-card-order',{
+    					id : list[i].id,
+    					status: "done",
+    					order : i,
+    				});
+  	      }
+  	    },
+        connectWith: "#sortableToDo, #sortableInProgress"
+    }).disableSelection();
+}); 
   $(document).ready(function() {
-
+	  
 	    // page is now ready, initialize the calendar...
 
 	    $('#calendar').fullCalendar({
@@ -95,22 +92,25 @@
 	    })
 
 	});
-  
+
   </script>
 </head>
 
 <body>
 Hi ${username}, welcome to the Project Management Space for ${projectName}!
-
+	<input type="hidden" id="project_name" value="${projectName}"/>
+	<input type="hidden" id="project_proposer" value="${projectProposer}"/>
 <br>
 
 <br>
 
 <div>
+<div id="todoKB">
 	<ul id="sortableToDo" class="connectedSortable">
 		<c:forEach items="${todoList}" var="todo" varStatus="count">
 			<li 
 			id="${todo.getCard_id()}" class="ui-state-default">
+			${todo.getCard_id()}
 			${todo.getCard_title()}
 			<br>
 			${todo.getDescription()}
@@ -119,7 +119,10 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 			<br>
 			${todo.getAssignees()}
 			<br>
-			<button type="button">Delete</button>
+			<button id="${todo.getCard_id()},todo" type="submit" name="delete"
+            	class="btn btn-danger delete" onClick="delet(this.id)">
+            Delete
+            </button>
 			<button type="button" class="btn btn-success"
 			onClick="edit()">
 			<i class="fa fa-plus-circle"></i> Edit Card
@@ -129,19 +132,23 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 	</ul>
 </div>
 
-<div>
+<div id="inprogressKB">
 	<ul id="sortableInProgress" class="connectedSortable">
-	  <c:forEach items="${inprogressList}" var="todo">
-			<li id="${todo.getCard_id()}" class="ui-state-default">
-			${todo.getCard_title()}
+	  <c:forEach items="${inprogressList}" var="inprogress">
+			<li id="${inprogress.getCard_id()}" class="ui-state-default">
+			${inprogress.getCard_id()}
+			${inprogress.getCard_title()}
 			<br>
-			${todo.getDescription()}
+			${inprogress.getDescription()}
 			<br>
-			${todo.getTags()}
+			${inprogress.getTags()}
 			<br>
-			${todo.getAssignees()}
+			${inprogress.getAssignees()}
 			<br>
-			<button type="button">Delete</button>
+			<button id="${inprogress.getCard_id()},inprogress" type="submit" name="delete"
+            	class="btn btn-danger delete" onClick="delet(this.id)">
+            Delete
+            </button>
 			<button type="button" class="btn btn-success"
 			onClick="edit()">
 			<i class="fa fa-plus-circle"></i> Edit Card
@@ -151,19 +158,24 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 	</ul>
 </div>
  
- <div>
+ <div id="doneKB">
 	 <ul id="sortableDone" class="connectedSortable">
-	  <c:forEach items="${doneList}" var="todo">
-			<li id="${todo.getCard_id()}" class="ui-state-default">
-			${todo.getCard_title()}
+	  <c:forEach items="${doneList}" var="done">
+			<li id="${done.getCard_id()}" class="ui-state-default">
+			${done.getCard_id()}
+			${done.getCard_title()}
 			<br>
-			${todo.getDescription()}
+			${done.getDescription()}
 			<br>
-			${todo.getTags()}
+			${done.getTags()}
 			<br>
-			${todo.getAssignees()}
+			${done.getAssignees()}
 			<br>
-			<button type="button">Delete</button>
+			<button id="${done.getCard_id()},done" type="submit" name="delete"
+            	class="btn btn-danger delete" onClick="delet(this.id)">
+            Delete
+            </button>
+            	
 			<button type="button" class="btn btn-success"
 				onClick="edit()">
 				<i class="fa fa-plus-circle"></i> Edit Card
@@ -172,7 +184,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 		</c:forEach>
 	</ul>
 </div>
-
+</div>
 <button type="button" class="btn btn-success"
 	onClick="add()">
 	<i class="fa fa-plus-circle"></i> Add Card
@@ -232,11 +244,9 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 											</c:forEach>
 										</select>
 										
-										<input type="hidden" name="board_id"
-										value="${board}">
+										<input type="hidden" id="board_id"
+										value="${board_id}">
 										
-										<input type="hidden" name="card_order"
-										value="${todoList.size()}">
 									</div>
 								</div>
 							</div>
@@ -244,7 +254,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Cancel</button>
-							<button type="submit" id="add" class="btn btn-success">Add</button>
+							<button type="button" id="add" class="btn btn-success">Add</button>
 						</div>
 					</form>
 				</div>
@@ -327,6 +337,8 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <br>
 <br>
 <br>
+<!-- Display List Of Members and the resource they are providing -->
+
 <div id='calendar'></div>
 </body>
 
@@ -338,5 +350,51 @@ function add() {
 function edit() {
 	$('#EditModal').modal('show');
 };
+
+function delet(id) {
+	if (confirm("Are you sure you want to delete this card?") == true){
+		var arr = id.split(",");
+		var newId = arr[0];
+		var column = arr[1];
+      $.post('delete-card',{
+    	card_id : newId,
+      });
+      $("#todoKB").load(window.location.href + " #todoKB" );
+      $("#inprogressKB").load(window.location.href + " #inprogressKB" );
+      $("#doneKB").load(window.location.href + " #doneKB" );
+      return true;
+    } else {
+      return false;
+    }
+};
+</script>
+
+<script>
+	$(document).ready(function() {	
+		$('#add').click(
+				function(event) {
+							
+					var modalCardTitle = $('#modalCardTitle').val();
+					var modalCardDescription = $('#modalCardDescription').val();
+					var modalCardAssignees = $('#modalCardAssignees').val();
+					var modalCardTags = $('#modalCardTags').val();
+					var board_id = $('#board_id').val();
+					var projectName = $('#project_name').val();
+					var projectProposer = $('#project_proposer').val();
+					
+					var projectName2 = encodeURIComponent(projectName.trim());
+					
+					$.post('add-card',{
+						modalCardTitle : modalCardTitle,
+						modalCardDescription : modalCardDescription,
+						modalCardAssignees : modalCardAssignees,
+						modalCardTags: modalCardTags,
+						board_id: board_id,
+					});
+					
+					$('#AddModal').modal('hide');
+					$("#todoKB").load(window.location.href + " #todoKB" );
+				});
+		}); 						
 </script>
 </html>

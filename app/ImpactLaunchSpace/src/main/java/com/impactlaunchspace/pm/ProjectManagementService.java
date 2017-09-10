@@ -32,10 +32,10 @@ public class ProjectManagementService {
 		return boardDAO.retrieveBoardId(Project_Name, Project_Proposer);
 	}
 	
-	public void addCard(String modalCardTitle, String modalCardDescription, String status, String tags, int board_id, int card_order, String username, String assignee, Timestamp timestamp) {
+	public void addCard(String modalCardTitle, String modalCardDescription, String status, String tags, int board_id, String username, String assignee, Timestamp timestamp) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDAO cardDAO = (CardDAO) context.getBean("cardDAO");
-		cardDAO.insert(new Card(board_id, modalCardTitle, modalCardDescription, username, timestamp, tags, status, card_order));
+		cardDAO.insert(new Card(board_id, modalCardTitle, modalCardDescription, username, timestamp, tags, status));
 	}
 	
 	public void deleteCard(int card_id) {
