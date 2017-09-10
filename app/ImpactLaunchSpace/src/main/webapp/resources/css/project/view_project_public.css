@@ -43,3 +43,11 @@
 	z-index: 9999;
 	background: url(../../img/Pacman.gif) center no-repeat #fff;
 }
+
+.view_project_public_info {
+	margin-top: 5%;
+}
+
+.view_project_public_status {
+	float: right;
+}

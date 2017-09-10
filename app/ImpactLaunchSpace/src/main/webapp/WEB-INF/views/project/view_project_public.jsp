@@ -54,26 +54,52 @@ function loader() {
 				<div class="content col-md-8 col-sm-12 col-xs-12">
 					<div class="section-block">
 						<div class="funding-meta">
-							<h1>${selected_project.getProject_name() }</h1>
+							<h1 style="display: inline;">${selected_project.getProject_name() }</h1>
 
-							<br> <br> <input type="hidden" name="project_name"
-								value="${selected_project.getProject_name() }"> <input
-								type="hidden" name="project_proposer"
-								value="${selected_project.getProject_proposer()}"> <span
-								class="type-meta"> <i class="fa fa-user"></i> <c:choose>
-									<c:when test="${selected_project.getOrganization() != null}">
-										${selected_project.getOrganization()}
+							<div class="view_project_public_status">
+								<c:choose>
+									<c:when test="${selected_project.getProject_status() == 'new'}">
+										<h3>
+											<span class="label label-primary project_status">NEW PROJECT</span>
+										</h3>
 									</c:when>
+
+									<c:when
+										test="${selected_project.getProject_status() == 'started'}">
+										<h3>
+											<span class="label label-success project_status">PROJECT IN PROGRESS</span>
+										</h3>
+									</c:when>
+
 									<c:otherwise>
-										${selected_project.getProject_proposer()}
+										<h3>
+											<span class="label label-default project_status">PROJECT COMPLETED</span>
+										</h3>
 									</c:otherwise>
 								</c:choose>
-							</span> <span class="type-meta"> <i class="fa fa-tag"></i> <c:forEach
-									items="${project_target_areas}" var="item" varStatus="loop">
-									<a href="#">${item }</a>
-									<c:if test="${!loop.last}">,</c:if>
-								</c:forEach>
-							</span>
+							</div>
+
+							<input type="hidden" name="project_name"
+								value="${selected_project.getProject_name() }"> <input
+								type="hidden" name="project_proposer"
+								value="${selected_project.getProject_proposer()}">
+
+							<div class="view_project_public_info">
+								<span class="type-meta"> <i class="fa fa-user"></i> <c:choose>
+										<c:when test="${selected_project.getOrganization() != null}">
+										${selected_project.getOrganization()}
+									</c:when>
+										<c:otherwise>
+										${selected_project.getProject_proposer()}
+									</c:otherwise>
+									</c:choose>
+								</span> <span class="type-meta"> <i class="fa fa-tag"></i> <c:forEach
+										items="${project_target_areas}" var="item" varStatus="loop">
+										<a href="#">${item }</a>
+										<c:if test="${!loop.last}">,</c:if>
+									</c:forEach>
+								</span>
+							</div>
 
 							<div>
 								<img
@@ -235,7 +261,7 @@ function loader() {
 
 					<div class="start_project_public">
 						<!-- Start project button here -->
-						<c:if test="${item.getProject_status() == 'new'}">
+						<c:if test="${selected_project.getProject_status() == 'new'}">
 							<c:if
 								test="${username.equals(selected_project.getProject_proposer()) && progressPercentage >= 50.0 }">
 								<a type="button" onClick="start()"
@@ -427,9 +453,11 @@ function loader() {
 	</div>
 	<!-- Template JS -->
 	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/resources/js/main.js"></script>
+		src="<%=request.getContextPath()%>/resources/js/main.js">
+	</script>
 
 	<script>
+		
 		function apply(count) {
 			var selected_resource_category = $('#selected_resource_category'+ count).val();
 			var selects = document.getElementsByName('selected_resource_name');
@@ -477,6 +505,7 @@ function loader() {
 					project_name : project_name,
 					project_proposer : project_proposer
 				})
+				location.reload();
 			}			
 		}
 	</script>
