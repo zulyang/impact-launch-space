@@ -244,4 +244,18 @@ public class ProjectService {
 		}
 
 	}
+	
+	public void startProject(String project_name, String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectDAO projectDAO = (ProjectDAO) context.getBean("projectDAO");
+		
+		projectDAO.updateProjectStatus(project_name, project_proposer, "started");
+	}
+	
+	public ArrayList<ArrayList<String>> retrieveJoinedProjects(String username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
+		
+		return projectMemberListDAO.retrieveJoinedProjects(username);
+	}
 }

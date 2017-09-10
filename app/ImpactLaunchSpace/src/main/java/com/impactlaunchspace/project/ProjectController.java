@@ -506,6 +506,14 @@ public class ProjectController {
 		projectService.addProjectRequestedResource(oldProjectTitle, project_proposer, modalResourceCategory,
 				modalResourceName, modalResourceDescription);
 	}
+	
+	@RequestMapping(value = "/startProject", method = RequestMethod.POST)
+	public void startProject(@RequestParam String project_name, @RequestParam String project_proposer,
+			HttpServletRequest request) {
+		String proposer = (String) request.getSession().getAttribute("username");
+
+		projectService.startProject(project_name, project_proposer);
+	}
 
 	@RequestMapping(value = "/projectImageDisplay", method = RequestMethod.GET)
 	public void showImage(@RequestParam("project-name") String project_name,
@@ -552,6 +560,16 @@ public class ProjectController {
 		ArrayList<Project> projectsByUser = new ArrayList<Project>(); 
 		projectsByUser = projectService.retrieveProjectByUser(username);
 		model.put("projectsByUser", projectsByUser);
+		
+		ArrayList<ArrayList<String>> joined_project_string = projectService.retrieveJoinedProjects(username);
+		ArrayList<Project> projectsJoinedByUser = new ArrayList<Project>(); 
+		
+		for(ArrayList<String> project_string : joined_project_string){
+			Project project = projectService.retrieveProject(project_string.get(0), project_string.get(1));
+			projectsJoinedByUser.add(project);
+		}
+		
+		model.put("projectsJoinedByUser", projectsJoinedByUser);
 		
 		return "project/" + "my_projects";
 	}

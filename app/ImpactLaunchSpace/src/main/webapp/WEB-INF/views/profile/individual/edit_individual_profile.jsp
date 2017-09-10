@@ -14,11 +14,15 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/profile/individual/edit_individual_profile.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <link
@@ -26,7 +30,19 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<style type="text/css">
+img {
+	max-width: 100%;
+}
 
+.image_container {
+	width: 600px;
+	height: 500px;
+}
+</style>
+<link href="<%=request.getContextPath()%>/resources/css/cropper.min.css"
+	rel="stylesheet">
+<script src="<%=request.getContextPath()%>/resources/lib/cropper.min.js"></script>
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -40,10 +56,9 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit Individual Profile Form</div>
 						<div class="panel-body">
-							<div class="col-lg-12 required" style="float: right !important;">*
-								fields are required</div>
+							<div class="col-lg-12 required" style="float:right;">* fields are required</div>
 
-							<div class="edit_org_pic" style="display: inline-block">
+							<!--<div class="edit_org_pic" style="display: inline-block">
 								<form action="edit-individual-profile-pic" method="post"
 									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${username}"
@@ -58,6 +73,39 @@
 										type="submit" value="Update picture" id="editUploadIndPic" />
 
 								</form>
+							</div>-->
+
+							<div class="edit_indi_picture_container">
+								<img src="/imageDisplay?username=${username}"
+									class="circle_edit_ind_profile_image">
+								<button type="button" class="btn btn-info btn-lg edit_indi_profile_picture_btn"
+									data-toggle="modal" data-target="#myModal">Edit your
+									profile picture</button>
+								<div id="myModal" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">Crop your profile picture</h4>
+											</div>
+											<div class="modal-body">
+												<label for="editChooseIndPic"
+													class="form-control btn btn-info edit_indi_profile_save">Choose
+													your profile picture</label> <input type="file" name="image"
+													id="editChooseIndPic" style="visibility: hidden;"
+													onchange="readURL(this);" />
+												<div class="image_container">
+													<img id="blah" src="#" alt="" />
+												</div>
+												<button id="crop_button"
+													class="btn btn-info edit_indi_profile_save">Crop</button>
+												<div id="cropped_result"></div>
+												<button class="btn btn-success edit_indi_profile_save" onclick="reloadPage()">Confirm photo</button>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<form onsubmit="return checkFields();"
@@ -124,7 +172,9 @@
 								</div>
 
 								<div class="form-group">
-                                    <label for="editDob" class="col-sm-3 font_labels">Date Of Birth<span class="required">*</span></label>
+									<label for="editDob" class="col-sm-3 font_labels">Date
+										Of Birth<span class="required">*</span>
+									</label>
 
 									<div class="col-sm-9">
 										<input type="date" value="${individual.getDateOfBirth()}"
@@ -134,7 +184,8 @@
 								</div>
 
 								<div class="form-group">
-                                    <label for="editCountry" class="col-sm-3 font_labels">Country<span class="required">*</span></label>
+									<label for="editCountry" class="col-sm-3 font_labels">Country<span
+										class="required">*</span></label>
 
 									<div class="col-sm-9">
 										<select
@@ -157,7 +208,8 @@
 								</div>
 
 								<div class="form-group">
-                                    <label for="editEmail" class="col-sm-3 font_labels">Email<span class="required">*</span></label>
+									<label for="editEmail" class="col-sm-3 font_labels">Email<span
+										class="required">*</span></label>
 
 									<div class="col-sm-9">
 										<input type="text" value="${user.getEmail()}" name="email"
@@ -188,7 +240,9 @@
 								</div>
 
 								<div class="form-group">
-                                    <label for="editMinHour" class="col-sm-3 font_labels">Min    Hours<span class="required">*</span></label>
+									<label for="editMinHour" class="col-sm-3 font_labels">Min
+										Hours<span class="required">*</span>
+									</label>
 
 									<div class="col-sm-9">
 										<input type="number" required
@@ -199,7 +253,9 @@
 								</div>
 
 								<div class="form-group">
-                                    <label for="editMaxHour" class="col-sm-3 font_labels">Max    Hours<span class="required">*</span></label>
+									<label for="editMaxHour" class="col-sm-3 font_labels">Max
+										Hours<span class="required">*</span>
+									</label>
 
 									<div class="col-sm-9">
 										<input type="number" required
@@ -241,7 +297,8 @@
 							<br> I have expertise in these Job Sectors: <br> <select
 								required
 								class="js-example-basic-single-jobsectorindividual-required"
-                                name="selected_jobsector1" id="jsIndi1Value" style="width: 49%; margin-bottom: 2rem;">
+								name="selected_jobsector1" id="jsIndi1Value"
+								style="width: 49%; margin-bottom: 2rem;">
 
 								<option value=""></option>
 								<c:forEach items="${job_sector_list}" var="item">
@@ -258,7 +315,8 @@
 							</select> <input type="number" placeholder="Years of Experience"
 								id="js1experience" name="selected_jobsector1_years"
 								value="${jobSectorIndividual1.getYearsOfExperience()}"
-                                style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+								style="width: 49%; display: inline; margin-bottom: 2rem;"
+								class="form-control">
 
 
 							<c:choose>
@@ -266,7 +324,7 @@
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
 										name="selected_jobsector2" id="jsIndi2aValue"
-                                        style="width: 49%; margin-bottom: 2rem;">
+										style="width: 49%; margin-bottom: 2rem;">
 
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
@@ -286,7 +344,7 @@
 										placeholder="Years of Experience"
 										name="selected_jobsector2_years"
 										value="${jobSectorIndividual2.getYearsOfExperience()}"
-                                        style="width: 49%; margin-bottom: 2rem;">
+										style="width: 49%; margin-bottom: 2rem;">
 
 								</c:when>
 								<c:otherwise>
@@ -303,7 +361,9 @@
 									</select>
 									<input type="number" id="js2experienceB"
 										placeholder="Years of Experience"
-                                        name="selected_jobsector2_years" style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+										name="selected_jobsector2_years"
+										style="width: 49%; display: inline; margin-bottom: 2rem;"
+										class="form-control">
 
 								</c:otherwise>
 							</c:choose>
@@ -332,14 +392,15 @@
 										placeholder="Years of Experience"
 										name="selected_jobsector3_years"
 										value="${jobSectorIndividual3.getYearsOfExperience()}"
-                                        style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+										style="width: 49%; display: inline; margin-bottom: 2rem;"
+										class="form-control">
 
 								</c:when>
 								<c:otherwise>
 									<select
 										class="js-example-basic-single-jobsectorindividual-optional"
 										name="selected_jobsector3" id="jsIndi3bValue"
-                                        style="width: 49%; margin-bottom: 2rem;">
+										style="width: 49%; margin-bottom: 2rem;">
 
 										<option value=""></option>
 										<c:forEach items="${job_sector_list}" var="item">
@@ -350,7 +411,9 @@
 									</select>
 									<input type="number" id="js3experienceB"
 										placeholder="Years of Experience"
-                                        name="selected_jobsector3_years" style="width: 49%; display: inline; margin-bottom: 2rem;" class="form-control">
+										name="selected_jobsector3_years"
+										style="width: 49%; display: inline; margin-bottom: 2rem;"
+										class="form-control">
 
 								</c:otherwise>
 							</c:choose>
@@ -362,12 +425,11 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Interests</div>
 						<div class="panel-body">
-                            I prefer to work in:<span class="required">*</span> 
-                            <select
-
+							I prefer to work in:<span class="required">*</span> <select
 								class="js-example-basic-multiple-preferredcountries edit_profileField"
 								multiple="multiple" name="selected_preferredcountries"
-                                id="preferredCountries" style="width: 100%; margin-bottom: 2rem;" required>
+								id="preferredCountries"
+								style="width: 100%; margin-bottom: 2rem;" required>
 
 								<c:forEach items="${country_list}" var="item">
 									<c:choose>
@@ -381,8 +443,8 @@
 									</c:choose>
 								</c:forEach>
 
-                            </select> <br> Preferred Project Areas:<span class="required">*</span> <br> <select
-
+							</select> <br> Preferred Project Areas:<span class="required">*</span>
+							<br> <select
 								class="js-example-basic-multiple-preferredprojectareas edit_profileField"
 								multiple="multiple" name="selected_preferredprojectareas"
 								style="width: 100%" id="preferredAreas" required>
@@ -399,8 +461,8 @@
 								</c:forEach>
 
 
-                            </select> <br> Preferred Job Sectors:<span class="required">*</span> <br> <select
-
+							</select> <br> Preferred Job Sectors:<span class="required">*</span>
+							<br> <select
 								class="js-example-basic-multiple-preferredjobsectors edit_profileField"
 								multiple="multiple" name="selected_preferredjobsectors"
 								id="preferredJobSectors" style="width: 100%" required>
@@ -441,7 +503,9 @@
 								</c:forEach>
 								<tr>
 									<div class="col-lg-12 custom-file-upload" id="documents">
-                                        <div id="document_upload_button" class="document_upload_button" onclick="uploadFile()">Upload your documents</div>
+										<div id="document_upload_button"
+											class="document_upload_button" onclick="uploadFile()">Upload
+											your documents</div>
 
 										<div style='height: 0px; width: 0px; overflow: hidden;'>
 											<input id=uploadFile name="documents" multiple type="file"
@@ -455,7 +519,7 @@
 
 					<br>
 					<div class="form-group">
-                        <div class="col-lg-12">
+						<div class="col-lg-12">
 							<input type="submit"
 								class="btn btn-success edit_org_profile_save"
 								value="Update details" />
@@ -474,7 +538,81 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" defer>
+		function reloadPage() {
+			location.reload();
+		}
 
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result)
+				};
+				reader.readAsDataURL(input.files[0]);
+				setTimeout(initCropper, 1000);
+			}
+		}
+		function initCropper() {
+			console.log("Came here")
+			var image = document.getElementById('blah');
+			var cropper = new Cropper(image, {
+				aspectRatio : 1 / 1,
+				crop : function(e) {
+					//console.log(e.detail.x);
+					//console.log(e.detail.y);
+				}
+			});
+
+			// On crop button clicked
+			document
+					.getElementById('crop_button')
+					.addEventListener(
+							'click',
+							function() {
+								var imgurl = cropper.getCroppedCanvas()
+										.toDataURL();
+								var img = document.createElement("img");
+								img.src = imgurl;
+
+								document.getElementById("cropped_result")
+										.appendChild(img);
+								document.getElementById("cropped_result").childNodes[0]
+										.setAttribute(
+												"style",
+												"border-radius: 50%;width: 250px;display: flex;margin-left: auto;margin-right: auto;");
+
+								cropper
+										.getCroppedCanvas()
+										.toBlob(
+												function(blob) {
+													var formData = new FormData();
+													formData.append(
+															'profilePicture',
+															blob);
+													// Use `jQuery.ajax` method
+													$
+															.ajax(
+																	'edit-individual-profile-pic',
+																	{
+																		method : "POST",
+																		data : formData,
+																		processData : false,
+																		contentType : false,
+																		success : function() {
+																			console
+																					.log('Upload success');
+																		},
+																		error : function() {
+																			console
+																					.log('Upload error');
+																		}
+																	});
+												});
+
+							})
+		}
+	</script>
 	<script type="text/javascript">
 		function uploadFile() {
 			document.getElementById("uploadFile").click();

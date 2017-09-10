@@ -146,5 +146,38 @@ public class JdbcProjectMemberListDAO implements ProjectMemberListDAO {
 			}
 		}
 	}
+	
+	public ArrayList<ArrayList<String>> retrieveJoinedProjects(String username) {
+		 ArrayList<ArrayList<String>> output = new  ArrayList<ArrayList<String>>();
+		 
+		 String sql = "SELECT * FROM PROJECT_MEMBER_LIST WHERE project_member_username = ? AND NOT project_role = ?";
+			Connection conn = null;
+			try {
+				conn = dataSource.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, username);
+				ps.setString(2, "admin");
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					ArrayList<String> project_string = new ArrayList<String>();
+					project_string.add(rs.getString(1));
+					project_string.add(rs.getString(2));
+					output.add(project_string);
+					
+				}
+				rs.close();
+				ps.close();
+				return output;
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+					}
+				}
+			}
+	}
 
 }

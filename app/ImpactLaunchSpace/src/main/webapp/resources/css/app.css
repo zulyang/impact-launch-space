@@ -417,14 +417,6 @@ html, body {
 	margin-top: 3rem;
 }
 
-.edit_ind_profile_container {
-	position: relative;
-	display: inline-block;
-	width: 40rem;
-	margin-left: 10rem;
-	margin-top: 3rem;
-}
-
 .org_countries {
 	display: inline-block;
 	background-color: #ec0faa;

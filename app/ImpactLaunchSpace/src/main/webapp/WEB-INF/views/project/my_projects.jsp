@@ -69,7 +69,7 @@
 						</c:choose>
 						
 						<div class="card-content">
-							<p>
+							<p class="project_description"> ${item.getPurpose()}
 							<hr />
 							<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
 							<i class="fa fa-globe"></i> ${item.getLocation()}<br>
@@ -84,24 +84,48 @@
 				</div>
 				
 				</section> <section id="content2">
-				<p>Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky
-					drumstick fatback boudin ball tip turducken. Pork belly meatball
-					t-bone bresaola tail filet mignon kevin turkey ribeye shank flank
-					doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin
-					turkey rump ball tip sirloin frankfurter meatloaf boudin brisket
-					ham hock. Hamburger venison brisket tri-tip andouille pork belly
-					ball tip short ribs biltong meatball chuck. Pork chop ribeye tail
-					short ribs, beef hamburger meatball kielbasa rump corned beef
-					porchetta landjaeger flank. Doner rump frankfurter meatball
-					meatloaf, cow kevin pork pork loin venison fatback spare ribs
-					salami beef ribs.</p>
-				<p>Jerky jowl pork chop tongue, kielbasa shank venison. Capicola
-					shank pig ribeye leberkas filet mignon brisket beef kevin
-					tenderloin porchetta. Capicola fatback venison shank kielbasa,
-					drumstick ribeye landjaeger beef kevin tail meatball pastrami
-					prosciutto pancetta. Tail kevin spare ribs ground round ham ham
-					hock brisket shoulder. Corned beef tri-tip leberkas flank sausage
-					ham hock filet mignon beef ribs pancetta turkey.</p>
+				<c:if test="${projectsJoinedByUser.size() == 0 }">
+					<p>
+						You have not joined any projects yet.
+					</p>
+				</c:if>
+				
+				<div>
+				<c:forEach items="${projectsJoinedByUser}" var="item"> 
+				<div class="col m4">
+					<div class="card">
+						<div class="card-image">
+							<img src="/projectImageDisplay?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+							<span class="card-title">${item.getProject_name()}</span>
+						</div>
+						
+						<c:choose>
+						  <c:when test="${item.getProject_status() == 'new'}">
+						  	<span class="label label-primary project_status">${item.getProject_status()}</span>
+						  </c:when>
+						  
+						  <c:when test="${item.getProject_status() == 'started'}">
+						  	<span class="label label-success project_status">${item.getProject_status()}</span>
+						  </c:when>
+						  
+						  <c:otherwise>
+						  	<span class="label label-default project_status">${item.getProject_status()}</span>
+						  </c:otherwise>
+						</c:choose>
+						
+						<div class="card-content">
+							<p class="project_description"> ${item.getPurpose()}
+							<hr />
+							<i class="fa fa-clock-o"></i> ${item.getDuration()} day(s)<br>
+							<i class="fa fa-globe"></i> ${item.getLocation()}<br>
+							</p>
+						</div>
+						<a href="/view-project?project-name=${item.getProject_name()}&project-proposer=${item.getProject_proposer()}">
+							<div class="card-action">View Project</div>
+						</a>
+					</div>
+				</div>
+				</c:forEach>
 				</section> </main>
 
 			</div>
