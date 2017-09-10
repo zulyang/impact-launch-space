@@ -31,7 +31,7 @@ public class Card {
 	}
 	
 	//this constructor is to be inserted into the database
-	public Card(int board_id, String card_title, String description, String owner, Timestamp date_created, String tags, String status, int card_order ) {
+	public Card(int board_id, String card_title, String description, String owner, Timestamp date_created, String tags, String status) {
 		super();
 		this.board_id = board_id;
 		this.card_title = card_title;
@@ -40,7 +40,6 @@ public class Card {
 		this.date_created = date_created;
 		this.tags = tags; 
 		this.status = status;
-		this.card_order = card_order;
 	}
 	
 	public Card(int card_id, int board_id, String card_title, String description, String owner, Timestamp date_created, String tags, String status, int card_order ) {
