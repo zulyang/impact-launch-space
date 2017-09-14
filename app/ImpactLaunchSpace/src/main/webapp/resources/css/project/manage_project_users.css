@@ -7,7 +7,23 @@
 	text-align: center;
 }
 
-.manage_project_users_form {
+.invite_users_panel, .remove_users_panel {
+	margin: 5%
+}
+
+.invite_users_label {
+	white-space: nowrap;
+}
+
+.invite_users_input {
+	margin: 5%;
+}
+
+.invite_btn {
+	width: 23%;
+}
+
+.manage_project_users {
 	margin: 10% auto;
 	width: 70%;
 	background: #fff;
@@ -16,8 +32,4 @@
 .users_table>tbody>tr>th, .users_table>tbody>tr>td {
 	padding: 15px;
 	text-align: center;
-}
-
-.remove_users_panel {
-	margin: 5%
 }

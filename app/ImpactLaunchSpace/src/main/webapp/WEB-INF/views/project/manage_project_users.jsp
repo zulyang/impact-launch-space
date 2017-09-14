@@ -53,16 +53,43 @@
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<%@include file="../common/navigation.jspf"%>
 				<div class="se-pre-con"></div>
-				<div class="container manage_project_users_form">
+				<div class="container manage_project_users">
 					<div class="row">
-						<div class="alert alert-info project_name" role="alert">PROJECT NAME HERE</div>
+						<div class="alert alert-info project_name" role="alert">PROJECT
+							NAME HERE</div>
 						<div class="page-header">
 							<h2>Manage Project Users</h2>
 						</div>
-						<form action="">
-							<div class="panel panel-danger remove_users_panel">
-								<!-- Default panel contents -->
-								<div class="panel-heading">Remove users from project</div>
+
+						<div class="panel panel-primary invite_users_panel">
+							<!-- Default panel contents -->
+							<div class="panel-heading">Invite users to join project</div>
+							<form action="">
+								<div class="invite_users_input">
+									<div class="form-group">
+										<div class="col-sm-9">
+											<select
+												class="js-example-basic-multiple-banlistusers create-new-project-select2 form-control"
+												multiple="multiple" name="selected_banlist"
+												style="width: 100% !important;">
+												<c:forEach items="${user_list}" var="item">
+													<c:if test="${item.equals(username) == false}">
+														<option value="${item}">${item}</option>
+													</c:if>
+												</c:forEach>
+											</select>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-success invite_btn"
+										onclick="return inviteUsers();">Invite</button>
+								</div>
+							</form>
+						</div>
+
+						<div class="panel panel-danger remove_users_panel">
+							<!-- Default panel contents -->
+							<div class="panel-heading">Remove users from project</div>
+							<form action="">
 								<table class="table users_table">
 									<tr id="user_row_1">
 										<th>Username</th>
@@ -89,8 +116,9 @@
 												id="remove4" onclick="removeUser(this.id);">Remove</button>
 									</tr>
 								</table>
-							</div>
-						</form>
+							</form>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -99,11 +127,20 @@
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple-banlistusers").select2({
-			placeholder : "Search for username : "
+			placeholder : "Search for users:"
 		});
+	</script>
+
+	<script>
+		function inviteUsers() {
+			if (confirm("Are you sure you want to remove this user from the project? This action cannot be reversed.")) {
+				return true;
+			}
+			return false;
+		}
 
 		function removeUser(id) {
-			if (confirm("Are you sure you want to remove this user from the project? This action cannot be reversed.") == true) {
+			if (confirm("Are you sure you want to remove this user from the project? This action cannot be reversed.")) {
 				let numId = id.substring(6);
 				$('#user_row_' + numId).remove();
 			}
