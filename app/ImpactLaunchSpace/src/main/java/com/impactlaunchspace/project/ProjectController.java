@@ -49,7 +49,7 @@ public class ProjectController {
 
 	@Autowired
 	RequestService requestService;
-
+	
 	// Show Create Project Page
 	@RequestMapping(value = "/create-project", method = RequestMethod.GET)
 	public String showCreateProjectPage(HttpServletRequest request, ModelMap model) {
@@ -573,4 +573,10 @@ public class ProjectController {
 		
 		return "project/" + "my_projects";
 	}
+	
+	@RequestMapping(value = "/manage-project-users", method = RequestMethod.GET)
+	public String showManageProjectUsersPage(HttpServletRequest request, ModelMap model) {
+		return "project/" + "manage_project_users";
+	}
+
 }
