@@ -1,0 +1,23 @@
+.page-header {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.project_name {
+	text-align: center;
+}
+
+.manage_project_users_form {
+	margin: 10% auto;
+	width: 70%;
+	background: #fff;
+}
+
+.users_table>tbody>tr>th, .users_table>tbody>tr>td {
+	padding: 15px;
+	text-align: center;
+}
+
+.remove_users_panel {
+	margin: 5%
+}
