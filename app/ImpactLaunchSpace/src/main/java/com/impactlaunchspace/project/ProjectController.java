@@ -585,24 +585,32 @@ public class ProjectController {
 		model.addAttribute("project_proposer", project_proposer);
 		ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer);
 		
+		ArrayList<String> member_list_string = new ArrayList<String>();
+		
+		for(ProjectMemberList member : member_list){
+			member_list_string.add(member.getProject_member_username());
+		}
+		
 		model.addAttribute("member_list", member_list);
+		model.addAttribute("member_list_string", member_list_string);
 		
 		return "project/" + "manage_project_users";
 	}
 	
-	@RequestMapping(value = "/send-invite", method = RequestMethod.GET)
+	@RequestMapping(value = "/send-invite", method = RequestMethod.POST)
 	public String inviteUsersToProject(@RequestParam String project_name,
-			@RequestParam String project_proposer,@RequestParam ArrayList<String> invited_users, HttpServletRequest request, ModelMap model) {
+			@RequestParam String project_proposer,@RequestParam ArrayList<String> invited_users, HttpServletRequest request, ModelMap model, RedirectAttributes redirectAttributes) {
+		System.out.println(project_name);
 		
-		return "project/" + "manage_project_users";
+		redirectAttributes.addAttribute("project-name", project_name);
+		redirectAttributes.addAttribute("project-proposer", project_proposer);
+		return "redirect:" + "manage-project-users";
 	}
 	
 	@RequestMapping(value = "/remove-member", method = RequestMethod.POST)
 	public void removeMemberFromProject(@RequestParam String project_name,
 			@RequestParam String project_proposer,@RequestParam String member_username, HttpServletRequest request, ModelMap model) {
-		
-		System.out.println("things happened");
-		System.out.println(member_username);
+		projectService.removeSpecificMember(project_name, project_proposer, member_username);
 	}
 
 

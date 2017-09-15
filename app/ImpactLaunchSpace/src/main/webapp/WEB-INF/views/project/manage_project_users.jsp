@@ -69,15 +69,21 @@
 							<!-- Default panel contents -->
 							<div class="panel-heading">Invite users to join project</div>
 							<form action="send-invite" method="post">
+								<input type="hidden" name="project_name" value="${project.getProject_name() }" />
+								<input type="hidden" name="project_proposer" value="${project.getProject_proposer() }" />
 								<div class="invite_users_input">
 									<div class="form-group">
 										<div class="col-sm-9">
 											<select
 												class="js-example-basic-multiple-banlistusers create-new-project-select2 form-control"
-												multiple="multiple" name="selected_banlist"
+												multiple="multiple" name="invited_users"
 												style="width: 100% !important;">
 												<c:forEach items="${user_list}" var="item">
-													<c:if test="${item.equals(username) == false}">
+													<c:if test="${member_list_string.contains(item) == true }">
+														<option value="${item}" disabled>${item}</option>
+													</c:if>
+													
+													<c:if test="${item.equals(username) == false && member_list_string.contains(item) == false}">
 														<option value="${item}">${item}</option>
 													</c:if>
 												</c:forEach>
@@ -181,7 +187,8 @@
 		});
 
 		function inviteUsers() {
-			if (confirm("Are you sure you want to remove this user from the project? This action cannot be reversed.")) {
+			if (confirm("Do you wish to send an invitation out to the selected users?")) {
+				
 				return true;
 			}
 			return false;
