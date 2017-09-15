@@ -27,6 +27,7 @@ import com.impactlaunchspace.entity.IndividualAccount;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectBanList;
+import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
@@ -575,7 +576,24 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/manage-project-users", method = RequestMethod.GET)
-	public String showManageProjectUsersPage(HttpServletRequest request, ModelMap model) {
+	public String showManageProjectUsersPage(@RequestParam("project-name") String project_name,
+			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
+		model.addAttribute("user_list", userService.retrieveUsernameList());
+		
+		Project project = projectService.retrieveProject(project_name, project_proposer);
+		model.addAttribute("project", project);
+		model.addAttribute("project_proposer", project_proposer);
+		ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer);
+		
+		model.addAttribute("member_list", member_list);
+		
+		return "project/" + "manage_project_users";
+	}
+	
+	@RequestMapping(value = "/send-invite", method = RequestMethod.GET)
+	public String inviteUsersToProject(@RequestParam String project_name,
+			@RequestParam String project_proposer,@RequestParam ArrayList<String> invited_users, HttpServletRequest request, ModelMap model) {
+		
 		return "project/" + "manage_project_users";
 	}
 

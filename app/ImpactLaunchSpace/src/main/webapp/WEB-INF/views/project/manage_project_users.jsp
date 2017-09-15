@@ -24,6 +24,9 @@
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
+
 
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -40,7 +43,9 @@
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
-
+<script type="text/javascript" charset="utf8"
+	src="<%=request.getContextPath()%>/resources/lib/datatables/js/jquery.dataTables.js"></script>
+</head>
 <script>
 	function loader() {
 		$(".se-pre-con").fadeOut("slow");
@@ -55,8 +60,7 @@
 				<div class="se-pre-con"></div>
 				<div class="container manage_project_users">
 					<div class="row">
-						<div class="alert alert-info project_name" role="alert">PROJECT
-							NAME HERE</div>
+						<div class="alert alert-info project_name" role="alert">${project.getProject_name() }</div>
 						<div class="page-header">
 							<h2>Manage Project Users</h2>
 						</div>
@@ -64,7 +68,7 @@
 						<div class="panel panel-primary invite_users_panel">
 							<!-- Default panel contents -->
 							<div class="panel-heading">Invite users to join project</div>
-							<form action="">
+							<form action="send-invite" method="post">
 								<div class="invite_users_input">
 									<div class="form-group">
 										<div class="col-sm-9">
@@ -88,33 +92,50 @@
 
 						<div class="panel panel-danger remove_users_panel">
 							<!-- Default panel contents -->
-							<div class="panel-heading">Remove users from project</div>
+							<div class="panel-heading">Member List</div>
 							<form action="">
-								<table class="table users_table">
-									<tr id="user_row_1">
-										<th>Username</th>
-										<th>Role</th>
-										<th></th>
-									</tr>
-									<tr id="user_row_2">
-										<td>Kevin</td>
-										<td>Admin</td>
-										<td><button type="button" id="remove2"
-												onclick="removeUser(this.id);" class="btn btn-danger"
-												disabled>Remove</button>
-									</tr>
-									<tr id="user_row_3">
-										<td>Michael</td>
-										<td>Resource offerer</td>
-										<td><button type="button" class="btn btn-danger"
-												id="remove3" onclick="removeUser(this.id);">Remove</button>
-									</tr>
-									<tr id="user_row_4">
-										<td>Jessica</td>
-										<td>Member</td>
-										<td><button type="button" class="btn btn-danger"
-												id="remove4" onclick="removeUser(this.id);">Remove</button>
-									</tr>
+
+								<table id="member_table" class="table users_table">
+									<thead>
+										<tr id="user_row_1">
+											<th>Username</th>
+											<th>Role</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<c:forEach items="${member_list}" var="item">
+											<c:if test="${item.getProject_role().equals(\"admin\") }">
+												<tr id="user_row_2">
+													<td>${item.getProject_member_username() }</td>
+													<td>Admin</td>
+													<td><button type="button" id="remove2"
+															onclick="removeUser(this.id);" class="btn btn-danger"
+															disabled>Remove</button></td>
+												</tr>
+											</c:if>
+
+											<c:if test="${item.getProject_role().equals(\"member\") }">
+												<tr id="user_row_3">
+													<td>${item.getProject_member_username() }</td>
+													<td>Resource offerer</td>
+													<td><button type="button" class="btn btn-danger"
+															id="remove3" onclick="removeUser(this.id);">Remove</button></td>
+												</tr>
+											</c:if>
+
+											<c:if test="${item.getProject_role().equals(\"invited\") }">
+												<tr id="user_row_4">
+													<td>${item.getProject_member_username() }</td>
+													<td>Member</td>
+													<td><button type="button" class="btn btn-danger"
+															id="remove4" onclick="removeUser(this.id);">Remove</button></td>
+												</tr>
+											</c:if>
+
+										</c:forEach>
+									</tbody>
 								</table>
 							</form>
 						</div>
@@ -132,6 +153,18 @@
 	</script>
 
 	<script>
+		$(document).ready(function() {
+			$('#member_table').DataTable({
+				"order" : [ [ 1, "asc" ] ],
+				responsive : true,
+				"columnDefs" : [ {
+					"targets" : [ 2 ],
+					"orderable" : false
+				} ]
+			});
+
+		});
+
 		function inviteUsers() {
 			if (confirm("Are you sure you want to remove this user from the project? This action cannot be reversed.")) {
 				return true;
