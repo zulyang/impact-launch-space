@@ -94,10 +94,12 @@
 							<!-- Default panel contents -->
 							<div class="panel-heading">Member List</div>
 							<form action="">
-
+							<input type="hidden" id="project_name" value="${project.getProject_name() }" />
+							<input type="hidden" id="project_proposer" value="${project.getProject_proposer() }" />
+														
 								<table id="member_table" class="table users_table">
 									<thead>
-										<tr id="user_row_1">
+										<tr id="headers">
 											<th>Username</th>
 											<th>Role</th>
 											<th></th>
@@ -105,36 +107,49 @@
 									</thead>
 
 									<tbody>
+										<%
+											int id = 0;
+										%>
 										<c:forEach items="${member_list}" var="item">
-											<c:if test="${item.getProject_role().equals(\"admin\") }">
-												<tr id="user_row_2">
+											<tr id="row<%=++id%>">
+											<input type="hidden" id="member<%=id%>"
+														value="${item.getProject_member_username() }" />
+											
+											<c:choose>	
+											<c:when test="${item.getProject_role().equals(\"admin\") }">
+												
+													
 													<td>${item.getProject_member_username() }</td>
 													<td>Admin</td>
-													<td><button type="button" id="remove2"
+													<td><button type="button" id="dele<%=id%>"
 															onclick="removeUser(this.id);" class="btn btn-danger"
 															disabled>Remove</button></td>
-												</tr>
-											</c:if>
+												
+											</c:when>
 
-											<c:if test="${item.getProject_role().equals(\"member\") }">
-												<tr id="user_row_3">
+											<c:when test="${item.getProject_role().equals(\"member\") }">
+												
+													
 													<td>${item.getProject_member_username() }</td>
 													<td>Resource offerer</td>
 													<td><button type="button" class="btn btn-danger"
-															id="remove3" onclick="removeUser(this.id);">Remove</button></td>
-												</tr>
-											</c:if>
+															id="dele<%=id%>" onclick="removeUser(this.id);">Remove</button></td>
+												
+											</c:when>
 
-											<c:if test="${item.getProject_role().equals(\"invited\") }">
-												<tr id="user_row_4">
+											<c:when test="${item.getProject_role().equals(\"invited\") }">
+												
+													
 													<td>${item.getProject_member_username() }</td>
 													<td>Member</td>
 													<td><button type="button" class="btn btn-danger"
-															id="remove4" onclick="removeUser(this.id);">Remove</button></td>
-												</tr>
-											</c:if>
-
+															id="dele<%=id%>" onclick="removeUser(this.id);">Remove</button></td>
+												
+											</c:when>
+											</c:choose>
+										</tr>
 										</c:forEach>
+										
 									</tbody>
 								</table>
 							</form>
@@ -173,9 +188,22 @@
 		}
 
 		function removeUser(id) {
+			var numId = id.substring(4);
+			
+			var member_username = $('#member' + numId).val();
 			if (confirm("Are you sure you want to remove this user from the project? This action cannot be reversed.")) {
-				let numId = id.substring(6);
-				$('#user_row_' + numId).remove();
+				
+				var project_name = $('#project_name').val();
+				var project_proposer = $('#project_proposer').val();
+				
+				console.log(member_username);
+				$('#row' + numId).remove();
+
+				$.post('remove-member', {
+					member_username : member_username,
+					project_name : project_name,
+					project_proposer : project_proposer
+				});
 			}
 		}
 	</script>

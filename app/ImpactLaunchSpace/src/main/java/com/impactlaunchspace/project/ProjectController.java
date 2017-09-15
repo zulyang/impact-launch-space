@@ -596,5 +596,14 @@ public class ProjectController {
 		
 		return "project/" + "manage_project_users";
 	}
+	
+	@RequestMapping(value = "/remove-member", method = RequestMethod.POST)
+	public void removeMemberFromProject(@RequestParam String project_name,
+			@RequestParam String project_proposer,@RequestParam String member_username, HttpServletRequest request, ModelMap model) {
+		
+		System.out.println("things happened");
+		System.out.println(member_username);
+	}
+
 
 }

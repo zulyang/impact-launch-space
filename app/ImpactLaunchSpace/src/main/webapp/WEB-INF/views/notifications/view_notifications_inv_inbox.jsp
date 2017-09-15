@@ -65,7 +65,7 @@
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
-												<li class="list-group-item-selected"><a
+												<li class="list-group-item"><a
 													href="/notifications/messages/inbox">Inbox<span
 														class="badge pull-right">${inboxSize }</span></a></li>
 												<li class="list-group-item"><a
@@ -93,7 +93,7 @@
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
-												<li class="list-group-item"><a
+												<li class="list-group-item-selected"><a
 													href="/notifications/invitations/inbox">Received <span
 														class="badge pull-right">${userRequestsSize }</span></a></li>
 												<li class="list-group-item"><a
