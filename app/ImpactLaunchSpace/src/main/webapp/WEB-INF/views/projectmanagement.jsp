@@ -2,41 +2,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project Management</title>
-  
-
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manage My Project</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project/project_management.css" />	
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
   <link rel='stylesheet' href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="<%=request.getContextPath() %>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
   <script src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
-
-  <style>
-  #sortableToDo, #sortableInProgress, #sortableDone {
-    border: 1px solid #eee;
-    width: 142px;
-    min-height: 20px;
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
-  }
-  #sortableToDo li, #sortableInProgress li, #sortableDone li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    width: 120px;
-  }
-  </style>
 
 <script>
 $(function() {
@@ -97,9 +77,20 @@ $(function() {
 </head>
 
 <body>
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-12">
+				<%@include file="common/navigation.jspf"%>
+				<div class="project-management-container">
+					<div class="container">
+						<div class="row">
 Hi ${username}, welcome to the Project Management Space for ${projectName}!
 	<input type="hidden" id="project_name" value="${projectName}"/>
 	<input type="hidden" id="project_proposer" value="${projectProposer}"/>
+	<button type="button" class="btn btn-success"
+	onClick="add()">
+	<i class="fa fa-plus-circle"></i> Add Card
+</button>
 <br>
 
 <br>
@@ -107,6 +98,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <div>
 <div id="todoKB">
 	<ul id="sortableToDo" class="connectedSortable">
+	<div class="kanban-header">TO DO</div>
 		<c:forEach items="${todoList}" var="todo" varStatus="count">
 			<li 
 			id="${todo.getCard_id()}" class="ui-state-default">
@@ -120,12 +112,11 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 			${todo.getAssignees()}
 			<br>
 			<button id="${todo.getCard_id()},todo" type="submit" name="delete"
-            	class="btn btn-danger delete" onClick="delet(this.id)">
-            Delete
+            	class="btn btn-danger delete" onClick="delet(this.id)"><i class="fa fa-trash"></i> Delete
             </button>
-			<button type="button" class="btn btn-success"
+			<button type="button" class="btn btn-primary"
 			onClick="edit()">
-			<i class="fa fa-plus-circle"></i> Edit Card
+			<i class="fa fa-pencil"></i> Edit
 			</button>
 			</li>
 		</c:forEach>
@@ -134,6 +125,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 
 <div id="inprogressKB">
 	<ul id="sortableInProgress" class="connectedSortable">
+	<div class="kanban-header">IN PROGRESS</div>
 	  <c:forEach items="${inprogressList}" var="inprogress">
 			<li id="${inprogress.getCard_id()}" class="ui-state-default">
 			${inprogress.getCard_id()}
@@ -146,12 +138,11 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 			${inprogress.getAssignees()}
 			<br>
 			<button id="${inprogress.getCard_id()},inprogress" type="submit" name="delete"
-            	class="btn btn-danger delete" onClick="delet(this.id)">
-            Delete
+            	class="btn btn-danger delete" onClick="delet(this.id)"><i class="fa fa-trash"></i> Delete
             </button>
-			<button type="button" class="btn btn-success"
+			<button type="button" class="btn btn-primary"
 			onClick="edit()">
-			<i class="fa fa-plus-circle"></i> Edit Card
+			<i class="fa fa-pencil"></i> Edit
 			</button>
 			</li>
 		</c:forEach>
@@ -160,6 +151,7 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
  
  <div id="doneKB">
 	 <ul id="sortableDone" class="connectedSortable">
+	 <div class="kanban-header">DONE</div>
 	  <c:forEach items="${doneList}" var="done">
 			<li id="${done.getCard_id()}" class="ui-state-default">
 			${done.getCard_id()}
@@ -173,22 +165,19 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 			<br>
 			<button id="${done.getCard_id()},done" type="submit" name="delete"
             	class="btn btn-danger delete" onClick="delet(this.id)">
-            Delete
+            <i class="fa fa-trash"></i> Delete
             </button>
             	
-			<button type="button" class="btn btn-success"
+			<button type="button" class="btn btn-primary"
 				onClick="edit()">
-				<i class="fa fa-plus-circle"></i> Edit Card
+				<i class="fa fa-pencil"></i> Edit
 			</button>
 			</li>
 		</c:forEach>
 	</ul>
 </div>
 </div>
-<button type="button" class="btn btn-success"
-	onClick="add()">
-	<i class="fa fa-plus-circle"></i> Add Card
-</button>
+
 									
 </div>
 		<!-- Add new card modal (Copied from resources)-->
@@ -339,7 +328,12 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <br>
 <!-- Display List Of Members and the resource they are providing -->
 
-<div id='calendar'></div>
+<div class="calendar-container"><div id='calendar'></div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 <script type="text/javascript">
