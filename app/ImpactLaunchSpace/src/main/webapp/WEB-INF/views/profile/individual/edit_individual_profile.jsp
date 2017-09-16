@@ -56,7 +56,7 @@ img {
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit Individual Profile Form</div>
 						<div class="panel-body">
-							<div class="col-lg-12 required" style="float:right;">* fields are required</div>
+							<div class="required" style="float:right;">* fields are required</div>
 
 							<!--<div class="edit_org_pic" style="display: inline-block">
 								<form action="edit-individual-profile-pic" method="post"

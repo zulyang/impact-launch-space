@@ -96,7 +96,7 @@
 							</form>
 						</div>
 
-						<div class="panel panel-danger remove_users_panel">
+						<div class="panel panel-success remove_users_panel">
 							<!-- Default panel contents -->
 							<div class="panel-heading">Member List</div>
 							<form action="">
