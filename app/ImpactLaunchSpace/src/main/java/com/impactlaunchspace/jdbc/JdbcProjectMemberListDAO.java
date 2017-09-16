@@ -60,16 +60,16 @@ public class JdbcProjectMemberListDAO implements ProjectMemberListDAO {
 		}
 	}
 
-	public void remove(ProjectMemberList projectMemberList) {
+	public void remove(String project_name, String project_proposer, String project_member_username) {
 		String sql = "DELETE FROM PROJECT_MEMBER_LIST WHERE project_name = ? AND project_proposer = ? AND project_member_username = ?";
 		Connection conn = null;
 
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, projectMemberList.getProject_name());
-			ps.setString(2, projectMemberList.getProject_proposer());
-			ps.setString(3, projectMemberList.getProject_member_username());
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.setString(3,project_member_username);
 			ps.executeUpdate();
 			ps.close();
 

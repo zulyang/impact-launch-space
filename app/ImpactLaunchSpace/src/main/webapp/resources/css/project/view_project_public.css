@@ -1,5 +1,10 @@
-.edit_project_public {
-	float: right;
+.project_public_btn {
+	width: 100%;
+}
+
+.edit_project_public, .start_project_public {
+	margin-top: 10%;
+	margin-bottom: 10%;
 }
 
 .progress-percentage {
@@ -37,4 +42,12 @@
 	height: 100%;
 	z-index: 9999;
 	background: url(../../img/Pacman.gif) center no-repeat #fff;
+}
+
+.view_project_public_info {
+	margin-top: 5%;
+}
+
+.view_project_public_status {
+	float: right;
 }

@@ -189,12 +189,6 @@ html, body {
 	display: inline-block;
 }
 
-.profile_bio {
-	display: inline-block;
-	float: right;
-	width: 65%;
-}
-
 .edit_org_profile_save {
 	justify-content: center;
 	display: flex;
@@ -394,18 +388,6 @@ html, body {
 	min-height: 100%;
 }
 
-.circle_indi_profile_image {
-	border-radius: 50%;
-	width: 250px;
-	height: 250px;
-	min-height: 100%; 
-	display: inline-block;
-	/*width: auto;
-	height: 100%;
-	display: inline-block;
-	float: left;*/
-}
-
 .edit_org_pic {
 	margin: 1rem;
 }
@@ -444,12 +426,6 @@ html, body {
 	text-align: justify;
 }
 
-.indi_public_profile_display_container {
-	margin-top: 50rem; 
-	margin-bottom: 5rem;
-	width: 85rem;
-}
-
 .indi_private_profile_display_container {
 	margin-top: 50rem;
 	margin-bottom: 5rem;
@@ -466,54 +442,6 @@ html, body {
 
 .panel-body {
 	height: 100%;
-}
-
-.indi_bio {
-	width: 45rem;
-}
-
-.indi_skills {
-	display: inline-block;
-	background-color: #4CAF50;
-	border-radius: 25px;
-	border: 0.1rem solid #4CAF50;
-	width: 200px;
-	color: white;
-	text-align: center;
-	font-size: large;
-}
-
-.indi_project_area {
-	display: inline-block;
-	background-color: #24b8d7;
-	border-radius: 25px;
-	border: 0.1rem solid #24b8d7;
-	width: 200px;
-	color: white;
-	text-align: center;
-	font-size: large;
-}
-
-.indi_job_sector {
-	display: inline-block;
-	background-color: #eba410;
-	border-radius: 25px;
-	border: 0.1rem solid #eba410;
-	width: 200px;
-	color: white;
-	text-align: center;
-	font-size: large;
-}
-
-.indi_preferred_countries {
-	display: inline-block;
-	background-color: #ec0faa;
-	border-radius: 25px;
-	border: 0.1rem solid #ec0faa;
-	width: 200px;
-	color: white;
-	text-align: center;
-	font-size: large;
 }
 
 .create-project-container {
@@ -737,4 +665,25 @@ keyframes active {
   96% { -webkit-transform: matrix3d(1.1, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(1.1, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
   100% { -webkit-transform: matrix3d(1.1, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform: matrix3d(1.1, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
 }
+
+.change-password-container{
+	/* margin-top: 15rem;
+	height: 30rem;
+	background: #fff;
+	padding-top: 3rem;
+	padding-left: 10rem;
+	padding-right: 10rem;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto; */
+	/* margin-top: 15rem;
+	display: inline-block; */
+	display:block;
+	margin-top: 20rem;
+	padding-left: 35%;
+	text-align: center;
+	width: 60%;
+	
+}
+
 

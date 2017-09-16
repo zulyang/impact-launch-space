@@ -2,42 +2,57 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project Management</title>
-  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
+<title>Project Management</title>
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<link rel='stylesheet'
+	href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+=======
+<title>Manage My Project</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/project/project_management.css" />	
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel='stylesheet' href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="<%=request.getContextPath() %>/resources/lib/jquery-ui/jquery-ui.js"></script>
+>>>>>>> Project-Resource
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
   <script src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
 
-  <style>
-  #sortableToDo, #sortableInProgress, #sortableDone {
-    border: 1px solid #eee;
-    width: 142px;
-    min-height: 20px;
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
-  }
-  #sortableToDo li, #sortableInProgress li, #sortableDone li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    width: 120px;
-  }
-  </style>
+<<<<<<< HEAD
+<style>
+#sortableToDo, #sortableInProgress, #sortableDone {
+	border: 1px solid #eee;
+	width: 142px;
+	min-height: 20px;
+	list-style-type: none;
+	margin: 0;
+	padding: 5px 0 0 0;
+	float: left;
+	margin-right: 10px;
+}
 
+#sortableToDo li, #sortableInProgress li, #sortableDone li {
+	margin: 0 5px 5px 5px;
+	padding: 5px;
+	font-size: 1.2em;
+	width: 120px;
+}
+</style>
+</head>
+=======
 <script>
 $(function() {
     $("#sortableToDo").sortable({
@@ -53,6 +68,7 @@ $(function() {
   	    },
         connectWith: "#sortableInProgress, #sortableDone"
     }).disableSelection();
+>>>>>>> Project-Resource
 
     $("#sortableInProgress").sortable({
   	  update: function(event, ui) {
@@ -96,41 +112,56 @@ $(function() {
   </script>
 </head>
 
+<<<<<<< HEAD
+						<button type="button" class="btn btn-success" onClick="edit()">
+							<i class="fa fa-plus-circle"></i> Edit Card
+						</button>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
+	<button type="button" class="btn btn-success" onClick="add()">
+		<i class="fa fa-plus-circle"></i> Add Card
+	</button>
+=======
 <body>
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-12">
+				<%@include file="common/navigation.jspf"%>
+				<div class="project-management-container">
+					<div class="container">
+						<div class="row">
 Hi ${username}, welcome to the Project Management Space for ${projectName}!
 	<input type="hidden" id="project_name" value="${projectName}"/>
 	<input type="hidden" id="project_proposer" value="${projectProposer}"/>
+	<button type="button" class="btn btn-success"
+	onClick="add()">
+	<i class="fa fa-plus-circle"></i> Add Card
+</button>
 <br>
+>>>>>>> Project-Resource
 
 <br>
 
-<div>
-<div id="todoKB">
-	<ul id="sortableToDo" class="connectedSortable">
-		<c:forEach items="${todoList}" var="todo" varStatus="count">
-			<li 
-			id="${todo.getCard_id()}" class="ui-state-default">
-			${todo.getCard_id()}
-			${todo.getCard_title()}
-			<br>
-			${todo.getDescription()}
-			<br>
-			${todo.getTags()}
-			<br>
-			${todo.getAssignees()}
-			<br>
-			<button id="${todo.getCard_id()},todo" type="submit" name="delete"
-            	class="btn btn-danger delete" onClick="delet(this.id)">
-            Delete
-            </button>
-			<button type="button" class="btn btn-success"
-			onClick="edit()">
-			<i class="fa fa-plus-circle"></i> Edit Card
-			</button>
-			</li>
-		</c:forEach>
-	</ul>
-</div>
+<<<<<<< HEAD
+				<form action="add-card" role="form" method="post">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Add New Card</h4>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div id="resourcesNeeded" class="form-group row col-md-5">
+								<div class="col-md-12">
+									Card Title:
+									<textarea id="modalCardTitle" rows="4" name="modalCardTitle"
+										class="form-control col-md-4 create-project-add"
+										placeholder="Give your card a title here..."></textarea>
 
 <div id="inprogressKB">
 	<ul id="sortableInProgress" class="connectedSortable">
@@ -196,58 +227,113 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 			<div class="modal-dialog">
 				<div class="modal-content">
 
-					<form action="add-card" role="form" method="post">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title">Add New Card</h4>
-						</div>
-						<div class="modal-body">
-							<div class="container">
-								<div id="resourcesNeeded" class="form-group row col-md-5">
-									<div class="col-md-12">
-										 Card Title:
-										<textarea id="modalCardTitle" rows="4"
-											name="modalCardTitle"
-											class="form-control col-md-4 create-project-add"
-											placeholder="Give your card a title here..."></textarea>
-											
-										</select> <br> 									
-										 Description:
-										<textarea id="modalCardDescription" rows="4"
-											name="modalCardDescription"
-											class="form-control col-md-4 create-project-add"
-											placeholder="Describe your card here..."></textarea>
-										<br> 
-										
-										<!-- Tags refer to the all the resource categories in the project -->
-										Tags: 
-										<select id="modalCardTags"
-											name="modalCardTags" class="col-md-4 form-control" 
-											style="width: 100%">
-										 	<option value="" disabled selected>Select a Category:</option>
-											<c:forEach items="${cat}" var="item">
-												<option value="${item}">${item}</option>
-											</c:forEach>
-										</select>
-										<br> 
-										
-										Assignees:
-										<select id="modalCardAssignees"
-											name="modalCardAssignees" class="col-md-4 form-control" 
-											style="width: 100%">
-										 	<option value="" disabled selected>Select a username:</option>
-											<c:forEach items="${members}" var="item">
-												<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
-											</c:forEach>
-										</select>
-										
-										<input type="hidden" id="board_id"
-										value="${board_id}">
-										
-									</div>
+									<!-- Tags refer to the all the resource categories in the project -->
+									Tags: <select id="modalCardTags" name="modalCardTags"
+										class="col-md-4 form-control" style="width: 100%">
+										<option value="" disabled selected>Select a Category:</option>
+										<c:forEach items="${cat}" var="item">
+											<option value="${item}">${item}</option>
+										</c:forEach>
+									</select> <br> Assignees: <select id="modalCardAssignees"
+										name="modalCardAssignees" class="col-md-4 form-control"
+										style="width: 100%">
+										<option value="" disabled selected>Select a username:</option>
+										<c:forEach items="${members}" var="item">
+											<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
+										</c:forEach>
+									</select> <input type="hidden" id="board_id" value="${board_id}">
+=======
+<div>
+<div id="todoKB">
+	<ul id="sortableToDo" class="connectedSortable">
+	<div class="kanban-header">TO DO</div>
+		<c:forEach items="${todoList}" var="todo" varStatus="count">
+			<li 
+			id="${todo.getCard_id()}" class="ui-state-default">
+			${todo.getCard_id()}
+			${todo.getCard_title()}
+			<br>
+			${todo.getDescription()}
+			<br>
+			${todo.getTags()}
+			<br>
+			${todo.getAssignees()}
+			<br>
+			<button id="${todo.getCard_id()},todo" type="submit" name="delete"
+            	class="btn btn-danger delete" onClick="delet(this.id)"><i class="fa fa-trash"></i> Delete
+            </button>
+			<button type="button" class="btn btn-primary"
+			onClick="edit()">
+			<i class="fa fa-pencil"></i> Edit
+			</button>
+			</li>
+		</c:forEach>
+	</ul>
+</div>
+
+<div id="inprogressKB">
+	<ul id="sortableInProgress" class="connectedSortable">
+	<div class="kanban-header">IN PROGRESS</div>
+	  <c:forEach items="${inprogressList}" var="inprogress">
+			<li id="${inprogress.getCard_id()}" class="ui-state-default">
+			${inprogress.getCard_id()}
+			${inprogress.getCard_title()}
+			<br>
+			${inprogress.getDescription()}
+			<br>
+			${inprogress.getTags()}
+			<br>
+			${inprogress.getAssignees()}
+			<br>
+			<button id="${inprogress.getCard_id()},inprogress" type="submit" name="delete"
+            	class="btn btn-danger delete" onClick="delet(this.id)"><i class="fa fa-trash"></i> Delete
+            </button>
+			<button type="button" class="btn btn-primary"
+			onClick="edit()">
+			<i class="fa fa-pencil"></i> Edit
+			</button>
+			</li>
+		</c:forEach>
+	</ul>
+</div>
+ 
+ <div id="doneKB">
+	 <ul id="sortableDone" class="connectedSortable">
+	 <div class="kanban-header">DONE</div>
+	  <c:forEach items="${doneList}" var="done">
+			<li id="${done.getCard_id()}" class="ui-state-default">
+			${done.getCard_id()}
+			${done.getCard_title()}
+			<br>
+			${done.getDescription()}
+			<br>
+			${done.getTags()}
+			<br>
+			${done.getAssignees()}
+			<br>
+			<button id="${done.getCard_id()},done" type="submit" name="delete"
+            	class="btn btn-danger delete" onClick="delet(this.id)">
+            <i class="fa fa-trash"></i> Delete
+            </button>
+            	
+			<button type="button" class="btn btn-primary"
+				onClick="edit()">
+				<i class="fa fa-pencil"></i> Edit
+			</button>
+			</li>
+		</c:forEach>
+	</ul>
+</div>
+</div>
+
+									
+</div>
+		<!-- Add new card modal (Copied from resources)-->
+		<div class="modal fade" tabindex="-1" role="dialog" id="AddModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+>>>>>>> Project-Resource
+
 								</div>
 							</div>
 						</div>
@@ -339,7 +425,16 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <br>
 <!-- Display List Of Members and the resource they are providing -->
 
-<div id='calendar'></div>
+<<<<<<< HEAD
+	<div id='calendar'></div>
+=======
+<div class="calendar-container"><div id='calendar'></div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+>>>>>>> Project-Resource
 </body>
 
 <script type="text/javascript">

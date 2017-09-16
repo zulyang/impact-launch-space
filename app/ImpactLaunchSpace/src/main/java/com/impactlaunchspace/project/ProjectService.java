@@ -221,6 +221,13 @@ public class ProjectService {
 				project_member_username);
 	}
 	
+	public void removeSpecificMember(String project_name, String project_proposer,
+			String project_member_username){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectMemberListDAO projectMemberListDAO = (ProjectMemberListDAO) context.getBean("projectMemberListDAO");
+		projectMemberListDAO.remove(project_name, project_proposer, project_member_username);
+	}
+	
 	public double returnPercentageOfRecruitmentProgress(String project_name, String project_proposer){
 		double count = 0.0;
 		double MIN_PERCENTAGE = Project.MIN_PERCENTAGE;
