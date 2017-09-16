@@ -37,3 +37,11 @@
 .modalResourceOffered textarea{
 	resize: none;
 }
+
+.unread_message_icon {
+	background: #fed05b;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+}
