@@ -281,13 +281,19 @@
 		
 	
 		$('#inboxtable').DataTable( {
-			"order": [[ 3, "desc" ]],
+			
+			"order": [[0, "desc"] , [ 3, "desc" ]],
+			"orderFixed": {
+		        "post": [ 0, 'desc' ]
+		    },
+			
 			responsive: true,
 			 "columnDefs": [
 	            {
 	                "targets": [ 4 ],
 	                "orderable": false
 	            }
+	            
 	        ]
 	    } );
 		
@@ -300,6 +306,9 @@
 		var sender = $('#sender' + newId).val();
 		var subj = $('#subj' + newId).val();
 		var message = $('#message' + newId).val();
+		var senderUsername = $('#senderUsername' + newId).val();
+		var time = $('#time' + newId).val();
+		var copy_type = $('#copyType' + newId).val();
 		var message2 = message.replace(/%n/g, "\n");
 
 		$('#modalSender').val(sender);
@@ -308,6 +317,13 @@
 
 		document.getElementById("modalNotificationsMessage").innerHtml = message2;
 		$('#notificationsModal').modal('show');
+		
+		$.post('mark-read', {
+			senderUsername : senderUsername,
+			subj : subj,
+			time : time,
+			copy_type : copy_type
+		});
 	};
 
 	function del(id) {
