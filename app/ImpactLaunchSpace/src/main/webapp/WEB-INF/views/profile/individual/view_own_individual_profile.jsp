@@ -15,7 +15,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/profile/individual/view_individual_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/profile/individual/view_own_individual_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
@@ -34,7 +34,7 @@
 				<%@include file="../../common/navigation.jspf"%>
 
 
-				<div class="indi_public_profile_display_container">
+				<div class="view_own_individual_profile_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<img src="/imageDisplay?username=${individual.getUsername()}"

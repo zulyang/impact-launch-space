@@ -15,6 +15,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/profile/individual/view_public_individual_profile.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -33,7 +35,7 @@
 				<%@include file="../../common/navigation.jspf"%>
 
 
-				<div class="indi_public_profile_display_container ">
+				<div class="view_public_individual_profile_container ">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<img src="/imageDisplay?username=${individual.getUsername()}"
