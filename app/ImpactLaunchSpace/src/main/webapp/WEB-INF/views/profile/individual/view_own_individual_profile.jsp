@@ -26,13 +26,12 @@
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 
 </head>
-<body class="profile">
-	<div class="container-fluid">
+<body>
+	<div class="container">
 		<div class="row">
-			<div class="col-sm-12 col-md-12 col-lg-12">
+			<div class="col-lg-12">
 
 				<%@include file="../../common/navigation.jspf"%>
-
 
 				<div class="view_own_individual_profile_container">
 					<div class="panel panel-default">
