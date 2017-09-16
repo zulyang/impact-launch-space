@@ -4,18 +4,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
-<title>Project Management</title>
-
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<link rel='stylesheet'
-	href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-=======
 <title>Manage My Project</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
@@ -25,34 +13,11 @@
   <link rel='stylesheet' href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="<%=request.getContextPath() %>/resources/lib/jquery-ui/jquery-ui.js"></script>
->>>>>>> Project-Resource
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
   <script src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
 
-<<<<<<< HEAD
-<style>
-#sortableToDo, #sortableInProgress, #sortableDone {
-	border: 1px solid #eee;
-	width: 142px;
-	min-height: 20px;
-	list-style-type: none;
-	margin: 0;
-	padding: 5px 0 0 0;
-	float: left;
-	margin-right: 10px;
-}
-
-#sortableToDo li, #sortableInProgress li, #sortableDone li {
-	margin: 0 5px 5px 5px;
-	padding: 5px;
-	font-size: 1.2em;
-	width: 120px;
-}
-</style>
-</head>
-=======
 <script>
 $(function() {
     $("#sortableToDo").sortable({
@@ -425,16 +390,12 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 <br>
 <!-- Display List Of Members and the resource they are providing -->
 
-<<<<<<< HEAD
-	<div id='calendar'></div>
-=======
 <div class="calendar-container"><div id='calendar'></div></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
->>>>>>> Project-Resource
 </body>
 
 <script type="text/javascript">
