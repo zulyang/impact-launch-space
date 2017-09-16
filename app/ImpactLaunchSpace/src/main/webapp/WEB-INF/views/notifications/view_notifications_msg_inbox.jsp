@@ -65,12 +65,21 @@
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
-												<li class="list-group-item-selected"><a
+												<li class="list-group-item"><a
 													href="/notifications/messages/inbox">Inbox<span
 														class="badge pull-right">${inboxSize }</span>
 														<!-- NIGEL CHANGE STYLE FOR THIS AND DECREMENT IN FRONT END -->
-														<span
-														class="badge pull-right">${unreadCount }</span></a></li>
+														<c:choose>
+															<c:when test="${unreadCount > 99}">
+																<span class="badge pull-right">99+</span></a></li>
+															</c:when>
+															<c:otherwise>
+																<span class="badge pull-right">${unreadCount }</span></a></li>
+															</c:otherwise>
+														
+														</c:choose>
+														
+														
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
 														class="badge pull-right">${sentSize }</span></a></li>

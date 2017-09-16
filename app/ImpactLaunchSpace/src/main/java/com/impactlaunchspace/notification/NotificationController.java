@@ -126,38 +126,6 @@ public class NotificationController {
 		return "notifications/" + "view_notifications_req_sent";
 	}
 	
-	@RequestMapping(value = "/notifications/invitations/inbox", method = RequestMethod.GET)
-	public String viewInvInboxPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException{
-		String username = (String) request.getSession().getAttribute("username");
-		ArrayList<Notification> inbox = notificationService.getInbox(username);
-		ArrayList<Notification> sent = notificationService.getSent(username);
-		
-		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
-		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
-
-		model.addAttribute("inboxSize", inbox.size());
-		model.addAttribute("sentSize", sent.size());
-		model.addAttribute("userRequestsSize", userRequests.size());
-		model.addAttribute("userSentRequestsSize", userSentRequests.size());
-		return "notifications/" + "view_notifications_inv_inbox";
-	}
-	
-	@RequestMapping(value = "/notifications/invitations/sent", method = RequestMethod.GET)
-	public String viewInvSentPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException{
-		String username = (String) request.getSession().getAttribute("username");
-		ArrayList<Notification> inbox = notificationService.getInbox(username);
-		ArrayList<Notification> sent = notificationService.getSent(username);
-		
-		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
-		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
-
-		model.addAttribute("inboxSize", inbox.size());
-		model.addAttribute("sentSize", sent.size());
-		model.addAttribute("userRequestsSize", userRequests.size());
-		model.addAttribute("userSentRequestsSize", userSentRequests.size());
-		return "notifications/" + "view_notifications_inv_sent";
-	}
-	
 	@RequestMapping(value = "/send-message", method = RequestMethod.POST)
 	public void sendPersonalMessage(@RequestParam String recipient,@RequestParam String modalMessage,@RequestParam String modalSubject,
 			HttpServletResponse response,HttpServletRequest request){

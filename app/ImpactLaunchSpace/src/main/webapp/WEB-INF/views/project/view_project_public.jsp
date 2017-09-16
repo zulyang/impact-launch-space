@@ -56,31 +56,7 @@ function loader() {
 						<div class="funding-meta">
 							<h1>${selected_project.getProject_name() }</h1>
 
-							<div class="view_project_public_status">
-								<c:choose>
-									<c:when test="${selected_project.getProject_status() == 'new'}">
-										<h3>
-											<span class="label label-primary project_status">NEW
-												PROJECT</span>
-										</h3>
-									</c:when>
-
-									<c:when
-										test="${selected_project.getProject_status() == 'started'}">
-										<h3>
-											<span class="label label-success project_status">PROJECT
-												IN PROGRESS</span>
-										</h3>
-									</c:when>
-
-									<c:otherwise>
-										<h3>
-											<span class="label label-default project_status">PROJECT
-												COMPLETED</span>
-										</h3>
-									</c:otherwise>
-								</c:choose>
-							</div>
+							
 
 							<input type="hidden" name="project_name"
 								value="${selected_project.getProject_name() }"> <input
@@ -88,6 +64,25 @@ function loader() {
 								value="${selected_project.getProject_proposer()}">
 
 							<div class="view_project_public_info">
+								
+								<c:choose>
+									<c:when test="${selected_project.getProject_status() == 'new'}">
+										
+											<span class="label label-primary project_status">NEW</span>
+										
+									</c:when>
+
+									<c:when
+										test="${selected_project.getProject_status() == 'started'}">
+											<span class="label label-success project_status">IN PROGRESS</span>
+									</c:when>
+
+									<c:otherwise>
+											<span class="label label-default project_status">COMPLETED</span>
+									</c:otherwise>
+								</c:choose>
+							
+							
 								<span class="type-meta"> <i class="fa fa-user"></i> <c:choose>
 										<c:when test="${selected_project.getOrganization() != null}">
 										${selected_project.getOrganization()}
@@ -279,8 +274,19 @@ function loader() {
 					</div>
 
 					<div class="manage_project_public">
-						<a href="/project-management?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
-							type="button" onClick="manageProject()" class="btn btn-warning project_public_btn">Manage Project</a>
+						<c:if test="${selected_project.getProject_status() == 'started'}">
+							<c:if
+								test="${username.equals(selected_project.getProject_proposer()) }">
+							<a href="/project-management?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
+								type="button" onClick="manageProject()" class="btn btn-warning project_public_btn">Manage Project</a>
+							</c:if>
+							
+							<c:if
+									test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer())}">
+									<a href="/project-management?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
+								type="button" onClick="manageProject()" class="btn btn-warning project_public_btn">Manage Project</a>
+							</c:if>
+						</c:if>
 					</div>
 
 					<div class="section-block">
