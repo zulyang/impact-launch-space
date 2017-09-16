@@ -222,7 +222,7 @@ public class JdbcNotificationDAO implements NotificationDAO {
 	
 	public void markRead(String recipient_username, String sender_username, String notification_subject, String sent_time, String copy_type) {
 		String sql = "UPDATE NOTIFICATIONS SET "
-				+ "isRead = ? WHERE recipient_username = ? AND sender_username = ? AND notification_subject = ? AND sent_time = ? AND copy_type = ?";
+				+ "isRead = ?, sent_time = sent_time WHERE recipient_username = ? AND sender_username = ? AND notification_subject = ? AND sent_time = ? AND copy_type = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();

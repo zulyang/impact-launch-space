@@ -126,10 +126,10 @@
 																	<td>
 																	<c:choose>
 																		<c:when test="${item.isRead()}">
-																			ORANGE
+																			GREY
 																		</c:when>
 																		<c:otherwise>
-																			GREY
+																			ORANGE
 																		</c:otherwise>
 																	</c:choose>
 																	</td>
@@ -284,7 +284,7 @@
 			
 			"order": [[0, "desc"] , [ 3, "desc" ]],
 			"orderFixed": {
-		        "post": [ 0, 'desc' ]
+		        "pre": [ 0, 'desc' ]
 		    },
 			
 			responsive: true,

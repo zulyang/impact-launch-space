@@ -190,4 +190,23 @@ public class NotificationController {
 		notificationService.deleteNotification(recipient, sender, subj, time, copy_type);
 
 	}
+	
+	@RequestMapping(value = "/notifications/messages/mark-read", method = RequestMethod.POST)
+	public void markRead(@RequestParam(required = false) String senderUsername,@RequestParam(required = false) String recipientUsername,
+			@RequestParam String subj,	@RequestParam String time, @RequestParam String copy_type, HttpServletResponse response,HttpServletRequest request){
+		String recipient = null;
+		String sender = null;
+		
+		if(senderUsername != null){
+			recipient = (String) request.getSession().getAttribute("username");
+			sender = senderUsername;
+		}else if (recipientUsername != null){
+			sender = (String) request.getSession().getAttribute("username");
+			recipient = recipientUsername;
+		}
+
+		
+		notificationService.markRead(recipient, senderUsername, subj, time, copy_type);
+	}
+	
 }
