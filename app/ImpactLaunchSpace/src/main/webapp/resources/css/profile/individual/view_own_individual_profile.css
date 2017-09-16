@@ -1,7 +1,8 @@
 .view_own_individual_profile_container {
-	margin-top: 120%;
-    margin-bottom: 10%;
-    width: 100%;
+	margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
 .circle_indi_profile_image {
