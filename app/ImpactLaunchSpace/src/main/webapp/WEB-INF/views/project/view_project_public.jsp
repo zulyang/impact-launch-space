@@ -251,7 +251,7 @@ function loader() {
 								type="button" class="btn btn-primary project_public_btn">Edit
 								Project</a>
 						</c:if>
-						<c:if test="${username.equals(project_organization) }">
+						<c:if test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer()) }">
 							<a
 								href="/edit-project?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer() }"
 								type="button" class="btn btn-primary project_public_btn">Edit
@@ -268,7 +268,7 @@ function loader() {
 									class="btn btn-success project_public_btn">Start Project</a>
 							</c:if>
 							<c:if
-								test="${username.equals(project_organization) && progressPercentage >= 50.0}">
+								test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer()) && progressPercentage >= 50.0}">
 								<a type="button" onClick="start()"
 									class="btn btn-success project_public_btn">Start Project</a>
 							</c:if>
