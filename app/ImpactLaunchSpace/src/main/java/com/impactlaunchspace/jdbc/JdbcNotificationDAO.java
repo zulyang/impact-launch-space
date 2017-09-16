@@ -1,5 +1,7 @@
 package com.impactlaunchspace.jdbc;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +16,7 @@ import javax.sql.DataSource;
 
 import com.impactlaunchspace.dao.NotificationDAO;
 import com.impactlaunchspace.entity.Notification;
+import com.impactlaunchspace.entity.OrganizationAccount;
 
 public class JdbcNotificationDAO implements NotificationDAO {
 
@@ -191,12 +194,13 @@ public class JdbcNotificationDAO implements NotificationDAO {
 
 	public int countUnreadNotificationsOfUser(String username) {
 		int output = 0;
-		String sql = "SELECT COUNT(*) FROM NOTIFICATIONS WHERE recipient_username = ? AND isRead = false";
+		String sql = "SELECT COUNT(*) FROM NOTIFICATIONS WHERE recipient_username = ? AND isRead = false AND copy_type = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
+			ps.setString(2, "inbox");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				output = rs.getInt(1);
@@ -206,6 +210,44 @@ public class JdbcNotificationDAO implements NotificationDAO {
 			return output;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+	
+	public void markRead(String recipient_username, String sender_username, String notification_subject, String sent_time, String copy_type) {
+		String sql = "UPDATE NOTIFICATIONS SET "
+				+ "isRead = ? WHERE recipient_username = ? AND sender_username = ? AND notification_subject = ? AND sent_time = ? AND copy_type = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			java.util.Date utilDate = dateFormat.parse(sent_time);
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			long time = sqlDate.getTime();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setBoolean(1, true);
+			ps.setString(2, recipient_username);
+			ps.setString(3, sender_username);
+			ps.setString(4, notification_subject);
+			ps.setTimestamp(5, new Timestamp(time));
+			ps.setString(6, copy_type);
+
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {

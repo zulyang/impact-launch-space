@@ -41,10 +41,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
 
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("inbox", inbox);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
@@ -58,10 +60,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
 
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("sent", sent);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());	
@@ -74,6 +78,8 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<String> isAcceptable = new ArrayList<String>();
@@ -88,6 +94,7 @@ public class NotificationController {
 			}
 		}
 		
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
 		model.addAttribute("userRequests", userRequests);
@@ -104,10 +111,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
 
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
 		model.addAttribute("userRequestsSize", userRequests.size());

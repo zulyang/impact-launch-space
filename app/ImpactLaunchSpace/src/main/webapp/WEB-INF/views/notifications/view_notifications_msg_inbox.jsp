@@ -67,7 +67,10 @@
 											<ul class="list-group">
 												<li class="list-group-item-selected"><a
 													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">${inboxSize }</span></a></li>
+														class="badge pull-right">${inboxSize }</span>
+														<!-- NIGEL CHANGE STYLE FOR THIS AND DECREMENT IN FRONT END -->
+														<span
+														class="badge pull-right">${unreadCount }</span></a></li>
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
 														class="badge pull-right">${sentSize }</span></a></li>
@@ -102,6 +105,7 @@
 												id="inboxtable">
 												<thead>
 													<tr>
+														<th></th>
 														<th>Sender</th>
 														<th>Message Subject</th>
 														<th>Sent Time</th>
@@ -117,7 +121,19 @@
 
 
 														<tr id="row<%=++id%>">
-															
+																	
+																	<!-- NIGEL, THE MARK IS HERE -->
+																	<td>
+																	<c:choose>
+																		<c:when test="${item.isRead()}">
+																			ORANGE
+																		</c:when>
+																		<c:otherwise>
+																			GREY
+																		</c:otherwise>
+																	</c:choose>
+																	</td>
+																	
 																	<c:choose>
 																		<c:when
 																			test="${item.getSender_username().equals(\"admin\")}">
@@ -265,11 +281,11 @@
 		
 	
 		$('#inboxtable').DataTable( {
-			"order": [[ 2, "desc" ]],
+			"order": [[ 3, "desc" ]],
 			responsive: true,
 			 "columnDefs": [
 	            {
-	                "targets": [ 3 ],
+	                "targets": [ 4 ],
 	                "orderable": false
 	            }
 	        ]
