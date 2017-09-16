@@ -331,7 +331,7 @@ public class ProfileController {
 				}
 			}
 			
-			if(userType.equals("organization")){
+			if(!username.equals(loggedin_username) && userType.equals("organization")){
 				OrganizationAccount organization = profileService.getOrganizationAccountDetails(username);
 				
 				request.getSession().setAttribute("profileemail", user.getEmail());

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.impactlaunchspace.entity.IndividualAccount;
+import com.impactlaunchspace.entity.Notification;
 import com.impactlaunchspace.entity.OrganizationAccount;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectBanList;
@@ -32,6 +33,7 @@ import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
 import com.impactlaunchspace.entity.ProjectUserRequest;
+import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.request.RequestService;
 import com.impactlaunchspace.users.UserService;
@@ -41,6 +43,9 @@ public class ProjectController {
 
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	NotificationService notificationService;
 
 	@Autowired
 	ProfileService profileService;
@@ -600,7 +605,25 @@ public class ProjectController {
 	@RequestMapping(value = "/send-invite", method = RequestMethod.POST)
 	public String inviteUsersToProject(@RequestParam String project_name,
 			@RequestParam String project_proposer,@RequestParam ArrayList<String> invited_users, HttpServletRequest request, ModelMap model, RedirectAttributes redirectAttributes) {
-		System.out.println(project_name);
+		
+		for(String invited_username : invited_users){
+			ProjectMemberList projectMemberList = new ProjectMemberList(project_name, project_proposer, invited_username,
+					"invited");
+
+			projectService.addNewMemberToTeam(projectMemberList);
+			
+			String subject = "You have been given access rights to " + project_name;
+			
+			String message_content = "You have been given access rights to " + project_name;
+			message_content += "%n";
+			message_content += "%n";
+			message_content += "You can proceed to the My Projects page to access the project.";
+			
+			Notification message = new Notification(invited_username, "admin", subject,
+					message_content, "message", "inbox");
+			notificationService.sendNotification(message);
+
+		}
 		
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);

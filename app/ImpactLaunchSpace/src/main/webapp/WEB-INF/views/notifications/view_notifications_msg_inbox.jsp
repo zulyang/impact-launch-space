@@ -75,7 +75,7 @@
 										</div>
 
 										<div class="panel-heading">
-											<h4 class="panel-title">Requests</h4>
+											<h4 class="panel-title">Offers</h4>
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
@@ -88,19 +88,6 @@
 											</ul>
 										</div>
 										
-										<div class="panel-heading">
-											<h4 class="panel-title">Project Invitations</h4>
-										</div>
-										<div class="panel-collapse collapse in">
-											<ul class="list-group">
-												<li class="list-group-item"><a
-													href="/notifications/invitations/inbox">Received <span
-														class="badge pull-right">${userRequestsSize }</span></a></li>
-												<li class="list-group-item"><a
-													href="/notifications/invitations/sent">Sent <span
-														class="badge pull-right">${userSentRequestsSize }</span></a></li>
-											</ul>
-										</div>
 									</div>
 								</div>
 							</div>
