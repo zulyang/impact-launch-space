@@ -276,16 +276,11 @@ function loader() {
 					<div class="manage_project_public">
 						<c:if test="${selected_project.getProject_status() == 'started'}">
 							<c:if
-								test="${username.equals(selected_project.getProject_proposer()) }">
+								test="${member_usernames.contains(username)}">
 							<a href="/project-management?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
 								type="button" onClick="manageProject()" class="btn btn-warning project_public_btn">Manage Project</a>
 							</c:if>
 							
-							<c:if
-									test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer())}">
-									<a href="/project-management?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
-								type="button" onClick="manageProject()" class="btn btn-warning project_public_btn">Manage Project</a>
-							</c:if>
 						</c:if>
 					</div>
 

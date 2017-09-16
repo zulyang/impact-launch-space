@@ -316,7 +316,13 @@ public class ProjectController {
 
 		Project selected_project = projectService.retrieveProject(project_name, project_proposer);
 		String projectPrivacy = "public";
-
+		ArrayList<ProjectMemberList> projectMemberList = projectService.retrieveMemberList(project_name, project_proposer);
+		ArrayList<String> member_usernames = new ArrayList<String>();
+		
+		for(ProjectMemberList projectMember: projectMemberList){
+			member_usernames.add(projectMember.getProject_member_username());
+		}
+		
 		if (selected_project.isHiddenToAll()) {
 			projectPrivacy = "hidden";
 		}
@@ -380,6 +386,7 @@ public class ProjectController {
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);
+		model.addAttribute("member_usernames", member_usernames);
 		model.addAttribute("project_resource_categories", projectResourceCategories);
 		model.addAttribute("project_requested_resources", projectRequestedResources);
 
