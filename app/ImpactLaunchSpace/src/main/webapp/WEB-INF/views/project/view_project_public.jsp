@@ -60,20 +60,23 @@ function loader() {
 								<c:choose>
 									<c:when test="${selected_project.getProject_status() == 'new'}">
 										<h3>
-											<span class="label label-primary project_status">NEW PROJECT</span>
+											<span class="label label-primary project_status">NEW
+												PROJECT</span>
 										</h3>
 									</c:when>
 
 									<c:when
 										test="${selected_project.getProject_status() == 'started'}">
 										<h3>
-											<span class="label label-success project_status">PROJECT IN PROGRESS</span>
+											<span class="label label-success project_status">PROJECT
+												IN PROGRESS</span>
 										</h3>
 									</c:when>
 
 									<c:otherwise>
 										<h3>
-											<span class="label label-default project_status">PROJECT COMPLETED</span>
+											<span class="label label-default project_status">PROJECT
+												COMPLETED</span>
 										</h3>
 									</c:otherwise>
 								</c:choose>
@@ -274,7 +277,11 @@ function loader() {
 							</c:if>
 						</c:if>
 					</div>
-					<!-- ends here -->
+
+					<div class="manage_project_public">
+						<a href="/project-management?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}"
+							type="button" onClick="manageProject()" class="btn btn-warning project_public_btn">Manage Project</a>
+					</div>
 
 					<div class="section-block">
 						<h1 class="section-title">WHAT WE NEED</h1>

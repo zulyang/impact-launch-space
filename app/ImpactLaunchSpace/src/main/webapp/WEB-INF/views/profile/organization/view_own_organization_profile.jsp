@@ -26,8 +26,8 @@
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
-<body class="profile">
-	<div class="container-fluid">
+<body>
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 

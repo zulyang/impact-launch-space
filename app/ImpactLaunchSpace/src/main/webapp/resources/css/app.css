@@ -32,18 +32,6 @@ html, body {
 	width: 150px;
 }
 
-.profile {
-	display: flex;
-	align-items: center;
-	position: relative;
-	background-color: white;
-	background-repeat: repeat;
-	overflow: scroll;
-	max-width: 100%;
-	overflow-x: hidden;
-	margin-top: 20rem;
-}
-
 .profileNav {
 	background-color: white;
 }
