@@ -33,7 +33,6 @@ $(function() {
   	    },
         connectWith: "#sortableInProgress, #sortableDone"
     }).disableSelection();
->>>>>>> Project-Resource
 
     $("#sortableInProgress").sortable({
   	  update: function(event, ui) {
@@ -77,19 +76,6 @@ $(function() {
   </script>
 </head>
 
-<<<<<<< HEAD
-						<button type="button" class="btn btn-success" onClick="edit()">
-							<i class="fa fa-plus-circle"></i> Edit Card
-						</button>
-					</li>
-				</c:forEach>
-			</ul>
-		</div>
-	</div>
-	<button type="button" class="btn btn-success" onClick="add()">
-		<i class="fa fa-plus-circle"></i> Add Card
-	</button>
-=======
 <body>
 <div class="container-fluid">
 <div class="row">
@@ -106,108 +92,9 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 	<i class="fa fa-plus-circle"></i> Add Card
 </button>
 <br>
->>>>>>> Project-Resource
 
 <br>
 
-<<<<<<< HEAD
-				<form action="add-card" role="form" method="post">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title">Add New Card</h4>
-					</div>
-					<div class="modal-body">
-						<div class="container">
-							<div id="resourcesNeeded" class="form-group row col-md-5">
-								<div class="col-md-12">
-									Card Title:
-									<textarea id="modalCardTitle" rows="4" name="modalCardTitle"
-										class="form-control col-md-4 create-project-add"
-										placeholder="Give your card a title here..."></textarea>
-
-<div id="inprogressKB">
-	<ul id="sortableInProgress" class="connectedSortable">
-	  <c:forEach items="${inprogressList}" var="inprogress">
-			<li id="${inprogress.getCard_id()}" class="ui-state-default">
-			${inprogress.getCard_id()}
-			${inprogress.getCard_title()}
-			<br>
-			${inprogress.getDescription()}
-			<br>
-			${inprogress.getTags()}
-			<br>
-			${inprogress.getAssignees()}
-			<br>
-			<button id="${inprogress.getCard_id()},inprogress" type="submit" name="delete"
-            	class="btn btn-danger delete" onClick="delet(this.id)">
-            Delete
-            </button>
-			<button type="button" class="btn btn-success"
-			onClick="edit()">
-			<i class="fa fa-plus-circle"></i> Edit Card
-			</button>
-			</li>
-		</c:forEach>
-	</ul>
-</div>
- 
- <div id="doneKB">
-	 <ul id="sortableDone" class="connectedSortable">
-	  <c:forEach items="${doneList}" var="done">
-			<li id="${done.getCard_id()}" class="ui-state-default">
-			${done.getCard_id()}
-			${done.getCard_title()}
-			<br>
-			${done.getDescription()}
-			<br>
-			${done.getTags()}
-			<br>
-			${done.getAssignees()}
-			<br>
-			<button id="${done.getCard_id()},done" type="submit" name="delete"
-            	class="btn btn-danger delete" onClick="delet(this.id)">
-            Delete
-            </button>
-            	
-			<button type="button" class="btn btn-success"
-				onClick="edit()">
-				<i class="fa fa-plus-circle"></i> Edit Card
-			</button>
-			</li>
-		</c:forEach>
-	</ul>
-</div>
-</div>
-<button type="button" class="btn btn-success"
-	onClick="add()">
-	<i class="fa fa-plus-circle"></i> Add Card
-</button>
-									
-</div>
-		<!-- Add new card modal (Copied from resources)-->
-		<div class="modal fade" tabindex="-1" role="dialog" id="AddModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-									<!-- Tags refer to the all the resource categories in the project -->
-									Tags: <select id="modalCardTags" name="modalCardTags"
-										class="col-md-4 form-control" style="width: 100%">
-										<option value="" disabled selected>Select a Category:</option>
-										<c:forEach items="${cat}" var="item">
-											<option value="${item}">${item}</option>
-										</c:forEach>
-									</select> <br> Assignees: <select id="modalCardAssignees"
-										name="modalCardAssignees" class="col-md-4 form-control"
-										style="width: 100%">
-										<option value="" disabled selected>Select a username:</option>
-										<c:forEach items="${members}" var="item">
-											<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
-										</c:forEach>
-									</select> <input type="hidden" id="board_id" value="${board_id}">
-=======
 <div>
 <div id="todoKB">
 	<ul id="sortableToDo" class="connectedSortable">
@@ -297,8 +184,59 @@ Hi ${username}, welcome to the Project Management Space for ${projectName}!
 		<div class="modal fade" tabindex="-1" role="dialog" id="AddModal">
 			<div class="modal-dialog">
 				<div class="modal-content">
->>>>>>> Project-Resource
 
+					<form action="add-card" role="form" method="post">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Add New Card</h4>
+						</div>
+						<div class="modal-body">
+							<div class="container">
+								<div id="resourcesNeeded" class="form-group row col-md-5">
+									<div class="col-md-12">
+										 Card Title:
+										<textarea id="modalCardTitle" rows="4"
+											name="modalCardTitle"
+											class="form-control col-md-4 create-project-add"
+											placeholder="Give your card a title here..."></textarea>
+											
+										</select> <br> 									
+										 Description:
+										<textarea id="modalCardDescription" rows="4"
+											name="modalCardDescription"
+											class="form-control col-md-4 create-project-add"
+											placeholder="Describe your card here..."></textarea>
+										<br> 
+										
+										<!-- Tags refer to the all the resource categories in the project -->
+										Tags: 
+										<select id="modalCardTags"
+											name="modalCardTags" class="col-md-4 form-control" 
+											style="width: 100%">
+										 	<option value="" disabled selected>Select a Category:</option>
+											<c:forEach items="${cat}" var="item">
+												<option value="${item}">${item}</option>
+											</c:forEach>
+										</select>
+										<br> 
+										
+										Assignees:
+										<select id="modalCardAssignees"
+											name="modalCardAssignees" class="col-md-4 form-control" 
+											style="width: 100%">
+										 	<option value="" disabled selected>Select a username:</option>
+											<c:forEach items="${members}" var="item">
+												<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
+											</c:forEach>
+										</select>
+										
+										<input type="hidden" id="board_id"
+										value="${board_id}">
+										
+									</div>
 								</div>
 							</div>
 						</div>
