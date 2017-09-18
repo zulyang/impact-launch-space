@@ -320,7 +320,7 @@ public class JdbcProjectDAO implements ProjectDAO {
 		}
 		
 		String sql = "SELECT * FROM PROJECTS p INNER JOIN PROJECT_TARGET_AREAS pt ON p.Project_Name = pt.Project_Name"
-					+ " AND p.Project_Proposer = pt.Project_Proposer WHERE pt.PROJECT_NAME LIKE '%" + searchbox + "%' ";
+					+ " AND p.Project_Proposer = pt.Project_Proposer WHERE p.hiddenToAll = false AND pt.PROJECT_NAME LIKE '%" + searchbox + "%' ";
 		
 		if (!causes.equals("Select Cause")) {
 			sql += "AND pt.PROJECT_AREA = '" + causes + "'";
