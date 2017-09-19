@@ -1,8 +1,8 @@
 .notifications-container {
 	margin-top: 10rem;
-  margin-bottom: 5rem;
-  margin-left:auto;
-  margin-right: auto;
+	margin-bottom: 5rem;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .modalNotificationsField {
@@ -15,33 +15,36 @@
 	font-weight: 700;
 	color: #091743;
 	display: inline-block;
-	 font-family: Arial, Helvetica, sans-serif;	
+	font-family: Arial, Helvetica, sans-serif;
 	margin-bottom: 2rem;
 }
 
-.modalResourceRequested{
+.modalResourceRequested {
 	border-bottom: 2px solid #777;
 	margin-bottom: 2rem;
 }
 
-.modalSubheading{
+.modalSubheading {
 	font-size: 8pt;
 	color: #777;
 	text-transform: uppercase;
 	margin-bottom: 0;
-	
- font-family: Gill Sans, Verdana;
- 
+	font-family: Gill Sans, Verdana;
 }
 
-.modalResourceOffered textarea{
+.modalResourceOffered textarea {
 	resize: none;
+}
+
+.unreadCountDisplay {
+	background: #fed05b;
+	margin-right: 3%;
 }
 
 .unread_message_icon {
 	background: #fed05b;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-top: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin-top: 5px;
 }

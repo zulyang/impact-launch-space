@@ -75,7 +75,7 @@
 															<span class="badge pull-right">99+</span></a></li>
 														</c:when>
 														<c:otherwise>
-															<span id="unreadCountDisplay" class="badge pull-right">${unreadCount }</span>
+															<span id="unreadCountDisplay" class="badge pull-right unreadCountDisplay">${unreadCount }</span>
 															</a>
 															</li>
 														</c:otherwise>
