@@ -185,8 +185,12 @@
 		});
 
 		function inviteUsers() {
+			if(document.getElementById("invite_users_search").value == ""){
+				alert("Please search for the users that you want to invite.");
+				return false;
+			}
+			
 			if (confirm("Do you wish to send an invitation out to the selected users?")) {
-				
 				return true;
 			}
 			return false;
