@@ -11,4 +11,5 @@ public interface CardDAO {
 	public ArrayList<Card> retrieveCardsByStatus(int board_id, String status);
 	public void delete(int card_id);
 	public void updateOrder(int card_id, String status,int order);
+	public Card retrieveProjectCardById(int card_id);
 }

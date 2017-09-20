@@ -1,5 +1,6 @@
 package com.impactlaunchspace.pm;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -51,8 +52,6 @@ public class ProjectManagementController {
 			cat.add(categories.get(i).getResource_category());
 		}
 		
-		
-		
 		model.addAttribute("user", username);
 		model.addAttribute("projectName", project_name);
 		model.addAttribute("project_proposer", project_proposer);
@@ -75,18 +74,20 @@ public class ProjectManagementController {
 
 	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
-			@RequestParam(required = false) String tags, @RequestParam(required = false) String assignee, @RequestParam String board_id,
+			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignees, @RequestParam String board_id,
+			@RequestParam(required = false) Date start_date, @RequestParam(required = false) Date due_date,
 			HttpServletRequest request, ModelMap model) {
 		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 		
-		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username, assignee, timestamp);
+		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username, modalCardAssignees, timestamp, start_date, due_date);
 		
+		String activity = username + " added " + modalCardTitle + " to the Todo List on " + timestamp ; 
+		
+		pmService.updateActivity(activity, board_id, username);
 	}
 	
-	//Add assignee
-	//Might need to add timestamp to show change in date.
 	@RequestMapping(value = "/edit-card", method = RequestMethod.GET)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			 @RequestParam(required = false) String tags, @RequestParam int card_order, @RequestParam(required = false) String assignee,
@@ -95,17 +96,30 @@ public class ProjectManagementController {
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 		pmService.edit(modalCardTitle, modalCardDescription, tags, assignee);
+		
+		String activity = username + " edited " + modalCardTitle + " on " + timestamp; 
 
 	}
 
 	@RequestMapping(value = "/delete-card", method = RequestMethod.POST)
 	public void deleteCard(@RequestParam String card_id, HttpServletRequest request, ModelMap model) {
 		pmService.deleteCard(Integer.parseInt(card_id));
+		
+		String username = (String) request.getSession().getAttribute("username"); // owner
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		Card c = pmService.retrieveProjectCardById(Integer.parseInt(card_id));
+		String card_title = c.getCard_title();
+		
+		String activity = username + " deleted " + card_title + " on " + timestamp; 
 	}
 
 	@RequestMapping(value = "/update-card-order", method = RequestMethod.POST)
 	public void updateCardOrder(@RequestParam String id, @RequestParam String status,
 			@RequestParam String order, HttpServletRequest request) {
+		
+		String username = (String) request.getSession().getAttribute("username"); // owner
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		
 		int newId = Integer.parseInt(id);
 		int newOrder = Integer.parseInt(order);
 		pmService.updateOrder(newId, status, newOrder);

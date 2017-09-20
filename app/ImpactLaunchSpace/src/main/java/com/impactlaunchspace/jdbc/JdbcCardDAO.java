@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class JdbcCardDAO implements CardDAO{
 		// TODO Auto-generated method stub
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		String sql = "INSERT INTO PROJECT_CARD "
-				+ "(board_id, title, description, owner, date_created, tags, card_status, card_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "(board_id, title, description, owner, assignee, date_created, tags, card_status, card_order, start_date, due_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? )";
 		Connection conn = null;
 		
 		try {
@@ -49,10 +50,13 @@ public class JdbcCardDAO implements CardDAO{
 			ps.setString(2, card.getCard_title());
 			ps.setString(3, card.getDescription());
 			ps.setString(4, card.getOwner());
-			ps.setTimestamp(5, card.getDate_created());
-			ps.setString(6,card.getTags());
-			ps.setString(7, card.getStatus());
-			ps.setInt(8, retrieveCardsByStatus(card.getBoard_id(),"todo").size());
+			ps.setString(5, card.getAssignee());
+			ps.setTimestamp(6, card.getDate_created());
+			ps.setString(7,card.getTags());
+			ps.setString(8, card.getStatus());
+			ps.setInt(9, retrieveCardsByStatus(card.getBoard_id(),"todo").size());
+			ps.setDate(10, card.getStart_date());
+			ps.setDate(11, card.getDue_date());
 			ps.executeUpdate();
 			ps.close();
 			
@@ -113,8 +117,8 @@ public class JdbcCardDAO implements CardDAO{
 	
 			while (rs.next()) {
 				card = new Card(rs.getInt("card_id"), rs.getInt("board_id"),
-						rs.getString("title"), rs.getString("description"), rs.getString("owner"),
-						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("status"), rs.getInt("order")
+						rs.getString("title"), rs.getString("description"), rs.getString("owner"), rs.getString("assignee"),
+						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("card_status"), rs.getInt("card_order"), rs.getDate("start_date"), rs.getDate("due_date")
 						);
 				
 				toReturn.add(card);
@@ -151,8 +155,8 @@ public class JdbcCardDAO implements CardDAO{
 	
 			while (rs.next()) {
 				card = new Card(rs.getInt("card_id"), rs.getInt("board_id"),
-						rs.getString("title"), rs.getString("description"), rs.getString("owner"),
-						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("card_status"), rs.getInt("card_order")
+						rs.getString("title"), rs.getString("description"), rs.getString("owner"), rs.getString("assignee"),
+						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("card_status"), rs.getInt("card_order"),rs.getDate("start_date"), rs.getDate("due_date")
 						);
 				
 				toReturn.add(card);
@@ -226,5 +230,41 @@ public class JdbcCardDAO implements CardDAO{
 			}
 		}
 	
+	}
+	
+	
+	@Override
+	public Card retrieveProjectCardById(int card_id) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		String sql = "SELECT * FROM project_card WHERE card_id= ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, card_id);
+			Card card = null;
+			ResultSet rs = ps.executeQuery();
+	
+			while (rs.next()) {
+				card = new Card(rs.getInt("card_id"), rs.getInt("board_id"),
+						rs.getString("title"), rs.getString("description"), rs.getString("owner"), rs.getString("assignee"),
+						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("card_status"), rs.getInt("card_order"), rs.getDate("start_date"), rs.getDate("due_date")
+						);
+				
+			}
+			
+			rs.close();
+			ps.close();
+			return card;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
 	}
 }

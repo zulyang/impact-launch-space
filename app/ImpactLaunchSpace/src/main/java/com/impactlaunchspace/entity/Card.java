@@ -2,6 +2,7 @@ package com.impactlaunchspace.entity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class Card {
 	private int card_id;
@@ -9,50 +10,58 @@ public class Card {
 	private String card_title;
 	private String description;
 	private String owner;
-	private ArrayList<User> assignees;
+	private String assignee;
 	private Timestamp date_created;
 	private String tags;
 	private String status;
 	private int card_order; 
+	private Date start_date;
+	private Date due_date; 
 	
 	
 
-	public Card(int card_id, int board_id, String card_title, String description, String owner, ArrayList<User> assignees, Timestamp date_created, String tags, String status ) {
+	public Card(int card_id, int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status ) {
 		super();
 		this.card_id = card_id;
 		this.board_id = board_id;
 		this.card_title = card_title;
 		this.description = description;
 		this.owner = owner;
-		this.assignees = assignees;
+		this.assignee = assignee;
 		this.date_created = date_created;
 		this.tags = tags; 
 		this.status = status;
 	}
 	
 	//this constructor is to be inserted into the database
-	public Card(int board_id, String card_title, String description, String owner, Timestamp date_created, String tags, String status) {
+	public Card(int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status, Date start_date, Date due_date) {
 		super();
 		this.board_id = board_id;
 		this.card_title = card_title;
 		this.description = description;
 		this.owner = owner;
+		this.assignee = assignee;
 		this.date_created = date_created;
 		this.tags = tags; 
 		this.status = status;
+		this.start_date = start_date;
+		this.due_date = due_date;
 	}
 	
-	public Card(int card_id, int board_id, String card_title, String description, String owner, Timestamp date_created, String tags, String status, int card_order ) {
+	public Card(int card_id, int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status, int card_order, Date start_date, Date due_date ) {
 		super();
 		this.card_id = card_id;
 		this.board_id = board_id;
 		this.card_title = card_title;
 		this.description = description;
 		this.owner = owner;
+		this.assignee = assignee;
 		this.date_created = date_created;
 		this.tags = tags; 
 		this.status = status;
 		this.card_order = card_order;
+		this.start_date = start_date;
+		this.due_date = due_date;
 	}
 	
 	public String getStatus() {
@@ -115,14 +124,10 @@ public class Card {
 	}
 
 
-	public ArrayList<User> getAssignees() {
-		return assignees;
+	public String getAssignee() {
+		return assignee;
 	}
 
-
-	public void setAssignees(ArrayList<User> assignees) {
-		this.assignees = assignees;
-	}
 
 
 	public Timestamp getDate_created() {
@@ -150,6 +155,26 @@ public class Card {
 
 	public void setCard_order(int card_order) {
 		this.card_order = card_order;
+	}
+
+	public Date getStart_date() {
+		return start_date;
+	}
+
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+
+	public Date getDue_date() {
+		return due_date;
+	}
+
+	public void setDue_date(Date due_date) {
+		this.due_date = due_date;
+	}
+
+	public void setAssignee(String assignee) {
+		this.assignee = assignee;
 	}
 	
 	

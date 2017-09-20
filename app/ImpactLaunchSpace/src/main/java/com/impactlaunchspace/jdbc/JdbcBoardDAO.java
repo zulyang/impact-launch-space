@@ -109,5 +109,33 @@ public class JdbcBoardDAO implements BoardDAO {
 	
 	}
 	
+	public void updateActivityLog(String activity, String board_id, String username) {
+		// TODO Auto-generated method stub
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		String sql = "UPDATE BOARD_CHANGE_LOG SET "
+				+ "log = ?,  board_id = ?, user = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, activity);
+			ps.setString(2, board_id);
+			ps.setString(3, username);
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	
+	}
+	
 	
 }
