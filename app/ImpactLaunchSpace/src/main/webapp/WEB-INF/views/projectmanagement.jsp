@@ -70,10 +70,10 @@
 							<!--tabs-->
 
 							<ul class="nav nav-tabs tabs-bordered nav-justified" id="pm-tabs">
-								<li><a href="#activity-log" data-toggle="tab"
-									aria-expanded="false"><span class>Activity Log</span></a></li>
 								<li><a href="#kanban" data-toggle="tab"
 									aria-expanded="false"><span class>Kanban</span></a></li>
+								<li><a href="#activity-log" data-toggle="tab"
+									aria-expanded="false"><span class>Activity Log</span></a></li>
 								<li><a href="#project-calendar" data-toggle="tab"
 									aria-expanded="false"><span class>Calendar</span></a></li>
 								<li><a href="#documents" data-toggle="tab"
@@ -89,20 +89,11 @@
 							<div class="section-block">
 								<div class="tab-content">
 
-									<div role="tabpanel" class="tab-pane fade in active"
-										id="activity-log">
-										<h3 class="tabs-header">ACTIVITY LOG</h3>
-									</div>
-
-									<div role="tabpanel" class="tab-pane fade" id="kanban">
+									<div role="tabpanel" class="tab-pane fade  in active" id="kanban">
 										<h3 class="tabs-header">KANBAN BOARD</h3>
 										<button type="button" class="btn btn-success" onClick="add()">
 											<i class="fa fa-plus-circle"></i> Add Card
 										</button>
-									</div>
-								</div>
-								<br> <br>
-
 								<div>
 									<div id="todoKB">
 										<ul id="sortableToDo" class="connectedSortable">
@@ -207,6 +198,13 @@
 
 							</div>
 
+
+									<div role="tabpanel" class="tab-pane fade"
+										id="activity-log">
+										<h3 class="tabs-header">ACTIVITY LOG</h3>
+									</div>
+									
+									
 							<div role="tabpanel" class="tab-pane fade" id="project-calendar">
 								<div class="full-calendar">
 									<h3 class="tabs-header">CALENDAR</h3>
@@ -361,8 +359,6 @@
 					</div>
 				</div>
 			</div>
-			<br> <br> <br> <br> <br> <br> <br>
-			<br>
 			<!-- Display List Of Members and the resource they are providing -->
 		</div>
 	</div>
