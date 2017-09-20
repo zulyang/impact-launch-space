@@ -1,6 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
 @import url(http://fonts.googleapis.com/css?family=Titillium+Web);
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+<<<<<<< Updated upstream
+=======
+@import url(https://fonts.googleapis.com/css?family=Quicksand);
+>>>>>>> Stashed changes
 
 #sortableToDo, #sortableInProgress, #sortableDone {
     border: 1px solid #eee;
@@ -79,7 +83,12 @@
 }
 
 .project-management-container .tabs-bordered{
+<<<<<<< Updated upstream
 	border-bottom: 2px solid rgba(152, 166, 173, 0.2) !important;
+=======
+	/* border-bottom: 2px solid rgba(152, 166, 173, 0.2) !important; */
+	border-bottom: 0.2em solid #311957 !important;
+>>>>>>> Stashed changes
 }
 
 .project-management-container .nav-tabs .nav-justified{
@@ -141,4 +150,35 @@
 
 #sidebar-menu .btn-bordered{
 	background: transparent !important;
+<<<<<<< Updated upstream
+=======
+}
+
+#sidebar-menu .project-description{
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+#sidebar-menu .members-profile-icon{
+	width: 2.5em;
+	height: 2.5em;
+	border-radius: 50%;
+	background: black;
+	margin-left: 1.5em;
+	margin-right: 1.5em;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.project-management-container .pms-header{
+	text-align: center;
+	font-size: 1.3em;
+	text-transform: uppercase;
+	font-family: 'Roboto Condensed', sans-serif;
+	height: 3rem;
+}
+
+.project-management-container .tabs-header{
+	font-family: 'Quicksand', sans-serif;
+>>>>>>> Stashed changes
 }
