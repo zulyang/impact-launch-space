@@ -70,10 +70,10 @@
 							<!--tabs-->
 
 							<ul class="nav nav-tabs tabs-bordered nav-justified" id="pm-tabs">
-								<li><a href="#kanban" data-toggle="tab"
-									aria-expanded="false"><span class>Kanban</span></a></li>
 								<li><a href="#activity-log" data-toggle="tab"
 									aria-expanded="false"><span class>Activity Log</span></a></li>
+								<li><a href="#kanban" data-toggle="tab"
+									aria-expanded="false"><span class>Kanban</span></a></li>
 								<li><a href="#project-calendar" data-toggle="tab"
 									aria-expanded="false"><span class>Calendar</span></a></li>
 								<li><a href="#documents" data-toggle="tab"
@@ -89,11 +89,20 @@
 							<div class="section-block">
 								<div class="tab-content">
 
-									<div role="tabpanel" class="tab-pane fade  in active" id="kanban">
+									<div role="tabpanel" class="tab-pane fade in active"
+										id="activity-log">
+										<h3 class="tabs-header">ACTIVITY LOG</h3>
+									</div>
+
+									<div role="tabpanel" class="tab-pane fade" id="kanban">
 										<h3 class="tabs-header">KANBAN BOARD</h3>
 										<button type="button" class="btn btn-success" onClick="add()">
 											<i class="fa fa-plus-circle"></i> Add Card
 										</button>
+									</div>
+								</div>
+								<br> <br>
+
 								<div>
 									<div id="todoKB">
 										<ul id="sortableToDo" class="connectedSortable">
@@ -198,13 +207,6 @@
 
 							</div>
 
-
-									<div role="tabpanel" class="tab-pane fade"
-										id="activity-log">
-										<h3 class="tabs-header">ACTIVITY LOG</h3>
-									</div>
-									
-									
 							<div role="tabpanel" class="tab-pane fade" id="project-calendar">
 								<div class="full-calendar">
 									<h3 class="tabs-header">CALENDAR</h3>
@@ -278,15 +280,17 @@
 
 											<!-- Tags refer to the all the resource categories in the project -->
 											<br> Start Date: <br> <input type="date"
-												name="startDate" required id="startDate"
+												name="startdate" required id="startdate"
 												onfocus="(this.type='date')"
 												placeholder="Start Date Of Task (mm/dd/yyyy)*"
 												class="form-control profileField"> Due Date: <br>
-											<input type="date" name="dueDate" required id="dueDate"
+												
+											<input type="date" name="duedate" required id="duedate"
 												onfocus="(this.type='date')"
 												placeholder="Due Date Of Task (mm/dd/yyyy)*"
-												class="form-control profileField"> <input
-												type="hidden" id="board_id" value="${board_id}">
+												class="form-control profileField"> 
+												
+												<input type="hidden" id="board_id" value="${board_id}">
 
 										</div>
 									</div>
@@ -327,7 +331,7 @@
 												type="text" id="modalCardDescriptionView"
 												class="form-control col-md-4 create-project-add"
 												name="modalCardDescription"> <br> Tags: <select
-												id="modalCardTagsView" name="modalCardTags"
+												id="modalCardTagsView" name="modalCardTagsView"
 												class="col-md-4 form-control" style="width: 100%">
 												<c:forEach items="${cat}" var="item">
 													<option value="${item}">${item}</option>
@@ -345,7 +349,8 @@
 											<input type="date" name="dueDate" id="dueDateView"
 												onfocus="(this.type='date')"
 												class="form-control profileField"> Comments: <br>
-
+											<input type="hidden" id="board_id_view" value="${board_id}">
+											<input type="hidden" id="card_id_view" value="${card_id}">
 										</div>
 									</div>
 								</div>
@@ -359,6 +364,8 @@
 					</div>
 				</div>
 			</div>
+			<br> <br> <br> <br> <br> <br> <br>
+			<br>
 			<!-- Display List Of Members and the resource they are providing -->
 		</div>
 	</div>
@@ -442,6 +449,7 @@
 		var assignee = $('#assignee' + newId).val();
 		var start_date = $('#startdate' + newId).val();
 		var due_date = $('#duedate' + newId).val();
+		
 
 		$('#modalCardTitleView').val(title);
 		$('#modalCardDescriptionView').val(desc);
@@ -496,9 +504,38 @@
 			$('#AddModal').modal('hide');
 			$("#todoKB").load(window.location.href + " #todoKB");
 		});
+		
+		$('#edit').click(function(event) {
+
+			var modalCardTitle = $('#modalCardTitleView').val();
+			var modalCardDescription = $('#modalCardDescriptionView').val();
+			var modalCardAssignees = $('#modalCardAssigneesView').val();
+			var modalCardTags = $('#modalCardTagsView').val();
+			var board_id = $('#board_id_view').val();
+			var card_id = $('#card_id_view').val();
+			var start_date = $('#startDateView').val();
+			var due_date = $('#dueDateView').val();
+			
+
+			$.post('edit-card', {
+				modalCardTitle : modalCardTitle,
+				modalCardDescription : modalCardDescription,
+				modalCardTags : modalCardTags,
+				modalCardAssignees : modalCardAssignees,
+				board_id : board_id,
+				start_date : start_date,
+				due_date : due_date,
+				card_id : card_id
+			});
+
+			$('#ViewModal').modal('hide');
+			$("#todoKB").load(window.location.href + " #todoKB");
+			$("#inprogressKB").load(window.location.href + " #inprogressKB");
+			$("#doneKB").load(window.location.href + " #doneKB");
+		});
 
 	});
-	/* 		$('#manageusers').click(
+	/* $('#manageusers').click(
 	 function(e){
 	 e.preventDefault();
 	 $('#pm-tabs a[href="#members"]').tab('show');
