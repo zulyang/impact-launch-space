@@ -33,3 +33,11 @@
 	padding: 15px;
 	text-align: center;
 }
+
+th {
+	text-align: center;
+}
+
+.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
+	margin: 2%
+}

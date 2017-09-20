@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
 @import url(http://fonts.googleapis.com/css?family=Titillium+Web);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
 
 #sortableToDo, #sortableInProgress, #sortableDone {
     border: 1px solid #eee;
@@ -24,8 +25,8 @@
   .project-management-container{
   margin-top: 10rem;
   margin-bottom: 5rem;
-  margin-left:auto;
-  margin-right: auto;
+  margin-left: auto;
+  margin-right: 20%;
 }
 
 .kanban-header{
@@ -45,10 +46,99 @@
 	width: 120px;
 }
 
-.calendar-container{
+.side-calendar-container{
 	width: 40rem;
 	height: 30rem;
 	background: #fff;
 	padding: 3rem;
 	
+}
+
+.full-calendar-container{
+	width: 100%;
+	padding: 3rem;
+	background: #fff;
+}
+
+.project-management-container .nav-tabs > li > a {
+	color: #313a46;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 13px;
+}
+
+.project-management-container .tabs-bordered > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .nav-justified > li.active > a{
+	color: #1ea69a;
+	margin-bottom: -1px;
+	border-bottom: 2px solid #1ea69a !important;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	
+}
+
+.project-management-container .tabs-bordered{
+	border-bottom: 2px solid rgba(152, 166, 173, 0.2) !important;
+}
+
+.project-management-container .nav-tabs .nav-justified{
+	width: 100%;
+}
+
+.side-menu{
+	width: 20%;
+    z-index: 10;
+    background: #ffffff;
+    bottom: 0;
+    margin-top: 0;
+    padding-bottom: 30px;
+    position: fixed;
+    top: 3.5em;
+    border-left: 1px solid #e2e2e2;
+    right: 0;
+}
+
+#sidebar-menu{
+	padding-top: 10px;
+}
+
+#wrapper{
+	height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+#sidebar-menu .menu-title{
+	padding: 12px 20px !important;
+    letter-spacing: .05em;
+    pointer-events: none;
+    cursor: default;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #98a6ad;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+#sidebar-menu .btn-primary {
+	color: #348cd4 !important;
+	border: 2px solid #348cd4 !important;
+	padding: 2px 10px !important;
+    height: 2em;
+    border-radius: 2em;
+    font-size: 8pt;
+	float: right;
+	margin-right: 1em;
+	margin-top: -2.8em;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+#sidebar-menu .btn-primary:hover{
+	color: #fff !important;
+	background: #348cd4 !important;
+}
+
+#sidebar-menu .btn-bordered{
+	background: transparent !important;
 }

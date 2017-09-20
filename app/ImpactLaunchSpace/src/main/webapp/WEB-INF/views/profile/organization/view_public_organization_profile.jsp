@@ -15,6 +15,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/profile/organisation/view_public_organization_profile.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -24,14 +26,14 @@
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
-<body class="profile">
-	<div class="container-fluid">
+<body>
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
 				<%@include file="../../common/navigation.jspf"%>
 
-				<div class="org_profile_display_container">
+				<div class="view_public_organization_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div style="display: inline-block">

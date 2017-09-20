@@ -236,7 +236,7 @@ public class JdbcUserOfferedResourceDAO implements UserOfferedResourceDAO {
 
 		String sql = "SELECT * FROM user_offered_resources WHERE user_offered_resources.resource_name LIKE '%" + searchbox + "%'";
 
-	    if (!skillset.equals("Select skillset")) {
+	    if (!skillset.equals("All")) {
 		      sql += "AND user_offered_resources.resource_category = '" + skillset + "'";
 		    }
 

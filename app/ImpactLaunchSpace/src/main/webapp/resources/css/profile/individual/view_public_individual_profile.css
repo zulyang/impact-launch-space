@@ -1,16 +1,19 @@
-.indi_public_profile_display_container {
-	margin-top: 120%;
-    margin-bottom: 10%;
-    width: 100%;
+.view_public_individual_profile_container {
+	margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
 .circle_indi_profile_image {
+	margin-left: auto;
+    margin-right: auto;
+    display: flex;
 	border-radius: 50%;
 	width: 250px;
 	height: 250px;
 	min-height: 100%; 
 }
-
 
 .indi_bio {
 	width: 45rem;

@@ -26,8 +26,6 @@
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
-
-
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
@@ -96,7 +94,7 @@
 							</form>
 						</div>
 
-						<div class="panel panel-danger remove_users_panel">
+						<div class="panel panel-success remove_users_panel">
 							<!-- Default panel contents -->
 							<div class="panel-heading">Member List</div>
 							<form action="">
@@ -129,7 +127,7 @@
 													<td>Admin</td>
 													<td><button type="button" id="dele<%=id%>"
 															onclick="removeUser(this.id);" class="btn btn-danger"
-															disabled>Remove</button></td>
+															disabled>Remove User</button></td>
 												
 											</c:when>
 
@@ -139,7 +137,7 @@
 													<td>${item.getProject_member_username() }</td>
 													<td>Resource offerer</td>
 													<td><button type="button" class="btn btn-danger"
-															id="dele<%=id%>" onclick="removeUser(this.id);">Remove</button></td>
+															id="dele<%=id%>" onclick="removeUser(this.id);">Remove User</button></td>
 												
 											</c:when>
 
@@ -149,7 +147,7 @@
 													<td>${item.getProject_member_username() }</td>
 													<td>Member</td>
 													<td><button type="button" class="btn btn-danger"
-															id="dele<%=id%>" onclick="removeUser(this.id);">Remove</button></td>
+															id="dele<%=id%>" onclick="removeUser(this.id);">Remove User</button></td>
 												
 											</c:when>
 											</c:choose>
@@ -187,8 +185,12 @@
 		});
 
 		function inviteUsers() {
+			if(document.getElementById("invite_users_search").value == ""){
+				alert("Please search for the users that you want to invite.");
+				return false;
+			}
+			
 			if (confirm("Do you wish to send an invitation out to the selected users?")) {
-				
 				return true;
 			}
 			return false;

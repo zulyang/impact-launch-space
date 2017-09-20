@@ -32,18 +32,6 @@ html, body {
 	width: 150px;
 }
 
-.profile {
-	display: flex;
-	align-items: center;
-	position: relative;
-	background-color: white;
-	background-repeat: repeat;
-	overflow: scroll;
-	max-width: 100%;
-	overflow-x: hidden;
-	margin-top: 20rem;
-}
-
 .profileNav {
 	background-color: white;
 }
@@ -355,12 +343,6 @@ html, body {
 	max-width: 130%;
 	max-height: 130%;
 	margin-left: 2rem;
-}
-
-.org_profile_display_container {
-	margin-top: -10rem;
-	margin-bottom: 5rem;
-	width: 85rem;
 }
 
 .edit_org_profile_display_container {

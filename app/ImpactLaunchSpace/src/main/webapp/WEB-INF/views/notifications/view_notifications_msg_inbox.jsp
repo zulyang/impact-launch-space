@@ -25,7 +25,7 @@
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
-	
+
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
@@ -65,9 +65,24 @@
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
-												<li class="list-group-item-selected"><a
+												<li class="list-group-item"><a
 													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">${inboxSize }</span></a></li>
+														class="badge pull-right">${inboxSize}</span> 
+														<input type="hidden" id="unreadCount" value="${unreadCount}" />
+														<!-- NIGEL CHANGE STYLE FOR THIS AND DECREMENT IN FRONT END -->
+														<c:choose>
+														<c:when test="${unreadCount > 99}">
+															<span class="badge pull-right">99+</span></a></li>
+														</c:when>
+														<c:otherwise>
+															<span id="unreadCountDisplay" class="badge pull-right unreadCountDisplay">${unreadCount }</span>
+															</a>
+															</li>
+														</c:otherwise>
+		
+														</c:choose>
+
+
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
 														class="badge pull-right">${sentSize }</span></a></li>
@@ -75,7 +90,7 @@
 										</div>
 
 										<div class="panel-heading">
-											<h4 class="panel-title">Requests</h4>
+											<h4 class="panel-title">Offers</h4>
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
@@ -87,20 +102,7 @@
 														class="badge pull-right">${userSentRequestsSize }</span></a></li>
 											</ul>
 										</div>
-										
-										<div class="panel-heading">
-											<h4 class="panel-title">Project Invitations</h4>
-										</div>
-										<div class="panel-collapse collapse in">
-											<ul class="list-group">
-												<li class="list-group-item"><a
-													href="/notifications/invitations/inbox">Received <span
-														class="badge pull-right">${userRequestsSize }</span></a></li>
-												<li class="list-group-item"><a
-													href="/notifications/invitations/sent">Sent <span
-														class="badge pull-right">${userSentRequestsSize }</span></a></li>
-											</ul>
-										</div>
+
 									</div>
 								</div>
 							</div>
@@ -111,89 +113,96 @@
 									</div>
 									<div class="panel-body">
 										<div class="table-responsive col-md-12">
-											<table class="table table-striped table-hover"
-												id="inboxtable">
+											<table class="table" id="inboxtable">
 												<thead>
 													<tr>
+														<th></th>
 														<th>Sender</th>
 														<th>Message Subject</th>
 														<th>Sent Time</th>
 														<th></th>
-														
+
 													</tr>
 												</thead>
 												<tbody id="userNotificationsTable">
 													<%
 														int id = 0;
 													%>
+													<input type="hidden" id="inboxSize" value="${inboxSize}" />
 													<c:forEach items="${inbox}" var="item">
 
 
 														<tr id="row<%=++id%>">
-															
-																	<c:choose>
-																		<c:when
-																			test="${item.getSender_username().equals(\"admin\")}">
-																			<td><p>
-																			<b> 
+
+															<td id="status<%=id%>"><c:choose>
+																	<c:when test="${item.isRead()}">
+																	</c:when>
+																	<c:otherwise>
+																		<div class="unread_message_icon"></div>
+																	</c:otherwise>
+																</c:choose></td>
+
+															<c:choose>
+																<c:when
+																	test="${item.getSender_username().equals(\"admin\")}">
+																	<td><p>
 																			<input class="editable-field form-control"
 																				id="sender<%=id%>" type="hidden"
 																				value="ImpactLaunch.Space Admin" disabled="true" />
-																				ImpactLaunch.Space Admin
-																			</b>
-																			</p></td>
-																		</c:when>
-																		<c:otherwise>
-																		<td ><p>
+																			ImpactLaunch.Space Admin
+																		</p></td>
+																</c:when>
+																<c:otherwise>
+																	<td><p>
 																			<input class="editable-field form-control"
 																				id="sender<%=id%>" type="hidden"
 																				value="${item.getSender_username()}" disabled="true" />
-																				${item.getSender_username()}
-																				</p></td>
-																		</c:otherwise>
-																	</c:choose>
+																			${item.getSender_username()}
+																		</p></td>
+																</c:otherwise>
+															</c:choose>
 
-																
+
 															<td><p>
 																	<input class="editable-field form-control"
 																		id="subj<%=id %>" type="hidden"
 																		value="${item.getNotification_subject()}"
 																		disabled="true" />${item.getNotification_subject()}
-																</p></td>	
+																</p></td>
 															<td><p>
 																	<input class="editable-field form-control"
 																		id="time<%=id%>" type="hidden"
 																		value="${item.getSent_time() }" disabled="true" />
-																		${item.getSent_time() }
+																	${item.getSent_time() }
 																</p></td>
 
-															
-																	<input class="editable-field form-control"
-																		id="message<%=id%>" type="hidden"
-																		value="${item.getNotification_message()}"
-																		disabled="true" />
-																
 
-															
-																	<input class="editable-field form-control"
-																		id="senderUsername<%=id%>" type="hidden"
-																		value="${item.getSender_username()}" disabled="true" />
-																
+															<input class="editable-field form-control"
+																id="message<%=id%>" type="hidden"
+																value="${item.getNotification_message()}"
+																disabled="true" />
 
-															
-																	<input class="editable-field form-control"
-																		id="copyType<%=id%>" type="hidden" value="inbox"
-																		disabled="true" />
-																
+
+
+															<input class="editable-field form-control"
+																id="senderUsername<%=id%>" type="hidden"
+																value="${item.getSender_username()}" disabled="true" />
+
+
+
+															<input class="editable-field form-control"
+																id="copyType<%=id%>" type="hidden" value="inbox"
+																disabled="true" />
+
 
 															<td class="col-md-2"><p>
 																	<button id="view<%=id%>" type="btn" name="view"
-																		class="btn btn-primary edit" onClick="view(this.id)"
-																		href="#">View</button>
+																		class="btn btn-primary edit"
+																		onClick="return view(this.id);" href="#">View</button>
 																	<button id="dele<%=id%>" type="submit" name="delete"
 																		class="btn btn-danger delete" onClick="del(this.id)"
 																		href="#">
-																		<i class="fa fa-trash" style="padding: 3px;"></i> 
+																		<i class="fa fa-trash" style="padding: 3px;"></i>
 																	</button>
 																</p></td>
 
@@ -203,7 +212,7 @@
 												</tbody>
 											</table>
 
-											
+
 										</div>
 									</div>
 								</div>
@@ -214,58 +223,74 @@
 
 
 
+				<c:forEach begin="1" end="${inboxSize}" varStatus="msg">
+					<div>
+						<!-- View Notifications modal-->
+						<div class="modal fade" tabindex="-1" role="dialog"
+							id="notificationsModal${msg.index}">
+							<div class="modal-dialog">
+								<div class="modal-content">
 
-				<!-- View Notifications modal-->
-				<div class="modal fade" tabindex="-1" role="dialog"
-					id="notificationsModal">
-					<div class="modal-dialog">
-						<div class="modal-content">
-
-							<form action="view-notification" role="form" method="post">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title">View Message</h4>
-								</div>
-								<div class="modal-body">
-									<div class="container">
-										<div id="resourcesNeeded"
-											class="form-group row col-md-6 col-lg-6 col-xs-9">
-											<div class="col-md-12">
-												<p class="modalSubheading">From</p>
-												<input id="modalSender" name="modalSender"
-													class="form-control  modalNotificationsField"
-													placeholder="Sender Username here" type="text" readonly />
-												<p class="modalSubheading">Subject</p>
-												<input id="modalNotificationSubject"
-													name="modalNotificationSubject"
-													class="form-control  modalNotificationsField"
-													placeholder="Message subject here" type="text" readonly />
-												<p class="modalSubheading">Message</p>
-												<textarea id="modalNotificationsMessage"
-													name="modalNotificationsMessage"
-													class="form-control  modalNotificationsField"
-													placeholder="Grab message from db and paste here" rows="10"
-													readonly></textarea>
+									<form action="view-notification" role="form" method="post">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											<h4 class="modal-title">View Message</h4>
+										</div>
+										<div class="modal-body">
+											<div class="container">
+												<div id="resourcesNeeded${msg.index}"
+													class="form-group row col-md-6 col-lg-6 col-xs-9">
+													<div class="col-md-12">
+														<p class="modalSubheading">From</p>
+														<input id="modalSender${msg.index}" name="modalSender"
+															class="form-control  modalNotificationsField"
+															placeholder="Sender Username here" type="text" readonly />
+														<p class="modalSubheading">Subject</p>
+														<input id="modalNotificationSubject${msg.index}"
+															name="modalNotificationSubject"
+															class="form-control  modalNotificationsField"
+															placeholder="Message subject here" type="text" readonly />
+														<p class="modalSubheading">Message</p>
+														<textarea id="modalNotificationsMessage${msg.index}"
+															name="modalNotificationsMessage"
+															class="form-control  modalNotificationsField"
+															placeholder="Grab message from db and paste here"
+															rows="10" readonly></textarea>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">OK</button>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">OK</button>
 
+										</div>
+									</form>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
 </body>
+<script>
+	$(document).ready(function() {
+		const inboxSize = document.getElementById("inboxSize").value;
+		for (i = 1; i <= inboxSize; i++) {
+			var id = "#status" + i
+			if ($(id)[0].childNodes[1] !== undefined) {
+				$("#sender" + i).parent().css("font-weight", "700");
+				$("#subj" + i).parent().css("font-weight", "700");
+				$("#time" + i).parent().css("font-weight", "700");
+			}
+		}
+	});
+</script>
 <script>
 	$(document).ready(function() {
 		$('#add').click(function(event) {
@@ -275,36 +300,65 @@
 		$('#notificationsModal').on('hidden.bs.modal', function() {
 			$(this).find("input,textarea,select").val('').end();
 		});
-		
-	
-		$('#inboxtable').DataTable( {
-			"order": [[ 2, "desc" ]],
-			responsive: true,
-			 "columnDefs": [
-	            {
-	                "targets": [ 3 ],
-	                "orderable": false
-	            }
-	        ]
-	    } );
-		
+
+		$('#inboxtable').DataTable({
+
+			"order" : [ [ 0, "desc" ], [ 3, "desc" ] ],
+			"orderFixed" : {
+				"pre" : [ 0, 'desc' ]
+			},
+
+			responsive : true,
+			"columnDefs" : [ {
+				"targets" : [ 4 ],
+				"orderable" : false
+			}
+
+			]
+		});
+
 	});
 </script>
 <script type="text/javascript">
+	var unreadCount = document.getElementById("unreadCount").value;
+	
 	function view(id) {
 		var disabledStatus = $('.editable-field').attr('disabled');
 		var newId = id.substring(4);
 		var sender = $('#sender' + newId).val();
 		var subj = $('#subj' + newId).val();
 		var message = $('#message' + newId).val();
+		var senderUsername = $('#senderUsername' + newId).val();
+		var time = $('#time' + newId).val();
+		var copy_type = $('#copyType' + newId).val();
 		var message2 = message.replace(/%n/g, "\n");
 
-		$('#modalSender').val(sender);
-		$('#modalNotificationSubject').val(subj);
-		$('#modalNotificationsMessage').val(message2);
+		$("#status" + newId).children().hide()
+		$("#sender" + newId).parent().css("font-weight", "normal");
+		$("#subj" + newId).parent().css("font-weight", "normal");
+		$("#time" + newId).parent().css("font-weight", "normal");
 
-		document.getElementById("modalNotificationsMessage").innerHtml = message2;
-		$('#notificationsModal').modal('show');
+		$('#modalSender' + newId).val(sender);
+		$('#modalNotificationSubject' + newId).val(subj);
+		$('#modalNotificationsMessage' + newId).val(message2);
+
+		document.getElementById("modalNotificationsMessage" + newId).innerHtml = message2;
+		$('#notificationsModal' + newId).modal('show');
+
+		$.post('mark-read', {
+			senderUsername : senderUsername,
+			subj : subj,
+			time : time,
+			copy_type : copy_type
+		});
+		
+		unreadCount -= 1;
+		
+		if(unreadCount === 0){
+			$("#unreadCountDisplay").hide();
+		} else {
+			$("#unreadCountDisplay").text(unreadCount);
+		}
 	};
 
 	function del(id) {

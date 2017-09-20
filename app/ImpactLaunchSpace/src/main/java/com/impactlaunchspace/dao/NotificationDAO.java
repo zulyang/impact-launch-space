@@ -11,4 +11,5 @@ public interface NotificationDAO {
 	public ArrayList<Notification> retrieveSentNotificationsOfUser(String username);
 	public int countTotalNotificationsOfUser(String username);
 	public int countUnreadNotificationsOfUser(String username);
+	public void markRead(String recipient_username, String sender_username, String notification_subject, String sent_time, String copy_type);
 }

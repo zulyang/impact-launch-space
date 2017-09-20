@@ -66,7 +66,19 @@
 											<ul class="list-group">
 												<li class="list-group-item"><a
 													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">${inboxSize }</span></a></li>
+														class="badge pull-right">${inboxSize }</span>
+														<!-- NIGEL CHANGE STYLE FOR THIS AND DECREMENT IN FRONT END -->
+														<c:choose>
+															<c:when test="${unreadCount > 99}">
+																<span class="badge pull-right">99+</span></a></li>
+															</c:when>
+															<c:otherwise>
+																<span class="badge pull-right">${unreadCount }</span></a></li>
+															</c:otherwise>
+														
+														</c:choose>
+														
+														
 												<li class="list-group-item"><a
 													href="/notifications/messages/sent">Sent<span
 														class="badge pull-right">${sentSize }</span></a></li>
@@ -74,7 +86,7 @@
 										</div>
 
 										<div class="panel-heading">
-											<h4 class="panel-title">Requests</h4>
+											<h4 class="panel-title">Offers</h4>
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
@@ -87,19 +99,6 @@
 											</ul>
 										</div>
 										
-										<div class="panel-heading">
-											<h4 class="panel-title">Project Invitations</h4>
-										</div>
-										<div class="panel-collapse collapse in">
-											<ul class="list-group">
-												<li class="list-group-item"><a
-													href="/notifications/invitations/inbox">Received <span
-														class="badge pull-right">${userRequestsSize }</span></a></li>
-												<li class="list-group-item"><a
-													href="/notifications/invitations/sent">Sent <span
-														class="badge pull-right">${userSentRequestsSize }</span></a></li>
-											</ul>
-										</div>
 									</div>
 								</div>
 							</div>

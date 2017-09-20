@@ -41,10 +41,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
 
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("inbox", inbox);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
@@ -58,10 +60,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
 
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("sent", sent);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());	
@@ -74,6 +78,8 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<String> isAcceptable = new ArrayList<String>();
@@ -88,6 +94,7 @@ public class NotificationController {
 			}
 		}
 		
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
 		model.addAttribute("userRequests", userRequests);
@@ -104,10 +111,12 @@ public class NotificationController {
 		String username = (String) request.getSession().getAttribute("username");
 		ArrayList<Notification> inbox = notificationService.getInbox(username);
 		ArrayList<Notification> sent = notificationService.getSent(username);
+		int unreadCount = notificationService.countUnreadNotifications(username);
 		
 		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
 		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
 
+		model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("inboxSize", inbox.size());
 		model.addAttribute("sentSize", sent.size());
 		model.addAttribute("userRequestsSize", userRequests.size());
@@ -115,38 +124,6 @@ public class NotificationController {
 		model.addAttribute("userSentRequests", userSentRequests);
 		
 		return "notifications/" + "view_notifications_req_sent";
-	}
-	
-	@RequestMapping(value = "/notifications/invitations/inbox", method = RequestMethod.GET)
-	public String viewInvInboxPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException{
-		String username = (String) request.getSession().getAttribute("username");
-		ArrayList<Notification> inbox = notificationService.getInbox(username);
-		ArrayList<Notification> sent = notificationService.getSent(username);
-		
-		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
-		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
-
-		model.addAttribute("inboxSize", inbox.size());
-		model.addAttribute("sentSize", sent.size());
-		model.addAttribute("userRequestsSize", userRequests.size());
-		model.addAttribute("userSentRequestsSize", userSentRequests.size());
-		return "notifications/" + "view_notifications_inv_inbox";
-	}
-	
-	@RequestMapping(value = "/notifications/invitations/sent", method = RequestMethod.GET)
-	public String viewInvSentPage(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws IOException{
-		String username = (String) request.getSession().getAttribute("username");
-		ArrayList<Notification> inbox = notificationService.getInbox(username);
-		ArrayList<Notification> sent = notificationService.getSent(username);
-		
-		ArrayList<ProjectUserRequest> userRequests = requestService.retrieveAllForUser(username);
-		ArrayList<ProjectUserRequest> userSentRequests = requestService.retrieveAllSentForUser(username);
-
-		model.addAttribute("inboxSize", inbox.size());
-		model.addAttribute("sentSize", sent.size());
-		model.addAttribute("userRequestsSize", userRequests.size());
-		model.addAttribute("userSentRequestsSize", userSentRequests.size());
-		return "notifications/" + "view_notifications_inv_sent";
 	}
 	
 	@RequestMapping(value = "/send-message", method = RequestMethod.POST)
@@ -181,4 +158,23 @@ public class NotificationController {
 		notificationService.deleteNotification(recipient, sender, subj, time, copy_type);
 
 	}
+	
+	@RequestMapping(value = "/notifications/messages/mark-read", method = RequestMethod.POST)
+	public void markRead(@RequestParam(required = false) String senderUsername,@RequestParam(required = false) String recipientUsername,
+			@RequestParam String subj,	@RequestParam String time, @RequestParam String copy_type, HttpServletResponse response,HttpServletRequest request){
+		String recipient = null;
+		String sender = null;
+		
+		if(senderUsername != null){
+			recipient = (String) request.getSession().getAttribute("username");
+			sender = senderUsername;
+		}else if (recipientUsername != null){
+			sender = (String) request.getSession().getAttribute("username");
+			recipient = recipientUsername;
+		}
+
+		
+		notificationService.markRead(recipient, senderUsername, subj, time, copy_type);
+	}
+	
 }

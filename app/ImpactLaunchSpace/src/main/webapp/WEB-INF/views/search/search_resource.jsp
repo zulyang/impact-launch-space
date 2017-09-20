@@ -34,9 +34,10 @@
 			    $.each(responseJson, function (key, value) {
 					var val = value
 					var res = val.split(",");
-			        trHTML += '<tr><td>' + res[0] + '</td><td>' + res[1] + '</td><td>' + res[2] + '</td><td>' + res[3] +'</td></tr>';
+			        trHTML += '<tr><td>' + res[0] + '</td><td>' + res[1] + '</td><td>' + res[2] + '</td><td><a href ="/view-profile?username='+res[3]+'">' + res[3] +'</td></tr>';
 			    });
 			    $('#resources').append(trHTML);
+
 			});
 		});
 	});
@@ -74,14 +75,13 @@
 	<div class="table-responsive col-md-12">
 	<table class="table table-striped table-hover resourceTable" id="resources">
 	<thead>
-	<tr>
-	    <th>Resource Name</th>
-        <th>Resource Description</th>
-        <th>Resource Category</th>
-        <th>Resource Owner</th>
-        <th>Contact</th>
-	
-	</tr>
+		<tr>
+		    <th>Resource Name</th>
+	        <th>Resource Description</th>
+	        <th>Resource Category</th>
+	        <th>Resource Owner</th>
+		
+		</tr>
 	</thead>
 	<tbody></tbody>
 	</table>
