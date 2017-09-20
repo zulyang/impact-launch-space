@@ -88,17 +88,17 @@ public class ProjectManagementController {
 		pmService.updateActivity(activity, board_id, username);
 	}
 	
-	@RequestMapping(value = "/edit-card", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit-card", method = RequestMethod.POST)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
-			 @RequestParam(required = false) String tags, @RequestParam int card_order, @RequestParam(required = false) String assignee,
+			 @RequestParam(required = false) String tags, @RequestParam(required = false) String assignee, String board_id, Date start_date, Date due_date, Integer card_id,
 			HttpServletRequest request, ModelMap model) {
 		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
-		pmService.edit(modalCardTitle, modalCardDescription, tags, assignee);
+		pmService.edit(modalCardTitle, modalCardDescription, tags, assignee, start_date, due_date, card_id);
 		
 		String activity = username + " edited " + modalCardTitle + " on " + timestamp; 
-
+		pmService.updateActivity(activity, board_id, username);
 	}
 
 	@RequestMapping(value = "/delete-card", method = RequestMethod.POST)
@@ -108,9 +108,12 @@ public class ProjectManagementController {
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 		Card c = pmService.retrieveProjectCardById(Integer.parseInt(card_id));
+		System.out.print(c);
 		String card_title = c.getCard_title();
+		int board_id = c.getBoard_id();
 		
 		String activity = username + " deleted " + card_title + " on " + timestamp; 
+		pmService.updateActivity(activity, Integer.toString(board_id), username);
 	}
 
 	@RequestMapping(value = "/update-card-order", method = RequestMethod.POST)

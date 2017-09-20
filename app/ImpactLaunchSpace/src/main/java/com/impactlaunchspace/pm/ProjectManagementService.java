@@ -51,10 +51,10 @@ public class ProjectManagementService {
 		cardDAO.updateOrder(card_id, status, order);
 	}
 	
-	public void edit(String card_title, String description, String tags, String assignee) {
+	public void edit(String card_title, String description, String tags, String assignee, Date start_date, Date due_date, int card_id) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDAO cardDAO = (CardDAO) context.getBean("cardDAO");
-		cardDAO.edit(card_title, description, tags, assignee);
+		cardDAO.edit(card_title, description, tags, assignee, start_date, due_date, card_id);
 	}
 	
 	public Card retrieveProjectCardById(int card_id){
@@ -66,6 +66,7 @@ public class ProjectManagementService {
 	public void updateActivity(String activity, String board_id, String username) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		BoardDAO boardDAO = (BoardDAO) context.getBean("boardDAO");
+		boardDAO.updateActivityLog(activity, board_id, username);
 	}
 	
 }
