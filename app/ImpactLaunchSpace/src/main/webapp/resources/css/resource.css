@@ -1,8 +1,8 @@
-.manage-resource-container{
-  margin-top: 10rem;
-  margin-bottom: 5rem;
-  margin-left:auto;
-  margin-right: auto;
+.manage-resource-container {
+	margin-top: 10rem;
+	margin-bottom: 5rem;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .title {
@@ -16,29 +16,39 @@
 	text-align: center;
 }
 
-.title-label{
-	font-weight:400;font-size:24px;	 	}
-.navbar-barnd{vertical-align : middle;line-height:45px;}
-.btn-success.create, .btn-warning.guide {margin-top:10px;}
+.title-label {
+	font-weight: 400;
+	font-size: 24px;
+}
+
+.navbar-barnd {
+	vertical-align: middle;
+	line-height: 45px;
+}
+
+.btn-success.create, .btn-warning.guide {
+	margin-top: 10px;
+}
 
 .save, .cancel {
 	display: none;
 }
 
-.editable-field:disabled,
-.editable-field[disabled]{
-  border: 1px solid transparent;
-  background-color: transparent;
+.editable-field:disabled, .editable-field[disabled] {
+	border: 1px solid transparent;
+	background-color: transparent;
 }
 
 select:required:invalid {
-  color: #999999;
+	color: #999999;
 }
+
 option[value=""][disabled] {
-  display: none;
+	display: none;
 }
+
 option {
-  color: black;
+	color: black;
 }
 
 .modal-title {
@@ -46,13 +56,59 @@ option {
 }
 
 .resource_guide_start_button {
+	border-radius: 0;
 	margin-left: 25%;
-    margin-right: 25%;
-    width: 50%;
+	margin-right: 25%;
+	width: 50%;
+}
+
+.modal_start_text {
+	font-size: 20px;
+	margin: 1% 0%;
 }
 
 .asset_header, .skills_header {
 	margin-left: 25%;
-    margin-right: 25%;
-    text-align: center;
+	margin-right: 25%;
+	text-align: center;
+}
+
+.resource_modal_content {
+	border-radius: 0;
+}
+
+.resource_modal_header {
+	border-bottom: none;
+	background-color: rgba(70, 130, 180, 0.89);
+	color: white;
+}
+
+.resource_modal_body {
+	background-color: rgba(70, 130, 180, 0.89);
+	color: white;
+}
+
+.close { &:hover background rgba(black, 0.6);
+	
+}
+
+.close_img {
+	border-radius: 50%;
+	-webkit-transition: -webkit-transform .4s ease-in-out;
+	transition: transform .4s ease-in-out;
+}
+
+.close_img:hover {
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.resource_modal_footer {
+	border-top: none;
+	height: 70px;
+	background-color: #5cb85c;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	font-weight: bold;
 }
