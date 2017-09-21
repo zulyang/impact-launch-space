@@ -66,21 +66,23 @@
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
 												<li class="list-group-item"><a
-													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">${inboxSize }</span>
-														<!-- NIGEL CHANGE STYLE FOR THIS AND DECREMENT IN FRONT END -->
+													href="/notifications/messages/inbox">Inbox
+														<input type="hidden" id="unreadCount" value="${unreadCount}" />
 														<c:choose>
-															<c:when test="${unreadCount > 99}">
-																<span class="badge pull-right">99+</span></a></li>
-															</c:when>
-															<c:otherwise>
-																<span class="badge pull-right">${unreadCount }</span></a></li>
-															</c:otherwise>
-														
+														<c:when test="${unreadCount > 99}">
+															<span class="badge pull-right">99+</span></a></li>
+														</c:when>
+														<c:when test="${unreadCount > 0}">
+															<span id="unreadCountDisplay" class="badge pull-right unreadCountDisplay">${unreadCount}</span>
+															</a>
+															</li>
+														</c:when>
+		
 														</c:choose>
+
 														
 														
-												<li class="list-group-item"><a
+												<li class="list-group-item-selected"><a
 													href="/notifications/messages/sent">Sent<span
 														class="badge pull-right">${sentSize }</span></a></li>
 											</ul>

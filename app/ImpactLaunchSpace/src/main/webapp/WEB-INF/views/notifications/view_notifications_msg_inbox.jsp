@@ -65,19 +65,18 @@
 										</div>
 										<div class="panel-collapse collapse in">
 											<ul class="list-group">
-												<li class="list-group-item"><a
-													href="/notifications/messages/inbox">Inbox<span
-														class="badge pull-right">${inboxSize}</span> 
+												<li class="list-group-item-selected"><a
+													href="/notifications/messages/inbox">Inbox
 														<input type="hidden" id="unreadCount" value="${unreadCount}" />
 														<c:choose>
 														<c:when test="${unreadCount > 99}">
 															<span class="badge pull-right">99+</span></a></li>
 														</c:when>
-														<c:otherwise>
+														<c:when test="${unreadCount > 0}">
 															<span id="unreadCountDisplay" class="badge pull-right unreadCountDisplay">${unreadCount}</span>
 															</a>
 															</li>
-														</c:otherwise>
+														</c:when>
 		
 														</c:choose>
 
