@@ -39,12 +39,11 @@
 							class="fa fa-home homeIcon"></i>
 					</a></li>
 
-					<li class="profileIcons">
-						<a class="navbar-brand" href="/notifications/messages/inbox"> 
-							<i class="fa fa-bell alertsIcon"></i>
-							<span class="notification-counter">${unreadCount}</span>
-						</a>
-					</li>
+					<li class="profileIcons"><a class="navbar-brand"
+						href="/notifications/messages/inbox"> <i
+							class="fa fa-bell alertsIcon"></i> <span
+							class="notification-counter">${unreadCount}</span>
+					</a></li>
 
 					<li class="profileIcons"><a class="navbar-brand" href="/chat">
 							<i class="fa fa-comments chatIcon"></i>
@@ -80,3 +79,8 @@
 		<!-- /.container-fluid -->
 	</nav>
 </div>
+<script>
+	if ($(".notification-counter").text() === "" || $(".notification-counter").text() === "0") {
+		$(".notification-counter").hide()
+	}
+</script>
