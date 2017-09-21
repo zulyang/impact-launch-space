@@ -89,6 +89,7 @@ public class JdbcCardDAO implements CardDAO{
 			ps.setString(4, assignee);
 			ps.setDate(5, start_date);
 			ps.setDate(6, due_date);
+			ps.setInt(7, card_id);
 			ps.executeUpdate();
 			ps.close();
 
