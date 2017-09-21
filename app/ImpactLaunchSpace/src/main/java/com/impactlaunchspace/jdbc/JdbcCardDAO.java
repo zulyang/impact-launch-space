@@ -245,15 +245,15 @@ public class JdbcCardDAO implements CardDAO{
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, card_id);
-			Card card = null;
+			Card card = null;		
 			ResultSet rs = ps.executeQuery();
-	
-			while (rs.next()) {
+			
+			if (rs.next()) {
 				card = new Card(rs.getInt("card_id"), rs.getInt("board_id"),
 						rs.getString("title"), rs.getString("description"), rs.getString("owner"), rs.getString("assignee"),
 						rs.getTimestamp("date_created"), rs.getString("tags"), rs.getString("card_status"), rs.getInt("card_order"), rs.getDate("start_date"), rs.getDate("due_date")
 						);
-				
+
 			}
 			
 			rs.close();

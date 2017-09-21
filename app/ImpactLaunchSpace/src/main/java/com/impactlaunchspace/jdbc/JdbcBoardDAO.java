@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -124,6 +125,37 @@ public class JdbcBoardDAO implements BoardDAO {
 			ps.executeUpdate();
 			ps.close();
 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	
+	}
+	
+	public ArrayList<String> retrieveActivityLog(int board_id) {
+		// TODO Auto-generated method stub
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		String sql = "SELECT * FROM BOARD_CHANGE_LOG WHERE board_id = ? ";
+		ArrayList<String> toreturn = new ArrayList<String>(); 
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, board_id);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String log = rs.getString("log");
+				toreturn.add(log);
+			}
+			
+			return toreturn;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

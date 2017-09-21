@@ -3,6 +3,7 @@ package com.impactlaunchspace.pm;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,6 +70,11 @@ public class ProjectManagementController {
 		model.addAttribute("inprogressList", inprogressList);
 		model.addAttribute("doneList", doneList);
 		
+		//Upon initializing, display the activity log
+		ArrayList<String> activitylog = pmService.retrieveActivityLog(board_id);
+		Collections.reverse(activitylog);
+		model.addAttribute("activitylog", activitylog);
+		
 		return "projectmanagement";
 	}
 
@@ -83,7 +89,7 @@ public class ProjectManagementController {
 		
 		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username, modalCardAssignee, timestamp, start_date, due_date);
 		
-		String activity = username + " added " + modalCardTitle + " to the Todo List on " + timestamp ; 
+		String activity = username + " added " + modalCardTitle + " to Todo on " + timestamp ; 
 		
 		pmService.updateActivity(activity, board_id, username);
 	}
@@ -104,16 +110,17 @@ public class ProjectManagementController {
 
 	@RequestMapping(value = "/delete-card", method = RequestMethod.POST)
 	public void deleteCard(@RequestParam String card_id, HttpServletRequest request, ModelMap model) {
+		
+		Card c = pmService.retrieveProjectCardById(Integer.parseInt(card_id));	
+		String card_title = c.getCard_title();
+		int board_id = c.getBoard_id();
+		String cardstatus = c.getStatus();
 		pmService.deleteCard(Integer.parseInt(card_id));
 		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
-		Card c = pmService.retrieveProjectCardById(Integer.parseInt(card_id));
-		System.out.print(c);
-		String card_title = c.getCard_title();
-		int board_id = c.getBoard_id();
-		
-		String activity = username + " deleted " + card_title + " on " + timestamp; 
+
+		String activity = username + " deleted " + card_title + " from  " + cardstatus + " at " + timestamp; 
 		pmService.updateActivity(activity, Integer.toString(board_id), username);
 	}
 
@@ -127,5 +134,16 @@ public class ProjectManagementController {
 		int newId = Integer.parseInt(id);
 		int newOrder = Integer.parseInt(order);
 		pmService.updateOrder(newId, status, newOrder);
+	}
+	
+	@RequestMapping(value = "/retrieve-activity", method = RequestMethod.POST)
+	public void retrieveActivity(@RequestParam int board_id, HttpServletRequest request, ModelMap model) {
+		
+		String username = (String) request.getSession().getAttribute("username"); // owner
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		ArrayList<String> activitylog = pmService.retrieveActivityLog(board_id);
+		Collections.reverse(activitylog);
+		model.addAttribute("activitylog", board_id);
+		
 	}
 }

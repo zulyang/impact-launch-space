@@ -1,5 +1,7 @@
 package com.impactlaunchspace.dao;
 
+import java.util.ArrayList;
+
 import com.impactlaunchspace.entity.Board;
 
 public interface BoardDAO {
@@ -7,4 +9,5 @@ public interface BoardDAO {
 	public void update(String card_title, String description, String tags, String status);
 	public int retrieveBoardId(String Project_Name, String Project_Proposer);
 	public void updateActivityLog(String activity, String board_id, String username);
+	public ArrayList<String> retrieveActivityLog(int board_id);
 }

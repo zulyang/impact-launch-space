@@ -64,9 +64,7 @@
 							<div class="pms-header">Project Management Space</div>
 
 							<input type="hidden" id="project_name" value="${projectName}" />
-							<input type="hidden" id="project_proposer"
-								value="${projectProposer}" /> <br>
-
+							<input type="hidden" id="project_proposer" value="${project_proposer}" /> <br>
 							<!--tabs-->
 
 							<ul class="nav nav-tabs tabs-bordered nav-justified" id="pm-tabs">
@@ -152,18 +150,20 @@
 
 													${inprogress.getCard_title()} <br>
 													${inprogress.getTags()} <br>
-
+													
+													<button id="view${inprogress.getCard_id()}" type="submit"
+														name="view" class="btn btn-primary"
+														onClick="view(this.id)">
+														<i class="fa fa-pencil"></i> View
+													</button>
+													
 													<button id="${inprogress.getCard_id()}" type="submit"
 														name="delete" class="btn btn-danger delete"
 														onClick="delet(this.id)">
 														<i class="fa fa-trash"></i> Delete
 													</button>
 
-													<button id="view${inprogress.getCard_id()}" type="submit"
-														name="view" class="btn btn-primary"
-														onClick="view(this.id)">
-														<i class="fa fa-pencil"></i> View
-													</button>
+
 
 												</li>
 											</c:forEach>
@@ -191,17 +191,19 @@
 													id="duedate${done.getCard_id()}"
 													value="${done.getDue_date()}" />
 													${done.getCard_title()} <br> ${done.getTags()}
-
+													
+													<button id="view${done.getCard_id()}" type="submit"
+														name="view" class="btn btn-primary" onClick="view()">
+														<i class="fa fa-pencil"></i> View
+													</button>
+													
 													<button id="${done.getCard_id()}" type="submit"
 														name="delete" class="btn btn-danger delete"
 														onClick="delet(this.id)">
 														<i class="fa fa-trash"></i> Delete
 													</button>
 
-													<button id="view${done.getCard_id()}" type="submit"
-														name="view" class="btn btn-primary" onClick="view()">
-														<i class="fa fa-pencil"></i> View
-													</button>
+
 
 												</li>
 											</c:forEach>
@@ -213,6 +215,16 @@
 									<div role="tabpanel" class="tab-pane fade"
 										id="activity-log">
 										<h3 class="tabs-header">ACTIVITY LOG</h3>
+										<div class="table-responsive col-md-12">
+										<table id="activitylogtable" class="table">
+											<tbody id="logtable">
+												<c:forEach items="${activitylog}" var="log">
+													<tr>${log}</tr>
+													<br>
+												</c:forEach>
+											</tbody>
+										</table>	
+										</div>	
 									</div>
 
 							<div role="tabpanel" class="tab-pane fade" id="project-calendar">
@@ -433,10 +445,24 @@
 					}).disableSelection();
 		});
 	}
+	
+	function refreshActivityLog(){
+		
+		var projectProposer = $('#project_proposer').val();
+		var projectName = $('#project_name').val();
+		var projectName2 = encodeURIComponent(projectName.trim());
+		
+		var url = "project-management?project-name="+projectName2+"&project-proposer="+projectProposer; 
+		    setInterval(function(){  
+		        $('#activitylogtable').load(url)
+		       }, 1000);
+	}
+	
 	$(document).ready(function() {
 
 		// page is now ready, initialize the calendar...
 		initialiseKB();
+		//refreshActivityLog();
 		$('#fullcalendar').fullCalendar({
 			// put your options and callbacks here
 			height : 400,

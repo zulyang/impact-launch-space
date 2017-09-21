@@ -69,4 +69,12 @@ public class ProjectManagementService {
 		boardDAO.updateActivityLog(activity, board_id, username);
 	}
 	
+	public ArrayList<String> retrieveActivityLog(int board_id) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		BoardDAO boardDAO = (BoardDAO) context.getBean("boardDAO");
+		return boardDAO.retrieveActivityLog(board_id);
+	}
+	
+	
+	
 }
