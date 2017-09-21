@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+
 .manage-resource-container {
 	margin-top: 10rem;
 	margin-bottom: 5rem;
@@ -53,6 +56,13 @@ option {
 
 .modal-title {
 	text-align: center;
+	
+}
+
+#resource_modal_content .modal-title{
+	font-size: 1.8em;
+	text-transform: uppercase;
+	text-align: center;
 }
 
 .resource_guide_start_button {
@@ -75,17 +85,21 @@ option {
 
 .resource_modal_content {
 	border-radius: 0;
+	border: none;
 }
 
 .resource_modal_header {
 	border-bottom: none;
-	background-color: rgba(70, 130, 180, 0.89);
+	background-color: steelblue;
 	color: white;
+	font-family: 'Roboto Condensed', sans-serif;
+	letter-spacing: 1px;
 }
 
 .resource_modal_body {
-	background-color: rgba(70, 130, 180, 0.89);
+	background-color: steelblue;
 	color: white;
+	font-family: 'Quicksand', sans-serif;
 }
 
 .close { &:hover background rgba(black, 0.6);
@@ -106,9 +120,18 @@ option {
 .resource_modal_footer {
 	border-top: none;
 	height: 70px;
-	background-color: #5cb85c;
-	color: white;
+	background-color: white;
+	color: steelblue;
 	text-align: center;
 	cursor: pointer;
 	font-weight: bold;
 }
+
+#resource_modal_content li:before {    
+	font-family: 'FontAwesome';
+	content: '\f00c';
+	margin:0 5px 0 -15px;
+	color: rgb(107, 255, 122);
+}
+
+#resource_modal_content ul { list-style-type: none; }

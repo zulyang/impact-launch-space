@@ -16,7 +16,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/profile/organisation/view_own_organization_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/profile/organization/view_own_organization_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script

@@ -13,7 +13,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/profile/organisation/setup_organisation_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/profile/organization/setup_organization_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
@@ -36,7 +36,7 @@
 
 				<%@include file="../../common/navigation.jspf"%>
 
-				<div class="col-lg-12 form_container org_profile_container">
+				<div class="form_container org_profile_container">
 					<form method="post" action="setup-organization" onsubmit="return checkFields();"
 						enctype="multipart/form-data"
 						class="form-horizontal org_profile_form">
