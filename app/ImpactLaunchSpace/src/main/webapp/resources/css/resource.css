@@ -75,16 +75,17 @@ option {
 
 .resource_modal_content {
 	border-radius: 0;
+	border: none;
 }
 
 .resource_modal_header {
 	border-bottom: none;
-	background-color: rgba(70, 130, 180, 0.89);
+	background-color: rgba(42, 64, 82, 0.89);
 	color: white;
 }
 
 .resource_modal_body {
-	background-color: rgba(70, 130, 180, 0.89);
+	background-color: rgba(42, 64, 82, 0.89);
 	color: white;
 }
 
@@ -106,7 +107,7 @@ option {
 .resource_modal_footer {
 	border-top: none;
 	height: 70px;
-	background-color: #5cb85c;
+	background-color: #267b26;
 	color: white;
 	text-align: center;
 	cursor: pointer;

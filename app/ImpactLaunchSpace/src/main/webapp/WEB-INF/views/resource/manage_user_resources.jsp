@@ -522,7 +522,7 @@
 	function help() {
 		$('#resource_guide_modal').modal('show');
 		$(".assets_column, .skills_column").hide().each(function(i) {
-			$(this).delay(i * 700).fadeIn(700);
+			$(this).delay(i * 800).fadeIn(800);
 		});
 	};
 	
