@@ -212,7 +212,7 @@
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
-				<div class="modal-content resource_modal_content">
+				<div class="modal-content resource_modal_content" id="resource_modal_content">
 					<div class="modal-header resource_modal_header">
 						<button type="button" class="close" data-dismiss="modal">
 							<img class="close_img"
@@ -244,7 +244,7 @@
 							<div class="col-xs-6 skills_column">
 								<div class="skills_header">
 									<img
-										src="<%=request.getContextPath()%>/resources/img/employee.png">
+										src="<%=request.getContextPath()%>/resources/img/employee (2).png">
 									<h3>Skills</h3>
 								</div>
 								<div class="skills_description">
@@ -262,7 +262,7 @@
 						</div>
 					</div>
 					<div class="modal-footer resource_modal_footer" data-dismiss="modal">
-						<p class="modal_start_text">GET STARTED!</p>
+						<p class="modal_start_text">GET STARTED</p>
 					</div>
 				</div>
 
