@@ -31,6 +31,7 @@
 	<import resource="project/Spring-DocumentsProject.xml" />
 	<import resource="project/Spring-ProjectUserRequest.xml" />
 	<import resource="project/Spring-ProjectMemberList.xml" />
+	<import resource="project/Spring-ProjectUpdate.xml" />
 	<import resource="notifications/Spring-Notification.xml" />
 	<import resource="pm/Spring-Board.xml" />
 	<import resource="pm/Spring-Card.xml" />

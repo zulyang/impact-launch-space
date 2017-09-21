@@ -173,42 +173,18 @@ function loader() {
 								<div class="update-information">
 									<h1 class="section-title">UPDATES</h1>
 									<!--update items-->
-									<div class="update-post">
-										<h4 class="update-title">We've started shipping!</h4>
-										<span class="update-date">Posted 2 days ago</span>
-										<p>Suspendisse luctus at massa sit amet bibendum. Cras
-											commodo congue urna, vel dictum velit bibendum eget.
-											Vestibulum quis risus euismod, facilisis lorem nec, dapibus
-											leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit
-											amet lacus ipsum. Nullam varius lobortis neque, et efficitur
-											lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi
-											vel aliquet velit, accumsan dapibus urna. Cras ligula orci,
-											suscipit id eros non, rhoncus efficitur nisi.</p>
-									</div>
-									<div class="update-post">
-										<h4 class="update-title">Launch begins manufacturing</h4>
-										<span class="update-date">Posted 9 days ago</span>
-										<p>Suspendisse luctus at massa sit amet bibendum. Cras
-											commodo congue urna, vel dictum velit bibendum eget.
-											Vestibulum quis risus euismod, facilisis lorem nec, dapibus
-											leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit
-											amet lacus ipsum. Nullam varius lobortis neque, et efficitur
-											lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi
-											vel aliquet velit, accumsan dapibus urna. Cras ligula orci,
-											suscipit id eros non, rhoncus efficitur nisi.</p>
-									</div>
-									<div class="update-post">
-										<h4 class="update-title">Designs have now been finalized</h4>
-										<span class="update-date">Posted 17 days ago</span>
-										<p>Suspendisse luctus at massa sit amet bibendum. Cras
-											commodo congue urna, vel dictum velit bibendum eget.
-											Vestibulum quis risus euismod, facilisis lorem nec, dapibus
-											leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit
-											amet lacus ipsum. Nullam varius lobortis neque, et efficitur
-											lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi
-											vel aliquet velit, accumsan dapibus urna. Cras ligula orci,
-											suscipit id eros non, rhoncus efficitur nisi.</p>
-									</div>
+									<c:if test="${project_updates.size() == 0 }">
+										<p>There are no updates published yet.</p>
+									</c:if>
+									<c:forEach items="${project_updates}" var="item">
+										
+										<div class="update-post">
+											<h4 class="update-title">${item.getUpdate_title() }</h4>
+											<span class="update-date">${item.getPosted_time() }</span>
+											<p>${item.getUpdate_contents() }</p>
+										
+										</div>
+									</c:forEach>
 									<!--/update items-->
 								</div>
 							</div>

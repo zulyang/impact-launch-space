@@ -78,13 +78,18 @@
 					<div class="row">
 						<div class="page-header">
 							<h2>Publish Update</h2>
-						</div>
-						<form action="post-update" method="POST">
-							<textarea id="update_text" name="update_text" required>Test</textarea>
-							<input id="publish" type="submit" name="publish"
-								class="btn btn-primary edit" value="Submit"/>
+							<form action="post-update" method="POST">
+								<input type="hidden" name="project_name" value="${project_name }"/>
+								<input type="hidden" name="project_proposer" value="${project_proposer }"/>
+								<input class="form-control" type="text" id="update_title" name="update_title" placeholder = "Update Title" required/>
+								<p></p>
+								<textarea id="update_text" name="update_contents" required></textarea>
+								<input id="publish" type="submit"
+									class="btn btn-primary edit" value="Submit"/>
 							
-						</form>
+							</form>
+						</div>
+						
 
 
 
