@@ -83,7 +83,7 @@ img {
 									data-toggle="modal" data-target="#myModal">Edit your
 									profile picture</button>
 								<div id="myModal" class="modal fade" role="dialog">
-									<div class="modal-dialog">
+									<div class="modal-dialog edit_profile_picture_modal">
 
 										<div class="modal-content">
 											<div class="modal-header">
@@ -555,7 +555,6 @@ img {
 			}
 		}
 		function initCropper() {
-			console.log("Came here")
 			var image = document.getElementById('blah');
 			var cropper = new Cropper(image, {
 				aspectRatio : 1 / 1,
