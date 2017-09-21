@@ -643,5 +643,11 @@ public class ProjectController {
 		projectService.removeSpecificMember(project_name, project_proposer, member_username);
 	}
 
-
+	@RequestMapping(value = "/publish-update", method = RequestMethod.GET)
+	public String showPublishUpdatePage(@RequestParam("project-name") String project_name,
+			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
+		return "project/" + "publish_update";
+	}
+	
+	
 }
