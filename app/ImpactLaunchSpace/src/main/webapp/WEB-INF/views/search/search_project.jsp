@@ -14,6 +14,7 @@
 <script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
 <script	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/lib/materialize/js/materialize.min.js"></script>
+<script src="http://evanplaice.github.io/jquery-csv/src/jquery.csv.js"></script>
 <script>
 	function loader() {
 		$(".se-pre-con").fadeOut("slow");
@@ -39,8 +40,11 @@
 						$("#projectResults").empty()
 						var trHTML = '';
 						$.each(responseJson,function(key,value) {
+							console.log(responseJson);
 							var val = value
 							var res = val.split(",");
+							
+
 							trHTML += '<div class="col m4"><div class="card"><div class="card-image">';
 						
 							if(res[13] !== null){

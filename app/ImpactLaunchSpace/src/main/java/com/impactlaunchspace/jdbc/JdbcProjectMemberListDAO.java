@@ -158,7 +158,7 @@ public class JdbcProjectMemberListDAO implements ProjectMemberListDAO {
 				ps.setString(1, username);
 				ps.setString(2, "admin");
 				ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
+				while (rs.next()) {
 					ArrayList<String> project_string = new ArrayList<String>();
 					project_string.add(rs.getString(1));
 					project_string.add(rs.getString(2));
