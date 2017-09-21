@@ -10,13 +10,14 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>View Organization Profile</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/profile/organisation/view_public_organization_profile.css" />
+	href="<%=request.getContextPath()%>/resources/css/profile/organization/view_public_organization_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script
@@ -37,10 +38,8 @@
 				<div class="view_public_organization_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div style="display: inline-block">
-								<img src="/imageDisplay?username=${organization.getUsername()}"
-									class="circle_org_profile_image">
-							</div>
+							<img src="/imageDisplay?username=${organization.getUsername()}"
+								class="circle_org_profile_image">
 
 							<div style="display: inline-block">
 								<h1 style="display: inline-block">${organization.getCompanyName()}</h1>

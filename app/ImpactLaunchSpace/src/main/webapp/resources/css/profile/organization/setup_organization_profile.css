@@ -1,3 +1,11 @@
+.org_profile_container {
+	margin-top: 10%;
+	margin-bottom: 5rem;
+	height: 70rem;
+	width: 75rem;
+	border: 0.125rem solid #ccc;
+}
+
 .profile_save {
 	justify-content: center;
 	display: flex;

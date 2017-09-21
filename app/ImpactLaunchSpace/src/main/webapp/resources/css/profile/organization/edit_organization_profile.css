@@ -1,0 +1,24 @@
+.edit_org_profile_display_container {
+	margin-top: 10%;
+	margin-bottom: 5rem;
+	margin-left: auto; 
+	margin-right : auto;
+	width: 85rem;
+}
+
+.edit_org_profile_container {
+	display: inline-block;
+	width: 40rem;
+	margin-left: 10rem;
+}
+
+.circle_edit_org_profile_image {
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%;
+}
+
+.edit_org_pic {
+	margin: 1rem;
+}
