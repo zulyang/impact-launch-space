@@ -69,13 +69,12 @@
 													href="/notifications/messages/inbox">Inbox<span
 														class="badge pull-right">${inboxSize}</span> 
 														<input type="hidden" id="unreadCount" value="${unreadCount}" />
-														<!-- NIGEL CHANGE STYLE FOR THIS AND DECREMENT IN FRONT END -->
 														<c:choose>
 														<c:when test="${unreadCount > 99}">
 															<span class="badge pull-right">99+</span></a></li>
 														</c:when>
 														<c:otherwise>
-															<span id="unreadCountDisplay" class="badge pull-right unreadCountDisplay">${unreadCount }</span>
+															<span id="unreadCountDisplay" class="badge pull-right unreadCountDisplay">${unreadCount}</span>
 															</a>
 															</li>
 														</c:otherwise>
@@ -321,7 +320,7 @@
 </script>
 <script type="text/javascript">
 	var unreadCount = document.getElementById("unreadCount").value;
-	
+
 	function view(id) {
 		var disabledStatus = $('.editable-field').attr('disabled');
 		var newId = id.substring(4);
@@ -352,12 +351,15 @@
 			copy_type : copy_type
 		});
 		
-		unreadCount -= 1;
-		
-		if(unreadCount === 0){
-			$("#unreadCountDisplay").hide();
-		} else {
+		if(unreadCount > 0){
+			unreadCount -= 1;
 			$("#unreadCountDisplay").text(unreadCount);
+			$(".notification-counter").text(unreadCount);
+		} 
+		
+		if (unreadCount === 0){
+			$("#unreadCountDisplay").hide();
+			$(".notification-counter").hide();
 		}
 	};
 
