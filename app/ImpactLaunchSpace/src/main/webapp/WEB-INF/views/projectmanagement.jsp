@@ -138,17 +138,17 @@
 												<li id="${inprogress.getCard_id()}" class="ui-state-default">
 
 													<input type="hidden" id="title${inprogress.getCard_id()}"
-													value="${todo.getCard_title()}" /> <input type="hidden"
+													value="${inprogress.getCard_title()}" /> <input type="hidden"
 													id="desc${inprogress.getCard_id()}"
-													value="${todo.getDescription()}" /> <input type="hidden"
+													value="${inprogress.getDescription()}" /> <input type="hidden"
 													id="tags${inprogress.getCard_id()}"
-													value="${todo.getTags()}" /> <input type="hidden"
+													value="${inprogress.getTags()}" /> <input type="hidden"
 													id="assignee${inprogress.getCard_id()}"
-													value="${todo.getAssignee()}" /> <input type="hidden"
+													value="${inprogress.getAssignee()}" /> <input type="hidden"
 													id="startdate${inprogress.getCard_id()}"
-													value="${todo.getStart_date()}" /> <input type="hidden"
+													value="${inprogress.getStart_date()}" /> <input type="hidden"
 													id="duedate${inprogress.getCard_id()}"
-													value="${todo.getDue_date()}" />
+													value="${inprogress.getDue_date()}" />
 
 													${inprogress.getCard_title()} <br>
 													${inprogress.getTags()} <br>
@@ -177,7 +177,19 @@
 
 											<c:forEach items="${doneList}" var="done">
 												<li id="${done.getCard_id()}" class="ui-state-default">
-
+													
+													<input type="hidden" id="title${done.getCard_id()}"
+													value="${done.getCard_title()}" /> <input type="hidden"
+													id="desc${done.getCard_id()}"
+													value="${done.getDescription()}" /> <input type="hidden"
+													id="tags${done.getCard_id()}"
+													value="${done.getTags()}" /> <input type="hidden"
+													id="assignee${done.getCard_id()}"
+													value="${done.getAssignee()}" /> <input type="hidden"
+													id="startdate${done.getCard_id()}"
+													value="${done.getStart_date()}" /> <input type="hidden"
+													id="duedate${done.getCard_id()}"
+													value="${done.getDue_date()}" />
 													${done.getCard_title()} <br> ${done.getTags()}
 
 													<button id="${done.getCard_id()}" type="submit"
@@ -259,16 +271,16 @@
 											<!-- Tags refer to the all the resource categories in the project -->
 											Tags: <select id="modalCardTags" name="modalCardTags"
 												class="col-md-4 form-control" style="width: 100%">
-												<option value="" disabled selected>Select a
-													Category:</option>
+												<option value="">None</option>
 												<c:forEach items="${cat}" var="item">
 													<option value="${item}">${item}</option>
 												</c:forEach>
-											</select> <br> Assignees: <select id="modalCardAssignees"
-												name="modalCardAssignees" class="col-md-4 form-control"
+											</select> <br> 
+											
+											Assignees: <select id="modalCardAssignee"
+												name="modalCardAssignee" class="col-md-4 form-control"
 												style="width: 100%">
-												<option value="" disabled selected>Select a
-													username:</option>
+												<option value="">None</option>
 												<c:forEach items="${members}" var="item">
 													<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
 												</c:forEach>
@@ -332,9 +344,11 @@
 												<c:forEach items="${cat}" var="item">
 													<option value="${item}">${item}</option>
 												</c:forEach>
-											</select> <br> Assignees: <select id="modalCardAssigneeView"
-												name="modalCardAssignees" class="col-md-4 form-control"
-												style="width: 100%" required>
+											</select> <br> 
+											Assignees: <select id="modalCardAssigneeView"
+												name="modalCardAssignee" class="col-md-4 form-control"
+												style="width: 100%" >
+												<option value="">None</option>
 												<c:forEach items="${members}" var="item">
 													<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
 												</c:forEach>
@@ -346,7 +360,8 @@
 												onfocus="(this.type='date')"
 												class="form-control profileField"> Comments: <br>
 											<input type="hidden" id="board_id_view" value="${board_id}">
-											<input type="hidden" id="card_id_view" value="${card_id}">
+											
+											<input type="hidden" id="card_id_view" name = "card_id_view">
 										</div>
 									</div>
 								</div>
@@ -443,15 +458,16 @@
 		var assignee = $('#assignee' + newId).val();
 		var start_date = $('#startdate' + newId).val();
 		var due_date = $('#duedate' + newId).val();
+	
 		
-
 		$('#modalCardTitleView').val(title);
 		$('#modalCardDescriptionView').val(desc);
 		$('#modalCardTagsView').val(tags);
 		$('#modalCardAssigneeView').val(assignee);
 		$('#startDateView').val(start_date);
 		$('#dueDateView').val(due_date);
-
+		$('#card_id_view').val(newId);
+		
 		$('#ViewModal').modal('show');
 	};
 
@@ -473,10 +489,10 @@
 <script>
 	$(document).ready(function() {
 		$('#add').click(function(event) {
-
+			
 			var modalCardTitle = $('#modalCardTitle').val();
 			var modalCardDescription = $('#modalCardDescription').val();
-			var modalCardAssignees = $('#modalCardAssignees').val();
+			var modalCardAssignee = $('#modalCardAssignee').val();
 			var modalCardTags = $('#modalCardTags').val();
 			var board_id = $('#board_id').val();
 			var projectName = $('#project_name').val();
@@ -488,7 +504,7 @@
 			$.post('add-card', {
 				modalCardTitle : modalCardTitle,
 				modalCardDescription : modalCardDescription,
-				modalCardAssignees : modalCardAssignees,
+				modalCardAssignee : modalCardAssignee,
 				modalCardTags : modalCardTags,
 				board_id : board_id,
 				start_date : start_date,
@@ -503,23 +519,25 @@
 
 			var modalCardTitle = $('#modalCardTitleView').val();
 			var modalCardDescription = $('#modalCardDescriptionView').val();
-			var modalCardAssignees = $('#modalCardAssigneesView').val();
+			var modalCardAssignee = $('#modalCardAssigneeView').val();
 			var modalCardTags = $('#modalCardTagsView').val();
 			var board_id = $('#board_id_view').val();
 			var card_id = $('#card_id_view').val();
 			var start_date = $('#startDateView').val();
 			var due_date = $('#dueDateView').val();
-			
+			var card_id_view = $('#card_id_view').val();
+		
 
 			$.post('edit-card', {
 				modalCardTitle : modalCardTitle,
 				modalCardDescription : modalCardDescription,
 				modalCardTags : modalCardTags,
-				modalCardAssignees : modalCardAssignees,
+				modalCardAssignee : modalCardAssignee,
 				board_id : board_id,
 				start_date : start_date,
 				due_date : due_date,
-				card_id : card_id
+				card_id_view : card_id_view
+				
 			});
 
 			$('#ViewModal').modal('hide');

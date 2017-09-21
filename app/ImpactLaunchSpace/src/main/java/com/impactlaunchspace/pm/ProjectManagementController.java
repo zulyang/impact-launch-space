@@ -74,14 +74,14 @@ public class ProjectManagementController {
 
 	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
-			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignees, @RequestParam String board_id,
+			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee, @RequestParam String board_id,
 			@RequestParam(required = false) Date start_date, @RequestParam(required = false) Date due_date,
 			HttpServletRequest request, ModelMap model) {
 		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 		
-		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username, modalCardAssignees, timestamp, start_date, due_date);
+		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username, modalCardAssignee, timestamp, start_date, due_date);
 		
 		String activity = username + " added " + modalCardTitle + " to the Todo List on " + timestamp ; 
 		
@@ -90,13 +90,14 @@ public class ProjectManagementController {
 	
 	@RequestMapping(value = "/edit-card", method = RequestMethod.POST)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
-			 @RequestParam(required = false) String tags, @RequestParam(required = false) String assignee, String board_id, Date start_date, Date due_date, Integer card_id,
+			 @RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee, String board_id, Date start_date, Date due_date, String card_id_view,
 			HttpServletRequest request, ModelMap model) {
 		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
-		pmService.edit(modalCardTitle, modalCardDescription, tags, assignee, start_date, due_date, card_id);
+		int card_id_view2 = Integer.parseInt(card_id_view);
 		
+		pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date, due_date, card_id_view2);
 		String activity = username + " edited " + modalCardTitle + " on " + timestamp; 
 		pmService.updateActivity(activity, board_id, username);
 	}
