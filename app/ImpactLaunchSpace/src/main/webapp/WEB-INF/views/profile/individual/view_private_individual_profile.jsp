@@ -10,8 +10,10 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/profile/individual/view_private_individual_profile.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
 <script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <%-- <script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-migrate-1.4.1.js"></script> --%>
@@ -27,10 +29,8 @@
 				<div class="indi_private_profile_display_container">
 					<div class="panel panel-default">
 						<div class="panel-body">
-							<div class="profile_img">
-								<img src="/imageDisplay?username=${individual.getUsername()}"
+							<img src="/imageDisplay?username=${individual.getUsername()}"
 									class="circle_indi_profile_image">
-							</div>
 
 							<div class="profile_bio">
 								<h1 style="display: inline-block">${individual.getFirst_name()}

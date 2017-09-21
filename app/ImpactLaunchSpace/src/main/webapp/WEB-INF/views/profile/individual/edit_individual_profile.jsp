@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Your Individual Profile</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -82,7 +83,7 @@ img {
 									data-toggle="modal" data-target="#myModal">Edit your
 									profile picture</button>
 								<div id="myModal" class="modal fade" role="dialog">
-									<div class="modal-dialog">
+									<div class="modal-dialog edit_profile_picture_modal">
 
 										<div class="modal-content">
 											<div class="modal-header">
@@ -554,7 +555,6 @@ img {
 			}
 		}
 		function initCropper() {
-			console.log("Came here")
 			var image = document.getElementById('blah');
 			var cropper = new Cropper(image, {
 				aspectRatio : 1 / 1,

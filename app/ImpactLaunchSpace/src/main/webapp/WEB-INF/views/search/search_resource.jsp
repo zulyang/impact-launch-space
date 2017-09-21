@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search For Resource</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/explore.css" />
@@ -49,6 +50,7 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<%@include file="../common/navigation.jspf"%>
+				<main>
 <div class="explore-header col-sm-12">
 	<h1 class="explore-title">Search For Resource</h1>
 <div class="explore-search">
@@ -86,7 +88,7 @@
 	<tbody></tbody>
 	</table>
 	</div>
-
+	</main>
 </div>
 </div>
 </div>

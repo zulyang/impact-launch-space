@@ -17,12 +17,14 @@ import com.impactlaunchspace.dao.ProjectMemberListDAO;
 import com.impactlaunchspace.dao.ProjectRequestedResourceDAO;
 import com.impactlaunchspace.dao.ProjectResourceCategoryDAO;
 import com.impactlaunchspace.dao.ProjectTargetAreaDAO;
+import com.impactlaunchspace.dao.ProjectUpdateDAO;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectBanList;
 import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
+import com.impactlaunchspace.entity.ProjectUpdate;
 
 @Service
 public class ProjectService {
@@ -265,4 +267,27 @@ public class ProjectService {
 		
 		return projectMemberListDAO.retrieveJoinedProjects(username);
 	}
+	
+	public void publishUpdate(ProjectUpdate projectUpdate){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUpdateDAO projectUpdateDAO = (ProjectUpdateDAO) context.getBean("projectUpdateDAO");
+		
+		projectUpdateDAO.insert(projectUpdate);
+	}
+	
+	public void deleteUpdate(int update_id){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUpdateDAO projectUpdateDAO = (ProjectUpdateDAO) context.getBean("projectUpdateDAO");
+		
+		projectUpdateDAO.remove(update_id);
+	}
+	
+	public ArrayList<ProjectUpdate> retrieveProjectUpdates(String project_name, String project_proposer){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUpdateDAO projectUpdateDAO = (ProjectUpdateDAO) context.getBean("projectUpdateDAO");
+		
+		return projectUpdateDAO.retrieveProjectUpdates(project_name, project_proposer);
+	}
+	
+
 }

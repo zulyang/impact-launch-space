@@ -10,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Manage Resources</title>
-
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -212,14 +212,18 @@
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<div class="modal-content resource_modal_content" id="resource_modal_content">
+					<div class="modal-header resource_modal_header">
+						<button type="button" class="close" data-dismiss="modal">
+							<img class="close_img"
+								src="<%=request.getContextPath()%>/resources/img/close-btn.svg"
+								width="42" height="42">
+						</button>
 						<h4 class="modal-title">What is a resource?</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body resource_modal_body">
 						<div class="row">
-							<div class="col-xs-6">
+							<div class="col-xs-6 assets_column">
 								<div class="asset_header">
 									<img
 										src="<%=request.getContextPath()%>/resources/img/database.png">
@@ -237,10 +241,10 @@
 									</ul>
 								</div>
 							</div>
-							<div class="col-xs-6">
+							<div class="col-xs-6 skills_column">
 								<div class="skills_header">
 									<img
-										src="<%=request.getContextPath()%>/resources/img/employee.png">
+										src="<%=request.getContextPath()%>/resources/img/employee (2).png">
 									<h3>Skills</h3>
 								</div>
 								<div class="skills_description">
@@ -257,10 +261,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="button"
-							class="btn btn-success resource_guide_start_button"
-							data-dismiss="modal">Get started!</button>
+					<div class="modal-footer resource_modal_footer" data-dismiss="modal">
+						<p class="modal_start_text">GET STARTED</p>
 					</div>
 				</div>
 
@@ -270,6 +272,10 @@
 	</div>
 </body>
 <script>
+	$(".assets_column, .skills_column").hide().each(function(i) {
+		$(this).delay(i * 700).fadeIn(700);
+	});
+
 	$(document)
 			.ready(
 					function() {
@@ -512,10 +518,17 @@
 	function add() {
 		$('#myModal').modal('show');
 	};
-	
+
 	function help() {
 		$('#resource_guide_modal').modal('show');
+		$(".assets_column, .skills_column").hide().each(function(i) {
+			$(this).delay(i * 800).fadeIn(800);
+		});
 	};
+	
+	$('.resource_modal_footer').click(function() {
+		$('#myModal').modal('show');
+	});
 </script>
 
 <script type="text/javascript">

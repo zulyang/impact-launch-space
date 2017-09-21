@@ -10,6 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Manage Project Users</title>
+<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet"
@@ -123,7 +124,11 @@
 											<c:when test="${item.getProject_role().equals(\"admin\") }">
 												
 													
-													<td>${item.getProject_member_username() }</td>
+													<td>
+														<a href="/view-profile?username=${item.getProject_member_username()}" class="username_link_profile">
+															<i class="fa fa-user"></i>&nbsp;${item.getProject_member_username()}
+														</a>
+													</td>
 													<td>Admin</td>
 													<td><button type="button" id="dele<%=id%>"
 															onclick="removeUser(this.id);" class="btn btn-danger"
@@ -134,7 +139,11 @@
 											<c:when test="${item.getProject_role().equals(\"member\") }">
 												
 													
-													<td>${item.getProject_member_username() }</td>
+													<td>
+														<a href="/view-profile?username=${item.getProject_member_username()}" class="username_link_profile">
+															<i class="fa fa-user"></i>&nbsp;${item.getProject_member_username()}
+														</a>
+													</td>
 													<td>Resource offerer</td>
 													<td><button type="button" class="btn btn-danger"
 															id="dele<%=id%>" onclick="removeUser(this.id);">Remove User</button></td>
@@ -144,7 +153,11 @@
 											<c:when test="${item.getProject_role().equals(\"invited\") }">
 												
 													
-													<td>${item.getProject_member_username() }</td>
+													<td>
+														<a href="/view-profile?username=${item.getProject_member_username()}" class="username_link_profile">
+															<i class="fa fa-user"></i>&nbsp;${item.getProject_member_username()}
+														</a>
+													</td>
 													<td>Member</td>
 													<td><button type="button" class="btn btn-danger"
 															id="dele<%=id%>" onclick="removeUser(this.id);">Remove User</button></td>

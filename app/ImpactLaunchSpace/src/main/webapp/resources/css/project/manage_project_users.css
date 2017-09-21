@@ -41,3 +41,7 @@ th {
 .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
 	margin: 2%
 }
+
+.username_link_profile {
+	font-weight: 700;
+}

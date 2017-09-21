@@ -32,6 +32,7 @@ import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.entity.ProjectResourceCategory;
 import com.impactlaunchspace.entity.ProjectTargetArea;
+import com.impactlaunchspace.entity.ProjectUpdate;
 import com.impactlaunchspace.entity.ProjectUserRequest;
 import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
@@ -382,7 +383,10 @@ public class ProjectController {
 		double progressPercentage = projectService.returnPercentageOfRecruitmentProgress(project_name, project_proposer) * 100;
 
 		model.addAttribute("progressPercentage",  df.format(progressPercentage));
-
+		
+		ArrayList<ProjectUpdate> projectUpdates = projectService.retrieveProjectUpdates(project_name, project_proposer);
+		
+		model.addAttribute("project_updates", projectUpdates);
 		model.addAttribute("project_target_areas", projectTargetAreas);
 		model.addAttribute("creator_name", userService.retrieveFullNameOrCompanyName(project_proposer));
 		model.addAttribute("selected_project", selected_project);
@@ -643,5 +647,30 @@ public class ProjectController {
 		projectService.removeSpecificMember(project_name, project_proposer, member_username);
 	}
 
-
+	@RequestMapping(value = "/publish-update", method = RequestMethod.GET)
+	public String showPublishUpdatePage(@RequestParam("project-name") String project_name,
+			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
+		model.addAttribute("project_name",project_name);
+		model.addAttribute("project_proposer",project_proposer);
+		
+		return "project/" + "publish_update";
+	}
+	
+	@RequestMapping(value = "/post-update", method = RequestMethod.POST)
+	public String processPublishUpdate(@RequestParam String project_name,
+			@RequestParam String project_proposer,@RequestParam String update_title,
+			@RequestParam String update_contents, HttpServletRequest request, 
+			RedirectAttributes redirectAttributes,ModelMap model) {
+		
+		
+		ProjectUpdate projectUpdate = new ProjectUpdate(project_name, project_proposer, update_title,
+				update_contents);
+		projectService.publishUpdate(projectUpdate);
+		
+		redirectAttributes.addAttribute("project-name", project_name);
+		redirectAttributes.addAttribute("project-proposer", project_proposer);
+		return "redirect:" + "view-project";
+	}
+	
+	
 }

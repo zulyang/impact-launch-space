@@ -12,7 +12,6 @@
 	margin-left: auto; 
 	margin-right : auto;
 	width: 85rem;
-	margin-right: auto;
 }
 
 .circle_edit_ind_profile_image {
@@ -20,6 +19,15 @@
 	width: 250px;
 	height: 250px;
 	min-height: 100%;
+}
+
+.edit_profile_picture_modal {
+	position: relative;
+    display: table; /* This is important */ 
+    overflow-y: auto;    
+    overflow-x: auto;
+    width: auto;
+    min-width: 300px;   
 }
 
 .edit_ind_profile_container {
