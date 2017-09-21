@@ -426,22 +426,6 @@ e<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	</script>
 
 	<script>
-		var userType = document.getElementById("userType").value;
-
-		if (userType === "org") {
-			document.getElementById("radio_org").checked = true;
-			document.getElementById("radio_indi").disabled = true;
-		}
-
-		var indiOrg = document.getElementById("indiOrg").value;
-
-		if (userType === "indi" && indiOrg === "") {
-			document.getElementById("radio_indi").checked = true;
-			document.getElementById("radio_org").disabled = true;
-		}
-	</script>
-
-	<script>
 		function addResource() {						
 						var resourceCategory = $('#modalResourceCategory').val();
 						var resourceName = $('#modalResourceName').val();
