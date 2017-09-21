@@ -19,7 +19,7 @@
 .title-label{
 	font-weight:400;font-size:24px;	 	}
 .navbar-barnd{vertical-align : middle;line-height:45px;}
-.btn-success.create {margin-top:10px;}
+.btn-success.create, .btn-warning.guide {margin-top:10px;}
 
 .save, .cancel {
 	display: none;
@@ -39,4 +39,20 @@ option[value=""][disabled] {
 }
 option {
   color: black;
+}
+
+.modal-title {
+	text-align: center;
+}
+
+.resource_guide_start_button {
+	margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+}
+
+.asset_header, .skills_header {
+	margin-left: 25%;
+    margin-right: 25%;
+    text-align: center;
 }

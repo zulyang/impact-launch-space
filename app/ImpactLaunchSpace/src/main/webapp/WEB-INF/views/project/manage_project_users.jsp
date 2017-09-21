@@ -72,7 +72,7 @@
 								<div class="invite_users_input">
 									<div class="form-group">
 										<div class="col-sm-9">
-											<select
+											<select id="invite_users_search"
 												class="js-example-basic-multiple-banlistusers create-new-project-select2 form-control"
 												multiple="multiple" name="invited_users"
 												style="width: 100% !important;">
