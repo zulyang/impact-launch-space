@@ -3,7 +3,6 @@ package com.impactlaunchspace.profile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -30,6 +29,7 @@ import com.impactlaunchspace.entity.PreferredJobSector;
 import com.impactlaunchspace.entity.PreferredProjectArea;
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.entity.UserSkill;
+import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.users.UserService;
 
 @Controller
@@ -40,6 +40,9 @@ public class ProfileController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	NotificationService notificationService;
 
 	// Setup for Organizations
 	@RequestMapping(value = "/setup-organization", method = RequestMethod.GET)
@@ -109,7 +112,9 @@ public class ProfileController {
 		// editing
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
-
+		
+		String username = (String) request.getSession().getAttribute("username");
+		
 		ArrayList<CountryOfOperation> coos = profileService
 				.retrieveCountriesOfOperations((String) request.getSession().getAttribute("username"));
 		ArrayList<String> organization_countriesofoperation_list = new ArrayList<String>();
@@ -129,6 +134,10 @@ public class ProfileController {
 				organization_countriesofoperation_list);
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
+		
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
+		
 		return "profile/organization/" + "edit_organization_profile";
 	}
 
@@ -316,7 +325,9 @@ public class ProfileController {
 	public String showMyProfilePage(@RequestParam("username") String username, HttpServletRequest request, ModelMap model) {
 		User user = userService.retrieveUser(username);
 		String loggedin_username = (String) request.getSession().getAttribute("username");
-		
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
+	    
 		if(user != null){
 			String userType = user.getUser_type();
 			
@@ -345,6 +356,8 @@ public class ProfileController {
 				IndividualAccount individual = profileService.getIndividualAccountDetails(username);
 				boolean isPublic = individual.isPublicProfile();
 				
+				
+			    
 				request.getSession().setAttribute("individual",
 						individual);
 				
@@ -383,7 +396,9 @@ public class ProfileController {
 		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
 		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
-
+		
+		String username = (String) request.getSession().getAttribute("username");
+		
 		// sets up individual user's current skills to be shown in edit page
 		ArrayList<UserSkill> userskills = profileService
 				.retrieveAllSkillsOfUser(((String) request.getSession().getAttribute("username")));
@@ -449,7 +464,9 @@ public class ProfileController {
 				}
 			}
 		}
-
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
+	    
 		request.getSession().setAttribute("individual_preferredjobsector_list", individual_preferredjobsector_list);
 		request.getSession().setAttribute("individual_preferredprojectarea_list", individual_preferredprojectarea_list);
 		request.getSession().setAttribute("individual_preferredcountry_list", individual_preferredcountry_list);
@@ -687,43 +704,6 @@ public class ProfileController {
 		}
 	}
 
-	@RequestMapping(value = "/testSelect2", method = RequestMethod.GET)
-	public String displaySelect(ModelMap model) {
-		model.addAttribute("country_list", profileService.retrieveCountryList());
-		model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
-		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
-		model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
-
-		ArrayList<CountryOfOperation> coos = profileService.retrieveCountriesOfOperations("edwardo");
-		ArrayList<String> edwardo_country_list = new ArrayList<String>();
-		for (CountryOfOperation coo : coos) {
-			edwardo_country_list.add(coo.getCountry_name());
-		}
-		model.addAttribute("edwardo_country_list", edwardo_country_list);
-
-		ArrayList<JobSectorOrganization> jsos = profileService.retrieveOrganizationJobSectors("edwardo");
-		ArrayList<String> edwardo_jobsector_list = new ArrayList<String>();
-		for (JobSectorOrganization jso : jsos) {
-			edwardo_jobsector_list.add(jso.getJob_sector());
-		}
-		model.addAttribute("edwardo_jobsector_list", edwardo_jobsector_list);
-
-		return "testSelect2";
-	}
-
-	@RequestMapping(value = "/processSelect2", method = RequestMethod.POST)
-	public String displaySelect2(@RequestParam ArrayList<String> selected_countries, ModelMap model) {
-		for (String country : selected_countries) {
-		}
-
-		model.put("selected_countries", selected_countries);
-		return "processSelect2";
-	}
-
-	@RequestMapping(value = "/processSelect2", method = RequestMethod.GET)
-	public String displaySelect12(@RequestParam ArrayList<String> selected_countries, ModelMap model) {
-		return "processSelect2";
-	}
 
 	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
 	public void showFiles(@RequestParam File file, HttpServletResponse response, HttpServletRequest request)

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.impactlaunchspace.entity.Card;
 import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
-import com.impactlaunchspace.entity.UserOfferedResource;
+import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.project.ProjectService;
 
 @Controller
@@ -28,6 +28,9 @@ public class ProjectManagementController {
 
 	@Autowired
 	ProjectManagementService pmService;
+	
+	@Autowired
+	NotificationService notificationService;
 
 	// Access Project Management Page
 	@RequestMapping(value = "/project-management", method = RequestMethod.GET)
@@ -37,6 +40,8 @@ public class ProjectManagementController {
 		// Add a boolean for project to see whether it's started or not. If not
 		// started,cannot access projectManagement page
 		String username = (String) request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		// Project selected_project =
 		// projectService.retrieveProject(project_name, project_proposer);
 		// retrieve board_id for project

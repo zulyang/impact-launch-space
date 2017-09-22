@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.impactlaunchspace.entity.UserOfferedResource;
+import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
 
@@ -25,10 +26,15 @@ public class ResourceController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	NotificationService notificationService;
+	
 	//Show Manage User Resource Page
 	@RequestMapping(value = "/manage-user-resources", method = RequestMethod.GET)
 	public String showEditUserResourcePage(HttpServletRequest request, ModelMap model) {
 		String username = (String)request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("user_resource_offering", resourceService.getUserResourceOffering(username));
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		return "resource/" + "manage_user_resources";

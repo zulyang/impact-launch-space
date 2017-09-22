@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.impactlaunchspace.entity.Country;
-import com.impactlaunchspace.entity.JobSectorIndividual;
 import com.impactlaunchspace.entity.Skillset;
 import com.impactlaunchspace.entity.User;
 import com.impactlaunchspace.exception.ExceptionController;
+import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.users.UserService;
 
@@ -46,6 +46,9 @@ public class LoginController {
 
 	@Autowired
 	ProfileService profileService;
+	
+	@Autowired
+	NotificationService notificationService;
 
 	private Log logger = LogFactory.getLog(ExceptionController.class);
 	private final int MAX_LOGIN_ATTEMPTS = 5;
@@ -387,6 +390,10 @@ public class LoginController {
 				if (isFirstTimeLogin == false) {
 
 					request.getSession().setAttribute("username", username);
+					
+					int unreadCount = notificationService.countUnreadNotifications(username);
+				    model.addAttribute("unreadCount", unreadCount);
+				    
 					if (userType.equals("organization")) {
 						// add a cookie to the response.
 						if (c != null) {
@@ -413,7 +420,6 @@ public class LoginController {
 								profileService.getIndividualAccountDetails(username));
 						request.getSession().setAttribute("jobSectorsIndividual",
 								profileService.retrieveIndividualJobSectors(username));
-
 						request.getSession().setAttribute("preferredCountries",
 								profileService.retrievePreferredCountries(username));
 						request.getSession().setAttribute("preferredJobSectors",
@@ -596,6 +602,9 @@ public class LoginController {
 	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
 	public String changePassword(@RequestParam String username, @RequestParam String existingPassword,
 			@RequestParam String password1, @RequestParam String password2, ModelMap model) {
+		
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		boolean isCorrectPW = loginService.authenticate(username, existingPassword);
 		int passLength = password1.length();
 		boolean hasLetters = false;
@@ -636,16 +645,22 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/search-project", method = RequestMethod.GET)
-	public String searchProject(ModelMap model) {
+	public String searchProject(HttpServletRequest request, ModelMap model) {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
 		model.addAttribute("countries", countries);
+		String username = (String)request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		return "search/" + "search_project";
 	}
 
 	@RequestMapping(value = "/search-resource", method = RequestMethod.GET)
-	public String searchResource(ModelMap model) {
+	public String searchResource(HttpServletRequest request, ModelMap model) {
 		ArrayList<Country> countries = profileService.retrieveCountryList();
 		ArrayList<Skillset> skillset = profileService.retrieveSkillsetList();
+		String username = (String)request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("countries", countries);
 		model.addAttribute("skillset", skillset);
 		return "search/" + "search_resource";

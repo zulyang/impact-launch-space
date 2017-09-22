@@ -84,7 +84,11 @@ public class ProjectController {
 
 		model.addAttribute("user_type", user_type);
 		model.addAttribute("indi_org", indi_org);
-
+		
+		String username = (String)request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
+	    
 		return "project/" + "create_project";
 	}
 
@@ -248,7 +252,9 @@ public class ProjectController {
 		for (ProjectBanList project_ban_username : project_ban_list_objs) {
 			project_ban_list.add(project_ban_username.getBanned_username());
 		}
-
+		
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("project_ban_list", project_ban_list);
 
 		// populates the edit page with the requested resources for the user to
@@ -308,7 +314,8 @@ public class ProjectController {
 	public String showProjectViewPage(@RequestParam("project-name") String project_name,
 			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
 		String username = (String) request.getSession().getAttribute("username");
-
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		model.addAttribute("country_list", profileService.retrieveCountryList());
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
@@ -452,7 +459,10 @@ public class ProjectController {
 		model.addAttribute("resource_category_list", profileService.retrieveSkillsetList());
 		model.addAttribute("user_list", userService.retrieveUsernameList());
 		model.addAttribute("organization_list", userService.retrieveOrganizationNamelist());
-
+		
+		String username = (String)request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		return "project/" + "view_project_private";
 	}
 
@@ -585,6 +595,8 @@ public class ProjectController {
 			Project project = projectService.retrieveProject(project_string.get(0), project_string.get(1));
 			projectsJoinedByUser.add(project);
 		}
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		
 		model.put("projectsJoinedByUser", projectsJoinedByUser);
 		
@@ -595,6 +607,8 @@ public class ProjectController {
 	public String showManageProjectUsersPage(@RequestParam("project-name") String project_name,
 			@RequestParam("project-proposer") String project_proposer, HttpServletRequest request, ModelMap model) {
 		model.addAttribute("user_list", userService.retrieveUsernameList());
+		
+		String username = (String)request.getSession().getAttribute("username");
 		
 		Project project = projectService.retrieveProject(project_name, project_proposer);
 		model.addAttribute("project", project);
@@ -607,6 +621,8 @@ public class ProjectController {
 			member_list_string.add(member.getProject_member_username());
 		}
 		
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
 		model.addAttribute("member_list", member_list);
 		model.addAttribute("member_list_string", member_list_string);
 		
@@ -653,6 +669,10 @@ public class ProjectController {
 		model.addAttribute("project_name",project_name);
 		model.addAttribute("project_proposer",project_proposer);
 		
+		String username = (String)request.getSession().getAttribute("username");
+		int unreadCount = notificationService.countUnreadNotifications(username);
+	    model.addAttribute("unreadCount", unreadCount);
+	    
 		return "project/" + "publish_update";
 	}
 	
