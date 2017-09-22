@@ -289,5 +289,11 @@ public class ProjectService {
 		return projectUpdateDAO.retrieveProjectUpdates(project_name, project_proposer);
 	}
 	
+	public void editUpdate(String update_contents, String project_name, String project_proposer, String update_title, String posted_time){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		ProjectUpdateDAO projectUpdateDAO = (ProjectUpdateDAO) context.getBean("projectUpdateDAO");
+		
+		projectUpdateDAO.editUpdate(update_contents, project_name, project_proposer, update_title, posted_time);
+	}
 
 }

@@ -692,5 +692,18 @@ public class ProjectController {
 		return "redirect:" + "view-project";
 	}
 	
+	@RequestMapping(value = "/edit-project-update", method = RequestMethod.POST)
+	public String editProjectUpdate(@RequestParam String pn,
+			@RequestParam String pp,
+			@RequestParam String post,@RequestParam String time,
+			@RequestParam String name, HttpServletRequest request, 
+			RedirectAttributes redirectAttributes,ModelMap model) {
+		
+		projectService.editUpdate(post, pn, pp, name, time);
+		
+		redirectAttributes.addAttribute("project-name", pn);
+		redirectAttributes.addAttribute("project-proposer", pp);
+		return "redirect:" + "view-project";
+	}
 	
 }

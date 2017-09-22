@@ -113,4 +113,38 @@ public class JdbcProjectUpdateDAO implements ProjectUpdateDAO{
 			}
 		}
 	}
+	
+	public void editUpdate(String update_contents, String project_name, String project_proposer, String update_title, String posted_time){
+		String sql = "UPDATE PROJECT_UPDATES SET "
+				+ "update_contents = ? WHERE project_name = ? AND project_proposer = ? AND update_title = ? AND posted_time = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			java.util.Date utilDate = dateFormat.parse(posted_time);
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			long time = sqlDate.getTime();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, update_contents);
+			ps.setString(2, project_name);
+			ps.setString(3, project_proposer);
+			ps.setString(4, update_title);
+			ps.setTimestamp(5, new Timestamp(time));
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
 }
