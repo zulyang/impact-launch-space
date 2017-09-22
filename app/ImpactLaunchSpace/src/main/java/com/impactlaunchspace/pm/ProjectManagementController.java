@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.impactlaunchspace.entity.Card;
 import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
-import com.impactlaunchspace.notification.NotificationService;
+import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.project.ProjectService;
 
 @Controller
@@ -28,9 +28,6 @@ public class ProjectManagementController {
 
 	@Autowired
 	ProjectManagementService pmService;
-	
-	@Autowired
-	NotificationService notificationService;
 
 	// Access Project Management Page
 	@RequestMapping(value = "/project-management", method = RequestMethod.GET)
@@ -40,8 +37,6 @@ public class ProjectManagementController {
 		// Add a boolean for project to see whether it's started or not. If not
 		// started,cannot access projectManagement page
 		String username = (String) request.getSession().getAttribute("username");
-		int unreadCount = notificationService.countUnreadNotifications(username);
-	    model.addAttribute("unreadCount", unreadCount);
 		// Project selected_project =
 		// projectService.retrieveProject(project_name, project_proposer);
 		// retrieve board_id for project
@@ -58,16 +53,16 @@ public class ProjectManagementController {
 			cat.add(categories.get(i).getResource_category());
 		}
 		
-		//add the memberlsit for populating the sidebar
-		ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer);
-		
-		ArrayList<String> member_list_string = new ArrayList<String>();
-		
-		for(ProjectMemberList member : member_list){
-			member_list_string.add(member.getProject_member_username());
-		}
-		model.addAttribute("member_list", member_list);
-		model.addAttribute("member_list_string", member_list_string);
+	    //add the memberlist for populating the sidebar 
+	    ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer); 
+	     
+	    ArrayList<String> member_list_string = new ArrayList<String>(); 
+	     
+	    for(ProjectMemberList member : member_list){ 
+	      member_list_string.add(member.getProject_member_username()); 
+	    } 
+	    model.addAttribute("member_list", member_list); 
+	    model.addAttribute("member_list_string", member_list_string); 
 		
 		model.addAttribute("user", username);
 		model.addAttribute("projectName", project_name);
@@ -135,7 +130,14 @@ public class ProjectManagementController {
 		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
-
+			
+		if(cardstatus.equals("todo")){
+			cardstatus = "Todo";
+		}else if(cardstatus.equals("inprogress")){
+			cardstatus = "In Progress";
+		}else{
+			cardstatus = "Done";
+		}
 		String activity = username + " deleted " + card_title + " from  " + cardstatus + " at " + timestamp; 
 		pmService.updateActivity(activity, Integer.toString(board_id), username);
 	}
@@ -160,6 +162,38 @@ public class ProjectManagementController {
 		ArrayList<String> activitylog = pmService.retrieveActivityLog(board_id);
 		Collections.reverse(activitylog);
 		model.addAttribute("activitylog", board_id);
+		
+	}
+	
+	//Create new method for detecting change between lists. 
+	@RequestMapping(value = "/detect-status-change", method = RequestMethod.POST)
+	public void detectstatuschange(@RequestParam String from, @RequestParam String to, @RequestParam String card_id, HttpServletRequest request, ModelMap model) {
+		
+		Card c = pmService.retrieveProjectCardById(Integer.parseInt(card_id));	
+		String card_title = c.getCard_title();
+		int board_id = c.getBoard_id();
+		String username = (String) request.getSession().getAttribute("username"); // owner
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		
+		if(from.equals("sortableInProgress")){
+			from = "In Progress";
+		}else if(from.equals("sortableToDo ")){
+			from = "Todo";
+		}else{
+			from = "Done";
+		}
+		
+		if(to.equals("sortableInProgress")){
+			to = "In Progress";
+		}else if(to.equals("sortableToDo ")){
+			to = "Todo";
+		}else{
+			to = "Done";
+		}
+		
+		
+		String activity = username + " moved " + card_title + " from " + from + " to " + to + " at "+ timestamp ; 
+		pmService.updateActivity(activity, Integer.toString(board_id), username);
 		
 	}
 }

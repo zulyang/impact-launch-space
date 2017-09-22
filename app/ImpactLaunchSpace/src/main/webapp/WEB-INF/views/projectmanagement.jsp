@@ -5,7 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Manage My Project</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -42,23 +43,27 @@
 							${projectName}<br>${username}
 						</div>
 
-						<hr/>
+						<hr />
 
 						<li class="menu-title">Members</li>
-						<a class="btn btn-primary btn-bordered"
-							id="manageusers" href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
-						
+						<a class="btn btn-primary btn-bordered" id="manageusers"
+							href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
+
 						<c:forEach items="${member_list}" var="item">
 							<div>
 								<!-- Each member profile icon here -->
-								<img src="/imageDisplay?username=${item.getProject_member_username()}"
-								class="members-profile-icon">
+								<img
+									src="/imageDisplay?username=${item.getProject_member_username()}"
+									class="members-profile-icon">
 								<c:choose>
-									<c:when test="${item.getProject_member_username().equals(username)}">
-										${item.getProject_member_username()}(me)
-									</c:when>
+									<c:when
+										test="${item.getProject_member_username().equals(username)}"> 
+                    ${item.getProject_member_username()}(me) 
+                  </c:when>
 									<c:otherwise>
-										<a href="/view-profile?username=${item.getProject_member_username()}" class="username_link_profile">${item.getProject_member_username()}
+										<a
+											href="/view-profile?username=${item.getProject_member_username()}"
+											class="username_link_profile">${item.getProject_member_username()}
 										</a>
 									</c:otherwise>
 								</c:choose>
@@ -74,9 +79,9 @@
 										<i class="fa fa-user"></i>
 									</c:when>
 								</c:choose>
-								
+
 							</div>
-						</c:forEach> 
+						</c:forEach>
 
 					</ul>
 
@@ -91,7 +96,8 @@
 							<div class="pms-header">Project Management Space</div>
 
 							<input type="hidden" id="project_name" value="${projectName}" />
-							<input type="hidden" id="project_proposer" value="${project_proposer}" /> <br>
+							<input type="hidden" id="project_proposer"
+								value="${project_proposer}" /> <br>
 							<!--tabs-->
 
 							<ul class="nav nav-tabs tabs-bordered nav-justified" id="pm-tabs">
@@ -113,310 +119,305 @@
 							<div class="section-block">
 								<div class="tab-content">
 
-									<div role="tabpanel" class="tab-pane fade in active" id="kanban">
+									<div role="tabpanel" class="tab-pane fade in active"
+										id="kanban">
 										<h3 class="tabs-header">KANBAN BOARD</h3>
 										<button type="button" class="btn btn-success" onClick="add()">
 											<i class="fa fa-plus-circle"></i> Add Card
 										</button>
 
-								<div>
-									<div id="todoKB">
-										<ul id="sortableToDo" class="connectedSortable">
-											<div class="kanban-header">TO DO</div>
+										<div>
+											<div id="todoKB">
+												<ul id="sortableToDo" class="connectedSortable">
+													<div class="kanban-header">TO DO</div>
 
-											<c:forEach items="${todoList}" var="todo" varStatus="count">
-												<li id="${todo.getCard_id()}" class="ui-state-default">
+													<c:forEach items="${todoList}" var="todo" varStatus="count">
+														<li id="${todo.getCard_id()}" class="ui-state-default">
 
-													<input type="hidden" id="title${todo.getCard_id()}"
-													value="${todo.getCard_title()}" /> <input type="hidden"
-													id="desc${todo.getCard_id()}"
-													value="${todo.getDescription()}" /> <input type="hidden"
-													id="tags${todo.getCard_id()}" value="${todo.getTags()}" />
-													<input type="hidden" id="assignee${todo.getCard_id()}"
-													value="${todo.getAssignee()}" /> <input type="hidden"
-													id="startdate${todo.getCard_id()}"
-													value="${todo.getStart_date()}" /> <input type="hidden"
-													id="duedate${todo.getCard_id()}"
-													value="${todo.getDue_date()}" /> ${todo.getCard_title()} <br>
-													${todo.getTags()} <br>
+															<input type="hidden" id="title${todo.getCard_id()}"
+															value="${todo.getCard_title()}" /> <input type="hidden"
+															id="desc${todo.getCard_id()}"
+															value="${todo.getDescription()}" /> <input type="hidden"
+															id="tags${todo.getCard_id()}" value="${todo.getTags()}" />
+															<input type="hidden" id="assignee${todo.getCard_id()}"
+															value="${todo.getAssignee()}" /> <input type="hidden"
+															id="startdate${todo.getCard_id()}"
+															value="${todo.getStart_date()}" /> <input type="hidden"
+															id="duedate${todo.getCard_id()}"
+															value="${todo.getDue_date()}" /> ${todo.getCard_title()}
+															<br> ${todo.getTags()} <br>
 
-													<button id="view${todo.getCard_id()}" type="submit"
-														name="view" class="btn btn-primary"
-														onClick="view(this.id)">
-														<i class="fa fa-pencil"></i> View
-													</button>
+															<button id="view${todo.getCard_id()}" type="submit"
+																name="view" class="btn btn-primary"
+																onClick="view(this.id)">
+																<i class="fa fa-pencil"></i> View
+															</button>
 
-													<button id="${todo.getCard_id()}" type="submit"
-														name="delete" class="btn btn-danger delete"
-														onClick="delet(this.id)">
-														<i class="fa fa-trash"></i> Delete
-													</button>
-												</li>
-											</c:forEach>
-										</ul>
+															<button id="${todo.getCard_id()}" type="submit"
+																name="delete" class="btn btn-danger delete"
+																onClick="delet(this.id)">
+																<i class="fa fa-trash"></i> Delete
+															</button>
+														</li>
+													</c:forEach>
+												</ul>
+											</div>
+
+											<div id="inprogressKB">
+												<ul id="sortableInProgress" class="connectedSortable">
+													<div class="kanban-header">IN PROGRESS</div>
+													<c:forEach items="${inprogressList}" var="inprogress">
+														<li id="${inprogress.getCard_id()}"
+															class="ui-state-default"><input type="hidden"
+															id="title${inprogress.getCard_id()}"
+															value="${inprogress.getCard_title()}" /> <input
+															type="hidden" id="desc${inprogress.getCard_id()}"
+															value="${inprogress.getDescription()}" /> <input
+															type="hidden" id="tags${inprogress.getCard_id()}"
+															value="${inprogress.getTags()}" /> <input type="hidden"
+															id="assignee${inprogress.getCard_id()}"
+															value="${inprogress.getAssignee()}" /> <input
+															type="hidden" id="startdate${inprogress.getCard_id()}"
+															value="${inprogress.getStart_date()}" /> <input
+															type="hidden" id="duedate${inprogress.getCard_id()}"
+															value="${inprogress.getDue_date()}" />
+
+															${inprogress.getCard_title()} <br>
+															${inprogress.getTags()} <br>
+
+															<button id="view${inprogress.getCard_id()}" type="submit"
+																name="view" class="btn btn-primary"
+																onClick="view(this.id)">
+																<i class="fa fa-pencil"></i> View
+															</button>
+
+															<button id="${inprogress.getCard_id()}" type="submit"
+																name="delete" class="btn btn-danger delete"
+																onClick="delet(this.id)">
+																<i class="fa fa-trash"></i> Delete
+															</button></li>
+													</c:forEach>
+												</ul>
+											</div>
+										</div>
+
+										<div id="doneKB">
+											<ul id="sortableDone" class="connectedSortable">
+												<div class="kanban-header">DONE</div>
+
+												<c:forEach items="${doneList}" var="done">
+													<li id="${done.getCard_id()}" class="ui-state-default">
+
+														<input type="hidden" id="title${done.getCard_id()}"
+														value="${done.getCard_title()}" /> <input type="hidden"
+														id="desc${done.getCard_id()}"
+														value="${done.getDescription()}" /> <input type="hidden"
+														id="tags${done.getCard_id()}" value="${done.getTags()}" />
+														<input type="hidden" id="assignee${done.getCard_id()}"
+														value="${done.getAssignee()}" /> <input type="hidden"
+														id="startdate${done.getCard_id()}"
+														value="${done.getStart_date()}" /> <input type="hidden"
+														id="duedate${done.getCard_id()}"
+														value="${done.getDue_date()}" /> ${done.getCard_title()}
+														<br> ${done.getTags()}
+
+														<button id="view${done.getCard_id()}" type="submit"
+															name="view" class="btn btn-primary" onClick="view()">
+															<i class="fa fa-pencil"></i> View
+														</button>
+
+														<button id="${done.getCard_id()}" type="submit"
+															name="delete" class="btn btn-danger delete"
+															onClick="delet(this.id)">
+															<i class="fa fa-trash"></i> Delete
+														</button>
+
+
+
+													</li>
+												</c:forEach>
+											</ul>
+										</div>
 									</div>
 
-									<div id="inprogressKB">
-										<ul id="sortableInProgress" class="connectedSortable">
-											<div class="kanban-header">IN PROGRESS</div>
-											<c:forEach items="${inprogressList}" var="inprogress">
-												<li id="${inprogress.getCard_id()}" class="ui-state-default">
 
-													<input type="hidden" id="title${inprogress.getCard_id()}"
-													value="${inprogress.getCard_title()}" /> <input type="hidden"
-													id="desc${inprogress.getCard_id()}"
-													value="${inprogress.getDescription()}" /> <input type="hidden"
-													id="tags${inprogress.getCard_id()}"
-													value="${inprogress.getTags()}" /> <input type="hidden"
-													id="assignee${inprogress.getCard_id()}"
-													value="${inprogress.getAssignee()}" /> <input type="hidden"
-													id="startdate${inprogress.getCard_id()}"
-													value="${inprogress.getStart_date()}" /> <input type="hidden"
-													id="duedate${inprogress.getCard_id()}"
-													value="${inprogress.getDue_date()}" />
-
-													${inprogress.getCard_title()} <br>
-													${inprogress.getTags()} <br>
-													
-													<button id="view${inprogress.getCard_id()}" type="submit"
-														name="view" class="btn btn-primary"
-														onClick="view(this.id)">
-														<i class="fa fa-pencil"></i> View
-													</button>
-													
-													<button id="${inprogress.getCard_id()}" type="submit"
-														name="delete" class="btn btn-danger delete"
-														onClick="delet(this.id)">
-														<i class="fa fa-trash"></i> Delete
-													</button>
-
-
-
-												</li>
-											</c:forEach>
-										</ul>
-									</div>
-									</div>
-
-									<div id="doneKB">
-										<ul id="sortableDone" class="connectedSortable">
-											<div class="kanban-header">DONE</div>
-
-											<c:forEach items="${doneList}" var="done">
-												<li id="${done.getCard_id()}" class="ui-state-default">
-													
-													<input type="hidden" id="title${done.getCard_id()}"
-													value="${done.getCard_title()}" /> <input type="hidden"
-													id="desc${done.getCard_id()}"
-													value="${done.getDescription()}" /> <input type="hidden"
-													id="tags${done.getCard_id()}"
-													value="${done.getTags()}" /> <input type="hidden"
-													id="assignee${done.getCard_id()}"
-													value="${done.getAssignee()}" /> <input type="hidden"
-													id="startdate${done.getCard_id()}"
-													value="${done.getStart_date()}" /> <input type="hidden"
-													id="duedate${done.getCard_id()}"
-													value="${done.getDue_date()}" />
-													${done.getCard_title()} <br> ${done.getTags()}
-													
-													<button id="view${done.getCard_id()}" type="submit"
-														name="view" class="btn btn-primary" onClick="view()">
-														<i class="fa fa-pencil"></i> View
-													</button>
-													
-													<button id="${done.getCard_id()}" type="submit"
-														name="delete" class="btn btn-danger delete"
-														onClick="delet(this.id)">
-														<i class="fa fa-trash"></i> Delete
-													</button>
-
-
-
-												</li>
-											</c:forEach>
-										</ul>
-									</div>
-								</div>
-
-							
-									<div role="tabpanel" class="tab-pane fade"
-										id="activity-log">
+									<div role="tabpanel" class="tab-pane fade" id="activity-log">
 										<h3 class="tabs-header">ACTIVITY LOG</h3>
 										<div class="table-responsive col-md-12">
-										<table id="activitylogtable" class="table">
-											<tbody id="logtable">
-												<c:forEach items="${activitylog}" var="log">
-													<tr>${log}</tr>
-													<br>
-												</c:forEach>
-											</tbody>
-										</table>	
-										</div>	
+											<div id="activitylogtablediv">
+												<table id="activitylogtable" class="table">
+													<tbody id="logtable">
+														<c:forEach items="${activitylog}" var="log">
+															<tr>${log}</tr>
+															<br>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
 									</div>
 
-							<div role="tabpanel" class="tab-pane fade" id="project-calendar">
-								<div class="full-calendar">
-									<h3 class="tabs-header">CALENDAR</h3>
-									<div class="full-calendar-container">
-										<div id='fullcalendar'></div>
+									<div role="tabpanel" class="tab-pane fade"
+										id="project-calendar">
+										<div class="full-calendar">
+											<h3 class="tabs-header">CALENDAR</h3>
+											<div class="full-calendar-container">
+												<div id='fullcalendar'></div>
+											</div>
+										</div>
 									</div>
+
+									<div role="tabpanel" class="tab-pane fade" id="documents">
+										<h3 class="tabs-header">DOCUMENTS</h3>
+									</div>
+
+									<div role="tabpanel" class="tab-pane fade" id="group-chat">
+										<h3 class="tabs-header">GROUP CHAT</h3>
+									</div>
+
 								</div>
 							</div>
+						</div>
+						<!--/tabs-->
+						<!-- end of tab -->
 
-							<div role="tabpanel" class="tab-pane fade" id="documents">
-								<h3 class="tabs-header">DOCUMENTS</h3>
+					</div>
+					<!-- Add new card modal (Copied from resources)-->
+					<div class="modal fade" tabindex="-1" role="dialog" id="AddModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+
+								<form action="add-card" role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title">Add New Card</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container">
+											<div id="resourcesNeeded" class="form-group row col-md-5">
+												<div class="col-md-12">
+													Card Title:
+													<textarea id="modalCardTitle" rows="4"
+														name="modalCardTitle"
+														class="form-control col-md-4 create-project-add"
+														placeholder="Give your card a title here..."></textarea>
+
+													</select> <br> Description:
+													<textarea id="modalCardDescription" rows="4"
+														name="modalCardDescription"
+														class="form-control col-md-4 create-project-add"
+														placeholder="Describe your card here..."></textarea>
+													<br>
+
+													<!-- Tags refer to the all the resource categories in the project -->
+													Tags: <select id="modalCardTags" name="modalCardTags"
+														class="col-md-4 form-control" style="width: 100%">
+														<option value="">None</option>
+														<c:forEach items="${cat}" var="item">
+															<option value="${item}">${item}</option>
+														</c:forEach>
+													</select> <br> Assignees: <select id="modalCardAssignee"
+														name="modalCardAssignee" class="col-md-4 form-control"
+														style="width: 100%">
+														<option value="">None</option>
+														<c:forEach items="${members}" var="item">
+															<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
+														</c:forEach>
+													</select>
+
+													<!-- Tags refer to the all the resource categories in the project -->
+													<br> Start Date: <br> <input type="date"
+														name="startdate" required id="startdate"
+														onfocus="(this.type='date')"
+														placeholder="Start Date Of Task (mm/dd/yyyy)*"
+														class="form-control profileField"> Due Date: <br>
+
+													<input type="date" name="duedate" required id="duedate"
+														onfocus="(this.type='date')"
+														placeholder="Due Date Of Task (mm/dd/yyyy)*"
+														class="form-control profileField"> <input
+														type="hidden" id="board_id" value="${board_id}">
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Cancel</button>
+										<button type="button" id="add" class="btn btn-success">Add</button>
+									</div>
+								</form>
 							</div>
-
-							<div role="tabpanel" class="tab-pane fade" id="group-chat">
-								<h3 class="tabs-header">GROUP CHAT</h3>
-							</div>
-
 						</div>
 					</div>
-				</div>
-				<!--/tabs-->
-				<!-- end of tab -->
 
-			</div>
-			<!-- Add new card modal (Copied from resources)-->
-			<div class="modal fade" tabindex="-1" role="dialog" id="AddModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
 
-						<form action="add-card" role="form" method="post">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-								<h4 class="modal-title">Add New Card</h4>
-							</div>
-							<div class="modal-body">
-								<div class="container">
-									<div id="resourcesNeeded" class="form-group row col-md-5">
-										<div class="col-md-12">
-											Card Title:
-											<textarea id="modalCardTitle" rows="4" name="modalCardTitle"
-												class="form-control col-md-4 create-project-add"
-												placeholder="Give your card a title here..."></textarea>
+					<!-- View card modal / Edit Card(Copied from resources)-->
+					<div class="modal fade" tabindex="-1" role="dialog" id="ViewModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
 
-											</select> <br> Description:
-											<textarea id="modalCardDescription" rows="4"
-												name="modalCardDescription"
-												class="form-control col-md-4 create-project-add"
-												placeholder="Describe your card here..."></textarea>
-											<br>
+								<form action="edit-card" role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title">View Card</h4>
+									</div>
+									<div class="modal-body">
+										<div class="container">
+											<div id="resourcesNeeded" class="form-group row col-md-5">
+												<div class="col-md-12">
 
-											<!-- Tags refer to the all the resource categories in the project -->
-											Tags: <select id="modalCardTags" name="modalCardTags"
-												class="col-md-4 form-control" style="width: 100%">
-												<option value="">None</option>
-												<c:forEach items="${cat}" var="item">
-													<option value="${item}">${item}</option>
-												</c:forEach>
-											</select> <br> 
-											
-											Assignees: <select id="modalCardAssignee"
-												name="modalCardAssignee" class="col-md-4 form-control"
-												style="width: 100%">
-												<option value="">None</option>
-												<c:forEach items="${members}" var="item">
-													<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
-												</c:forEach>
-											</select>
+													Card Title: <input type="text" id="modalCardTitleView"
+														class="form-control col-md-4 create-project-add"
+														name="modalCardTitle"> <br> Description: <input
+														type="text" id="modalCardDescriptionView"
+														class="form-control col-md-4 create-project-add"
+														name="modalCardDescription"> <br> Tags: <select
+														id="modalCardTagsView" name="modalCardTagsView"
+														class="col-md-4 form-control" style="width: 100%">
+														<c:forEach items="${cat}" var="item">
+															<option value="${item}">${item}</option>
+														</c:forEach>
+													</select> <br> Assignees: <select id="modalCardAssigneeView"
+														name="modalCardAssignee" class="col-md-4 form-control"
+														style="width: 100%">
+														<option value="">None</option>
+														<c:forEach items="${members}" var="item">
+															<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
+														</c:forEach>
+													</select> <br> Start Date: <br> <input type="date"
+														name="startDate" id="startDateView"
+														onfocus="(this.type='date')"
+														class="form-control profileField"> Due Date: <br>
+													<input type="date" name="dueDate" id="dueDateView"
+														onfocus="(this.type='date')"
+														class="form-control profileField"> Comments: <br>
+													<input type="hidden" id="board_id_view" value="${board_id}">
 
-											<!-- Tags refer to the all the resource categories in the project -->
-											<br> Start Date: <br> <input type="date"
-												name="startdate" required id="startdate"
-												onfocus="(this.type='date')"
-												placeholder="Start Date Of Task (mm/dd/yyyy)*"
-												class="form-control profileField"> Due Date: <br>
-												
-											<input type="date" name="duedate" required id="duedate"
-												onfocus="(this.type='date')"
-												placeholder="Due Date Of Task (mm/dd/yyyy)*"
-												class="form-control profileField"> 
-												
-												<input type="hidden" id="board_id" value="${board_id}">
-
+													<input type="hidden" id="card_id_view" name="card_id_view">
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Cancel</button>
-								<button type="button" id="add" class="btn btn-success">Add</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-
-
-			<!-- View card modal / Edit Card(Copied from resources)-->
-			<div class="modal fade" tabindex="-1" role="dialog" id="ViewModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-
-						<form action="edit-card" role="form" method="post">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-								<h4 class="modal-title">View Card</h4>
-							</div>
-							<div class="modal-body">
-								<div class="container">
-									<div id="resourcesNeeded" class="form-group row col-md-5">
-										<div class="col-md-12">
-
-											Card Title: <input type="text" id="modalCardTitleView"
-												class="form-control col-md-4 create-project-add"
-												name="modalCardTitle"> <br> Description: <input
-												type="text" id="modalCardDescriptionView"
-												class="form-control col-md-4 create-project-add"
-												name="modalCardDescription"> <br> Tags: <select
-												id="modalCardTagsView" name="modalCardTagsView"
-												class="col-md-4 form-control" style="width: 100%">
-												<c:forEach items="${cat}" var="item">
-													<option value="${item}">${item}</option>
-												</c:forEach>
-											</select> <br> 
-											Assignees: <select id="modalCardAssigneeView"
-												name="modalCardAssignee" class="col-md-4 form-control"
-												style="width: 100%" >
-												<option value="">None</option>
-												<c:forEach items="${members}" var="item">
-													<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
-												</c:forEach>
-											</select> <br> Start Date: <br> <input type="date"
-												name="startDate" id="startDateView"
-												onfocus="(this.type='date')"
-												class="form-control profileField"> Due Date: <br>
-											<input type="date" name="dueDate" id="dueDateView"
-												onfocus="(this.type='date')"
-												class="form-control profileField"> Comments: <br>
-											<input type="hidden" id="board_id_view" value="${board_id}">
-											
-											<input type="hidden" id="card_id_view" name = "card_id_view">
-										</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Cancel</button>
+										<button type="button" id="edit" class="btn btn-success">Save</button>
 									</div>
-								</div>
+								</form>
 							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Cancel</button>
-								<button type="button" id="edit" class="btn btn-success">Save</button>
-							</div>
-						</form>
+						</div>
 					</div>
+					<!-- Display List Of Members and the resource they are providing -->
 				</div>
 			</div>
-			<!-- Display List Of Members and the resource they are providing -->
-		</div>
-	</div>
 </body>
 
 <script type="text/javascript">
@@ -435,6 +436,23 @@
 								});
 							}
 						},
+
+						receive : function(event, ui) {
+
+							var card_id = ui.item.attr("id");
+							var from = ui.sender.attr("id");
+							var to = "sortableToDo";
+
+							$.post('detect-status-change', {
+								from : from,
+								to : to,
+								card_id : card_id
+							});
+							$("#activitylogtablediv").load(
+									window.location.href
+											+ " #activitylogtablediv");
+						},
+
 						connectWith : "#sortableInProgress, #sortableDone"
 					}).disableSelection();
 
@@ -452,6 +470,22 @@
 								});
 							}
 						},
+
+						receive : function(event, ui) {
+
+							var card_id = ui.item.attr("id");
+							var from = ui.sender.attr("id")
+							var to = "sortableInProgress";
+							$.post('detect-status-change', {
+								from : from,
+								to : to,
+								card_id : card_id
+							});
+							$("#activitylogtablediv").load(
+									window.location.href
+											+ " #activitylogtablediv");
+						},
+
 						connectWith : "#sortableToDo, #sortableDone"
 					}).disableSelection();
 
@@ -468,25 +502,36 @@
 								});
 							}
 						},
+
+						receive : function(event, ui) {
+
+							var card_id = ui.item.attr("id");
+							var from = ui.sender.attr("id")
+							var to = "sortableDone";
+							$.post('detect-status-change', {
+								from : from,
+								to : to,
+								card_id : card_id
+							});
+							$("#activitylogtablediv").load(
+									window.location.href
+											+ " #activitylogtablediv");
+						},
 						connectWith : "#sortableToDo, #sortableInProgress"
 					}).disableSelection();
 		});
 	}
-	
-	function refreshActivityLog(){
-		
-		var projectProposer = $('#project_proposer').val();
-		var projectName = $('#project_name').val();
-		var projectName2 = encodeURIComponent(projectName.trim());
-		
-		var url = "project-management?project-name="+projectName2+"&project-proposer="+projectProposer; 
-		    setInterval(function(){  
-		        $('#activitylogtable').load(url)
-		       }, 1000);
-	}
-	
-	$(document).ready(function() {
 
+	function refreshActivityLog() {
+
+		setInterval(function() {
+			//put this line for everytime i update the activity log (add,edit,delete,shift). create a method)
+			$("#activitylogtablediv").load(
+					window.location.href + " #activitylogtablediv");
+		}, 10000);
+	}
+
+	$(document).ready(function() {
 		// page is now ready, initialize the calendar...
 		initialiseKB();
 		//refreshActivityLog();
@@ -511,8 +556,7 @@
 		var assignee = $('#assignee' + newId).val();
 		var start_date = $('#startdate' + newId).val();
 		var due_date = $('#duedate' + newId).val();
-	
-		
+
 		$('#modalCardTitleView').val(title);
 		$('#modalCardDescriptionView').val(desc);
 		$('#modalCardTagsView').val(tags);
@@ -520,7 +564,7 @@
 		$('#startDateView').val(start_date);
 		$('#dueDateView').val(due_date);
 		$('#card_id_view').val(newId);
-		
+
 		$('#ViewModal').modal('show');
 	};
 
@@ -532,6 +576,8 @@
 			$("#todoKB").load(window.location.href + " #todoKB");
 			$("#inprogressKB").load(window.location.href + " #inprogressKB");
 			$("#doneKB").load(window.location.href + " #doneKB");
+			$("#activitylogtablediv").load(
+					window.location.href + " #activitylogtablediv");
 			return true;
 		} else {
 			return false;
@@ -540,66 +586,114 @@
 </script>
 
 <script>
-	$(document).ready(function() {
-		$('#add').click(function(event) {
-			
-			var modalCardTitle = $('#modalCardTitle').val();
-			var modalCardDescription = $('#modalCardDescription').val();
-			var modalCardAssignee = $('#modalCardAssignee').val();
-			var modalCardTags = $('#modalCardTags').val();
-			var board_id = $('#board_id').val();
-			var projectName = $('#project_name').val();
-			var projectProposer = $('#project_proposer').val();
-			var start_date = $('#startdate').val();
-			var due_date = $('#duedate').val();
-			var projectName2 = encodeURIComponent(projectName.trim());
+	$(document)
+			.ready(
+					function() {
+						$('#add')
+								.click(
+										function(event) {
 
-			$.post('add-card', {
-				modalCardTitle : modalCardTitle,
-				modalCardDescription : modalCardDescription,
-				modalCardAssignee : modalCardAssignee,
-				modalCardTags : modalCardTags,
-				board_id : board_id,
-				start_date : start_date,
-				due_date : due_date
-			});
+											var modalCardTitle = $(
+													'#modalCardTitle').val();
+											var modalCardDescription = $(
+													'#modalCardDescription')
+													.val();
+											var modalCardAssignee = $(
+													'#modalCardAssignee').val();
+											var modalCardTags = $(
+													'#modalCardTags').val();
+											var board_id = $('#board_id').val();
+											var projectName = $('#project_name')
+													.val();
+											var projectProposer = $(
+													'#project_proposer').val();
+											var start_date = $('#startdate')
+													.val();
+											var due_date = $('#duedate').val();
+											var projectName2 = encodeURIComponent(projectName
+													.trim());
 
-			$('#AddModal').modal('hide');
-			$("#todoKB").load(window.location.href + " #todoKB");
-		});
-		
-		$('#edit').click(function(event) {
+											$
+													.post(
+															'add-card',
+															{
+																modalCardTitle : modalCardTitle,
+																modalCardDescription : modalCardDescription,
+																modalCardAssignee : modalCardAssignee,
+																modalCardTags : modalCardTags,
+																board_id : board_id,
+																start_date : start_date,
+																due_date : due_date
+															});
 
-			var modalCardTitle = $('#modalCardTitleView').val();
-			var modalCardDescription = $('#modalCardDescriptionView').val();
-			var modalCardAssignee = $('#modalCardAssigneeView').val();
-			var modalCardTags = $('#modalCardTagsView').val();
-			var board_id = $('#board_id_view').val();
-			var card_id = $('#card_id_view').val();
-			var start_date = $('#startDateView').val();
-			var due_date = $('#dueDateView').val();
-			var card_id_view = $('#card_id_view').val();
-		
+											$('#AddModal').modal('hide');
+											$("#todoKB").load(
+													window.location.href
+															+ " #todoKB");
+											$("#activitylogtablediv")
+													.load(
+															window.location.href
+																	+ " #activitylogtablediv");
+										});
 
-			$.post('edit-card', {
-				modalCardTitle : modalCardTitle,
-				modalCardDescription : modalCardDescription,
-				modalCardTags : modalCardTags,
-				modalCardAssignee : modalCardAssignee,
-				board_id : board_id,
-				start_date : start_date,
-				due_date : due_date,
-				card_id_view : card_id_view
-				
-			});
+						$('#edit')
+								.click(
+										function(event) {
 
-			$('#ViewModal').modal('hide');
-			$("#todoKB").load(window.location.href + " #todoKB");
-			$("#inprogressKB").load(window.location.href + " #inprogressKB");
-			$("#doneKB").load(window.location.href + " #doneKB");
-		});
+											var modalCardTitle = $(
+													'#modalCardTitleView')
+													.val();
+											var modalCardDescription = $(
+													'#modalCardDescriptionView')
+													.val();
+											var modalCardAssignee = $(
+													'#modalCardAssigneeView')
+													.val();
+											var modalCardTags = $(
+													'#modalCardTagsView').val();
+											var board_id = $('#board_id_view')
+													.val();
+											var card_id = $('#card_id_view')
+													.val();
+											var start_date = $('#startDateView')
+													.val();
+											var due_date = $('#dueDateView')
+													.val();
+											var card_id_view = $(
+													'#card_id_view').val();
 
-	});
+											$
+													.post(
+															'edit-card',
+															{
+																modalCardTitle : modalCardTitle,
+																modalCardDescription : modalCardDescription,
+																modalCardTags : modalCardTags,
+																modalCardAssignee : modalCardAssignee,
+																board_id : board_id,
+																start_date : start_date,
+																due_date : due_date,
+																card_id_view : card_id_view
+
+															});
+
+											$('#ViewModal').modal('hide');
+											$("#todoKB").load(
+													window.location.href
+															+ " #todoKB");
+											$("#inprogressKB").load(
+													window.location.href
+															+ " #inprogressKB");
+											$("#doneKB").load(
+													window.location.href
+															+ " #doneKB");
+											$("#activitylogtablediv")
+													.load(
+															window.location.href
+																	+ " #activitylogtablediv");
+										});
+
+					});
 	/* $('#manageusers').click(
 	 function(e){
 	 e.preventDefault();
