@@ -89,13 +89,14 @@ public class JdbcProjectMemberListDAO implements ProjectMemberListDAO {
 	public ArrayList<ProjectMemberList> retrieveMemberList(String project_name, String project_proposer) {
 		ArrayList<ProjectMemberList> output = new ArrayList<ProjectMemberList>();
 
-		String sql = "SELECT * FROM PROJECT_MEMBER_LIST WHERE project_name = ? AND project_proposer = ?";
+		String sql = "SELECT * FROM PROJECT_MEMBER_LIST WHERE project_name = ? AND project_proposer = ? ORDER BY (CASE WHEN project_member_username = ? THEN 0 WHEN project_role = 'admin' THEN 1 WHEN project_role = 'member' THEN 2 ELSE 3 END)";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, project_name);
 			ps.setString(2, project_proposer);
+			ps.setString(3, project_proposer);
 			ProjectMemberList projectMemberList = null;
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {

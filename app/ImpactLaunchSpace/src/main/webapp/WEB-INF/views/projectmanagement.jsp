@@ -42,18 +42,38 @@
 							${projectName}<br>${username}
 						</div>
 
-						<hr />
+						<hr/>
 
 						<li class="menu-title">Members</li>
 						<a class="btn btn-primary btn-bordered"
 							id="manageusers" href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
 						
 						<c:forEach items="${member_list}" var="item">
-							<div class="members-profile-icon">
+							<div>
 								<!-- Each member profile icon here -->
 								<img src="/imageDisplay?username=${item.getProject_member_username()}"
-								class="circle_indi_profile_image">
-									
+								class="members-profile-icon">
+								<c:choose>
+									<c:when test="${item.getProject_member_username().equals(username)}">
+										${item.getProject_member_username()}(me)
+									</c:when>
+									<c:otherwise>
+										<a href="/view-profile?username=${item.getProject_member_username()}" class="username_link_profile">${item.getProject_member_username()}
+										</a>
+									</c:otherwise>
+								</c:choose>
+								<!-- AMANDA SEE HERE PLS -->
+								<c:choose>
+									<c:when test="${item.getProject_role().equals(\"admin\")}">
+										<i class="fa  fa-user-circle-o"></i>
+									</c:when>
+									<c:when test="${item.getProject_role().equals(\"member\")}">
+										<i class="fa fa-handshake-o"></i>
+									</c:when>
+									<c:when test="${item.getProject_role().equals(\"invited\")}">
+										<i class="fa fa-user"></i>
+									</c:when>
+								</c:choose>
 								
 							</div>
 						</c:forEach> 
