@@ -36,6 +36,7 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+
 <script>
 function loader() {
 	$(".se-pre-con").fadeOut("slow");

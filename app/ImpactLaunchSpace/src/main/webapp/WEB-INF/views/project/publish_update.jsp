@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Manage Project Users</title>
+<title>Publish Update</title>
 <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
@@ -52,9 +52,43 @@
 	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/froala_style.min.css'
 	rel='stylesheet' type='text/css' />
 
+<link
+	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/image.min.css'
+	rel='stylesheet' type='text/css' />
+<link
+	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/video.min.css'
+	rel='stylesheet' type='text/css' />
+<link
+	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/char_counter.min.css'
+	rel='stylesheet' type='text/css' />
+<link
+	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/line_breaker.min.css'
+	rel='stylesheet' type='text/css' />	
+<link
+	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/table.min.css'
+	rel='stylesheet' type='text/css' />		
+	
+
 <script type='text/javascript'
 	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/froala_editor.min.js'></script>
-
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/video.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/image.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/url.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/font_size.min.js'></script>	
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/line_breaker.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/lists.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/char_counter.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/table.min.js'></script>
+<script type='text/javascript'
+	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/align.min.js'></script>	
 
 </head>
 <script>
@@ -89,9 +123,6 @@
 							
 							</form>
 						</div>
-						
-
-
 
 					</div>
 					
