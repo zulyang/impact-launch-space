@@ -259,6 +259,8 @@ e<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 								</div>
 							</div>
 						</div>
+						<c:choose>
+						<c:when test="${sample_project.getProject_status().equals(\"new\") }">
 						<h3>What I Need</h3>
 						<div>
 							<div class="form-group row">
@@ -349,7 +351,106 @@ e<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 									</table>
 								</div>
 							</div>
+						
 						</div>
+						</c:when>
+						
+						<c:when test="${!sample_project.getProject_status().equals(\"new\") }">
+						<h3>What I Need</h3>
+						<div>
+							<div class="form-group row">
+								<p style="color:red;">*You cannot edit requests for a project that has already started!</p>
+								<nav class="navbar navbar-default query" role="query">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse" id="">
+										<button onClick="return add();" type="button" id="addResource"
+											class="btn btn-success create pull-right" disabled>
+											<i class="fa fa-plus-circle"></i> Add resource
+										</button>
+									</div>
+
+								</div>
+								</nav>
+								<div class="table-responsive col-md-12">
+									<table width="100%" border="0" cellspacing="0" cellpadding="5"
+										id="resourcesNeeded" class="table table-striped table-hover">
+										<thead>
+											<tr>
+												<th>Resource Name</th>
+												<th>Resource Description</th>
+												<th>Category</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody id="resourceTableBody">
+											<%
+												int id = 0;
+											%>
+											<c:forEach items="${project_requested_resources}" var="item"
+												varStatus="loop">
+												<tr id="resourceRow<%=++id%>">
+													<td><input class="editable-field form-control"
+														id="reso<%=id %>" type="text"
+														value="${item.getResource_name()}" required disabled="true" /> 
+														<input
+														type="hidden" id="old_reso<%=id %>"
+														value="${item.getResource_name()}" /></td>
+													<td><input required class="editable-field form-control"
+														id="desc<%=id %>" type="textarea"
+														value="${item.getRequest_description()}" disabled="true" />
+														<input type="hidden" id="old_desc<%=id %>"
+														value="${item.getRequest_description()}" /></td>
+													<td>
+													<select required id="resourceCategory<%=id%>"
+														name="resourceCategory" class="col-md-4 resourceCategory"
+														style="width: 20rem;">
+															<option></option>
+															<c:forEach items="${resource_category_list}" var="item1">
+																<c:choose>
+																	<c:when test="${item1.getSkillset().equals(item.getResource_category()) }">
+																		<option value="${item1.getSkillset()}" selected = "selected">${item1.getSkillset()}</option>
+																	</c:when>
+																	<c:otherwise>
+																		<option value="${item1.getSkillset()}">${item1.getSkillset()}</option>
+																	</c:otherwise>
+																</c:choose>
+																
+															</c:forEach>
+													</select> 
+													<span class="label label-success"
+														id="currentResourceCategory<%=id%>">${item.getResource_category()}</span>
+														<input type="hidden" id="old_rc<%=id%>"
+														value="${item.getResource_category()}" /></td>
+													<td class="col-md-2">
+														<button id="edit<%=id%>" type="button"
+															class="btn btn-primary manage-edit-button"
+															onClick="edit(this.id)" disabled>
+															<i class="fa fa-pencil"></i>Edit
+														</button>
+														<button id="save<%=id%>" type="button"
+															onClick="return save(this.id);" class="btn btn-success save"
+															href="#" disabled>
+															<i class="fa fa-save"></i>Save
+														</button>
+														<button id="dele<%=id%>" onClick="return deleteRow(this.id);"
+															type="button" class="btn btn-danger delete" href="#" disabled>
+															<i class="fa fa-trash"></i> Delete
+														</button>
+														<button id="canc<%=id%>" onClick="cancel(this.id)"
+															type="button" class="btn btn-default cancel" href="#" disabled>
+															<i class="fa fa-close"></i>Cancel
+														</button>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						
+						</div>
+						</c:when>
+					</c:choose>
 
 					</div>
 					<hr>
