@@ -58,6 +58,17 @@ public class ProjectManagementController {
 			cat.add(categories.get(i).getResource_category());
 		}
 		
+		//add the memberlsit for populating the sidebar
+		ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer);
+		
+		ArrayList<String> member_list_string = new ArrayList<String>();
+		
+		for(ProjectMemberList member : member_list){
+			member_list_string.add(member.getProject_member_username());
+		}
+		model.addAttribute("member_list", member_list);
+		model.addAttribute("member_list_string", member_list_string);
+		
 		model.addAttribute("user", username);
 		model.addAttribute("projectName", project_name);
 		model.addAttribute("project_proposer", project_proposer);

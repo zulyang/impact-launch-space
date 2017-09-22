@@ -45,12 +45,18 @@
 						<hr />
 
 						<li class="menu-title">Members</li>
-						<button type="btn" class="btn btn-primary btn-bordered"
-							id="manageusers">Manage</button>
-
-						<div class="members-profile-icon">
-							<!-- Each member profile icon here -->
-						</div>
+						<a class="btn btn-primary btn-bordered"
+							id="manageusers" href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
+						
+						<c:forEach items="${member_list}" var="item">
+							<div class="members-profile-icon">
+								<!-- Each member profile icon here -->
+								<img src="/imageDisplay?username=${item.getProject_member_username()}"
+								class="circle_indi_profile_image">
+									
+								
+							</div>
+						</c:forEach> 
 
 					</ul>
 
