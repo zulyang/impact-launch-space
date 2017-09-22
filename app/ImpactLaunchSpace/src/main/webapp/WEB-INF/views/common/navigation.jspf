@@ -50,9 +50,10 @@
 					</a></li>
 
 					<li class="profileIcons"><a class="navbar-brand"
-						href="/view-my-profile"> <img alt="profilePicture"
+						href="/view-my-profile"> 
+						<img alt="profilePicture" id="profilePictureIcon"
 							class="profilePictureIcon"
-							src="<%=request.getContextPath()%>/resources/img/profilePicture.png">
+							src="/imageDisplay?username=${username}">
 					</a></li>
 
 					<li class="profileIcons"><a class="navbar-brand"
@@ -83,4 +84,9 @@
 	if ($(".notification-counter").text() === "" || $(".notification-counter").text() === "0") {
 		$(".notification-counter").hide()
 	}
+	
+	var im = document.getElementById('profilePictureIcon');
+	im.onerror = function(){
+	   im.src = "<%=request.getContextPath()%>/resources/img/profilePicture.png";
+	};
 </script>
