@@ -556,7 +556,7 @@ function loader() {
 
 	<script>
 		    $(document).ready(function() {
-
+				
 				$('#myModal').on(
 				'hidden.bs.modal',
 				function() {
@@ -573,6 +573,8 @@ function loader() {
 	function edit(id) {
 		var numId = id.substring(4);
 		$('div#update'+numId).hide();
+		$('#dest'+numId).show();
+		
         if (!$('textarea#post'+numId).data('froala.editor')) {
           $('textarea#post'+numId).froalaEditor();
         }
@@ -600,7 +602,9 @@ function loader() {
 	          $('textarea#post'+numId).froalaEditor('destroy');
 	          $('textarea#post'+numId).hide();
         }
+		$('div#update'+numId).html(post);
 		$('div#update'+numId).show();
+		$('#init'+numId).show();
 	}
 	</script>
 </body>
