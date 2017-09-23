@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.text.DecimalFormat" %>
@@ -343,7 +343,7 @@
 														<c:out value="${fileSize}"/>
 													</td>
 													<td>
-														<button type="button" class="btn btn-success" onClick="/saveFile?file='${file}'">Download</button>
+														<a href="/saveFile?file=${file}&project_name=${projectName}&project_proposer=${project_proposer}&username=${username}"><button type="button" class="btn btn-success">Download</button></a>
 													<td>
 														<button type="button" class="btn btn-error" onClick="deleteFile('${file}')">Delete</button>
 													</td>
@@ -794,68 +794,83 @@
 	});
 </script>
 
-        <script>
-        var filesList = new Array();
-        var formData = new FormData();
-        function uploadFile(){
-        	 $(function () {
-                 $('#fileupload').fileupload({
-                     autoUpload: false,
-                     dropZone: $('#dropzone')
-                 }).on('fileuploadadd', function (e, data) {
-                     data.context = $('<div/>', { class: 'thumbnail pull-left' }).appendTo('#files');
-                     $.each(data.files, function (index, file) {
-                         filesList.push(data.files[index]);
-                         var node = $('<p/>').append($('<span/>').text(file.name).data(data));
-                         node.appendTo(data.context);
-                     });
-                 }).on('fileuploadprocessalways', function (e, data) {
-                     var index = data.index,
-                         file = data.files[index],
-                         node = $(data.context.children()[index]);
-                     if (file.preview) {
-                         node.prepend('<br>').prepend(file.preview);
-                     }
-                     if (file.error) {
-                         node.append('<br>').append($('<span class="text-danger"/>').text(file.error));
-                     }
-                 }).prop('disabled', !$.support.fileInput)
-                     .parent().addClass($.support.fileInput ? undefined : 'disabled');
-        
-		        $("#uploadFiles").click(function(event) {
-		            if (filesList.length > 0) {
-		                event.preventDefault();
+<script>
+	var project_name = $('#project_name').val();
+	var project_proposer = $('#project_proposer').val();
+	var username = $('#username').val();
+	var board_id = $('#board_id').val();
+   var filesList = new Array();
+   var formData = new FormData();
+   function uploadFile(){
+   	 $(function () {
+            $('#fileupload').fileupload({
+                autoUpload: false,
+                dropZone: $('#dropzone')
+            }).on('fileuploadadd', function (e, data) {
+                data.context = $('<div/>', { class: 'thumbnail pull-left' }).appendTo('#files');
+                $.each(data.files, function (index, file) {
+                    filesList.push(data.files[index]);
+                    var node = $('<p/>').append($('<span/>').text(file.name).data(data));
+                    node.appendTo(data.context);
+                });
+            }).on('fileuploadprocessalways', function (e, data) {
+                var index = data.index,
+                    file = data.files[index],
+                    node = $(data.context.children()[index]);
+                if (file.preview) {
+                    node.prepend('<br>').prepend(file.preview);
+                }
+                if (file.error) {
+                    node.append('<br>').append($('<span class="text-danger"/>').text(file.error));
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+   
+	     $("#uploadFiles").click(function(event) {
+	         if (filesList.length > 0) {
+	             event.preventDefault();
+				formData.append('project_name', project_name);
+				formData.append('project_proposer', project_proposer);
+				formData.append('username', username);
+				formData.append('board_id', board_id);
+				
+	             for (var i = 0; i<filesList.length ; i++) {
+	                 formData.append('files', filesList[i]);
+	             }
+	                 	$.ajax({
+	                 		url : 'uploadProjectFiles',
+	                 		type: "POST",
+	                 		cache: false,
+	             		    contentType: false,
+	             		    processData: false,
+	                 		data: formData,
+	                 		success:function(data){
+	                 			$("#fileUploadDiv").load(window.location.href + " #fileUploadDiv");
+	                 			$("#fileListDiv").load(window.location.href + " #fileListDiv");
+	                 			$("#activitylogtablediv").load(window.location.href + " #activitylogtablediv");
+	                 		}
+	                 	});
+	         } else {
+	             alert("Please select files to upload");
+	         }
+	     });
+	 });
+   }
+
+	function deleteFile(file) {
+		var result = confirm("Are you sure you want to delete this file?");
+		if (result) {
 		
-		                for (var i = 0; i<filesList.length ; i++) {
-		                    formData.append('files', filesList[i]);
-		                }
-		                    	$.ajax({
-		                    		url : 'uploadProjectFiles',
-		                    		type: "POST",
-		                    		cache: false,
-		                		    contentType: false,
-		                		    processData: false,
-		                    		data: formData,
-		                    		success:function(data){
-		                    			$("#fileUploadDiv").load(window.location.href + " #fileUploadDiv");
-		                    			$("#fileListDiv").load(window.location.href + " #fileListDiv");
-		                    		}
-		                    	});
-		            } else {
-		                alert("Please select files to upload");
-		            }
-		        });
-		    });
-        }
-    
-	    function deleteFile(file) {
-	    	var result = confirm("Are you sure you want to delete this file?");
-	    	if (result) {
-	    		$.post('deleFile', {
-	        		file:file
-	        	});
-	        	$("#fileListDiv").load(window.location.href + " #fileListDiv");
-	    	}
-	    };
-    </script>
+			$.post('deleFile', {
+	    		file:file,
+	    		project_name:project_name,
+	    		project_proposer:project_proposer,
+	    		username:username,
+	    		board_id:board_id
+	    	});
+	    	$("#fileListDiv").load(window.location.href + " #fileListDiv");
+	    	$("#activitylogtablediv").load(window.location.href + " #activitylogtablediv");
+		}
+	};
+</script>
 </html>

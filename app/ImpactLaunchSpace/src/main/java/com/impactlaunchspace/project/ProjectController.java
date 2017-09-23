@@ -540,6 +540,13 @@ public class ProjectController {
 		String proposer = (String) request.getSession().getAttribute("username");
 
 		projectService.startProject(project_name, project_proposer);
+		
+		//create folder directory for project 
+		File file = new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+		
 	}
 
 	@RequestMapping(value = "/projectImageDisplay", method = RequestMethod.GET)

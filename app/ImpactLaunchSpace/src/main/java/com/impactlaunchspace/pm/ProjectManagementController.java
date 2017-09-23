@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -94,7 +97,7 @@ public class ProjectManagementController {
 		Collections.reverse(activitylog);
 		model.addAttribute("activitylog", activitylog);
 		
-		File folder = new File("src/main/webapp/resources/storage/" + "1");
+		File folder = new File("src/main/webapp/resources/storage/" +  project_name + "_" + project_proposer);
 		File[] listOfFiles = folder.listFiles();
 		model.addAttribute("filesList", listOfFiles);
 		
@@ -203,49 +206,69 @@ public class ProjectManagementController {
 			to = "Done";
 		}
 		
-		String activity = username + " moved " + card_title + " from " + from + " to " + to + " at "+ timestamp ; 
+		String activity = username + " moved " + card_title + " from " + from + " to " + to + " at "+ timestamp; 
 		pmService.updateActivity(activity, Integer.toString(board_id), username);
 	}
 	
 	@RequestMapping(value = "/uploadProjectFiles", method = RequestMethod.POST)
-	public String processUploadProjectFiles(@RequestParam("files") MultipartFile[] files) {
-		for(MultipartFile mpf:files){	
-			Writer output = null; 
-			try {
-				// change 1 to project id in the future
-				mpf.transferTo(new File("src/main/webapp/resources/storage/" + "1" + "/" + mpf.getOriginalFilename()));
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public String processUploadProjectFiles(@RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username, 
+			@RequestParam String board_id, @RequestParam("files") MultipartFile[] files) {
+		
+		if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			String filesName = "";
+			for(MultipartFile mpf:files){	
+				Writer output = null; 
+				try {
+					filesName += mpf.getOriginalFilename() + ";";
+					mpf.transferTo(new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer + "/" + mpf.getOriginalFilename()));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			String activity = username + " uploaded " + files.length + "files (" + filesName  + ") at "+ timestamp; 
+			pmService.updateActivity(activity, board_id, username);
 		}
 		return "projectmanagement";
 	}
 	
 	@RequestMapping(value = "/saveFile", method = RequestMethod.GET)
-	public void saveFile(@RequestParam File file, HttpServletResponse response, HttpServletRequest request)
-			throws ServletException {
+	public void saveFile(@RequestParam File file, @RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,
+			HttpServletResponse response, HttpServletRequest request) {
 		FileInputStream inputStream;
-		try {
-			inputStream = new FileInputStream(file);
-			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-			response.setHeader("Content-Length", String.valueOf(file.length()));
-			FileCopyUtils.copy(inputStream, response.getOutputStream());
-			inputStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			try {
+				inputStream = new FileInputStream(file);
+				response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+				response.setHeader("Content-Length", String.valueOf(file.length()));
+				FileCopyUtils.copy(inputStream, response.getOutputStream());
+				inputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	@RequestMapping(value = "/deleFile", method = RequestMethod.POST)
-	public void deleteFile(@RequestParam File file, HttpServletResponse response, HttpServletRequest request)
-			throws ServletException {
-		try {
-			Files.delete(file.toPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void deleteFile(@RequestParam File file, @RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username, 
+			@RequestParam String board_id, HttpServletResponse response, HttpServletRequest request) {
+		if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			try {
+				Path path = Paths.get(file.getPath());
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String activity = username + " deleted file (" + file.getName() + ") at "+ timestamp; 
+			pmService.updateActivity(activity, board_id, username);
 		}
 	}
 	
