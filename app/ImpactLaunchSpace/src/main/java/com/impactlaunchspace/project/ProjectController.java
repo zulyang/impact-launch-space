@@ -713,4 +713,13 @@ public class ProjectController {
 		return "redirect:" + "view-project";
 	}
 	
+	@RequestMapping(value = "/remove-project-update", method = RequestMethod.POST)
+	public void removeProjectUpdate(@RequestParam String project_name,
+			@RequestParam String project_proposer,@RequestParam String time,
+			@RequestParam String name, HttpServletRequest request, 
+			ModelMap model) {
+		
+		projectService.deleteUpdate(project_name, project_proposer, name, time);
+
+	}
 }

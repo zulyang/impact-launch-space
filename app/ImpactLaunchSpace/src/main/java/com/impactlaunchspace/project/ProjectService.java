@@ -275,11 +275,11 @@ public class ProjectService {
 		projectUpdateDAO.insert(projectUpdate);
 	}
 	
-	public void deleteUpdate(int update_id){
+	public void deleteUpdate(String project_name, String project_proposer, String update_title, String posted_time){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		ProjectUpdateDAO projectUpdateDAO = (ProjectUpdateDAO) context.getBean("projectUpdateDAO");
 		
-		projectUpdateDAO.remove(update_id);
+		projectUpdateDAO.remove(project_name, project_proposer, update_title, posted_time);
 	}
 	
 	public ArrayList<ProjectUpdate> retrieveProjectUpdates(String project_name, String project_proposer){

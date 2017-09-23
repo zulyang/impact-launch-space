@@ -41,7 +41,7 @@
 						$("#projectResults").empty()
 						var trHTML = '';
 						$.each(responseJson,function(key,value) {
-							console.log(responseJson);
+							
 							var val = value
 							var res = val.split(",");
 							

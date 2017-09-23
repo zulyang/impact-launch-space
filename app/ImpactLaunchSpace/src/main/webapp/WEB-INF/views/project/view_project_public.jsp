@@ -227,7 +227,7 @@ function loader() {
 									%>
 									<c:forEach items="${project_updates}" var="item">
 										<%++id;%>
-										<div class="update-post">
+										<div class="update-post" id="section<%=id%>">
 											<h4 id="name1<%=id%>" class="update-title">${item.getUpdate_title()}</h4>
 											<span id="time1<%=id%>" class="update-date">${item.getPosted_time()}</span>
 											<input id="time<%=id%>" type="hidden" value="${item.getPosted_time()}"/>
@@ -238,6 +238,7 @@ function loader() {
 											<textarea style="display:none;" id="post<%=id%>" >${item.getUpdate_contents()}</textarea>
 											 <div id="update_edit<%=id%>"><a id="init<%=id%>" onclick="edit(this.id);" class="btn r-btn text-small">Edit</a></div>
 											 <div id="update_save<%=id%>"><a id="dest<%=id%>" onclick="save(this.id);" class="btn r-btn highlight text-small">Save</a></div>
+											 <div id="update_remove<%=id%>"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn r-btn highlight text-small">Delete</a></div>
 										</div>
 									</c:forEach>
 									<!--/update items-->
@@ -582,6 +583,31 @@ function loader() {
 	</script>
 	
 	<script>
+	function dele(id) {
+		var numId = id.substring(4);
+		$('div#update'+numId).hide();
+		$('textarea#post'+numId).hide();
+		$('#update_save'+numId).hide();
+		$('#update_edit'+numId).hide();
+		$('#update_remove'+numId).hide();
+		$('#name1'+numId).hide();
+		$('#time1'+numId).hide();
+		$('#section'+numId).hide();
+		
+		var name = $('#name' + numId).val();
+		var time = $('#time' + numId).val();
+		var project_proposer = $('#pp').val();
+		var project_name = $('#pn').val();
+		
+		
+		$.post('remove-project-update', {
+			name : name,
+			time : time,
+			project_proposer : project_proposer,
+			project_name : project_name
+		});		
+	}
+	
 	
 	function edit(id) {
 		var numId = id.substring(4);
@@ -598,14 +624,12 @@ function loader() {
 	function save(id) {
 		var numId = id.substring(4);
 		var post = $('#post' + numId).val();
-		var uid = $('#uid' + numId).val();
 		var name = $('#name' + numId).val();
 		var time = $('#time' + numId).val();
 		var project_proposer = $('#pp').val();
 		var project_name = $('#pn').val();
 		
 		$.post('edit-project-update', {
-			uid : uid,
 			post : post,
 			name : name,
 			time : time,
