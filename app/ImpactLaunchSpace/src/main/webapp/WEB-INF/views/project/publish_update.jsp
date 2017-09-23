@@ -18,15 +18,13 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/project/project.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/project/manage_project_users.css" />
+	href="<%=request.getContextPath()%>/resources/css/project/publish_update.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 
@@ -37,58 +35,52 @@
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/project.js"></script>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css" />
-<script
-	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
-<script type="text/javascript" charset="utf8"
-	src="<%=request.getContextPath()%>/resources/lib/datatables/js/jquery.dataTables.js"></script>
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/froala_editor.min.css'
+    href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/froala_editor.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/froala_style.min.css'
-	rel='stylesheet' type='text/css' />
+    href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/froala_style.min.css'
+    rel='stylesheet' type='text/css' />    
+
 
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/image.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/image.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/video.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/video.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/char_counter.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/char_counter.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/line_breaker.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/line_breaker.min.css'
 	rel='stylesheet' type='text/css' />	
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/table.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/table.min.css'
 	rel='stylesheet' type='text/css' />		
-	
+<script type='text/javascript'
+    src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/froala_editor.min.js'></script>
 
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/froala_editor.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/video.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/video.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/image.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/image.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/url.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/url.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/font_size.min.js'></script>	
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/font_size.min.js'></script>	
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/line_breaker.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/line_breaker.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/lists.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/lists.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/char_counter.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/char_counter.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/table.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/table.min.js'></script>
-<script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/align.min.js'></script>	
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/align.min.js'></script>	
 
 </head>
 <script>
@@ -107,19 +99,21 @@
 				<%@include file="../common/navigation.jspf"%>
 				<div class="se-pre-con"></div>
 				
-				<div class="container manage_project_users">
+				<div class="container publish_update_container">
 					
 					<div class="row">
 						<div class="page-header">
 							<h2>Publish Update</h2>
+							<p>You may post a short description of the progress of your project</p>
 							<form action="post-update" method="POST">
 								<input type="hidden" name="project_name" value="${project_name }"/>
 								<input type="hidden" name="project_proposer" value="${project_proposer }"/>
-								<input class="form-control" type="text" id="update_title" name="update_title" placeholder = "Update Title" required/>
+								<input class="form-control update_post_title" type="text" id="update_title" name="update_title" placeholder = "Title of post" required/>
 								<p></p>
 								<textarea id="update_text" name="update_contents" required></textarea>
+								<br/>
 								<input id="publish" type="submit"
-									class="btn btn-primary edit" value="Submit"/>
+									class="publish_button" value="Submit"/>
 							
 							</form>
 						</div>
@@ -139,6 +133,24 @@
 		$('textarea#update_text').froalaEditor({
 	    });
 	});
+	
+	$(function() {
+		  $( "#publish" ).click(function() {
+		    $( "#publish" ).addClass( "onclic", 250, validate);
+		  });
+
+		  function validate() {
+		    setTimeout(function() {
+		      $( "#publish" ).removeClass( "onclic" );
+		      $( "#publish" ).addClass( "validate", 450, callback );
+		    }, 2250 );
+		  }
+		    function callback() {
+		      setTimeout(function() {
+		        $( "#publish" ).removeClass( "validate" );
+		      }, 1250 );
+		    }
+		  });
 </script>
 
 </html>
