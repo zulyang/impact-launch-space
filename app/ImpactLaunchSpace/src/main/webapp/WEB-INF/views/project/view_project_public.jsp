@@ -214,7 +214,9 @@ function loader() {
 							</div>
 							<div role="tabpanel" class="tab-pane" id="updates">
 								<div class="update-information">
-									<h1 class="section-title">UPDATES</h1>
+									<h1 class="section-title">UPDATES
+										<a href="/publish-update?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}" class="new-update-button bg-gradient2"><span><i class="fa fa-plus"></i> New</span></a>
+									</h1>
 									<!--update items-->
 									<c:if test="${project_updates.size() == 0 }">
 										<p>There are no updates published yet.</p>
