@@ -96,9 +96,9 @@
 		font-size: 1.265em;
 		vertical-align: middle;
 	}
-#updates span {
+.section-title span {
 		display: inline-block;
-		padding: 16px 20px;
+		padding: 0.4em 1em;
 		border-radius: 50em;
 		position: relative;
 		z-index: 2;

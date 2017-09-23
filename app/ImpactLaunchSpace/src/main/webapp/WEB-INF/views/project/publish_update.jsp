@@ -115,6 +115,7 @@
 								<input id="publish" type="submit"
 									class="publish_button" value="Submit"/>
 							
+							<a href="" title="Back" class="button btnFloat btnBack" onclick="history.back(-1)">Back</a>
 							</form>
 						</div>
 
