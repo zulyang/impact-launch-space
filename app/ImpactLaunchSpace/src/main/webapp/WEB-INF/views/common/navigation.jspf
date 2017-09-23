@@ -57,7 +57,9 @@
 					</a></li>
 
 					<li class="profileIcons"><a class="navbar-brand"
-						href="/view-my-profile">${username}</a></li>
+						href="/view-my-profile">${username}</a>
+						<input type="hidden" id="username" value="${username}" /></li>
+					
 
 					<li class="dropdown"><a href="#" class="navbar-brand"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
