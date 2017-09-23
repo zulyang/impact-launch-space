@@ -10,6 +10,7 @@ img {
 }
 
 .cropped_result {
+	background-color: rgba(162, 151, 151, 0.44);
 	border: 1px dotted;
     margin: 5% auto;
     width: 20vw;
@@ -26,6 +27,11 @@ img {
 
 .btn_text {
 	color: white;
+}
+
+.btn_text:hover {
+	color: white;
+	text-decoration: none;
 }
 
 .setup_profile_picture {
@@ -65,8 +71,4 @@ img {
 	padding-top: 22px;
 	text-align: center;
 	line-height: 1em;
-}
-
-.icons {
-	font: none;
 }

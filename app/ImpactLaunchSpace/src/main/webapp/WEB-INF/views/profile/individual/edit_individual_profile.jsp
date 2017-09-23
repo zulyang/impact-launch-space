@@ -7,7 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Your Individual Profile</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -31,16 +32,6 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
-<style type="text/css">
-img {
-	max-width: 100%;
-}
-
-.image_container {
-	width: 600px;
-	height: 500px;
-}
-</style>
 <link href="<%=request.getContextPath()%>/resources/css/cropper.min.css"
 	rel="stylesheet">
 <script src="<%=request.getContextPath()%>/resources/lib/cropper.min.js"></script>
@@ -57,31 +48,16 @@ img {
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit Individual Profile Form</div>
 						<div class="panel-body">
-							<div class="required" style="float:right;">* fields are required</div>
-
-							<!--<div class="edit_org_pic" style="display: inline-block">
-								<form action="edit-individual-profile-pic" method="post"
-									enctype="multipart/form-data">
-									<img src="/imageDisplay?username=${username}"
-										class="circle_edit_ind_profile_image"> <label
-										for="editChooseIndPic"
-										class="form-control btn btn-info edit_org_profile_save">Update
-										your profile picture</label> <input type="file" name="profilePicture"
-										style="display: inline-block; visibility: hidden;"
-										id="editChooseIndPic" /> <label for="editUploadIndPic"
-										class="form-control btn btn-info edit_org_profile_save">Upload</label>
-									<input style="display: inline-block; visibility: hidden;"
-										type="submit" value="Update picture" id="editUploadIndPic" />
-
-								</form>
-							</div>-->
-
+							<div class="required" style="float: right;">* fields are
+								required</div>
 							<div class="edit_indi_picture_container">
 								<img src="/imageDisplay?username=${username}"
 									class="circle_edit_ind_profile_image">
-								<button type="button" class="btn btn-info btn-lg edit_indi_profile_picture_btn"
+								<button type="button"
+									class="btn btn-info btn-lg edit_indi_profile_picture_btn"
 									data-toggle="modal" data-target="#myModal">Edit your
 									profile picture</button>
+
 								<div id="myModal" class="modal fade" role="dialog">
 									<div class="modal-dialog edit_profile_picture_modal">
 
@@ -92,17 +68,30 @@ img {
 											</div>
 											<div class="modal-body">
 												<label for="editChooseIndPic"
-													class="form-control btn btn-info edit_indi_profile_save">Choose
-													your profile picture</label> <input type="file" name="image"
-													id="editChooseIndPic" style="visibility: hidden;"
-													onchange="readURL(this);" />
-												<div class="image_container">
+													class="btn btn-info edit_indi_profile_save"> <i
+													class="fa fa-picture-o" aria-hidden="true"
+													style="font: none;"></i>&nbspChoose your profile picture
+												</label> <input type="file" name="image" id="editChooseIndPic"
+													style="visibility: hidden;" onchange="readURL(this);" />
+												<div class="image_container" id="image_container">
 													<img id="blah" src="#" alt="" />
 												</div>
-												<button id="crop_button"
-													class="btn btn-info edit_indi_profile_save">Crop</button>
-												<div id="cropped_result"></div>
-												<button class="btn btn-success edit_indi_profile_save" onclick="reloadPage()">Confirm photo</button>
+												<div id="crop_button"
+													class="btn btn-info image_cropper_btns">
+													<span><i class="fa fa-crop" aria-hidden="true"></i>&nbspCrop</span>
+												</div>
+												<div id="reset_button"
+													class="btn btn-warning image_cropper_btns">
+													<span><i class="fa fa-trash" aria-hidden="true"></i>&nbspReset
+														Image</span>
+												</div>
+												<div id="cropped_result" class="cropped_result"></div>
+												<div id="confirm_button"
+													class="btn btn-success image_cropper_btns"
+													onClick="reloadPage()">
+													<i class="fa fa-check" aria-hidden="true"></i>&nbsp<a
+														class="btn_text">Confirm photo</a>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -546,9 +535,12 @@ img {
 
 		function readURL(input) {
 			if (input.files && input.files[0]) {
+
 				var reader = new FileReader();
 				reader.onload = function(e) {
-					$('#blah').attr('src', e.target.result)
+
+					$('#blah').attr('src', e.target.result);
+
 				};
 				reader.readAsDataURL(input.files[0]);
 				setTimeout(initCropper, 1000);
@@ -563,6 +555,19 @@ img {
 					//console.log(e.detail.y);
 				}
 			});
+
+			document.getElementById('reset_button').addEventListener('click',
+					function() {
+						cropper.reset();
+						cropper.clear();
+						cropper.destroy();
+						$('#blah').removeAttr('src');
+						var clone = $('#blah').clone();
+						$('#blah').remove();
+						$('#image_container').append(clone);
+
+						$('#cropped_result').children()[0].remove();
+					})
 
 			// On crop button clicked
 			document
@@ -581,36 +586,28 @@ img {
 										.setAttribute(
 												"style",
 												"border-radius: 50%;width: 250px;display: flex;margin-left: auto;margin-right: auto;");
-
-								cropper
-										.getCroppedCanvas()
-										.toBlob(
-												function(blob) {
-													var formData = new FormData();
-													formData.append(
-															'profilePicture',
-															blob);
-													// Use `jQuery.ajax` method
-													$
-															.ajax(
-																	'edit-individual-profile-pic',
-																	{
-																		method : "POST",
-																		data : formData,
-																		processData : false,
-																		contentType : false,
-																		success : function() {
-																			console
-																					.log('Upload success');
-																		},
-																		error : function() {
-																			console
-																					.log('Upload error');
-																		}
-																	});
-												});
-
 							})
+
+			document.getElementById('confirm_button').addEventListener('click',
+					function() {
+						cropper.getCroppedCanvas().toBlob(function(blob) {
+							var formData = new FormData();
+							formData.append('profilePicture', blob);
+							// Use `jQuery.ajax` method
+							$.ajax('edit-individual-profile-pic', {
+								method : "POST",
+								data : formData,
+								processData : false,
+								contentType : false,
+								success : function() {
+									console.log('Upload success');
+								},
+								error : function() {
+									console.log('Upload error');
+								}
+							});
+						});
+					})
 		}
 	</script>
 	<script type="text/javascript">
