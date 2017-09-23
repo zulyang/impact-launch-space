@@ -38,13 +38,7 @@
 	src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
 <script
 	src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
-	
-<style type="text/css">
-	.dropzone { border: 1px dashed #cccccc; padding: 30px; background: #fff; }
-	.dropzone .fileupload_label #fileupload { display: none; }
-	form, #progress, input, .form-actions, #files { margin: 10px 0; }
-	.thumbnail { margin: 10px 10px 0 0; }
-</style>
+
 </head>
 
 <body>
@@ -63,7 +57,7 @@
 						<hr />
 
 						<li class="menu-title">Members</li>
-						<a class="btn btn-primary btn-bordered" id="manageusers"
+						<a class="btn btn-manage-users btn-bordered" id="manageusers"
 							href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
 
 						<c:forEach items="${member_list}" var="item">
@@ -84,16 +78,15 @@
 										</a>
 									</c:otherwise>
 								</c:choose>
-								<!-- AMANDA SEE HERE PLS -->
 								<c:choose>
 									<c:when test="${item.getProject_role().equals(\"admin\")}">
-										<i class="fa  fa-user-circle-o"></i>
+										<i class="fa fa-trophy" style="color: #FCC314"></i>
 									</c:when>
 									<c:when test="${item.getProject_role().equals(\"member\")}">
 										<i class="fa fa-handshake-o"></i>
 									</c:when>
 									<c:when test="${item.getProject_role().equals(\"invited\")}">
-										<i class="fa fa-user"></i>
+										<i class="fa fa-user" style="color: #bbbbbb"></i>
 									</c:when>
 								</c:choose>
 
