@@ -215,7 +215,14 @@ function loader() {
 							<div role="tabpanel" class="tab-pane" id="updates">
 								<div class="update-information">
 									<h1 class="section-title">UPDATES
-										<a href="/publish-update?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}" class="new-update-button bg-gradient2"><span><i class="fa fa-plus"></i> New</span></a>
+										<c:choose>
+											 	<c:when test="${username.equals(selected_project.getProject_proposer()) }">
+													<a href="/publish-update?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}" class="new-update-button bg-gradient2"><span><i class="fa fa-plus"></i> New</span></a>
+												</c:when>
+												<c:when test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer()) }">
+													<a href="/publish-update?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}" class="new-update-button bg-gradient2"><span><i class="fa fa-plus"></i> New</span></a>
+												</c:when>
+										</c:choose>
 									</h1>
 									<!--update items-->
 									<c:if test="${project_updates.size() == 0 }">
