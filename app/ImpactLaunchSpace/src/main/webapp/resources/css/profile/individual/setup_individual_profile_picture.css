@@ -12,8 +12,8 @@ img {
 .cropped_result {
 	border: 1px dotted;
     margin: 5% auto;
-    width: 30vw;
-    height: 30vw;
+    width: 20vw;
+    height: 19vw;
 }
 
 .image_cropper_btns {

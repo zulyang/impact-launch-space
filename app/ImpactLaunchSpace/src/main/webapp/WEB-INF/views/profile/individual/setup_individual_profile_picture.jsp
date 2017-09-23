@@ -58,17 +58,20 @@
 								your profile picture
 							</label> <input type="file" name="image" id="editChooseIndPic"
 								style="visibility: hidden;" onchange="readURL(this);" />
-							<div class="image_container">
+							<div class="image_container" id="image_container">
 								<img id="blah" src="#" alt="" />
 							</div>
 							<div id="crop_button" class="btn btn-info image_cropper_btns">
-								<span><i class="fa fa-crop" aria-hidden="true"></i>&nbsp
-									Crop</span>
+								<span><i class="fa fa-crop" aria-hidden="true"></i>&nbspCrop</span>
+							</div>
+							<div id="reset_button" class="btn btn-warning image_cropper_btns">
+								<span><i class="fa fa-trash" aria-hidden="true"></i>&nbspReset Image</span>
 							</div>
 							<div id="cropped_result" class="cropped_result"></div>
-							<div id="confirm_button" class="btn btn-success image_cropper_btns">
+							<div id="confirm_button"
+								class="btn btn-success image_cropper_btns">
 								<i class="fa fa-check" aria-hidden="true"></i>&nbsp<a
-									class="btn_text" >Confirm photo</a>
+									class="btn_text">Confirm photo</a>
 							</div>
 						</div>
 					</div>
@@ -80,9 +83,12 @@
 	<script type="text/javascript" defer>
 		function readURL(input) {
 			if (input.files && input.files[0]) {
+
 				var reader = new FileReader();
 				reader.onload = function(e) {
-					$('#blah').attr('src', e.target.result)
+
+					$('#blah').attr('src', e.target.result);
+
 				};
 				reader.readAsDataURL(input.files[0]);
 				setTimeout(initCropper, 1000);
@@ -97,7 +103,23 @@
 					//console.log(e.detail.y);
 				}
 			});
-
+			
+			document
+			.getElementById('reset_button')
+			.addEventListener(
+					'click',
+					function() {
+						cropper.reset();
+						cropper.clear();
+						cropper.destroy();
+						$('#blah').removeAttr('src');
+						var clone = $('#blah').clone();
+						$('#blah').remove();
+						$('#image_container').append(clone);
+						
+						$('#cropped_result').children()[0].remove();
+					})
+			
 			// On crop button clicked
 			document
 					.getElementById('crop_button')
