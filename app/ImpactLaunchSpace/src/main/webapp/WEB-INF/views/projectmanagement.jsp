@@ -1,5 +1,7 @@
 <!doctype html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="java.text.DecimalFormat" %>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -20,6 +22,14 @@
 <link rel='stylesheet'
 	href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-image.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script
@@ -28,6 +38,13 @@
 	src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
 <script
 	src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
+	
+<style type="text/css">
+	.dropzone { border: 1px dashed #cccccc; padding: 30px; background: #fff; }
+	.dropzone .fileupload_label #fileupload { display: none; }
+	form, #progress, input, .form-actions, #files { margin: 10px 0; }
+	.thumbnail { margin: 10px 10px 0 0; }
+</style>
 </head>
 
 <body>
@@ -269,6 +286,71 @@
 
 									<div role="tabpanel" class="tab-pane fade" id="documents">
 										<h3 class="tabs-header">DOCUMENTS</h3>
+										<div id="fileUploadDiv" class="container">
+									        <h1>Project Documents</h1>
+									        
+									        <div id="dropzone" class="dropzone">
+									            <div class="fileupload_wrapper">
+									                Drop files here, or
+									                <label class="fileupload_label">browse for files
+									                    <input id="fileupload" type="file" name="files" multiple="multiple">
+									                </label>
+									            </div>
+									        </div>
+									
+									        <div id="files" class="thumbnails clearfix"></div>
+									
+									        <button id="uploadFiles" type="button" class="btn btn-primary">Upload</button>
+							        </div>
+							        <div id="fileListDiv">
+								        <table>
+								        	<tr>
+								        		<td>Name</td>
+								        		<td>Date Modified</td>
+								        		<td>Size</td>
+								        	</tr>
+											<c:forEach items="${filesList}" var="file">
+												<tr>
+													<td>${file.getName()}</td>
+													<td>
+														<jsp:useBean id="mDate" class="java.util.Date"/>
+														<c:set target="${mDate}" property="time" value="${file.lastModified()}"/>
+														<fmt:formatDate value="${mDate}" pattern="dd/MM/yyyy hh:mm" />
+													</td>
+													<td>
+														<c:set var="fileSize" value="${file.length()}"/>
+														<%
+															String fileSize = String.valueOf(pageContext.getAttribute("fileSize")); 
+															Long size = Long.parseLong(fileSize);
+							
+														    double b = size;
+														    double k = size/1024.0;
+														    double m = ((size/1024.0)/1024.0);
+														    double g = (((size/1024.0)/1024.0)/1024.0);
+								
+														    DecimalFormat dec = new DecimalFormat("#0.00");
+														    if ( g>1 ) {
+														    	fileSize = dec.format(g) + " GB";
+														    } else if ( m>1 ) {
+														    	fileSize = dec.format(m) + " MB";
+														    } else if ( k>1 ) {
+														    	fileSize = dec.format(k) + " KB";
+														    } else {
+														    	fileSize = dec.format(b) + " Bytes";
+														    }
+														  pageContext.setAttribute("fileSize", fileSize);
+														%>
+														<c:out value="${fileSize}"/>
+													</td>
+													<td>
+														<button type="button" class="btn btn-success" onClick="/saveFile?file='${file}'">Download</button>
+													<td>
+														<button type="button" class="btn btn-error" onClick="deleteFile('${file}')">Delete</button>
+													</td>
+												</tr>
+											</c:forEach>
+										</table>
+							        </div>
 									</div>
 
 									<div role="tabpanel" class="tab-pane fade" id="group-chat">
@@ -534,6 +616,7 @@
 	$(document).ready(function() {
 		// page is now ready, initialize the calendar...
 		initialiseKB();
+		uploadFile();
 		//refreshActivityLog();
 		$('#fullcalendar').fullCalendar({
 			// put your options and callbacks here
@@ -702,10 +785,77 @@
 
 	$(document).ajaxSuccess(function() {
 		initialiseKB();
+		uploadFile();
 	});
 
 	$(document).ajaxError(function() {
 		initialiseKB();
+		uploadFile();
 	});
 </script>
+
+        <script>
+        var filesList = new Array();
+        var formData = new FormData();
+        function uploadFile(){
+        	 $(function () {
+                 $('#fileupload').fileupload({
+                     autoUpload: false,
+                     dropZone: $('#dropzone')
+                 }).on('fileuploadadd', function (e, data) {
+                     data.context = $('<div/>', { class: 'thumbnail pull-left' }).appendTo('#files');
+                     $.each(data.files, function (index, file) {
+                         filesList.push(data.files[index]);
+                         var node = $('<p/>').append($('<span/>').text(file.name).data(data));
+                         node.appendTo(data.context);
+                     });
+                 }).on('fileuploadprocessalways', function (e, data) {
+                     var index = data.index,
+                         file = data.files[index],
+                         node = $(data.context.children()[index]);
+                     if (file.preview) {
+                         node.prepend('<br>').prepend(file.preview);
+                     }
+                     if (file.error) {
+                         node.append('<br>').append($('<span class="text-danger"/>').text(file.error));
+                     }
+                 }).prop('disabled', !$.support.fileInput)
+                     .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        
+		        $("#uploadFiles").click(function(event) {
+		            if (filesList.length > 0) {
+		                event.preventDefault();
+		
+		                for (var i = 0; i<filesList.length ; i++) {
+		                    formData.append('files', filesList[i]);
+		                }
+		                    	$.ajax({
+		                    		url : 'uploadProjectFiles',
+		                    		type: "POST",
+		                    		cache: false,
+		                		    contentType: false,
+		                		    processData: false,
+		                    		data: formData,
+		                    		success:function(data){
+		                    			$("#fileUploadDiv").load(window.location.href + " #fileUploadDiv");
+		                    			$("#fileListDiv").load(window.location.href + " #fileListDiv");
+		                    		}
+		                    	});
+		            } else {
+		                alert("Please select files to upload");
+		            }
+		        });
+		    });
+        }
+    
+	    function deleteFile(file) {
+	    	var result = confirm("Are you sure you want to delete this file?");
+	    	if (result) {
+	    		$.post('deleFile', {
+	        		file:file
+	        	});
+	        	$("#fileListDiv").load(window.location.href + " #fileListDiv");
+	    	}
+	    };
+    </script>
 </html>
