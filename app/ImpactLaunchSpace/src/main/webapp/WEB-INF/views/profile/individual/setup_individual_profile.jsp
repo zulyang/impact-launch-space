@@ -84,17 +84,6 @@
 									class="form-control profileField">
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-lg-12">
-								<div id="profile_upload_button" class="profile_upload_button"
-									onclick="uploadPicture()">Upload a profile picture</div>
-
-								<div style='height: 0px; width: 0px; overflow: hidden;'>
-									<input id="uploadPicture" name="profilePicture" type="file"
-										value="upload" onchange="sub(this)" />
-								</div>
-							</div>
-						</div>
 
 						<div class="form-group">
 							<label for="lastName" class="col-sm-3 font_labels">Date
@@ -371,16 +360,6 @@
 	</div>
 
 	<script type="text/javascript">
-		function uploadPicture() {
-			document.getElementById("uploadPicture").click();
-		}
-		function sub(obj) {
-			var file = obj.value;
-			var fileName = file.split("\\");
-			document.getElementById("profile_upload_button").innerHTML = fileName[fileName.length - 1];
-			event.preventDefault();
-		}
-
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
 		}
