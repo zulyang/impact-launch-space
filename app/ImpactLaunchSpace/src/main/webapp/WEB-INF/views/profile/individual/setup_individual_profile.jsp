@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.*"%>
 <html lang="en">
@@ -19,10 +18,13 @@
 	href="<%=request.getContextPath()%>/resources/css/profile/individual/setup_individual_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
+
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <link
@@ -310,8 +312,9 @@
 				</div>
 				<div class="form-group">
 					<div class="col-lg-12">
-						<input name="contactDetails" type="text" id="contactNumber"
-							class="form-control profileField" placeholder="Mobile Number">
+						<input name="contactDetailsShown" type="tel" id="contactNumberShown"
+							style="width: 100%" placeholder="Mobile Number">
+						<input id="contactNumber" type="hidden" name="contactDetails">
 					</div>
 				</div>
 				      
@@ -596,6 +599,11 @@
 			identity.required = true;
 		}
 	</script>
+	
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
+	
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple-preferredcountries").select2({
@@ -650,7 +658,8 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".js-example-basic-single-organization").select2({
-				placeholder : "Current Organization: "
+				placeholder : "Current Organization: ",
+				allowClear : true
 			});
 		});
 	</script>
@@ -661,7 +670,20 @@
 			$("[rel=tooltip]").tooltip({
 				placement : 'right'
 			});
+			var ctx = "${pageContext.request.contextPath}" + "resources/js/utils.js";
+			
+			$("#contactNumberShown").intlTelInput({
+				autoPlaceholder : "aggressive",
+				utilsScript : ctx,
+				
+			});
+			
+			$("form").submit(function() {
+				  $("#contactNumber").val($("#contactNumberShown").intlTelInput("getNumber"));
+			});
+
 		});
+
 	</script>
 
 </body>
