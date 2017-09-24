@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,6 +34,7 @@
 <link href="<%=request.getContextPath()%>/resources/css/cropper.min.css"
 	rel="stylesheet">
 <script src="<%=request.getContextPath()%>/resources/lib/cropper.min.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -211,9 +211,9 @@
 								<div class="form-group">
 									<label for="editContactDetails" class="col-sm-3">Phone</label>
 									<div class="col-sm-9">
-										<input type="text" value="${individual.getContactDetails()}"
-											name="contactDetails" class="form-control edit_profileField"
-											id="editContact" />
+										<input name="contactDetailsShown" type="tel" id="contactNumberShown"
+											style="width: 100%" placeholder="Mobile Number" value="${individual.getContactDetails()}">
+										<input id="editContact" type="hidden" name="contactDetails" value="${individual.getContactDetails()}">
 
 									</div>
 								</div>
@@ -528,6 +528,10 @@
 			</div>
 		</div>
 	</div>
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
+	
 	<script type="text/javascript" defer>
 		function reloadPage() {
 			location.reload();
@@ -1048,6 +1052,18 @@
 			$(".js-example-basic-single-organization").select2({
 				placeholder : "Select an organization: ",
 				allowClear : true
+			});
+			
+			var ctx = "${pageContext.request.contextPath}" + "resources/js/utils.js";
+			
+			$("#contactNumberShown").intlTelInput({
+				autoPlaceholder : "aggressive",
+				utilsScript : ctx,
+				
+			});
+			
+			$("form").submit(function() {
+				  $("#editContact").val($("#contactNumberShown").intlTelInput("getNumber"));
 			});
 		});
 	</script>

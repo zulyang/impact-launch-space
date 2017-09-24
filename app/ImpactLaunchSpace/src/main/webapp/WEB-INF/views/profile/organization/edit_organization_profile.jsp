@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.*"%>
 <html lang="en">
@@ -30,7 +29,7 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -84,10 +83,10 @@
 									<label for="editOrgContact" class="col-sm-2">Contact
 										Details</label>
 									<div class="col-sm-10">
-										<input id="editOrgContact"
-											class="form-control edit_profileField" type="text"
-											value="${organization.getContactDetails()}"
-											name="contactDetails">
+										<input name="contactDetailsShown" type="tel" id="contactNumberShown"
+											style="width: 100%" placeholder="Mobile Number" value="${organization.getContactDetails()}">
+										<input id="editOrgContact" type="hidden" name="contactDetails" value="${organization.getContactDetails()}">
+										
 									</div>
 								</div>
 								<div class="form-group">
@@ -168,6 +167,9 @@
 		</div>
 	</div>
 
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
 	<script type="text/javascript">
 		function checkFields() {
 			var contactNumber = document.getElementById("editOrgContact").value;
@@ -191,5 +193,23 @@
 			placeholder : "Select Up to 3 Job Sectors"
 		});
 	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var ctx = "${pageContext.request.contextPath}" + "resources/js/utils.js";
+			
+			$("#contactNumberShown").intlTelInput({
+				autoPlaceholder : "aggressive",
+				utilsScript : ctx,
+				
+			});
+			
+			$("form").submit(function() {
+				  $("#editOrgContact").val($("#contactNumberShown").intlTelInput("getNumber"));
+			});
+		});
+	</script>
+</body>
 </body>
 </html>
