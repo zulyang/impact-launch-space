@@ -117,8 +117,7 @@
 
 							<input type="hidden" id="project_name" value="${projectName}" />
 							<input type="hidden" id="calendarList" value="${calendarList}" />
-							<input type="hidden" id="project_proposer"
-								value="${project_proposer}" /> <br> ${calendarList}
+							<input type="hidden" id="project_proposer" value="${project_proposer}" /> <br> 
 							<!--tabs-->
 
 							<ul class="nav nav-tabs tabs-bordered nav-justified" id="pm-tabs">
@@ -647,7 +646,6 @@
 		// page is now ready, initialize the calendar...
 		initialiseKB();
 		var calendarList = ${calendarList}
-		alert(calendarList);
 		uploadFile();
 		$('#fullcalendar').fullCalendar({
 			// put your options and callbacks here
