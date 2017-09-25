@@ -283,7 +283,6 @@
 												<div id='fullcalendar'></div>
 											</div>
 										</div>
-										</div>
 									</div>
 
 									<div role="tabpanel" class="tab-pane fade" id="documents">
@@ -318,7 +317,7 @@
 														<td><jsp:useBean id="mDate" class="java.util.Date" />
 															<c:set target="${mDate}" property="time"
 																value="${file.lastModified()}" /> <fmt:formatDate
-																value="${mDate}" pattern="dd/MM/yyyy hh:mm" /></td>
+																value="${mDate}" pattern="dd/MM/yyyy HH:mm" /></td>
 														<td><c:set var="fileSize" value="${file.length()}" />
 															<%
 																String fileSize = String.valueOf(pageContext.getAttribute("fileSize"));
@@ -337,7 +336,7 @@
 																	} else if (k > 1) {
 																		fileSize = dec.format(k) + " KB";
 																	} else {
-																		fileSize = dec.format(b) + " Bytes";
+																		fileSize = dec.format(b) + " B";
 																	}
 																	pageContext.setAttribute("fileSize", fileSize);
 															%> <c:out value="${fileSize}" /></td>
@@ -909,7 +908,6 @@
 							formData.append('board_id', board_id);
 
 							for (var i = 0; i < filesList.length; i++) {
-								alert(filesList[i].name);
 								formData.append('files', filesList[i]);
 							}
 							filesList = new Array();

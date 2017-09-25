@@ -368,12 +368,30 @@ public class ProjectManagementController {
 		if (projectService.retrieveSpecificMember(project_name, project_proposer, username) != null) {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 			String filesName = "";
+			String path = "src/main/webapp/resources/storage/" +  project_name + "_" + project_proposer + "/";
 			for (MultipartFile mpf : files) {
 				Writer output = null;
 				try {
-					filesName += mpf.getOriginalFilename() + ";";
-					mpf.transferTo(new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer
-							+ "/" + mpf.getOriginalFilename()));
+					String fileName = mpf.getOriginalFilename();
+					
+					File file = new File(path + fileName);
+					
+					if (file.exists()) {
+						System.out.println("it exists");
+						int dot = fileName.lastIndexOf('.');   //Get the last index of . to separate extension
+						String ext = fileName.substring(dot);
+						String name = fileName.substring(0, dot);
+						
+						int fileNo = 0;
+				        while(file.exists()){
+				        	fileName = name + "("+ ++fileNo + ")" + ext;
+				        	System.out.println(fileName);
+				            file = new File(path + fileName);
+				        }
+				    }
+					
+					mpf.transferTo(file);
+					filesName += fileName + ",";
 				} catch (IllegalStateException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
