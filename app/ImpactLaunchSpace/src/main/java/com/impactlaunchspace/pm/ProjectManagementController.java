@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -157,19 +158,31 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
-			@RequestParam String board_id, @RequestParam(required = false) String start_date,
-			@RequestParam(required = false) String due_date, String projectName, HttpServletRequest request,
-			ModelMap model) throws ParseException {
-
-		if (start_date.equals("")) {
-			start_date = null;
-		}
-		if (due_date.equals("")) {
-			due_date = null;
-		}
-
+			@RequestParam String board_id,
+			@RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String due_date, String projectName,
+			HttpServletRequest request, ModelMap model) throws ParseException {
+		
+		if(start_date.equals("")){
+		      start_date = null;
+		    }
+		if(due_date.equals("")){
+		      due_date = null;
+		    }
+		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date start_date1 = null;
+		Date due_date1 = null;
+		    if(start_date != null){
+		        start_date1 = new java.sql.Date(dt.parse(start_date).getTime()); 
+		      }
+		      if(due_date != null){
+		        due_date1 = new java.sql.Date(dt.parse(due_date).getTime());
+		      }
+		      
+			//A task can have a start date with no due date
 
 		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date1 = null;
@@ -200,7 +213,7 @@ public class ProjectManagementController {
 		String activity = username + " added " + modalCardTitle + " to Todo on " + date + " at " + time;
 
 		pmService.updateActivity(activity, board_id, username);
-
+		
 		String message = username + " has assigned you the task " + modalCardTitle + " on " + date;
 		Notification notification = new Notification(modalCardAssignee, username,
 				"The user " + username + " has assigned you a task for " + projectName, message, "message", "inbox");

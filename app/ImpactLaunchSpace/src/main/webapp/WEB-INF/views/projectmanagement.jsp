@@ -283,6 +283,7 @@
 												<div id='fullcalendar'></div>
 											</div>
 										</div>
+										</div>
 									</div>
 
 									<div role="tabpanel" class="tab-pane fade" id="documents">
@@ -761,6 +762,7 @@
 													.load(
 															window.location.href
 																	+ " #activitylogtablediv");
+											
 										});
 
 						$('#edit')
