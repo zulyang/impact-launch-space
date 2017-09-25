@@ -1,12 +1,10 @@
 <%@page import="com.impactlaunchspace.dao.UserDAO"%>
 <%@page import="com.impactlaunchspace.login.LoginService"%>
 <%@page import="com.impactlaunchspace.entity.User"%>
-<%@page
-	import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+<%@page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <%@page import="com.impactlaunchspace.dao.CookieDAO"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,9 +14,8 @@
 <body>
 	<%
 		//This JSP checks for session first.
-		//To be inserted in all JSP pages.
-		//Check current session, and start to authenticate. (USER)
-
+		//To be included in all JSP pages.
+		//Check current s
 		User u = (User) request.getSession().getAttribute("user");
 
 		if (u == null || !u.getUser_role().equals("USER")) {
