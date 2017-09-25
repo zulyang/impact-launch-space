@@ -4,18 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Writer;
-import java.net.URL; 
 import java.nio.file.Files;
-import java.nio.file.Path; 
-import java.nio.file.Paths; 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -32,14 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.impactlaunchspace.entity.Card;
 import com.impactlaunchspace.entity.Notification;
 import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
-import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.notification.NotificationService;
 import com.impactlaunchspace.project.ProjectService;
 
@@ -134,11 +127,6 @@ public class ProjectManagementController {
 			Date sd = c.getStart_date();
 			Date dd = c.getDue_date();
 
-			/*
-			 * DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); String
-			 * sdstring = df.format(sd); String ddstring = df.format(dd);
-			 */
-
 			if (sd != null && dd != null) {
 				String title = c.getCard_title();
 				JSONObject j = new JSONObject();
@@ -159,7 +147,7 @@ public class ProjectManagementController {
 
 		model.addAttribute("calendarList", toReturn);
 
-	    File folder = new File("src/main/webapp/resources/storage/" +  project_name + "_" + project_proposer); 
+		File folder = new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer);
 		File[] listOfFiles = folder.listFiles();
 		model.addAttribute("filesList", listOfFiles);
 
@@ -169,16 +157,43 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
-			@RequestParam String board_id,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date start_date,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date due_date, String projectName,
-			HttpServletRequest request, ModelMap model) {
+			@RequestParam String board_id, @RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String due_date, String projectName, HttpServletRequest request,
+			ModelMap model) throws ParseException {
+
+		if (start_date.equals("")) {
+			start_date = null;
+		}
+		if (due_date.equals("")) {
+			due_date = null;
+		}
 
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 
-		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
-				modalCardAssignee, timestamp, start_date, due_date);
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+		Date start_date1 = null;
+		Date due_date1 = null;
+		if (start_date != null) {
+			start_date1 = new java.sql.Date(dt.parse(start_date).getTime());
+		}
+		if (due_date != null) {
+			due_date1 = new java.sql.Date(dt.parse(due_date).getTime());
+		}
+
+		// A task can have a start date with no due date
+
+		if (due_date != null && start_date != null) {
+			pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+					modalCardAssignee, timestamp, start_date1, due_date1);
+		} else if (due_date == null && start_date != null) {
+			pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+					modalCardAssignee, timestamp, start_date1, null);
+		} else {
+			pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+					modalCardAssignee, timestamp, null, null);
+		}
+
 		String timestamptostring = timestamp.toString();
 		String date = timestamptostring.substring(0, 10);
 		String time = timestamptostring.substring(11, 16);
@@ -195,9 +210,27 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/edit-card", method = RequestMethod.POST)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
-			String board_id, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date start_date,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date due_date, String card_id_view,
-			String projectName, HttpServletRequest request, ModelMap model) {
+			String board_id, @RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String due_date, String card_id_view, String projectName,
+			HttpServletRequest request, ModelMap model) throws ParseException {
+
+		if (start_date.equals("")) {
+			start_date = null;
+		}
+		if (due_date.equals("")) {
+			due_date = null;
+		}
+
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+		Date start_date1 = null;
+		Date due_date1 = null;
+		if (start_date != null) {
+			start_date1 = new java.sql.Date(dt.parse(start_date).getTime());
+		}
+
+		if (due_date != null) {
+			due_date1 = new java.sql.Date(dt.parse(due_date).getTime());
+		}
 
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
@@ -206,8 +239,17 @@ public class ProjectManagementController {
 		String date = timestamptostring.substring(0, 10);
 		String time = timestamptostring.substring(11, 16);
 
-		pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date, due_date,
-				card_id_view2);
+		// A task can have a start date with no due date
+		if (due_date != null && start_date != null) {
+			pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date1, due_date1,
+					card_id_view2);
+		} else if (due_date == null && start_date != null) {
+			pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date1, null,
+					card_id_view2);
+		} else {
+			pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, null, null, card_id_view2);
+		}
+
 		String activity = username + " edited " + modalCardTitle + " on " + date + " at " + time;
 		pmService.updateActivity(activity, board_id, username);
 
@@ -252,13 +294,11 @@ public class ProjectManagementController {
 				"The user " + username + " has deleted the task " + card_title + " in the board " + projectName,
 				message, "message", "inbox");
 		notificationService.sendNotification(notification);
-
 	}
 
 	@RequestMapping(value = "/update-card-order", method = RequestMethod.POST)
 	public void updateCardOrder(@RequestParam String id, @RequestParam String status, @RequestParam String order,
 			HttpServletRequest request) {
-
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 
@@ -275,7 +315,6 @@ public class ProjectManagementController {
 		ArrayList<String> activitylog = pmService.retrieveActivityLog(board_id);
 		Collections.reverse(activitylog);
 		model.addAttribute("activitylog", board_id);
-
 	}
 
 	// Create new method for detecting change between lists.
@@ -319,69 +358,67 @@ public class ProjectManagementController {
 				"The user " + username + " has moved the card " + card_title + " in the board " + projectName, message,
 				"message", "inbox");
 		notificationService.sendNotification(notification);
-
 	}
 
 	@RequestMapping(value = "/uploadProjectFiles", method = RequestMethod.POST)
-	  public String processUploadProjectFiles(@RequestParam("project_name") String project_name, 
-		      @RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,  
-		      @RequestParam String board_id, @RequestParam("files") MultipartFile[] files) { 
-		     
-		    if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){ 
-		      Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp 
-		      String filesName = ""; 
-		      for(MultipartFile mpf:files){   
-		        Writer output = null;  
-		        try { 
-		          filesName += mpf.getOriginalFilename() + ";"; 
-		          mpf.transferTo(new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer + "/" + mpf.getOriginalFilename())); 
-		        } catch (IllegalStateException | IOException e) { 
-		          // TODO Auto-generated catch block 
-		          e.printStackTrace(); 
-		        } 
-		      } 
-		      String activity = username + " uploaded " + files.length + "files (" + filesName  + ") at "+ timestamp;  
-		      pmService.updateActivity(activity, board_id, username); 
-		    } 
-		    return "projectmanagement"; 
-		  } 
+	public String processUploadProjectFiles(@RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,
+			@RequestParam String board_id, @RequestParam("files") MultipartFile[] files) {
 
-	@RequestMapping(value = "/saveFile", method = RequestMethod.GET)
-	  public void saveFile(@RequestParam File file, @RequestParam("project_name") String project_name, 
-		      @RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username, 
-		      HttpServletResponse response, HttpServletRequest request) { 
-		FileInputStream inputStream;
-	    if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){ 
-	        Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp 
-	        try { 
-	          inputStream = new FileInputStream(file); 
-	          response.setHeader("Content-Disposition", "attachment; filename=" + file.getName()); 
-	          response.setHeader("Content-Length", String.valueOf(file.length())); 
-	          FileCopyUtils.copy(inputStream, response.getOutputStream()); 
-	          inputStream.close(); 
-	        } catch (IOException e) { 
-	          // TODO Auto-generated catch block 
-	          e.printStackTrace(); 
-	        } 
-	    }
+		if (projectService.retrieveSpecificMember(project_name, project_proposer, username) != null) {
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			String filesName = "";
+			for (MultipartFile mpf : files) {
+				Writer output = null;
+				try {
+					filesName += mpf.getOriginalFilename() + ";";
+					mpf.transferTo(new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer
+							+ "/" + mpf.getOriginalFilename()));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			String activity = username + " uploaded " + files.length + "files (" + filesName + ") at " + timestamp;
+			pmService.updateActivity(activity, board_id, username);
+		}
+		return "projectmanagement";
 	}
 
-	@RequestMapping(value = "/deleFile", method = RequestMethod.POST)
-	  public void deleteFile(@RequestParam File file, @RequestParam("project_name") String project_name, 
-		      @RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,  
-		      @RequestParam String board_id, HttpServletResponse response, HttpServletRequest request) { 
-		    if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){ 
-		      Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp 
-		      try { 
-		        Path path = Paths.get(file.getPath()); 
-		        Files.delete(path); 
-		      } catch (IOException e) { 
-		        // TODO Auto-generated catch block 
-		        e.printStackTrace(); 
-		      } 
-		      String activity = username + " deleted file (" + file.getName() + ") at "+ timestamp;  
-		      pmService.updateActivity(activity, board_id, username); 
+	@RequestMapping(value = "/saveFile", method = RequestMethod.GET)
+	public void saveFile(@RequestParam File file, @RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,
+			HttpServletResponse response, HttpServletRequest request) {
+		FileInputStream inputStream;
+		if (projectService.retrieveSpecificMember(project_name, project_proposer, username) != null) {
+			try {
+				inputStream = new FileInputStream(file);
+				response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+				response.setHeader("Content-Length", String.valueOf(file.length()));
+				FileCopyUtils.copy(inputStream, response.getOutputStream());
+				inputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
+	@RequestMapping(value = "/deleFile", method = RequestMethod.POST)
+	public void deleteFile(@RequestParam File file, @RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,
+			@RequestParam String board_id, HttpServletResponse response, HttpServletRequest request) {
+		if (projectService.retrieveSpecificMember(project_name, project_proposer, username) != null) {
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			try {
+				Path path = Paths.get(file.getPath());
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String activity = username + " deleted file (" + file.getName() + ") at " + timestamp;
+			pmService.updateActivity(activity, board_id, username);
+		}
+	}
 }
