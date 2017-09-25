@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page language="java" pageEncoding="utf-8" %>
+<%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.*"%>
 <html lang="en">
@@ -9,7 +9,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Edit Organization Profile</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet"
@@ -29,7 +30,8 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
 </head>
 <body class="profile">
 	<div class="container-fluid">
@@ -45,7 +47,8 @@
 						<div class="panel-body">
 
 							<div class="edit_org_pic" style="display: inline-block">
-								<form action="edit-organization-profile-pic" method="post" enctype="multipart/form-data">
+								<form action="edit-organization-profile-pic" method="post"
+									enctype="multipart/form-data">
 									<img src="/imageDisplay?username=${organization.getUsername()}"
 										class="circle_edit_org_profile_image" height="64" width="64">
 
@@ -61,10 +64,15 @@
 								</form>
 							</div>
 
-							<form class="form-horizontal edit_org_profile_container" onsubmit="return checkFields();" action="editprofile-organization" method="post">
+							<form class="form-horizontal edit_org_profile_container"
+								onsubmit="return checkFields();"
+								action="editprofile-organization" method="post">
+								
+								<p class="required pull-right">* fields are required.</p>
+								
+								<br>
 								<div class="form-group">
-									<label for="editOrgName" class="col-sm-2">Company
-										Name</label>
+									<label for="editOrgName" class="col-sm-2">Company Name<span class="required">*</span></label>
 									<div class="col-sm-10">
 										<input type="text" id="editOrgName"
 											class="form-control edit_profileField"
@@ -72,7 +80,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgEmail" class="col-sm-2">Email</label>
+									<label for="editOrgEmail" class="col-sm-2">Email<span class="required">*</span></label>
 									<div class="col-sm-10">
 										<input class="form-control edit_profileField"
 											id="editOrgEmail" type="text" value="${user.getEmail()}"
@@ -83,15 +91,19 @@
 									<label for="editOrgContact" class="col-sm-2">Contact
 										Details</label>
 									<div class="col-sm-10">
-										<input name="contactDetailsShown" type="tel" id="contactNumberShown"
-											style="width: 100%" placeholder="Mobile Number" value="${organization.getContactDetails()}">
-										<input id="editOrgContact" type="hidden" name="contactDetails" value="${organization.getContactDetails()}">
-										
+										<input name="contactDetailsShown" type="tel"
+											id="contactNumberShown"
+											class="form-control contactNumberShown"
+											placeholder="Mobile Number"
+											value="${organization.getContactDetails()}"> 
+										<input
+											id="editOrgContact" type="hidden" name="contactDetails"
+											value="${organization.getContactDetails()}">
+
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgBio" class="col-sm-2">Company
-										Bio</label>
+									<label for="editOrgBio" class="col-sm-2">Company Bio</label>
 									<div class="col-sm-10">
 										<textarea id="editOrgBio" rows="4" name="companyBio"
 											class="form-control edit_profileField"
@@ -101,8 +113,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editCountry" class="col-sm-2">Countries
-										Of Operation</label>
+									<label for="editCountry" class="col-sm-2">Countries Of
+										Operation<span class="required">*</span></label>
 									<div class="col-sm-10">
 										<select id="editCountry" style="width: 100%"
 											class="js-example-basic-multiple edit_profileField"
@@ -128,7 +140,7 @@
 
 								<div class="form-group">
 									<label for="editJobSectors" class="col-sm-2">Job
-										Sectors</label>
+										Sectors<span class="required">*</span></label>
 									<div class="col-sm-10">
 										<select id="editJobSectors" style="width: 100%"
 											class="js-example-basic-multiple2 edit_profileField"
@@ -167,15 +179,17 @@
 		</div>
 	</div>
 
-	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
 	<script type="text/javascript">
 		function checkFields() {
-			var contactNumber = document.getElementById("editOrgContact").value;
-			
-			if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
-				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+			var contactNumber = document.getElementById("contactNumberShown").value;
+
+			if (contactNumber.indexOf(' ') >= 0) {
+				alert('Please do not enter spaces in your contact number.')
 				return false;
 			}
 		}
@@ -193,22 +207,27 @@
 			placeholder : "Select Up to 3 Job Sectors"
 		});
 	</script>
-	
+
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-			var ctx = "${pageContext.request.contextPath}" + "resources/js/utils.js";
-			
-			$("#contactNumberShown").intlTelInput({
-				autoPlaceholder : "aggressive",
-				utilsScript : ctx,
-				
-			});
-			
-			$("form").submit(function() {
-				  $("#editOrgContact").val($("#contactNumberShown").intlTelInput("getNumber"));
-			});
-		});
+		$(document).ready(
+				function() {
+
+					var ctx = "${pageContext.request.contextPath}"
+							+ "resources/js/utils.js";
+
+					$("#contactNumberShown").intlTelInput({
+						autoPlaceholder : "aggressive",
+						utilsScript : ctx,
+
+					});
+
+					$("form").submit(
+							function() {
+								$("#editOrgContact").val(
+										$("#contactNumberShown").intlTelInput(
+												"getNumber"));
+							});
+				});
 	</script>
 </body>
 </body>

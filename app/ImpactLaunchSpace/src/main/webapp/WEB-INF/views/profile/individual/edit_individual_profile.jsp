@@ -212,7 +212,7 @@
 									<label for="editContactDetails" class="col-sm-3">Phone</label>
 									<div class="col-sm-9">
 										<input name="contactDetailsShown" type="tel" id="contactNumberShown"
-											style="width: 100%" placeholder="Mobile Number" value="${individual.getContactDetails()}">
+										 placeholder="Mobile Number" class="form-control edit_profileField" value="${individual.getContactDetails()}">
 										<input id="editContact" type="hidden" name="contactDetails" value="${individual.getContactDetails()}">
 
 									</div>
@@ -675,13 +675,11 @@
 				return false;
 			}
 
-			var contactNumber = document.getElementById("editContact").value;
+			var contactNumber = document.getElementById("contactNumberShown").value;
 
 			if (contactNumber !== "") {
-				if (/^\d+$/.test(contactNumber) === false
-						|| contactNumber.length > 20
-						|| contactNumber.length < 8) {
-					alert('Please enter a minimum of 8 numbers and a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+				if (contactNumber.indexOf(' ') >= 0){
+					alert('Please do not enter spaces in your contact number.')
 					return false;
 				}
 			}

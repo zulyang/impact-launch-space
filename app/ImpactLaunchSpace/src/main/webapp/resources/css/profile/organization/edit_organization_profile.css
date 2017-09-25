@@ -22,3 +22,11 @@
 .edit_org_pic {
 	margin: 1rem;
 }
+
+.contactNumberShown {
+	width: 328px;
+}
+
+.intl-tel-input .country-list {
+	width: 684%;
+}

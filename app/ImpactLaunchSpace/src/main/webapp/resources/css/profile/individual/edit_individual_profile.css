@@ -120,3 +120,7 @@ img {
 	text-align: center;
 	line-height: 1em;
 }
+
+.intl-tel-input .country-list {
+	width: 540%;
+}
