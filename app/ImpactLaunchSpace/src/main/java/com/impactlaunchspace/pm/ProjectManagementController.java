@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,11 +135,6 @@ public class ProjectManagementController {
 			Date sd = c.getStart_date();
 			Date dd = c.getDue_date();
 
-			/*
-			 * DateFormat df = new SimpleDateFormat("MM/dd/yyyy"); String
-			 * sdstring = df.format(sd); String ddstring = df.format(dd);
-			 */
-
 			if (sd != null && dd != null) {
 				String title = c.getCard_title();
 				JSONObject j = new JSONObject();
@@ -170,22 +166,48 @@ public class ProjectManagementController {
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
 			@RequestParam String board_id,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date start_date,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date due_date, String projectName,
-			HttpServletRequest request, ModelMap model) {
-
+			@RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String due_date, String projectName,
+			HttpServletRequest request, ModelMap model) throws ParseException {
+		
+		if(start_date.equals("")){
+		      start_date = null;
+		    }
+		if(due_date.equals("")){
+		      due_date = null;
+		    }
+		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date start_date1 = null;
+		Date due_date1 = null;
+		    if(start_date != null){
+		        start_date1 = new java.sql.Date(dt.parse(start_date).getTime()); 
+		      }
+		      if(due_date != null){
+		        due_date1 = new java.sql.Date(dt.parse(due_date).getTime());
+		      }
+		      
+			//A task can have a start date with no due date
 
-		pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
-				modalCardAssignee, timestamp, start_date, due_date);
+		      if(due_date != null && start_date != null){
+		        pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+		            modalCardAssignee, timestamp, start_date1, due_date1);}
+		        else if(due_date == null && start_date != null){
+			        pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+				            modalCardAssignee, timestamp, start_date1, null);	        
+		      }else{pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+				modalCardAssignee, timestamp, null, null);
+		      }
+		
 		String timestamptostring = timestamp.toString();
 		String date = timestamptostring.substring(0, 10);
 		String time = timestamptostring.substring(11, 16);
 		String activity = username + " added " + modalCardTitle + " to Todo on " + date + " at " + time;
 
 		pmService.updateActivity(activity, board_id, username);
-
+		
 		String message = username + " has assigned you the task " + modalCardTitle + " on " + date;
 		Notification notification = new Notification(modalCardAssignee, username,
 				"The user " + username + " has assigned you a task for " + projectName, message, "message", "inbox");
@@ -195,19 +217,46 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/edit-card", method = RequestMethod.POST)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
-			String board_id, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date start_date,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date due_date, String card_id_view,
-			String projectName, HttpServletRequest request, ModelMap model) {
-
+			String board_id, @RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String due_date, String card_id_view,
+			String projectName, HttpServletRequest request, ModelMap model) throws ParseException {
+		
+		if(start_date.equals("")){
+		      start_date = null;
+		    }
+		if(due_date.equals("")){
+		      due_date = null;
+		    }
+		
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date start_date1 = null;
+		Date due_date1 = null;
+		    if(start_date != null){
+		        start_date1 = new java.sql.Date(dt.parse(start_date).getTime()); 
+		     }
+		    
+		    if(due_date != null){
+		        due_date1 = new java.sql.Date(dt.parse(due_date).getTime());
+		     }
+		
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 		int card_id_view2 = Integer.parseInt(card_id_view);
 		String timestamptostring = timestamp.toString();
 		String date = timestamptostring.substring(0, 10);
 		String time = timestamptostring.substring(11, 16);
-
-		pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date, due_date,
-				card_id_view2);
+		
+		//A task can have a start date with no due date
+		if(due_date != null && start_date != null){
+		pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date1, due_date1,
+				card_id_view2);}
+		else if(due_date == null && start_date != null){
+			pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, start_date1, null,
+					card_id_view2);
+		}else{
+		pmService.edit(modalCardTitle, modalCardDescription, tags, modalCardAssignee, null, null,
+					card_id_view2);
+		}
 		String activity = username + " edited " + modalCardTitle + " on " + date + " at " + time;
 		pmService.updateActivity(activity, board_id, username);
 

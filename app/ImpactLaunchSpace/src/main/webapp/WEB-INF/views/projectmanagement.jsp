@@ -239,7 +239,7 @@
 														value="${done.getStart_date()}" /> <input type="hidden"
 														id="duedate${done.getCard_id()}"
 														value="${done.getDue_date()}" /> ${done.getCard_title()}
-														<br> ${done.getTags()}
+														<br> ${done.getTags()}<br>
 
 														<button id="view${done.getCard_id()}" type="submit"
 															name="view" class="btn btn-primary" onClick="view()">
@@ -275,13 +275,12 @@
 										</div>
 									</div>
 
-									<div role="tabpanel" class="tab-pane fade"
-										id="project-calendar">
-										<div class="full-calendar">
-											<h3 class="tabs-header">CALENDAR</h3>
-											<div class="full-calendar-container">
-												<div id='fullcalendar'></div>
-											</div>
+									<div role="tabpanel" class="tab-pane fade" id="project-calendar">
+									<h3 class="tabs-header">CALENDAR</h3>
+									<div class="full-calendar">
+										<div class="full-calendar-container">
+											<div id='fullcalendar'></div>
+										</div>
 										</div>
 									</div>
 
@@ -761,6 +760,7 @@
 													.load(
 															window.location.href
 																	+ " #activitylogtablediv");
+											
 										});
 
 						$('#edit')
