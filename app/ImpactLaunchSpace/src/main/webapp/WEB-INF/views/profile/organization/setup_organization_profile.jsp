@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
@@ -27,6 +28,8 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
+
 </head>
 
 <body class="profile">
@@ -104,9 +107,9 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="contactDetails" required="required" type="text"
-									id="contactNumber" class="form-control profileField"
-									placeholder="Office telephone number" style="width: 100%">
+								<input name="contactDetailsShown" type="tel" id="contactNumberShown"
+									style="width: 100%" placeholder="Office telephone number">
+								<input id="contactNumber" type="hidden" name="contactDetails">
 							</div>
 						</div>
 						<div class="form-group">
@@ -122,7 +125,10 @@
 			</div>
 		</div>
 	</div>
-
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
+	
 	<script type="text/javascript">
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
@@ -155,6 +161,25 @@
 			maximumSelectionLength : 3,
 			placeholder : "Select Up to 3 Job Sectors"
 		});
+	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var ctx = "${pageContext.request.contextPath}" + "resources/js/utils.js";
+			
+			$("#contactNumberShown").intlTelInput({
+				autoPlaceholder : "aggressive",
+				utilsScript : ctx,
+				
+			});
+			
+			$("form").submit(function() {
+				  $("#contactNumber").val($("#contactNumberShown").intlTelInput("getNumber"));
+			});
+
+		});
+
 	</script>
 
 </body>

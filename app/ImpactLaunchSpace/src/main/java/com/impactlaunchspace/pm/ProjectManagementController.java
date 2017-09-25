@@ -1,23 +1,34 @@
 package com.impactlaunchspace.pm;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.Writer;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.impactlaunchspace.entity.Card;
 import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
-import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.project.ProjectService;
 
 @Controller
@@ -85,6 +96,10 @@ public class ProjectManagementController {
 		ArrayList<String> activitylog = pmService.retrieveActivityLog(board_id);
 		Collections.reverse(activitylog);
 		model.addAttribute("activitylog", activitylog);
+		
+		File folder = new File("src/main/webapp/resources/storage/" +  project_name + "_" + project_proposer);
+		File[] listOfFiles = folder.listFiles();
+		model.addAttribute("filesList", listOfFiles);
 		
 		return "projectmanagement";
 	}
@@ -177,7 +192,7 @@ public class ProjectManagementController {
 		
 		if(from.equals("sortableInProgress")){
 			from = "In Progress";
-		}else if(from.equals("sortableToDo ")){
+		}else if(from.equals("sortableToDo")){
 			from = "Todo";
 		}else{
 			from = "Done";
@@ -185,15 +200,76 @@ public class ProjectManagementController {
 		
 		if(to.equals("sortableInProgress")){
 			to = "In Progress";
-		}else if(to.equals("sortableToDo ")){
+		}else if(to.equals("sortableToDo")){
 			to = "Todo";
 		}else{
 			to = "Done";
 		}
 		
-		
-		String activity = username + " moved " + card_title + " from " + from + " to " + to + " at "+ timestamp ; 
+		String activity = username + " moved " + card_title + " from " + from + " to " + to + " at "+ timestamp; 
 		pmService.updateActivity(activity, Integer.toString(board_id), username);
-		
 	}
+	
+	@RequestMapping(value = "/uploadProjectFiles", method = RequestMethod.POST)
+	public String processUploadProjectFiles(@RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username, 
+			@RequestParam String board_id, @RequestParam("files") MultipartFile[] files) {
+		
+		if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			String filesName = "";
+			for(MultipartFile mpf:files){	
+				Writer output = null; 
+				try {
+					filesName += mpf.getOriginalFilename() + ";";
+					mpf.transferTo(new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer + "/" + mpf.getOriginalFilename()));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			String activity = username + " uploaded " + files.length + "files (" + filesName  + ") at "+ timestamp; 
+			pmService.updateActivity(activity, board_id, username);
+		}
+		return "projectmanagement";
+	}
+	
+	@RequestMapping(value = "/saveFile", method = RequestMethod.GET)
+	public void saveFile(@RequestParam File file, @RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username,
+			HttpServletResponse response, HttpServletRequest request) {
+		FileInputStream inputStream;
+		if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			try {
+				inputStream = new FileInputStream(file);
+				response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+				response.setHeader("Content-Length", String.valueOf(file.length()));
+				FileCopyUtils.copy(inputStream, response.getOutputStream());
+				inputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@RequestMapping(value = "/deleFile", method = RequestMethod.POST)
+	public void deleteFile(@RequestParam File file, @RequestParam("project_name") String project_name,
+			@RequestParam("project_proposer") String project_proposer, @RequestParam("username") String username, 
+			@RequestParam String board_id, HttpServletResponse response, HttpServletRequest request) {
+		if(projectService.retrieveSpecificMember(project_name, project_proposer, username)!=null){
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
+			try {
+				Path path = Paths.get(file.getPath());
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String activity = username + " deleted file (" + file.getName() + ") at "+ timestamp; 
+			pmService.updateActivity(activity, board_id, username);
+		}
+	}
+	
 }

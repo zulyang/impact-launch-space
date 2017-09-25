@@ -40,7 +40,7 @@ public class ProfileController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	NotificationService notificationService;
 
@@ -112,9 +112,9 @@ public class ProfileController {
 		// editing
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
-		
+
 		String username = (String) request.getSession().getAttribute("username");
-		
+
 		ArrayList<CountryOfOperation> coos = profileService
 				.retrieveCountriesOfOperations((String) request.getSession().getAttribute("username"));
 		ArrayList<String> organization_countriesofoperation_list = new ArrayList<String>();
@@ -134,16 +134,22 @@ public class ProfileController {
 				organization_countriesofoperation_list);
 		request.getSession().setAttribute("country_list", profileService.retrieveCountryList());
 		request.getSession().setAttribute("job_sector_list", profileService.retrieveJobSectorList());
-		
+
 		int unreadCount = notificationService.countUnreadNotifications(username);
-	    model.addAttribute("unreadCount", unreadCount);
-		
+		model.addAttribute("unreadCount", unreadCount);
+
 		return "profile/organization/" + "edit_organization_profile";
 	}
 
 	@RequestMapping(value = "/editprofile-organization", method = RequestMethod.GET)
 	public String showEditProfilePageOrganization(HttpServletRequest request) {
 		return "editprofile-organization";
+	}
+
+	// Setup for Individuals
+	@RequestMapping(value = "/setup-individual-profile-picture", method = RequestMethod.GET)
+	public String showSetupProfilePicturePageForIndividualProfile() {
+		return "profile/individual/" + "setup_individual_profile_picture";
 	}
 
 	// Setup for Individuals
@@ -164,23 +170,9 @@ public class ProfileController {
 			@RequestParam ArrayList<String> selected_projectareas, @RequestParam int minimumHours,
 			@RequestParam int maximumHours, @RequestParam ArrayList<String> selected_preferredcountries,
 			@RequestParam String personalBio, @RequestParam String contactDetails,
-			@RequestParam("profilePicture") MultipartFile profilePicture,
 			@RequestParam("documents") MultipartFile[] documents, ModelMap model, HttpServletRequest request) {
 
-		File profilePictureFile = null;
-		if(profilePicture.getOriginalFilename().isEmpty()){
-			profilePictureFile = new File("src/main/webapp/resources/img/astronaut.png");
-		}else{
-			profilePictureFile = new File(profilePicture.getOriginalFilename());
-			
-			try {
-				profilePicture.transferTo(profilePictureFile);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		File profilePictureFile = new File("src/main/webapp/resources/img/astronaut.png");
 
 		ArrayList<File> documentList = new ArrayList<>();
 		if (documents != null) {
@@ -189,7 +181,7 @@ public class ProfileController {
 				try {
 					document.transferTo(documentFile);
 				} catch (IllegalStateException | IOException e) {
-					//first document error
+					// first document error
 				}
 				documentList.add(documentFile);
 			}
@@ -250,6 +242,8 @@ public class ProfileController {
 
 		model.put("username", username);
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
+		request.getSession().setAttribute("myacccount-individual", profileService.getIndividualAccountDetails(username));
+		System.out.println("first try: "+profileService.getIndividualAccountDetails(username).getUsername());
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(username));
 
@@ -258,8 +252,8 @@ public class ProfileController {
 		request.getSession().setAttribute("preferredProjectArea",
 				profileService.retrievePreferredProjectArea(username));
 		request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username));
-		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		return "profile/individual/" + "view_own_individual_profile";
+		
+		return "profile/individual/" + "setup_individual_profile_picture";
 	}
 
 	@RequestMapping(value = "/individualprofile1", method = RequestMethod.GET)
@@ -309,58 +303,56 @@ public class ProfileController {
 	// Dashboard and Edit Pages for Individual Profiles
 	@RequestMapping(value = "/view-my-profile", method = RequestMethod.GET)
 	public String showOwnProfile(HttpServletRequest request, ModelMap model) {
-		String username = (String)request.getSession().getAttribute("username");
-		
+		String username = (String) request.getSession().getAttribute("username");
+
 		User user = userService.retrieveUser(username);
-		
-		if(user.getUser_type().equals("organization")){
+
+		if (user.getUser_type().equals("organization")) {
 			return "profile/organization/" + "view_own_organization_profile";
-		}else{
+		} else {
 			return "profile/individual/" + "view_own_individual_profile";
 		}
-		
+
 	}
-	
+
 	@RequestMapping(value = "/view-profile", method = RequestMethod.GET)
-	public String showMyProfilePage(@RequestParam("username") String username, HttpServletRequest request, ModelMap model) {
+	public String showMyProfilePage(@RequestParam("username") String username, HttpServletRequest request,
+			ModelMap model) {
 		User user = userService.retrieveUser(username);
 		String loggedin_username = (String) request.getSession().getAttribute("username");
 		int unreadCount = notificationService.countUnreadNotifications(username);
-	    model.addAttribute("unreadCount", unreadCount);
-	    
-		if(user != null){
+		model.addAttribute("unreadCount", unreadCount);
+
+		if (user != null) {
 			String userType = user.getUser_type();
-			
-			if(username.equals(loggedin_username)){
-				
+
+			if (username.equals(loggedin_username)) {
+
 				User me = userService.retrieveUser(loggedin_username);
-				
-				if(me.getUser_type().equals("organization")){
+
+				if (me.getUser_type().equals("organization")) {
 					return "profile/organization/" + "view_own_organization_profile";
-				}else{
+				} else {
 					return "profile/individual/" + "view_own_individual_profile";
 				}
 			}
-			
-			if(!username.equals(loggedin_username) && userType.equals("organization")){
+
+			if (!username.equals(loggedin_username) && userType.equals("organization")) {
 				OrganizationAccount organization = profileService.getOrganizationAccountDetails(username);
-				
+
 				request.getSession().setAttribute("profileemail", user.getEmail());
-				request.getSession().setAttribute("organization",organization);
+				request.getSession().setAttribute("organization", organization);
 				request.getSession().setAttribute("countriesOfOperation",
 						profileService.retrieveCountriesOfOperations(username));
 				request.getSession().setAttribute("jobSectorsOrganization",
 						profileService.retrieveOrganizationJobSectors(username));
 				return "profile/organization/" + "view_public_organization_profile";
-			}else if(userType.equals("individual")){
+			} else if (userType.equals("individual")) {
 				IndividualAccount individual = profileService.getIndividualAccountDetails(username);
 				boolean isPublic = individual.isPublicProfile();
-				
-				
-			    
-				request.getSession().setAttribute("individual",
-						individual);
-				
+
+				request.getSession().setAttribute("individual", individual);
+
 				request.getSession().setAttribute("jobSectorsIndividual",
 						profileService.retrieveIndividualJobSectors(username));
 
@@ -370,15 +362,14 @@ public class ProfileController {
 						profileService.retrievePreferredJobSectors(username));
 				request.getSession().setAttribute("preferredProjectArea",
 						profileService.retrievePreferredProjectArea(username));
-				request.getSession().setAttribute("userSkills",
-						profileService.retrieveAllSkillsOfUser(username));
-				
-				if(isPublic){
+				request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username));
+
+				if (isPublic) {
 					return "profile/individual/" + "view_public_individual_profile";
-				}else{
+				} else {
 					return "profile/individual/" + "view_private_individual_profile";
 				}
-				
+
 			}
 		}
 		return "profile/individual/" + "view_own_individual_profile";
@@ -396,9 +387,9 @@ public class ProfileController {
 		request.getSession().setAttribute("project_area_list", profileService.retrieveProjectAreaList());
 		request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
 		request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
-		
+
 		String username = (String) request.getSession().getAttribute("username");
-		
+
 		// sets up individual user's current skills to be shown in edit page
 		ArrayList<UserSkill> userskills = profileService
 				.retrieveAllSkillsOfUser(((String) request.getSession().getAttribute("username")));
@@ -465,8 +456,8 @@ public class ProfileController {
 			}
 		}
 		int unreadCount = notificationService.countUnreadNotifications(username);
-	    model.addAttribute("unreadCount", unreadCount);
-	    
+		model.addAttribute("unreadCount", unreadCount);
+
 		request.getSession().setAttribute("individual_preferredjobsector_list", individual_preferredjobsector_list);
 		request.getSession().setAttribute("individual_preferredprojectarea_list", individual_preferredprojectarea_list);
 		request.getSession().setAttribute("individual_preferredcountry_list", individual_preferredcountry_list);
@@ -494,9 +485,9 @@ public class ProfileController {
 		String username = individual.getUsername();
 		String email = individual.getEmail();
 		// to-do
-		if(organization.length() == 0){ 
-	      organization = null; 
-	    } 
+		if (organization.length() == 0) {
+			organization = null;
+		}
 
 		IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
 				individual.getEmail(), dateOfBirth, firstName, lastName, country, jobTitle, minimumVolunteerHours,
@@ -596,7 +587,8 @@ public class ProfileController {
 
 		}
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		request.getSession().setAttribute("myacccount-individual", profileService.getIndividualAccountDetails(username));
+		request.getSession().setAttribute("myacccount-individual",
+				profileService.getIndividualAccountDetails(username));
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(username));
 		request.getSession().setAttribute("preferredProjectArea",
@@ -611,6 +603,7 @@ public class ProfileController {
 	@RequestMapping(value = "/edit-individual-profile-pic", method = RequestMethod.POST)
 	public String processUpdateIndividualProfilePicture(@RequestParam("profilePicture") MultipartFile profilePicture,
 			HttpServletRequest request) {
+
 		if (profilePicture.isEmpty() || profilePicture == null) {
 			System.out.println("Is null or empty");
 			return "profile/individual/" + "edit_individual_profile";
@@ -626,8 +619,9 @@ public class ProfileController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			IndividualAccount individual = (IndividualAccount) request.getSession().getAttribute("myacccount-individual");
-			System.out.println("Individual "+individual);
+			IndividualAccount individual = (IndividualAccount) request.getSession()
+					.getAttribute("myacccount-individual");
+			System.out.println("Individual " + individual);
 			IndividualAccount updatedIndividualAccount = new IndividualAccount(individual.getUsername(),
 					individual.getEmail(), individual.getDateOfBirth(), individual.getFirst_name(),
 					individual.getLast_name(), individual.getCountry(), individual.getJobTitle(),
@@ -704,7 +698,6 @@ public class ProfileController {
 		}
 	}
 
-
 	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
 	public void showFiles(@RequestParam File file, HttpServletResponse response, HttpServletRequest request)
 			throws ServletException {
@@ -729,5 +722,5 @@ public class ProfileController {
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
 		return "profile/individual/" + "edit_individual_profile";
 	}
-	
+
 }

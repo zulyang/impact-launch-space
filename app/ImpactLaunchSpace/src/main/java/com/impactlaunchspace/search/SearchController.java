@@ -1,7 +1,5 @@
 package com.impactlaunchspace.search;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,17 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.impactlaunchspace.entity.IndividualAccount;
-import com.impactlaunchspace.entity.OrganizationAccount;
+import com.google.gson.Gson;
 import com.impactlaunchspace.entity.Project;
-import com.impactlaunchspace.entity.ProjectTargetArea;
 import com.impactlaunchspace.entity.UserOfferedResource;
-import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.project.ProjectService;
 import com.impactlaunchspace.resource.ResourceService;
-import com.impactlaunchspace.users.UserService;
 
 @Controller
 public class SearchController {

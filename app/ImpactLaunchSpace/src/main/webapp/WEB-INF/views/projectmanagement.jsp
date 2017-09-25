@@ -1,5 +1,7 @@
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="java.text.DecimalFormat" %>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -20,6 +22,14 @@
 <link rel='stylesheet'
 	href='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.css' />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>
+<script src="//blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-image.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
 <script
@@ -28,6 +38,7 @@
 	src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
 <script
 	src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
+
 </head>
 
 <body>
@@ -46,7 +57,7 @@
 						<hr />
 
 						<li class="menu-title">Members</li>
-						<a class="btn btn-primary btn-bordered" id="manageusers"
+						<a class="btn btn-manage-users btn-bordered" id="manageusers"
 							href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
 
 						<c:forEach items="${member_list}" var="item">
@@ -67,16 +78,15 @@
 										</a>
 									</c:otherwise>
 								</c:choose>
-								<!-- AMANDA SEE HERE PLS -->
 								<c:choose>
 									<c:when test="${item.getProject_role().equals(\"admin\")}">
-										<i class="fa  fa-user-circle-o"></i>
+										<i class="fa fa-trophy" style="color: #FCC314"></i>
 									</c:when>
 									<c:when test="${item.getProject_role().equals(\"member\")}">
 										<i class="fa fa-handshake-o"></i>
 									</c:when>
 									<c:when test="${item.getProject_role().equals(\"invited\")}">
-										<i class="fa fa-user"></i>
+										<i class="fa fa-user" style="color: #bbbbbb"></i>
 									</c:when>
 								</c:choose>
 
@@ -269,6 +279,71 @@
 
 									<div role="tabpanel" class="tab-pane fade" id="documents">
 										<h3 class="tabs-header">DOCUMENTS</h3>
+										<div id="fileUploadDiv" class="container">
+									        <h1>Project Documents</h1>
+									        
+									        <div id="dropzone" class="dropzone">
+									            <div class="fileupload_wrapper">
+									                Drop files here, or
+									                <label class="fileupload_label">browse for files
+									                    <input id="fileupload" type="file" name="files" multiple="multiple">
+									                </label>
+									            </div>
+									        </div>
+									
+									        <div id="files" class="thumbnails clearfix"></div>
+									
+									        <button id="uploadFiles" type="button" class="btn btn-primary">Upload</button>
+							        </div>
+							        <div id="fileListDiv">
+								        <table>
+								        	<tr>
+								        		<td>Name</td>
+								        		<td>Date Modified</td>
+								        		<td>Size</td>
+								        	</tr>
+											<c:forEach items="${filesList}" var="file">
+												<tr>
+													<td>${file.getName()}</td>
+													<td>
+														<jsp:useBean id="mDate" class="java.util.Date"/>
+														<c:set target="${mDate}" property="time" value="${file.lastModified()}"/>
+														<fmt:formatDate value="${mDate}" pattern="dd/MM/yyyy hh:mm" />
+													</td>
+													<td>
+														<c:set var="fileSize" value="${file.length()}"/>
+														<%
+															String fileSize = String.valueOf(pageContext.getAttribute("fileSize")); 
+															Long size = Long.parseLong(fileSize);
+							
+														    double b = size;
+														    double k = size/1024.0;
+														    double m = ((size/1024.0)/1024.0);
+														    double g = (((size/1024.0)/1024.0)/1024.0);
+								
+														    DecimalFormat dec = new DecimalFormat("#0.00");
+														    if ( g>1 ) {
+														    	fileSize = dec.format(g) + " GB";
+														    } else if ( m>1 ) {
+														    	fileSize = dec.format(m) + " MB";
+														    } else if ( k>1 ) {
+														    	fileSize = dec.format(k) + " KB";
+														    } else {
+														    	fileSize = dec.format(b) + " Bytes";
+														    }
+														  pageContext.setAttribute("fileSize", fileSize);
+														%>
+														<c:out value="${fileSize}"/>
+													</td>
+													<td>
+														<a href="/saveFile?file=${file}&project_name=${projectName}&project_proposer=${project_proposer}&username=${username}"><button type="button" class="btn btn-success">Download</button></a>
+													<td>
+														<button type="button" class="btn btn-error" onClick="deleteFile('${file}')">Delete</button>
+													</td>
+												</tr>
+											</c:forEach>
+										</table>
+							        </div>
 									</div>
 
 									<div role="tabpanel" class="tab-pane fade" id="group-chat">
@@ -534,6 +609,7 @@
 	$(document).ready(function() {
 		// page is now ready, initialize the calendar...
 		initialiseKB();
+		uploadFile();
 		//refreshActivityLog();
 		$('#fullcalendar').fullCalendar({
 			// put your options and callbacks here
@@ -702,10 +778,92 @@
 
 	$(document).ajaxSuccess(function() {
 		initialiseKB();
+		uploadFile();
 	});
 
 	$(document).ajaxError(function() {
 		initialiseKB();
+		uploadFile();
 	});
+</script>
+
+<script>
+	var project_name = $('#project_name').val();
+	var project_proposer = $('#project_proposer').val();
+	var username = $('#username').val();
+	var board_id = $('#board_id').val();
+   var filesList = new Array();
+   var formData = new FormData();
+   function uploadFile(){
+   	 $(function () {
+            $('#fileupload').fileupload({
+                autoUpload: false,
+                dropZone: $('#dropzone')
+            }).on('fileuploadadd', function (e, data) {
+                data.context = $('<div/>', { class: 'thumbnail pull-left' }).appendTo('#files');
+                $.each(data.files, function (index, file) {
+                    filesList.push(data.files[index]);
+                    var node = $('<p/>').append($('<span/>').text(file.name).data(data));
+                    node.appendTo(data.context);
+                });
+            }).on('fileuploadprocessalways', function (e, data) {
+                var index = data.index,
+                    file = data.files[index],
+                    node = $(data.context.children()[index]);
+                if (file.preview) {
+                    node.prepend('<br>').prepend(file.preview);
+                }
+                if (file.error) {
+                    node.append('<br>').append($('<span class="text-danger"/>').text(file.error));
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+   
+	     $("#uploadFiles").click(function(event) {
+	         if (filesList.length > 0) {
+	             event.preventDefault();
+				formData.append('project_name', project_name);
+				formData.append('project_proposer', project_proposer);
+				formData.append('username', username);
+				formData.append('board_id', board_id);
+				
+	             for (var i = 0; i<filesList.length ; i++) {
+	                 formData.append('files', filesList[i]);
+	             }
+	                 	$.ajax({
+	                 		url : 'uploadProjectFiles',
+	                 		type: "POST",
+	                 		cache: false,
+	             		    contentType: false,
+	             		    processData: false,
+	                 		data: formData,
+	                 		success:function(data){
+	                 			$("#fileUploadDiv").load(window.location.href + " #fileUploadDiv");
+	                 			$("#fileListDiv").load(window.location.href + " #fileListDiv");
+	                 			$("#activitylogtablediv").load(window.location.href + " #activitylogtablediv");
+	                 		}
+	                 	});
+	         } else {
+	             alert("Please select files to upload");
+	         }
+	     });
+	 });
+   }
+
+	function deleteFile(file) {
+		var result = confirm("Are you sure you want to delete this file?");
+		if (result) {
+		
+			$.post('deleFile', {
+	    		file:file,
+	    		project_name:project_name,
+	    		project_proposer:project_proposer,
+	    		username:username,
+	    		board_id:board_id
+	    	});
+	    	$("#fileListDiv").load(window.location.href + " #fileListDiv");
+	    	$("#activitylogtablediv").load(window.location.href + " #activitylogtablediv");
+		}
+	};
 </script>
 </html>

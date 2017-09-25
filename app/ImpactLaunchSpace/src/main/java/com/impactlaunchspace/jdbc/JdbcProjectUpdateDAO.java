@@ -58,21 +58,30 @@ public class JdbcProjectUpdateDAO implements ProjectUpdateDAO{
 			}
 		}
 	}
-	public void remove(int update_id){
-		String sql = "DELETE FROM PROJECT_UPDATES WHERE update_id = ?";
+	public void remove(String project_name, String project_proposer, String update_title, String posted_time){
+		String sql = "DELETE FROM PROJECT_UPDATES WHERE project_name = ? AND project_proposer = ? AND update_title = ? AND posted_time = ?";
 		Connection conn = null;
 
 		try {
-
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			java.util.Date utilDate = dateFormat.parse(posted_time);
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			long time = sqlDate.getTime();
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, update_id);
+			ps.setString(1, project_name);
+			ps.setString(2, project_proposer);
+			ps.setString(3, update_title);
+			ps.setTimestamp(4, new Timestamp(time));
 			ps.executeUpdate();
 			ps.close();
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 
+		}catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (conn != null) {
 				try {

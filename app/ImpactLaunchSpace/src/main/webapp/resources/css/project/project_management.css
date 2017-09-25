@@ -1,36 +1,40 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+
 @import url(http://fonts.googleapis.com/css?family=Titillium+Web);
+
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
 @import url(https://fonts.googleapis.com/css?family=Quicksand);
 
 #sortableToDo, #sortableInProgress, #sortableDone {
-    border: 1px solid #eee;
-    width: 30%;
-    min-height: 20px;
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
-    background: #fff;
-    margin-top: 2rem;
-  }
-  #sortableToDo li, #sortableInProgress li, #sortableDone li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    width: auto;
-    background: #fff;
-  }
-  
-  .project-management-container{
-  margin-top: 10rem;
-  margin-bottom: 5rem;
-  margin-left: auto;
-  margin-right: 20%;
+	border: 1px solid #eee;
+	width: 30%;
+	min-height: 20px;
+	list-style-type: none;
+	margin: 0;
+	padding: 5px 0 0 0;
+	float: left;
+	margin-right: 10px;
+	background: #fff;
+	margin-top: 2rem;
 }
 
-.kanban-header{
+#sortableToDo li, #sortableInProgress li, #sortableDone li {
+	margin: 0 5px 5px 5px;
+	padding: 5px;
+	font-size: 1.2em;
+	width: auto;
+	background: #fff;
+}
+
+.project-management-container {
+	margin-top: 10rem;
+	margin-bottom: 5rem;
+	margin-left: auto;
+	margin-right: 20%;
+}
+
+.kanban-header {
 	text-align: center;
 	font-size: 1.3em;
 	text-transform: uppercase;
@@ -47,21 +51,20 @@
 	width: 120px;
 }
 
-.side-calendar-container{
+.side-calendar-container {
 	width: 40rem;
 	height: 30rem;
 	background: #fff;
 	padding: 3rem;
-	
 }
 
-.full-calendar-container{
+.full-calendar-container {
 	width: 100%;
 	padding: 3rem;
 	background: #fff;
 }
 
-.project-management-container .nav-tabs > li > a {
+.project-management-container .nav-tabs>li>a {
 	color: #313a46;
 	text-transform: uppercase;
 	font-weight: 600;
@@ -69,66 +72,66 @@
 	font-size: 13px;
 }
 
-.project-management-container .tabs-bordered > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover, .nav-justified > li.active > a{
+.project-management-container .tabs-bordered>li.active>a, .nav-tabs>li.active>a:focus,
+	.nav-tabs>li.active>a:hover, .nav-justified>li.active>a {
 	color: #1ea69a;
 	margin-bottom: -1px;
 	border-bottom: 2px solid #1ea69a !important;
 	border-left: none;
 	border-right: none;
 	border-top: none;
-	
 }
 
-.project-management-container .tabs-bordered{
+.project-management-container .tabs-bordered {
 	/* border-bottom: 2px solid rgba(152, 166, 173, 0.2) !important; */
 	border-bottom: 0.2em solid #311957 !important;
 }
 
-.project-management-container .nav-tabs .nav-justified{
+.project-management-container .nav-tabs .nav-justified {
 	width: 100%;
 }
 
-.side-menu{
+.side-menu {
 	width: 20%;
-    z-index: 10;
-    background: #ffffff;
-    bottom: 0;
-    margin-top: 0;
-    padding-bottom: 30px;
-    position: fixed;
-    top: 3.5em;
-    border-left: 1px solid #e2e2e2;
-    right: 0;
+	z-index: 10;
+	background: #ffffff;
+	bottom: 0;
+	margin-top: 0;
+	padding-bottom: 30px;
+	position: fixed;
+	top: 3.5em;
+	border-left: 1px solid #e2e2e2;
+	right: 0;
 }
 
-#sidebar-menu{
+#sidebar-menu {
 	padding-top: 10px;
 }
 
-#wrapper{
+#wrapper {
 	height: 100%;
-    overflow: hidden;
-    width: 100%;
+	overflow: hidden;
+	width: 100%;
 }
 
-#sidebar-menu .menu-title{
+#sidebar-menu .menu-title {
 	padding: 12px 20px !important;
-    letter-spacing: .05em;
-    pointer-events: none;
-    cursor: default;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: #98a6ad;
-    font-family: 'Source Sans Pro', sans-serif;
+	letter-spacing: .05em;
+	pointer-events: none;
+	cursor: default;
+	font-size: 11px;
+	text-transform: uppercase;
+	color: #98a6ad;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
-#sidebar-menu .btn-primary {
+#sidebar-menu .btn-manage-users {
 	color: #348cd4 !important;
 	border: 2px solid #348cd4 !important;
 	padding: 2px 10px !important;
-    height: 2em;
-    border-radius: 2em;
-    font-size: 8pt;
+	height: 2em;
+	border-radius: 2em;
+	font-size: 8pt;
 	float: right;
 	margin-right: 1em;
 	margin-top: -2.8em;
@@ -136,32 +139,34 @@
 	letter-spacing: 0.1em;
 }
 
-#sidebar-menu .btn-primary:hover{
+#sidebar-menu .btn-manage-users:hover {
 	color: #fff !important;
 	background: #348cd4 !important;
 }
 
-#sidebar-menu .btn-bordered{
+#sidebar-menu .btn-bordered {
 	background: transparent !important;
 }
 
-#sidebar-menu .project-description{
+#sidebar-menu .project-description {
 	padding-left: 1.5em;
 	padding-right: 1.5em;
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
-#sidebar-menu .members-profile-icon{
+#sidebar-menu .members-profile-icon {
 	width: 2.5em;
 	height: 2.5em;
 	border-radius: 50%;
-	background: black;
+	background: white;
 	margin-left: 1.5em;
-	margin-right: 1.5em;
+	margin-right: 1.0em;
 	font-family: 'Source Sans Pro', sans-serif;
+	margin-bottom: 0.5em;
+	border: 1px solid lightgray;
 }
 
-.project-management-container .pms-header{
+.project-management-container .pms-header {
 	text-align: center;
 	font-size: 1.3em;
 	text-transform: uppercase;
@@ -169,6 +174,37 @@
 	height: 3rem;
 }
 
-.project-management-container .tabs-header{
+.project-management-container .tabs-header {
 	font-family: 'Quicksand', sans-serif;
+}
+
+.dropzone {
+	border: 1px dashed #cccccc;
+	padding: 30px;
+	background: #fff;
+}
+
+.dropzone .fileupload_label #fileupload {
+	display: none;
+}
+
+.project-management-container form, #progress, .project-management-container input, .project-management-container .form-actions, #files {
+	margin: 10px 0;
+}
+
+.thumbnail {
+	margin: 10px 10px 0 0;
+}
+
+.username_link_profile{
+	text-decoration: none !important;
+	cursor: pointer;
+	margin-right: 0.3em;
+	color: #311957;
+}
+
+.username_link_profile:hover{
+	color: darkcyan;
+	font-style: italic;
+	border-bottom: 1px dotted; 
 }

@@ -36,51 +36,50 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
-	
 	<link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/froala_editor.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/froala_editor.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/froala_style.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/froala_style.min.css'
 	rel='stylesheet' type='text/css' />
 
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/image.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/image.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/video.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/video.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/char_counter.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/char_counter.min.css'
 	rel='stylesheet' type='text/css' />
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/line_breaker.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/line_breaker.min.css'
 	rel='stylesheet' type='text/css' />	
 <link
-	href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/css/plugins/table.min.css'
+	href='<%=request.getContextPath()%>/resources/lib/froala-editor/css/plugins/table.min.css'
 	rel='stylesheet' type='text/css' />		
 	
 
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/froala_editor.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/froala_editor.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/video.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/video.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/image.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/image.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/url.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/url.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/font_size.min.js'></script>	
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/font_size.min.js'></script>	
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/line_breaker.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/line_breaker.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/lists.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/lists.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/char_counter.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/char_counter.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/table.min.js'></script>
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/table.min.js'></script>
 <script type='text/javascript'
-	src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.0/js/plugins/align.min.js'></script>	
+	src='<%=request.getContextPath()%>/resources/lib/froala-editor/js/plugins/align.min.js'></script>	
 
 <script>
 function loader() {
@@ -215,17 +214,27 @@ function loader() {
 							</div>
 							<div role="tabpanel" class="tab-pane" id="updates">
 								<div class="update-information">
-									<h1 class="section-title">UPDATES</h1>
+									<h1 class="section-title">UPDATES
+										<c:choose>
+											 	<c:when test="${username.equals(selected_project.getProject_proposer()) }">
+													<a href="/publish-update?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}" class="new-update-button bg-gradient2"><span><i class="fa fa-plus"></i> New</span></a>
+												</c:when>
+												<c:when test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer()) }">
+													<a href="/publish-update?project-name=${selected_project.getProject_name()}&project-proposer=${selected_project.getProject_proposer()}" class="new-update-button bg-gradient2"><span><i class="fa fa-plus"></i> New</span></a>
+												</c:when>
+										</c:choose>
+									</h1>
 									<!--update items-->
 									<c:if test="${project_updates.size() == 0 }">
 										<p>There are no updates published yet.</p>
 									</c:if>
+									<input type="hidden" id="update_size" value="${project_updates.size()}">
 									<%
 										int id = 0;
 									%>
 									<c:forEach items="${project_updates}" var="item">
 										<%++id;%>
-										<div class="update-post">
+										<div class="update-post" id="section<%=id%>">
 											<h4 id="name1<%=id%>" class="update-title">${item.getUpdate_title()}</h4>
 											<span id="time1<%=id%>" class="update-date">${item.getPosted_time()}</span>
 											<input id="time<%=id%>" type="hidden" value="${item.getPosted_time()}"/>
@@ -234,8 +243,18 @@ function loader() {
 												${item.getUpdate_contents()}
 											</div>
 											<textarea style="display:none;" id="post<%=id%>" >${item.getUpdate_contents()}</textarea>
-											 <a id="init<%=id%>" onclick="edit(this.id);" class="btn r-btn text-small">Edit</a>
-											 <a id="dest<%=id%>" onclick="save(this.id);" class="btn r-btn highlight text-small">Save</a>
+											 <c:choose>
+											 	<c:when test="${username.equals(selected_project.getProject_proposer()) }">
+													<div id="update_edit<%=id%>"><a id="init<%=id%>" onclick="edit(this.id);" class="btn r-btn text-small">Edit</a></div>
+													<div id="update_save<%=id%>"><a id="dest<%=id%>" onclick="save(this.id);" class="btn r-btn highlight text-small">Save</a></div>
+													<div id="update_remove<%=id%>"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn r-btn highlight text-small">Delete</a></div>
+												</c:when>
+												<c:when test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer()) }">
+													<div id="update_edit<%=id%>"><a id="init<%=id%>" onclick="edit(this.id);" class="btn r-btn text-small">Edit</a></div>
+													<div id="update_save<%=id%>"><a id="dest<%=id%>" onclick="save(this.id);" class="btn r-btn highlight text-small">Save</a></div>
+													<div id="update_remove<%=id%>"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn r-btn highlight text-small">Delete</a></div>
+												</c:when>
+											</c:choose>
 										</div>
 									</c:forEach>
 									<!--/update items-->
@@ -488,11 +507,20 @@ function loader() {
 
 		</div>
 	</div>
-	<!-- Template JS -->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/resources/js/main.js">
+	</script>	
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var update_list_size = $('#update_size').val();
+		for(i=0; i <= update_list_size; i++){
+			$('#update_edit'+i).show();
+			$('#update_save'+i).hide();
+		}
+		
+	});
 	</script>
-
 	<script>
 		
 		function apply(count) {
@@ -563,17 +591,46 @@ function loader() {
 					$(this).find("select,#personal_note,#selected_resource_desc").val('').end();
 				});
 				
+				$
+				
 				
 			});
 	
 	</script>
 	
 	<script>
+	function dele(id) {
+		var numId = id.substring(4);
+		$('div#update'+numId).hide();
+		$('textarea#post'+numId).hide();
+		$('#update_save'+numId).hide();
+		$('#update_edit'+numId).hide();
+		$('#update_remove'+numId).hide();
+		$('#name1'+numId).hide();
+		$('#time1'+numId).hide();
+		$('#section'+numId).hide();
+		
+		var name = $('#name' + numId).val();
+		var time = $('#time' + numId).val();
+		var project_proposer = $('#pp').val();
+		var project_name = $('#pn').val();
+		
+		
+		$.post('remove-project-update', {
+			name : name,
+			time : time,
+			project_proposer : project_proposer,
+			project_name : project_name
+		});		
+	}
+	
 	
 	function edit(id) {
 		var numId = id.substring(4);
 		$('div#update'+numId).hide();
 		$('#dest'+numId).show();
+		$('#update_save'+numId).show();
+		$('#update_edit'+numId).hide();
 		
         if (!$('textarea#post'+numId).data('froala.editor')) {
           $('textarea#post'+numId).froalaEditor();
@@ -583,14 +640,12 @@ function loader() {
 	function save(id) {
 		var numId = id.substring(4);
 		var post = $('#post' + numId).val();
-		var uid = $('#uid' + numId).val();
 		var name = $('#name' + numId).val();
 		var time = $('#time' + numId).val();
 		var project_proposer = $('#pp').val();
 		var project_name = $('#pn').val();
 		
 		$.post('edit-project-update', {
-			uid : uid,
 			post : post,
 			name : name,
 			time : time,
@@ -605,6 +660,8 @@ function loader() {
 		$('div#update'+numId).html(post);
 		$('div#update'+numId).show();
 		$('#init'+numId).show();
+		$('#update_edit'+numId).show();
+		$('#update_save'+numId).hide();
 	}
 	</script>
 </body>

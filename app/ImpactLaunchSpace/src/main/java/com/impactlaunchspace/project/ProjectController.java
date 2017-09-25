@@ -540,6 +540,13 @@ public class ProjectController {
 		String proposer = (String) request.getSession().getAttribute("username");
 
 		projectService.startProject(project_name, project_proposer);
+		
+		//create folder directory for project 
+		File file = new File("src/main/webapp/resources/storage/" + project_name + "_" + project_proposer);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+		
 	}
 
 	@RequestMapping(value = "/projectImageDisplay", method = RequestMethod.GET)
@@ -687,6 +694,22 @@ public class ProjectController {
 				update_contents);
 		projectService.publishUpdate(projectUpdate);
 		
+		String username = (String)request.getSession().getAttribute("username");
+		ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer);
+		String notification_message = "A new update has been posted for "
+				+ project_name;
+		notification_message += "%n";
+		notification_message += "%n";
+		notification_message += "You can view the new update in the Project Page.";
+		
+		for(ProjectMemberList member : member_list){
+			if(!member.getProject_member_username().equals(username)){
+				Notification notification = new Notification(member.getProject_member_username(), "admin",
+						"New Update Posted for " + project_name, notification_message, "message", "inbox");
+				notificationService.sendNotification(notification);
+			}
+		}
+		
 		redirectAttributes.addAttribute("project-name", project_name);
 		redirectAttributes.addAttribute("project-proposer", project_proposer);
 		return "redirect:" + "view-project";
@@ -706,4 +729,13 @@ public class ProjectController {
 		return "redirect:" + "view-project";
 	}
 	
+	@RequestMapping(value = "/remove-project-update", method = RequestMethod.POST)
+	public void removeProjectUpdate(@RequestParam String project_name,
+			@RequestParam String project_proposer,@RequestParam String time,
+			@RequestParam String name, HttpServletRequest request, 
+			ModelMap model) {
+		
+		projectService.deleteUpdate(project_name, project_proposer, name, time);
+
+	}
 }
