@@ -665,10 +665,6 @@ public class LoginController {
 		model.addAttribute("skillset", skillset);
 		return "search/" + "search_resource";
 	}
-	
-	@RequestMapping(value = "/projmanagement", method = RequestMethod.GET)
-	public String projManagement(ModelMap model) {
-		return "Kanban";
-	}
+
 
 }
