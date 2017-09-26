@@ -45,34 +45,63 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">Edit Organization Profile Form</div>
 						<div class="panel-body">
+							<div class="required" style="float: right;">* fields are
+								required</div>
+							<div class="edit_org_picture_container">
+								<img src="/imageDisplay?username=${username}"
+									class="circle_edit_org_profile_image">
+								<button type="button"
+									class="btn btn-info btn-lg edit_org_picture_btn"
+									data-toggle="modal" data-target="#myModal">Edit your
+									profile picture</button>
 
-							<div class="edit_org_pic" style="display: inline-block">
-								<form action="edit-organization-profile-pic" method="post"
-									enctype="multipart/form-data">
-									<img src="/imageDisplay?username=${organization.getUsername()}"
-										class="circle_edit_org_profile_image" height="64" width="64">
+								<div id="myModal" class="modal fade" role="dialog">
+									<div class="modal-dialog edit_profile_picture_modal">
 
-									<label for="editChooseOrgPic"
-										class="form-control btn btn-info edit_org_profile_save">Choose
-										A New Picture</label> <input
-										style="display: inline-block; visibility: hidden;" type="file"
-										name="profilePicture" id="editChooseOrgPic" /> <label
-										for="editUploadOrgPic"
-										class="form-control btn btn-info edit_org_profile_save">Upload</label>
-									<input style="display: inline-block; visibility: hidden;"
-										type="submit" value="Update picture" id="editUploadOrgPic" />
-								</form>
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">Crop your profile picture</h4>
+											</div>
+											<div class="modal-body">
+												<label for="editChooseOrgPic"
+													class="btn btn-info edit_org_profile_save"> <i
+													class="fa fa-picture-o" aria-hidden="true"
+													style="font: none;"></i>&nbspChoose your profile picture
+												</label> <input type="file" name="image" id="editChooseOrgPic"
+													style="visibility: hidden;" onchange="readURL(this);" />
+												<div class="image_container" id="image_container">
+													<img id="blah" src="#" alt="" />
+												</div>
+												<div id="crop_button"
+													class="btn btn-info image_cropper_btns">
+													<span><i class="fa fa-crop" aria-hidden="true"></i>&nbspCrop</span>
+												</div>
+												<div id="reset_button"
+													class="btn btn-warning image_cropper_btns">
+													<span><i class="fa fa-trash" aria-hidden="true"></i>&nbspReset
+														Image</span>
+												</div>
+												<div id="cropped_result" class="cropped_result"></div>
+												<div id="confirm_button"
+													class="btn btn-success image_cropper_btns"
+													onClick="reloadPage()">
+													<i class="fa fa-check" aria-hidden="true"></i>&nbsp<a
+														class="btn_text">Confirm photo</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<form class="form-horizontal edit_org_profile_container"
 								onsubmit="return checkFields();"
 								action="editprofile-organization" method="post">
 								
-								<p class="required pull-right">* fields are required.</p>
-								
-								<br>
 								<div class="form-group">
-									<label for="editOrgName" class="col-sm-2">Company Name<span class="required">*</span></label>
+									<label for="editOrgName" class="col-sm-2">Company Name<span
+										class="required">*</span></label>
 									<div class="col-sm-10">
 										<input type="text" id="editOrgName"
 											class="form-control edit_profileField"
@@ -80,7 +109,8 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgEmail" class="col-sm-2">Email<span class="required">*</span></label>
+									<label for="editOrgEmail" class="col-sm-2">Email<span
+										class="required">*</span></label>
 									<div class="col-sm-10">
 										<input class="form-control edit_profileField"
 											id="editOrgEmail" type="text" value="${user.getEmail()}"
@@ -95,8 +125,7 @@
 											id="contactNumberShown"
 											class="form-control contactNumberShown"
 											placeholder="Mobile Number"
-											value="${organization.getContactDetails()}"> 
-										<input
+											value="${organization.getContactDetails()}"> <input
 											id="editOrgContact" type="hidden" name="contactDetails"
 											value="${organization.getContactDetails()}">
 
@@ -114,7 +143,8 @@
 
 								<div class="form-group">
 									<label for="editCountry" class="col-sm-2">Countries Of
-										Operation<span class="required">*</span></label>
+										Operation<span class="required">*</span>
+									</label>
 									<div class="col-sm-10">
 										<select id="editCountry" style="width: 100%"
 											class="js-example-basic-multiple edit_profileField"
@@ -140,7 +170,8 @@
 
 								<div class="form-group">
 									<label for="editJobSectors" class="col-sm-2">Job
-										Sectors<span class="required">*</span></label>
+										Sectors<span class="required">*</span>
+									</label>
 									<div class="col-sm-10">
 										<select id="editJobSectors" style="width: 100%"
 											class="js-example-basic-multiple2 edit_profileField"
@@ -184,6 +215,88 @@
 	<script
 		src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
+	<script type="text/javascript" defer>
+		function reloadPage() {
+			location.reload();
+		}
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+
+				var reader = new FileReader();
+				reader.onload = function(e) {
+
+					$('#blah').attr('src', e.target.result);
+
+				};
+				reader.readAsDataURL(input.files[0]);
+				setTimeout(initCropper, 1000);
+			}
+		}
+		function initCropper() {
+			var image = document.getElementById('blah');
+			var cropper = new Cropper(image, {
+				aspectRatio : 1 / 1,
+				crop : function(e) {
+					//console.log(e.detail.x);
+					//console.log(e.detail.y);
+				}
+			});
+
+			document.getElementById('reset_button').addEventListener('click',
+					function() {
+						cropper.reset();
+						cropper.clear();
+						cropper.destroy();
+						$('#blah').removeAttr('src');
+						var clone = $('#blah').clone();
+						$('#blah').remove();
+						$('#image_container').append(clone);
+
+						$('#cropped_result').children()[0].remove();
+					})
+
+			// On crop button clicked
+			document
+					.getElementById('crop_button')
+					.addEventListener(
+							'click',
+							function() {
+								var imgurl = cropper.getCroppedCanvas()
+										.toDataURL();
+								var img = document.createElement("img");
+								img.src = imgurl;
+
+								document.getElementById("cropped_result")
+										.appendChild(img);
+								document.getElementById("cropped_result").childNodes[0]
+										.setAttribute(
+												"style",
+												"border-radius: 50%;width: 250px;display: flex;margin-left: auto;margin-right: auto;");
+							})
+
+			document.getElementById('confirm_button').addEventListener('click',
+					function() {
+						cropper.getCroppedCanvas().toBlob(function(blob) {
+							var formData = new FormData();
+							formData.append('profilePicture', blob);
+							// Use `jQuery.ajax` method
+							$.ajax('edit-organization-profile-pic', {
+								method : "POST",
+								data : formData,
+								processData : false,
+								contentType : false,
+								success : function() {
+									console.log('Upload success');
+								},
+								error : function() {
+									console.log('Upload error');
+								}
+							});
+						});
+					})
+		}
+	</script>
 	<script type="text/javascript">
 		function checkFields() {
 			var contactNumber = document.getElementById("contactNumberShown").value;
