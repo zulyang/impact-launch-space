@@ -40,6 +40,7 @@
 						}
 						break;
 					}
+					response.sendRedirect("/");
 				}
 			} else {
 				response.sendRedirect("/");
