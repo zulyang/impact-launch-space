@@ -22,3 +22,7 @@
 	font-size: 15pt;
 	font-weight: bold;
 }
+
+.intl-tel-input .country-list {
+	width: 1400%;
+}

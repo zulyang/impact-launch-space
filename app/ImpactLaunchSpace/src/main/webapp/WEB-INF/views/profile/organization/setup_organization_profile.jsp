@@ -45,19 +45,7 @@
 						class="form-horizontal org_profile_form">
 						                        
                         <h3 class="info_header">Company Information</h3>
-						
-						<div class="form-group">
-							<div class="col-lg-12">
-                                <div id="profile_upload_button" class="profile_upload_button"
 
-									style="margin-left: auto; margin-right: auto;"
-									onclick="uploadFile()">Upload a display picture</div>
-								<div style='height: 0px; width: 0px; overflow: hidden;'>
-									<input id="uploadFile" name="profilePicture" type="file"
-										value="upload" onchange="sub(this)" style="width: 100%" />
-								</div>
-							</div>
-						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
 								<input type="text" name="username" value="${username}" readonly
@@ -107,8 +95,8 @@
 						</div>
 						<div class="form-group">
 							<div class="col-lg-12">
-								<input name="contactDetailsShown" type="tel" id="contactNumberShown"
-									style="width: 100%" placeholder="Office telephone number">
+								<input name="contactDetailsShown" type="tel" id="contactNumberShown" class="form-control profileField"
+									style="width: 308%" placeholder="Office telephone number">
 								<input id="contactNumber" type="hidden" name="contactDetails">
 							</div>
 						</div>
@@ -141,11 +129,13 @@
 		}
 
 		function checkFields() {
-			var contactNumber = document.getElementById("contactNumber").value;
+			var contactNumber = document.getElementById("contactNumberShown").value;
 
-			if (/^\d+$/.test(contactNumber) === false || contactNumber.length > 20) {
-				alert('Please enter a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
-				return false;
+			if (contactNumber !== "") {
+				if (contactNumber.indexOf(' ') >= 0){
+					alert('Please do not enter spaces in your contact number.')
+					return false;
+				}
 			}
 		}
 	</script>

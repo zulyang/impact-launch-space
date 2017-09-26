@@ -66,7 +66,7 @@
 						<hr />
 
 						<li class="menu-title">Members</li>
-						<a class="btn btn-manage-users btn-bordered" id="manageusers" 
+						<a class="btn btn-manage-users btn-bordered" id="manageusers"
 							href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
 
 						<c:forEach items="${member_list}" var="item">
@@ -87,16 +87,16 @@
 										</a>
 									</c:otherwise>
 								</c:choose>
-								
+
 								<c:choose>
 									<c:when test="${item.getProject_role().equals(\"admin\")}">
-										<i class="fa fa-trophy" style="color: #FCC314"></i> 
+										<i class="fa fa-trophy" style="color: #FCC314"></i>
 									</c:when>
 									<c:when test="${item.getProject_role().equals(\"member\")}">
 										<i class="fa fa-handshake-o"></i>
 									</c:when>
 									<c:when test="${item.getProject_role().equals(\"invited\")}">
-										<i class="fa fa-user" style="color: #bbbbbb"></i> 
+										<i class="fa fa-user" style="color: #bbbbbb"></i>
 									</c:when>
 								</c:choose>
 
@@ -117,7 +117,8 @@
 
 							<input type="hidden" id="project_name" value="${projectName}" />
 							<input type="hidden" id="calendarList" value="${calendarList}" />
-							<input type="hidden" id="project_proposer" value="${project_proposer}" /> <br> 
+							<input type="hidden" id="project_proposer"
+								value="${project_proposer}" /> <br>
 							<!--tabs-->
 
 							<ul class="nav nav-tabs tabs-bordered nav-justified" id="pm-tabs">
@@ -239,7 +240,7 @@
 														value="${done.getStart_date()}" /> <input type="hidden"
 														id="duedate${done.getCard_id()}"
 														value="${done.getDue_date()}" /> ${done.getCard_title()}
-														<br> ${done.getTags()}<br>
+														<br> ${done.getTags()}</br>
 
 														<button id="view${done.getCard_id()}" type="submit"
 															name="view" class="btn btn-primary" onClick="view()">
@@ -276,11 +277,11 @@
 									</div>
 
 									<div role="tabpanel" class="tab-pane fade" id="project-calendar">
-									<h3 class="tabs-header">CALENDAR</h3>
-									<div class="full-calendar">
-										<div class="full-calendar-container">
-											<div id='fullcalendar'></div>
-										</div>
+										<h3 class="tabs-header">CALENDAR</h3>
+										<div class="full-calendar">
+											<div class="full-calendar-container">
+												<div id='fullcalendar'></div>
+											</div>
 										</div>
 									</div>
 
@@ -301,7 +302,7 @@
 											<div id="files" class="thumbnails clearfix"></div>
 
 											<button id="uploadFiles" type="button"
-												class="btn btn-primary">Upload</button>
+												class="btn btn-primary" onclick="this.disabled = true">Upload</button>
 										</div>
 										<div id="fileListDiv">
 											<table>
@@ -316,7 +317,7 @@
 														<td><jsp:useBean id="mDate" class="java.util.Date" />
 															<c:set target="${mDate}" property="time"
 																value="${file.lastModified()}" /> <fmt:formatDate
-																value="${mDate}" pattern="dd/MM/yyyy hh:mm" /></td>
+																value="${mDate}" pattern="dd/MM/yyyy HH:mm" /></td>
 														<td><c:set var="fileSize" value="${file.length()}" />
 															<%
 																String fileSize = String.valueOf(pageContext.getAttribute("fileSize"));
@@ -335,7 +336,7 @@
 																	} else if (k > 1) {
 																		fileSize = dec.format(k) + " KB";
 																	} else {
-																		fileSize = dec.format(b) + " Bytes";
+																		fileSize = dec.format(b) + " B";
 																	}
 																	pageContext.setAttribute("fileSize", fileSize);
 															%> <c:out value="${fileSize}" /></td>
@@ -856,6 +857,7 @@
 	var board_id = $('#board_id').val();
 	var filesList = new Array();
 	var formData = new FormData();
+
 	function uploadFile() {
 		$(function() {
 			$('#fileupload')
@@ -864,19 +866,21 @@
 						dropZone : $('#dropzone')
 					})
 					.on(
-							'fileuploadadd',
+						'fileuploadadd',
 							function(e, data) {
-								data.context = $('<div/>', {
-									class : 'thumbnail pull-left'
-								}).appendTo('#files');
 								$.each(data.files, function(index, file) {
-									filesList.push(data.files[index]);
-									var node = $('<p/>').append(
-											$('<span/>').text(file.name).data(
-													data));
-									node.appendTo(data.context);
+									if(!filesList.includes(data.files[index])){
+										data.context = $('<div/>', {
+											class : 'thumbnail pull-left'
+										}).appendTo('#files');
+										filesList.push(data.files[index]);
+										var node = $('<p/>').append(
+												$('<span/>').text(file.name).data(
+														data));
+										node.appendTo(data.context); 
+									}
 								});
-							})
+							}) 
 					.on(
 							'fileuploadprocessalways',
 							function(e, data) {
@@ -893,7 +897,7 @@
 							}).prop('disabled', !$.support.fileInput).parent()
 					.addClass($.support.fileInput ? undefined : 'disabled');
 
-			$("#uploadFiles").click(
+			$("#uploadFiles").unbind("click").click(
 					function(event) {
 						if (filesList.length > 0) {
 							event.preventDefault();
@@ -906,6 +910,7 @@
 							for (var i = 0; i < filesList.length; i++) {
 								formData.append('files', filesList[i]);
 							}
+							filesList = new Array();
 							$.ajax({
 								url : 'uploadProjectFiles',
 								type : "POST",
@@ -914,6 +919,7 @@
 								processData : false,
 								data : formData,
 								success : function(data) {
+									formData = new FormData();
 									$("#fileUploadDiv").load(
 											window.location.href
 													+ " #fileUploadDiv");

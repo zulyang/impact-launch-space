@@ -55,7 +55,7 @@ public class JdbcUserDAO implements UserDAO{
 
 	public User findByUsername(String username) {
 
-		String sql = "SELECT * FROM USERS WHERE username = ? COLLATE latin1_general_cs";
+		String sql = "SELECT * FROM USERS WHERE username = ?";
 
 		Connection conn = null;
 
@@ -87,7 +87,7 @@ public class JdbcUserDAO implements UserDAO{
 	
 	public User findByEmail(String email) {
 
-		String sql = "SELECT * FROM USERS WHERE email = ? COLLATE latin1_general_cs";
+		String sql = "SELECT * FROM USERS WHERE email = ?";
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();

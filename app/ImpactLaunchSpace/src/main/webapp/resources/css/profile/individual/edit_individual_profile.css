@@ -32,7 +32,7 @@
 	position: relative;
 	display: inline-block;
 	width: 40rem;
-	margin-left: 53%;
+	margin-left: 55%;
 }
 
 .edit_indi_profile_save {
@@ -119,4 +119,8 @@ img {
 	padding-top: 22px;
 	text-align: center;
 	line-height: 1em;
+}
+
+.intl-tel-input .country-list {
+	width: 540%;
 }

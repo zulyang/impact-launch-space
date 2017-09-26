@@ -54,19 +54,9 @@ public class ProfileController {
 	public String processSetupOrganization(@RequestParam String username, @RequestParam String email,
 			@RequestParam String companyName, @RequestParam ArrayList<String> countriesOfOperation,
 			@RequestParam String companyBio, @RequestParam ArrayList<String> selected_jobsectors,
-			@RequestParam String contactDetails, @RequestParam("profilePicture") MultipartFile profilePicture,
-			ModelMap model, HttpServletRequest request) {
+			@RequestParam String contactDetails, ModelMap model, HttpServletRequest request) {
 
-		File profilePictureFile = new File(profilePicture.getOriginalFilename());
-		try {
-			profilePicture.transferTo(profilePictureFile);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		File profilePictureFile = new File("src/main/webapp/resources/img/astronaut.png");
 
 		OrganizationAccount organizationAccount = new OrganizationAccount(username, email, companyName, false, false,
 				profilePictureFile, companyBio, contactDetails);
@@ -92,12 +82,16 @@ public class ProfileController {
 		model.put("username", username);
 		model.addAttribute("organization", profileService.getOrganizationAccountDetails(username));
 		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
-		request.getSession().setAttribute("organization", profileService.getOrganizationAccountDetails(username));
 		request.getSession().setAttribute("countriesOfOperation",
 				profileService.retrieveCountriesOfOperations(username));
 		request.getSession().setAttribute("jobSectorsOrganization",
 				profileService.retrieveOrganizationJobSectors(username));
-		return "profile/organization/" + "view_own_organization_profile";
+		return "profile/organization/" + "setup_organization_profile_picture";
+	}
+
+	@RequestMapping(value = "/setup-organization-profile-picture", method = RequestMethod.GET)
+	public String showSetupProfilePicturePageForOrganizationProfile() {
+		return "profile/organization/" + "setup_organization_profile_picture";
 	}
 
 	@RequestMapping(value = "/view-organization-profile", method = RequestMethod.GET)
@@ -242,8 +236,9 @@ public class ProfileController {
 
 		model.put("username", username);
 		request.getSession().setAttribute("individual", profileService.getIndividualAccountDetails(username));
-		request.getSession().setAttribute("myacccount-individual", profileService.getIndividualAccountDetails(username));
-		System.out.println("first try: "+profileService.getIndividualAccountDetails(username).getUsername());
+		request.getSession().setAttribute("myacccount-individual",
+				profileService.getIndividualAccountDetails(username));
+		System.out.println("first try: " + profileService.getIndividualAccountDetails(username).getUsername());
 		request.getSession().setAttribute("jobSectorsIndividual",
 				profileService.retrieveIndividualJobSectors(username));
 
@@ -252,7 +247,7 @@ public class ProfileController {
 		request.getSession().setAttribute("preferredProjectArea",
 				profileService.retrievePreferredProjectArea(username));
 		request.getSession().setAttribute("userSkills", profileService.retrieveAllSkillsOfUser(username));
-		
+
 		return "profile/individual/" + "setup_individual_profile_picture";
 	}
 
@@ -305,8 +300,9 @@ public class ProfileController {
 	public String showOwnProfile(HttpServletRequest request, ModelMap model) {
 		String username = (String) request.getSession().getAttribute("username");
 
+		System.out.println("username: " + username);
 		User user = userService.retrieveUser(username);
-
+		System.out.println("user: " + user);
 		if (user.getUser_type().equals("organization")) {
 			return "profile/organization/" + "view_own_organization_profile";
 		} else {

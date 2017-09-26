@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page language="java" pageEncoding="utf-8" %>
+<%@ page language="java" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.*"%>
 <html lang="en">
@@ -9,7 +9,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ImpactLaunch.Space</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -18,7 +19,8 @@
 	href="<%=request.getContextPath()%>/resources/css/profile/individual/setup_individual_profile.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
 
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
@@ -287,86 +289,94 @@
 								<input type="number" name="maximumHours" id="maxHours" min="1"
 									max="100" class="form-control profileField"
 									placeholder="Maximum Hours to commit per week" required>
-						
+
+							</div>
 						</div>
-				</div>
-				<div class="form-group">
-                            <label for="preferred_countries" class="col-sm-3 font_labels">Preferred Countries<span class="required">*</span></label>
-	
-					<div class="col-lg-9">
-						<select style="width: 100%" id="preferred_countries"
-							class="js-example-basic-multiple-preferredcountries profileField"
-							multiple="multiple" name="selected_preferredcountries" required>
-							<c:forEach items="${country_list}" var="item">
-								<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
-							</c:forEach>
-						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-lg-12">
-						<textarea rows="4" name="personalBio"
-							class="form-control personalBio"
-							placeholder="A short personal bio"></textarea>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-lg-12">
-						<input name="contactDetailsShown" type="tel" id="contactNumberShown"
-							style="width: 100%" placeholder="Mobile Number">
-						<input id="contactNumber" type="hidden" name="contactDetails">
-					</div>
-				</div>
-				      
-				      	<h3 class="info_header">Others</h3>
-				<br>
-				<div class="form-group">
-					<div class="col-lg-12 custom-file-upload" id="documents">
-                                <div id="document_upload_button" class="document_upload_button" onclick="uploadFile()">Upload your supporting document</div>
+						<div class="form-group">
+							<label for="preferred_countries" class="col-sm-3 font_labels">Preferred
+								Countries<span class="required">*</span>
+							</label>
 
-						<div style='height: 0px; width: 0px; overflow: hidden;'>
-							<input id=uploadFile name="documents" multiple type="file"
-								value="upload" onchange="docSub(this)" />
+							<div class="col-lg-9">
+								<select style="width: 100%" id="preferred_countries"
+									class="js-example-basic-multiple-preferredcountries profileField"
+									multiple="multiple" name="selected_preferredcountries" required>
+									<c:forEach items="${country_list}" var="item">
+										<option value="${item.getCountry_name()}">${item.getCountry_name()}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</div>
-					</div>
-				</div>   <br>               
-                        <h3 class="info_header" style="margin-right: 5px;">Privacy
-                        <span class="required">*</span>
-				
-				<i class="fa fa-info-circle info_tooltip" rel="tooltip"
-                            title="A public profile will show users your email address and contact number."></i></h3>
+						<div class="form-group">
+							<label for="contactNumberShown" class="col-sm-3 font-labels">Contact
+								Number</label>
+							<div class="col-lg-9">
+								<input name="contactDetailsShown" type="tel"
+									id="contactNumberShown" class="form-control profileField"
+									style="width: 178%" placeholder="Mobile Number"> <input
+									id="contactNumber" type="hidden" name="contactDetails">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<textarea rows="4" name="personalBio"
+									class="form-control personalBio"
+									placeholder="A short personal bio"></textarea>
+							</div>
+						</div>
 
-				<div class="form-radio center">
-					<ul class="radio_as_button">
-						<li><input type="radio" id="public" name="isPublicProfile"
-							required="required" value="true"> <label for="public">Public</label>
-						</li>
+						<h3 class="info_header">Others</h3>
+						<br>
+						<div class="form-group">
+							<div class="col-lg-12 custom-file-upload" id="documents">
+								<div id="document_upload_button" class="document_upload_button"
+									onclick="uploadFile()">Upload your supporting document</div>
 
-						<li><input type="radio" id="private" name="isPublicProfile"
-							required="required" value="false"> <label for="private">Private</label>
-						</li>
+								<div style='height: 0px; width: 0px; overflow: hidden;'>
+									<input id=uploadFile name="documents" multiple type="file"
+										value="upload" onchange="docSub(this)" />
+								</div>
+							</div>
+						</div>
+						<br>
+						<h3 class="info_header" style="margin-right: 5px;">
+							Privacy <span class="required">*</span> <i
+								class="fa fa-info-circle info_tooltip" rel="tooltip"
+								title="A public profile will show users your email address and contact number."></i>
+						</h3>
 
-					</ul>
+						<div class="form-radio center">
+							<ul class="radio_as_button">
+								<li><input type="radio" id="public" name="isPublicProfile"
+									required="required" value="true"> <label for="public">Public</label>
+								</li>
+
+								<li><input type="radio" id="private" name="isPublicProfile"
+									required="required" value="false"> <label for="private">Private</label>
+								</li>
+
+							</ul>
+						</div>
+						<br>
+						<br>
+						<div class="form-group">
+							<div class="col-lg-12">
+								<input type="submit" class="btn btn-success profile_save"
+									value="Save Account Details">
+							</div>
+						</div>
+					</form>
 				</div>
-				<br><br>
-				<div class="form-group">
-					<div class="col-lg-12">
-						<input type="submit" class="btn btn-success profile_save"
-							value="Save Account Details">
-					</div>
-				</div>
-				</form>
+
 			</div>
-
 		</div>
-	</div>
 	</div>
 
 	<script type="text/javascript">
 		function uploadFile() {
 			document.getElementById("uploadFile").click();
 		}
-		
+
 		function docSub(obj) {
 			var fileList = document.getElementById("uploadFile").files;
 			var allFileNames;
@@ -580,13 +590,11 @@
 				}
 			}
 
-			var contactNumber = document.getElementById("contactNumber").value;
+			var contactNumber = document.getElementById("contactNumberShown").value;
 
 			if (contactNumber !== "") {
-				if (/^\d+$/.test(contactNumber) === false
-						|| contactNumber.length > 20
-						|| contactNumber.length < 8) {
-					alert('Please enter a minimum of 8 numbers and a maximum of 20 positive numbers for your phone number, without symbols and spaces.')
+				if (contactNumber.indexOf(' ') >= 0) {
+					alert('Please do not enter spaces in your contact number.')
 					return false;
 				}
 			}
@@ -599,11 +607,13 @@
 			identity.required = true;
 		}
 	</script>
-	
-	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
+
+	<script
+		src="<%=request.getContextPath()%>/resources/js/intlTelInput.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/resources/js/intlTelInput.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
-	
+
 
 	<script type="text/javascript">
 		$(".js-example-basic-multiple-preferredcountries").select2({
@@ -666,24 +676,28 @@
 
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("[rel=tooltip]").tooltip({
-				placement : 'right'
-			});
-			var ctx = "${pageContext.request.contextPath}" + "resources/js/utils.js";
-			
-			$("#contactNumberShown").intlTelInput({
-				autoPlaceholder : "aggressive",
-				utilsScript : ctx,
-				
-			});
-			
-			$("form").submit(function() {
-				  $("#contactNumber").val($("#contactNumberShown").intlTelInput("getNumber"));
-			});
+		$(document).ready(
+				function() {
+					$("[rel=tooltip]").tooltip({
+						placement : 'right'
+					});
+					var ctx = "${pageContext.request.contextPath}"
+							+ "resources/js/utils.js";
 
-		});
+					$("#contactNumberShown").intlTelInput({
+						autoPlaceholder : "aggressive",
+						utilsScript : ctx,
 
+					});
+
+					$("form").submit(
+							function() {
+								$("#contactNumber").val(
+										$("#contactNumberShown").intlTelInput(
+												"getNumber"));
+							});
+
+				});
 	</script>
 
 </body>
