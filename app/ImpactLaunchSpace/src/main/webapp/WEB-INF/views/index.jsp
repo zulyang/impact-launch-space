@@ -69,7 +69,7 @@
 				<div class="float-left">
 					<h2>Explore</h2>
 					<p>Browse social impact projects near you.</p>
-					<a href="/search-project" class="btn-learn">Explore Projects</a>
+					<a href="/search-project" class="btn-learn explore_btn">Explore Projects</a>
 				</div>
 			</div>
 			<!--.story-->
