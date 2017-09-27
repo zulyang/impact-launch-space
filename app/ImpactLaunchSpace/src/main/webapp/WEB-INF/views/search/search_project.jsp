@@ -6,15 +6,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search For Project</title>
-<link rel="icon" type="image/png" href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/app.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/explore.css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
-<script src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/lib/materialize/js/materialize.min.js"></script>
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/explore.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/resources/lib/materialize/js/materialize.min.js"></script>
 <script src="http://evanplaice.github.io/jquery-csv/src/jquery.csv.js"></script>
 <script>
 	function loader() {
@@ -22,75 +31,125 @@
 	};
 </script>
 <script>
-	    $(document).ready(function() {
-						$('#searchbox').add('#causes').add('#location').add('#misc').on('keyup change',function(event) {
-						
-						if($("input#searchbox").val().length >= 3){
-						var $searchbox = $("input#searchbox").val();
-						}
-						var $causes = $("select#causes").val();
-						var $location = $("select#location").val();
-						var $misc = $("select#misc").val();
+	    $(document)
+			.ready(
+					function() {
+						$('#searchbox')
+								.add('#causes')
+								.add('#location')
+								.add('#misc')
+								.on(
+										'keyup change',
+										function(event) {
 
-						$.get('searchforproject',{
-							searchboxName : $searchbox,
-							causeName : $causes,
-							locationName : $location,
-							miscName : $misc},
-					function(responseJson) {
-						$("#projectResults").empty()
-						var trHTML = '';
-						$.each(responseJson,function(key,value) {
-							
-							var val = value
-							var res = val.split(",");
-							
+											if ($("input#searchbox").val().length >= 3) {
+												var $searchbox = $(
+														"input#searchbox")
+														.val();
+											}
+											var $causes = $("select#causes")
+													.val();
+											var $location = $("select#location")
+													.val();
+											var $misc = $("select#misc").val();
 
-							trHTML += '<div class="col m4"><div class="card"><div class="card-image">';
-						
-							if(res[13] !== null){
-								trHTML += '<img src="/projectImageDisplay?project-name='
-									+ res[0]
-									+ '&project-proposer='
-									+ res[5]
-									+ '">';	
-								
-							}else{
-								trHTML += '<img src="https://st.depositphotos.com/1724125/1373/v/950/depositphotos_13739151-stock-illustration-cartoon-astronaut.jpg">';
-							}
-							
-							trHTML += '<span class="card-title">'
-							+ res[0] + '</span></div>';
-							
-							if(res[4] == "new"){
-								trHTML += '<span class="label label-primary project_status">new</span>';
-							} else if (res[4] == "started") {
-								trHTML += '<span class="label label-success project_status">started</span>';
-							} else {
-								trHTML += '<span class="label label-default project_status">ended</span>';
-							}
+											$
+													.get(
+															'searchforproject',
+															{
+																searchboxName : $searchbox,
+																causeName : $causes,
+																locationName : $location,
+																miscName : $misc
+															},
+															function(
+																	responseJson) {
+																$(
+																		"#projectResults")
+																		.empty()
+																var trHTML = '';
+																$
+																		.each(
+																				responseJson,
+																				function(
+																						key,
+																						value) {
 
-							trHTML += '<div class="card-content"><p class="project_description">'+ res[1]
-							+ '<hr/><i class="fa fa-clock-o"></i> ' + res[2] + ' day(s)<br><i class="fa fa-globe"></i> '+ res[3]
-							+ '<br><i class="fa fa-user-circle-o"></i> ' + res[5] + '</p></div>'
-							+ '<a href ="/view-project?project-name=' + res[0]
-							+ '&project-proposer=' + res[5]+ '"><div class="card-action">View Project</div></a></div> </div>';
-						});
-						$('#projectResults').append(trHTML);
-						});
-						});
+																					var val = value
+																					var res = val
+																							.split(",");
+
+																					trHTML += '<div class="col m4"><div class="card"><div class="card-image">';
+
+																					if (res[13] !== null) {
+																						trHTML += '<img src="/projectImageDisplay?project-name='
+																								+ res[0]
+																								+ '&project-proposer='
+																								+ res[5]
+																								+ '">';
+
+																					} else {
+																						trHTML += '<img src="https://st.depositphotos.com/1724125/1373/v/950/depositphotos_13739151-stock-illustration-cartoon-astronaut.jpg">';
+																					}
+
+																					trHTML += '<span class="card-title">'
+																							+ res[0]
+																							+ '</span></div>';
+
+																					if (res[4] == "new") {
+																						trHTML += '<span class="label label-primary project_status">new</span>';
+																					} else if (res[4] == "started") {
+																						trHTML += '<span class="label label-success project_status">started</span>';
+																					} else {
+																						trHTML += '<span class="label label-default project_status">ended</span>';
+																					}
+
+																					trHTML += '<div class="card-content"><p class="project_description">'
+																							+ res[1]
+																							+ '<hr/><i class="fa fa-clock-o"></i> '
+																							+ res[2]
+																							+ ' day(s)<br><i class="fa fa-globe"></i> '
+																							+ res[3]
+																							+ '<br><i class="fa fa-user-circle-o"></i> '
+																							+ res[5]
+																							+ '</p></div>'
+																							+ '<a href ="/view-project?project-name='
+																							+ res[0]
+																							+ '&project-proposer='
+																							+ res[5]
+																							+ '"><div class="card-action">View Project</div></a></div> </div>';
+																				});
+																$(
+																		'#projectResults')
+																		.append(
+																				trHTML);
+															});
+										});
 					});
 </script>
 </head>
 <body onload="loader()">
-	<div class="se-pre-con"></div>>
+	<div class="se-pre-con"></div>
+	>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 
-				<!--navigation bar  -->
+				<%
+					String username = (String) request.getSession().getAttribute("username");
+					System.out.println("username: " + username);
+
+					if (username == null) {
+				%>
+				<%@include file="../common/navigation_not_logged_in.jspf"%>
+				<%
+					} else {
+				%>
 				<%@include file="../common/navigation.jspf"%>
-				
+				<%
+					}
+				%>
+
 				<main>
 				<div class="explore-header col-sm-12">
 
@@ -98,7 +157,8 @@
 					<div class="explore-search">
 						Search By Keyword: <span class="icon"><i
 							class="fa fa-search"></i></span> <input type="text" name="searchbox"
-							id="searchbox" placeholder="Minimum 3 Characters" class="search" /> <br>
+							id="searchbox" placeholder="Minimum 3 Characters" class="search" />
+						<br>
 
 						<div class="styled-select slate">
 

@@ -22,17 +22,39 @@
 </script>
 <body onload="loader()">
 	<!-- Replace following navbar with navbar of no entry -->
-	<%@include file="./common/navigationLogin.jspf"%>
+	<%
+		String username = (String) request.getSession().getAttribute("username");
+		System.out.println("username: " + username);
+
+		if (username == null) {
+	%>
+	<%@include file="./common/navigation_not_logged_in.jspf"%>
+	<%
+		} else {
+	%>
+	<%@include file="./common/navigation.jspf"%>
+	<%
+		}
+	%>
 	<div class="container-fluid" id="error">
 		<div class="row">
 			<div class="app-error-container">
 				<div class="app-error-card">
-				<img src="<%=request.getContextPath()%>/resources/img/Meteor.png" alt="Oops!" class="app-error-image">
-				<div class="error-header">Oops!</div>
-				<div class="error-subheader">Looks like you are lost in space...</div>
-				<div class="error-message"><p>Application has encountered an error. Please contact our administrator if this problem persists.</p>
-				<div class="error-button"><button type="button" class="btn btn-error-home"><a href="/">Back To Home</a></button></div> </div>
+					<img src="<%=request.getContextPath()%>/resources/img/Meteor.png"
+						alt="Oops!" class="app-error-image">
+					<div class="error-header">Oops!</div>
+					<div class="error-subheader">Looks like you are lost in
+						space...</div>
+					<div class="error-message">
+						<p>Application has encountered an error. Please contact our
+							administrator if this problem persists.</p>
+						<div class="error-button">
+							<button type="button" class="btn btn-error-home">
+								<a href="/">Back To Home</a>
+							</button>
+						</div>
 					</div>
+				</div>
 			</div>
 
 		</div>
