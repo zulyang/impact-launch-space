@@ -35,14 +35,19 @@
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/intlTelInput.css">
+<script>
+	function loader() {
+		$(".se-pre-con").fadeOut("slow");
+	};
+</script>
 </head>
 <body class="profile">
+	<div class="se-pre-con"></div>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<!--navigation bar  -->
 				<%@include file="../../common/navigation.jspf"%>
-
 
 				<div class="edit_org_profile_display_container">
 					<div class="panel panel-default">
@@ -103,7 +108,7 @@
 								action="editprofile-organization" method="post">
 								
 								<div class="form-group">
-									<label for="editOrgName" class="col-sm-2">Company Name<span
+									<label for="editOrgName" class="col-sm-4">Company Name<span
 										class="required">*</span></label>
 									<div class="col-sm-10">
 										<input type="text" id="editOrgName"
@@ -112,7 +117,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgEmail" class="col-sm-2">Email<span
+									<label for="editOrgEmail" class="col-sm-4">Email<span
 										class="required">*</span></label>
 									<div class="col-sm-10">
 										<input class="form-control edit_profileField"
@@ -121,7 +126,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgContact" class="col-sm-2">Contact
+									<label for="editOrgContact" class="col-sm-4">Contact
 										Details</label>
 									<div class="col-sm-10">
 										<input name="contactDetailsShown" type="tel"
@@ -135,7 +140,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="editOrgBio" class="col-sm-2">Company Bio</label>
+									<label for="editOrgBio" class="col-sm-4">Company Bio</label>
 									<div class="col-sm-10">
 										<textarea id="editOrgBio" rows="4" name="companyBio"
 											class="form-control edit_profileField"
@@ -145,7 +150,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editCountry" class="col-sm-2">Countries Of
+									<label for="editCountry" class="col-sm-4">Countries Of
 										Operation<span class="required">*</span>
 									</label>
 									<div class="col-sm-10">
@@ -172,7 +177,7 @@
 								</div>
 
 								<div class="form-group">
-									<label for="editJobSectors" class="col-sm-2">Job
+									<label for="editJobSectors" class="col-sm-4">Job
 										Sectors<span class="required">*</span>
 									</label>
 									<div class="col-sm-10">
@@ -196,7 +201,7 @@
 								</div>
 
 								<div class="form-group">
-									<div class="col-lg-12">
+									<div class="col-lg-10">
 										<input class="btn btn-success edit_org_profile_save"
 											type="submit" value="Update details" />
 									</div>

@@ -46,7 +46,7 @@
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 1rem;
-	width: 20rem;
+	width: 22rem;
 }
 
 .edit_org_picture_btn {
@@ -102,4 +102,16 @@ img {
 
 .intl-tel-input .country-list {
 	width: 540%;
+}
+
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; lef
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(../../../img/Pacman.gif) center no-repeat #fff;
 }
