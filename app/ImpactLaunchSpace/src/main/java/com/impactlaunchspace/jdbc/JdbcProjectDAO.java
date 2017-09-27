@@ -207,6 +207,69 @@ public class JdbcProjectDAO implements ProjectDAO {
 		}
 		return output;
 	}
+	
+	public ArrayList<Project> retrieveProjectByOrganization(String username) {
+		ArrayList<Project> output = new ArrayList<Project>();
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		DocumentsProjectDAO documentsProjectDAO = (DocumentsProjectDAO) context.getBean("documentsProjectDAO");
+		
+		String sql = "SELECT * FROM PROJECTS WHERE organization = ?";
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			Project project = null;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Blob blob = rs.getBlob("project_image");
+				InputStream in = blob.getBinaryStream();
+				byte[] bytes = IOUtils.toByteArray(in);
+				String fileType = "";
+				try {
+					fileType = FileTypeUtils.getContentType(bytes);
+				} catch (ContentTypeException e) {
+					e.printStackTrace();
+				}
+				fileType = "." + fileType.split("/")[1];
+				in = blob.getBinaryStream();
+				File temp = File.createTempFile("project_image", fileType);
+				OutputStream out = new FileOutputStream(temp);
+				byte[] buff = new byte[4096]; // how much of the blob to
+												// read/write at a time
+				int len = 0;
+
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+				project = new Project(rs.getString("project_name"), rs.getString("description"),
+						rs.getString("purpose"), rs.getInt("duration"), rs.getString("location"),
+						rs.getString("project_proposer"), rs.getString("organization"), rs.getBoolean("isPublic"),
+						rs.getBoolean("hiddenToOutsiders"), rs.getBoolean("hiddenToAll"),
+						rs.getString("project_status"), rs.getTimestamp("created_date"), 
+						rs.getInt("page_views"), temp, 
+						documentsProjectDAO.retrieveAll(rs.getString("project_name"), rs.getString("project_proposer")), rs.getString("project_video"));
+				output.add(project);
+			}
+			rs.close();
+			ps.close();
+			return output;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+		return output;
+	}
 
 	public ArrayList<Project> retrievePublicProjects() {
 		ArrayList<Project> output = new ArrayList<Project>();

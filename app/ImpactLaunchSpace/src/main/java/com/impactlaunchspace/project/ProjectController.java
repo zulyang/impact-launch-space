@@ -605,9 +605,27 @@ public class ProjectController {
 	@RequestMapping(value = "/my-projects", method = RequestMethod.GET)
 	public String showMyProjects(HttpServletRequest request, ModelMap model) {
 		String username = (String) request.getSession().getAttribute("username");
+		OrganizationAccount organizationAccount = null;
+		
+		if(profileService.getOrganizationAccountDetails(username) != null){
+			organizationAccount = profileService.getOrganizationAccountDetails(username);
+		}
+		
 
+		
 		ArrayList<Project> projectsByUser = new ArrayList<Project>(); 
-		projectsByUser = projectService.retrieveProjectByUser(username);
+		
+		
+		
+		if(organizationAccount != null){
+			ArrayList<Project> projectsByOrganization = projectService.retrieveProjectByOrganization(organizationAccount.getCompanyName());
+			for(Project projectByOrganization : projectsByOrganization){
+				projectsByUser.add(projectByOrganization);
+			}
+		}else{
+			projectsByUser = projectService.retrieveProjectByUser(username);
+		}
+		
 		model.put("projectsByUser", projectsByUser);
 		
 		ArrayList<ArrayList<String>> joined_project_string = projectService.retrieveJoinedProjects(username);

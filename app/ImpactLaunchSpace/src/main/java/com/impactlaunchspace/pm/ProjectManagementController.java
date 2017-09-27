@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,9 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.impactlaunchspace.entity.Card;
 import com.impactlaunchspace.entity.Notification;
+import com.impactlaunchspace.entity.OrganizationAccount;
+import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.ProjectMemberList;
 import com.impactlaunchspace.entity.ProjectRequestedResource;
 import com.impactlaunchspace.notification.NotificationService;
+import com.impactlaunchspace.profile.ProfileService;
 import com.impactlaunchspace.project.ProjectService;
 
 @Controller
@@ -48,6 +50,9 @@ public class ProjectManagementController {
 
 	@Autowired
 	NotificationService notificationService;
+	
+	@Autowired
+	ProfileService profileService;
 
 	// Access Project Management Page
 	@RequestMapping(value = "/project-management", method = RequestMethod.GET)
@@ -58,8 +63,7 @@ public class ProjectManagementController {
 		// Add a boolean for project to see whether it's started or not. If not
 		// started,cannot access projectManagement page
 		String username = (String) request.getSession().getAttribute("username");
-		// Project selected_project =
-		// projectService.retrieveProject(project_name, project_proposer);
+		Project project = projectService.retrieveProject(project_name, project_proposer);
 		// retrieve board_id for project
 		int board_id = pmService.retrieveBoardId(project_name, project_proposer);
 
@@ -105,13 +109,18 @@ public class ProjectManagementController {
 		}
 		model.addAttribute("member_list", member_list);
 		model.addAttribute("member_list_string", member_list_string);
-
+		
 		model.addAttribute("user", username);
 		model.addAttribute("projectName", project_name);
 		model.addAttribute("project_proposer", project_proposer);
 		model.addAttribute("categories", categories);
 		model.addAttribute("members", members);
 		model.addAttribute("board_id", board_id);
+		
+		if(project.getOrganization() != null){
+			OrganizationAccount organizationAccount = profileService.findByCompanyName(project.getOrganization());	
+			model.addAttribute("organization", organizationAccount.getUsername());
+		}
 
 		// Check the cards attribute and sort by status
 		ArrayList<Card> todoList = pmService.retrieveProjectCardsByStatus(board_id, "todo");

@@ -66,9 +66,16 @@
 						<hr />
 
 						<li class="menu-title">Members</li>
-						<a class="btn btn-manage-users btn-bordered" id="manageusers"
-							href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
-
+						<c:choose>
+							<c:when test="${project_proposer.equals(username) || organization.equals(username)}">
+								<a class="btn btn-manage-users btn-bordered" id="manageusers"
+									href="manage-project-users?project-name=${projectName}&project-proposer=${project_proposer}">Manage</a>
+							</c:when>
+							<c:otherwise>
+								<a class="btn btn-manage-users btn-bordered" id="manageusers"
+									href="#" disabled>Manage</a>
+							</c:otherwise>
+						</c:choose>
 						<c:forEach items="${member_list}" var="item">
 							<div>
 								<!-- Each member profile icon here -->
