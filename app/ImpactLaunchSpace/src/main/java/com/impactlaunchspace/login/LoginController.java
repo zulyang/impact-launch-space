@@ -187,9 +187,86 @@ public class LoginController {
 
 	// Verify Account
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String showWelcomePage(ModelMap model) {
-		return "index";
-	}
+	public String showWelcomePage(HttpServletRequest request, ModelMap model) {
+		String username = null;
+		username = (String)request.getSession().getAttribute("username");
+		if(username == null){
+			return "index";
+		}else{
+				User user = userService.retrieveUser(username);
+				String userType = user.getUser_type();
+				// To decide if the user logs in for the first time
+				boolean isFirstTimeLogin = loginService.isFirstTimeLogin(username);
+
+				// inserts information in the model for the view
+				request.getSession().setAttribute("username", user.getUsername());
+				request.getSession().setAttribute("email", user.getEmail());
+				request.getSession().setAttribute("user", user);
+
+					if (isFirstTimeLogin == false) {
+
+						request.getSession().setAttribute("username", username);
+						
+						int unreadCount = notificationService.countUnreadNotifications(username);
+					    model.addAttribute("unreadCount", unreadCount);
+					    
+						if (userType.equals("organization")) {
+
+							request.getSession().setAttribute("organization",
+									profileService.getOrganizationAccountDetails(username));
+							request.getSession().setAttribute("myacccount-organization",
+									profileService.getOrganizationAccountDetails(username));
+							request.getSession().setAttribute("countriesOfOperation",
+									profileService.retrieveCountriesOfOperations(username));
+							request.getSession().setAttribute("jobSectorsOrganization",
+									profileService.retrieveOrganizationJobSectors(username));
+							return "profile/organization/" + "view_own_organization_profile";
+						} else if (userType.equals("individual")) {
+
+							request.getSession().setAttribute("individual",
+									profileService.getIndividualAccountDetails(username));
+							request.getSession().setAttribute("myacccount-individual",
+									profileService.getIndividualAccountDetails(username));
+							request.getSession().setAttribute("jobSectorsIndividual",
+									profileService.retrieveIndividualJobSectors(username));
+							request.getSession().setAttribute("preferredCountries",
+									profileService.retrievePreferredCountries(username));
+							request.getSession().setAttribute("preferredJobSectors",
+									profileService.retrievePreferredJobSectors(username));
+							request.getSession().setAttribute("preferredProjectArea",
+									profileService.retrievePreferredProjectArea(username));
+							request.getSession().setAttribute("userSkills",
+									profileService.retrieveAllSkillsOfUser(username));
+							return "profile/individual/" + "view_own_individual_profile";
+						}
+					} else {
+						// userservice to determine if indiv/organ and redirect to
+						// page
+
+						// puts the necessary lists into model for setup pages to
+						// obtain
+						model.addAttribute("country_list", profileService.retrieveCountryList());
+						model.addAttribute("job_sector_list", profileService.retrieveJobSectorList());
+						request.getSession().setAttribute("user_list", userService.retrieveUsernameList());
+						request.getSession().setAttribute("organization_list", userService.retrieveOrganizationNamelist());
+
+						if (userType.equals("organization")) {
+						
+							return "profile/organization/" + "setup_organization_profile";
+						} else if (userType.equals("individual")) {
+							
+							model.addAttribute("project_area_list", profileService.retrieveProjectAreaList());
+							model.addAttribute("skillset_list", profileService.retrieveSkillsetList());
+							return "profile/individual/" + "setup_individual_profile";
+						}
+					}
+				}
+			
+			return "login/" + "login";
+			
+		}
+		
+	
 
 	@RequestMapping(value = "/verify-account", method = RequestMethod.GET)
 	public String showVerifyAccountPage(ModelMap model) {
