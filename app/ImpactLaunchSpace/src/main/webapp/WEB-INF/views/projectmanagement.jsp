@@ -450,7 +450,7 @@
 									</div>
 									<div class="modal-body">
 										<div class="container">
-											<div id="resourcesNeeded" class="form-group row col-md-5">
+											<div class="form-group row col-md-5">
 												<div class="col-md-12">
 
 													Card Title: <input type="text" id="modalCardTitleView"
@@ -833,11 +833,6 @@
 										});
 
 					});
-	/* $('#manageusers').click(
-	 function(e){
-	 e.preventDefault();
-	 $('#pm-tabs a[href="#members"]').tab('show');
-	 }); */
 
 	$(document).ajaxSuccess(function() {
 		initialiseKB();
@@ -953,4 +948,13 @@
 		}		
 	};
 </script>
+
+<script>
+        
+        $('#AddModal').on('hidden.bs.modal', function(){
+            $(this).find('form')[0].reset();
+        }); 
+    
+</script>
+
 </html>

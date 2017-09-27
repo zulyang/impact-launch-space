@@ -114,3 +114,71 @@
 	background: linear-gradient(180deg,  #39C2C9 0%, #3FC8C9 80%,#3FC8C9 100%);
 }
 
+#updates .update-inline-button{
+    display:inline-block;
+    float:right;
+}
+
+#updates .btn-update-edit{
+    position: relative;
+    text-align:left;
+    text-decoration: none;
+    color: gray;
+    margin-top:1em;
+    padding: 1px 20px;
+}
+
+#updates .btn-update-del{
+    position: relative;
+    text-align:left;
+    text-decoration: none;
+    color: gray;
+    /* border: 1px solid gray; */
+    padding: 1px 20px;
+    border-radius: 2em;
+    margin-top: 1em;
+}
+
+#updates .btn-update-save{
+    position: relative;
+    /* text-align:left; */
+    float:right;
+    text-decoration: none;
+    color: green;
+    border: 1px solid green;
+    padding: 1px 20px;
+    border-radius: 2em;
+    margin-top: 1em;
+}
+
+#updates .btn-update-edit:before{
+    font-family: FontAwesome;
+    content: '\f044';
+    font-size: 18pt;
+}
+
+#updates .btn-update-edit:hover{
+    color: navy;
+}
+
+#updates .btn-update-save:before{
+    font-family: FontAwesome;
+    content: '\f0c7';
+    font-size: 18pt;
+    
+}
+
+#updates .btn-update-save:hover{
+    color: white;
+    background: green;
+}
+
+#updates .btn-update-del:before{
+    font-family: FontAwesome;
+    content: '\f1f8';
+    font-size: 18pt;
+}
+
+#updates .btn-update-del:hover{
+    color: maroon;
+}
