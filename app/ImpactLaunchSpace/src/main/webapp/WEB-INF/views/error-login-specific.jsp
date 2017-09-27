@@ -5,9 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css" />
 </head>
 <body>
-
+<%@include file="./common/navigationLogin.jspf" %>
 <h2>Something went wrong with your login! Oops</h2>
 
 </body>
