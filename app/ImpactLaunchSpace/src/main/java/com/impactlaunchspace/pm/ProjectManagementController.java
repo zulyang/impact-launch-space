@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -179,7 +181,7 @@ public class ProjectManagementController {
 	@RequestMapping(value = "/add-card", method = RequestMethod.POST)
 	public void addCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
-			@RequestParam String board_id, @RequestParam(required = false) String start_date,
+			@RequestParam String board_id, @RequestParam(required = false) String start_date, @RequestParam(required = false) String modalCardDocLink,
 			@RequestParam(required = false) String due_date, String projectName, HttpServletRequest request,
 			ModelMap model) throws ParseException {
 
@@ -203,15 +205,15 @@ public class ProjectManagementController {
 		}
 
 		// A task can have a start date with no due date
-
+		int card_id = 0;
 		if (due_date != null && start_date != null) {
-			pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+			card_id = pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
 					modalCardAssignee, timestamp, start_date1, due_date1);
 		} else if (due_date == null && start_date != null) {
-			pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+			card_id = pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
 					modalCardAssignee, timestamp, start_date1, null);
 		} else {
-			pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
+			card_id = pmService.addCard(modalCardTitle, modalCardDescription, "todo", tags, Integer.parseInt(board_id), username,
 					modalCardAssignee, timestamp, null, null);
 		}
 
@@ -226,14 +228,25 @@ public class ProjectManagementController {
 		Notification notification = new Notification(modalCardAssignee, username,
 				"The user " + username + " has assigned you a task for " + projectName, message, "message", "inbox");
 		notificationService.sendNotification(notification);
+		
+		// might cause error if there is comma in the file name
+		String[] docLinkNames = modalCardDocLink.split(",");
+		// submit to DB
+		pmService.insertDocumentLink(card_id, docLinkNames);
 	}
 
 	@RequestMapping(value = "/edit-card", method = RequestMethod.POST)
 	public void editCard(@RequestParam String modalCardTitle, @RequestParam String modalCardDescription,
 			@RequestParam(required = false) String tags, @RequestParam(required = false) String modalCardAssignee,
-			String board_id, @RequestParam(required = false) String start_date,
-			@RequestParam(required = false) String due_date, String card_id_view, String projectName,
-			HttpServletRequest request, ModelMap model) throws ParseException {
+			@RequestParam(required = false) String modalCardDocLink, String board_id,
+			@RequestParam(required = false) String start_date, @RequestParam(required = false) String due_date,
+			String card_id_view, String projectName, HttpServletRequest request, ModelMap model) throws ParseException {
+
+		int card_id_view2 = Integer.parseInt(card_id_view);
+		// might cause error if there is comma in the file name
+		String[] docLinkNames = modalCardDocLink.split(",");
+		// submit to DB
+		pmService.insertDocumentLink(card_id_view2, docLinkNames);
 
 		if (start_date.equals("")) {
 			start_date = null;
@@ -255,7 +268,7 @@ public class ProjectManagementController {
 
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
-		int card_id_view2 = Integer.parseInt(card_id_view);
+
 		String timestamptostring = timestamp.toString();
 		String date = timestamptostring.substring(0, 10);
 		String time = timestamptostring.substring(11, 16);
@@ -290,7 +303,9 @@ public class ProjectManagementController {
 		int board_id = c.getBoard_id();
 		String cardstatus = c.getStatus();
 		String modalCardAssignee = c.getAssignee();
-		pmService.deleteCard(Integer.parseInt(card_id));
+		int cardId = Integer.parseInt(card_id);
+		pmService.deleteCard(cardId);
+		pmService.deleteDocumentList(cardId);
 
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
@@ -389,28 +404,31 @@ public class ProjectManagementController {
 		if (projectService.retrieveSpecificMember(project_name, project_proposer, username) != null) {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
 			String filesName = "";
-			String path = "src/main/webapp/resources/storage/" +  project_name + "_" + project_proposer + "/";
+			String path = "src/main/webapp/resources/storage/" + project_name + "_" + project_proposer + "/";
 			for (MultipartFile mpf : files) {
 				Writer output = null;
 				try {
 					String fileName = mpf.getOriginalFilename();
-					
+
 					File file = new File(path + fileName);
-					
+
 					if (file.exists()) {
 						System.out.println("it exists");
-						int dot = fileName.lastIndexOf('.');   //Get the last index of . to separate extension
+						int dot = fileName.lastIndexOf('.'); // Get the last
+																// index of . to
+																// separate
+																// extension
 						String ext = fileName.substring(dot);
 						String name = fileName.substring(0, dot);
-						
+
 						int fileNo = 0;
-				        while(file.exists()){
-				        	fileName = name + "("+ ++fileNo + ")" + ext;
-				        	System.out.println(fileName);
-				            file = new File(path + fileName);
-				        }
-				    }
-					
+						while (file.exists()) {
+							fileName = name + "(" + ++fileNo + ")" + ext;
+							System.out.println(fileName);
+							file = new File(path + fileName);
+						}
+					}
+
 					mpf.transferTo(file);
 					filesName += fileName + ",";
 				} catch (IllegalStateException | IOException e) {
@@ -460,4 +478,5 @@ public class ProjectManagementController {
 			pmService.updateActivity(activity, board_id, username);
 		}
 	}
+
 }

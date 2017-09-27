@@ -172,7 +172,13 @@
 															id="startdate${todo.getCard_id()}"
 															value="${todo.getStart_date()}" /> <input type="hidden"
 															id="duedate${todo.getCard_id()}"
-															value="${todo.getDue_date()}" /> ${todo.getCard_title()}
+															value="${todo.getDue_date()}" /> 
+															<c:forEach var="doc" items="${todo.getDocumentList()}">
+														        <input type="hidden"
+															class="documentList${todo.getCard_id()}"
+															value="${doc}" /> 
+														    </c:forEach>
+															${todo.getCard_title()}
 															<br> ${todo.getTags()} <br>
 
 															<button id="view${todo.getCard_id()}" type="submit"
@@ -209,7 +215,11 @@
 															value="${inprogress.getStart_date()}" /> <input
 															type="hidden" id="duedate${inprogress.getCard_id()}"
 															value="${inprogress.getDue_date()}" />
-
+															<c:forEach var="doc" items="${inprogress.getDocumentList()}">
+														        <input type="hidden"
+															class="documentList${inprogress.getCard_id()}"
+															value="${doc}" /> 
+														    </c:forEach>
 															${inprogress.getCard_title()} <br>
 															${inprogress.getTags()} <br>
 
@@ -246,9 +256,16 @@
 														id="startdate${done.getCard_id()}"
 														value="${done.getStart_date()}" /> <input type="hidden"
 														id="duedate${done.getCard_id()}"
-														value="${done.getDue_date()}" /> ${done.getCard_title()}
+														value="${done.getDue_date()}" /> 
+														<c:forEach var="doc" items="${done.getDocumentList()}">
+														        <input type="hidden"
+															class="documentList${done.getCard_id()}"
+															value="${doc}" /> 
+														</c:forEach>
+														
+														${done.getCard_title()}
 														<br> ${done.getTags()}</br>
-
+														
 														<button id="view${done.getCard_id()}" type="submit"
 															name="view" class="btn btn-primary" onClick="view()">
 															<i class="fa fa-pencil"></i> View
@@ -283,7 +300,8 @@
 										</div>
 									</div>
 
-									<div role="tabpanel" class="tab-pane fade" id="project-calendar">
+									<div role="tabpanel" class="tab-pane fade"
+										id="project-calendar">
 										<h3 class="tabs-header">CALENDAR</h3>
 										<div class="full-calendar">
 											<div class="full-calendar-container">
@@ -394,7 +412,7 @@
 														class="form-control col-md-4 create-project-add"
 														placeholder="Give your card a title here..."></textarea>
 
-													</select> <br> Description:
+													<br> Description:
 													<textarea id="modalCardDescription" rows="4"
 														name="modalCardDescription"
 														class="form-control col-md-4 create-project-add"
@@ -427,6 +445,15 @@
 														onfocus="(this.type='date')"
 														class="form-control profileField"> <input
 														type="hidden" id="board_id" value="${board_id}">
+														
+													<!-- Documents -->
+													Choose Documents Reference 
+													<select id="modalCardDocLink" name="modalCardDocLink"
+														class="col-md-4 form-control" style="width: 100%" multiple="multiple">
+														<c:forEach items="${filesList}" var="file">
+															<option value="${file.name}">${file.name}</option>
+														</c:forEach>
+													</select> 
 												</div>
 											</div>
 										</div>
@@ -462,16 +489,20 @@
 
 													Card Title: <input type="text" id="modalCardTitleView"
 														class="form-control col-md-4 create-project-add"
-														name="modalCardTitle"> <br> Description: <input
+														name="modalCardTitle"> <br> 
+													Description: <input
 														type="text" id="modalCardDescriptionView"
 														class="form-control col-md-4 create-project-add"
-														name="modalCardDescription"> <br> Tags: <select
+														name="modalCardDescription"> <br> 
+													Tags: 
+													<select
 														id="modalCardTagsView" name="modalCardTagsView"
 														class="col-md-4 form-control" style="width: 100%">
 														<c:forEach items="${cat}" var="item">
 															<option value="${item}">${item}</option>
 														</c:forEach>
-													</select> <br> Assignees: <select id="modalCardAssigneeView"
+													</select> <br> 
+													Assignees: <select id="modalCardAssigneeView"
 														name="modalCardAssignee" class="col-md-4 form-control"
 														style="width: 100%">
 														<option value="">None</option>
@@ -479,14 +510,28 @@
 														<c:forEach items="${members}" var="item">
 															<option value="${item.getProject_member_username()}">${item.getProject_member_username()}</option>
 														</c:forEach>
-													</select> <br> Start Date: <br> <input type="date"
+													</select> <br> 
+													Start Date: <br> 
+													<input type="date"
 														onblur="setDueDateMinView()" name="startDate"
 														id="startDateView" onfocus="(this.type='date')"
 														class="form-control profileField"> Due Date: <br>
 													<input type="date" name="dueDate" id="dueDateView"
 														onfocus="(this.type='date')"
 														class="form-control profileField"> <br>
-													Comments: <br>
+
+													<!-- Documents -->
+													Choose Documents Reference 
+													<select id="modalCardDocLinkView" name="modalCardDocLinkView"
+														class="col-md-4 form-control" style="width: 100%" multiple="multiple">
+														<c:forEach items="${filesList}" var="file">
+															<option value="${file.name}">${file.name}</option>
+														</c:forEach>
+													</select> 
+													
+													<div id="documentList_view"></div>
+													
+													<!--  Comments: <br>
 													<div class="table-responsive col-md-12">
 														<div id="commentstable">
 															<table id="commentstable" class="table">
@@ -498,7 +543,7 @@
 																</tbody>
 															</table>
 														</div>
-													</div>
+													</div>-->
 
 													<input type="hidden" id="board_id_view" value="${board_id}">
 													<input type="hidden" id="card_id_view" name="card_id_view">
@@ -670,6 +715,10 @@
 	};
 
 	function view(id) {
+		var projectName = $('#project_name')
+		.val();
+		var projectProposer = $(
+		'#project_proposer').val();
 		var newId = id.substring(4);
 		var title = $('#title' + newId).val();
 		var desc = $('#desc' + newId).val();
@@ -677,7 +726,14 @@
 		var assignee = $('#assignee' + newId).val();
 		var start_date = $('#startdate' + newId).val();
 		var due_date = $('#duedate' + newId).val();
-
+		
+		var documentList = document.getElementsByClassName("documentList" + newId); 
+		var listSize = documentList.length;
+	    var documentArr = new Array();
+	    for(var j = 0; j < listSize; j++){
+	    	documentArr.push(documentList[j].value);
+	    }
+	    
 		$('#modalCardTitleView').val(title);
 		$('#modalCardDescriptionView').val(desc);
 		$('#modalCardTagsView').val(tags);
@@ -685,6 +741,13 @@
 		$('#startDateView').val(start_date);
 		$('#dueDateView').val(due_date);
 		$('#card_id_view').val(newId);
+		
+		var str = "";
+		documentArr.forEach(function(doc, index) {
+			str +="<a href=\"/saveFile?file=src/main/webapp/resources/storage/"+projectName+"_"+projectProposer+"/"+doc+"&project_name=${projectName}&project_proposer=${project_proposer}&username=${username}\">"+doc+"</a><br>";
+		});
+		$('#documentList_view').html(str);
+		
 
 		$('#ViewModal').modal('show');
 	};
@@ -735,7 +798,7 @@
 													.val();
 
 											var due_date = $('#duedate').val();
-
+											var modalCardDocLink = $('#modalCardDocLink').val().toString();
 											if (start_date === "") {
 												start_date = null;
 											}
@@ -757,7 +820,8 @@
 																board_id : board_id,
 																start_date : start_date,
 																due_date : due_date,
-																projectName : projectName
+																projectName : projectName,
+																modalCardDocLink: modalCardDocLink
 															});
 
 											$('#AddModal').modal('hide');
@@ -798,7 +862,8 @@
 													.val();
 											var card_id_view = $(
 													'#card_id_view').val();
-
+											var modalCardDocLink = $('#modalCardDocLinkView').val().toString();
+											
 											if (start_date === "") {
 												start_date = null;
 											}
@@ -807,21 +872,20 @@
 												due_date = null;
 											}
 
-											$
-													.post(
-															'edit-card',
-															{
-																modalCardTitle : modalCardTitle,
-																modalCardDescription : modalCardDescription,
-																modalCardTags : modalCardTags,
-																modalCardAssignee : modalCardAssignee,
-																board_id : board_id,
-																start_date : start_date,
-																due_date : due_date,
-																card_id_view : card_id_view,
-																projectName : projectName
-
-															});
+											$.post(
+													'edit-card',
+													{
+														modalCardTitle : modalCardTitle,
+														modalCardDescription : modalCardDescription,
+														modalCardTags : modalCardTags,
+														modalCardAssignee : modalCardAssignee,
+														modalCardDocLink: modalCardDocLink,
+														board_id : board_id,
+														start_date : start_date,
+														due_date : due_date,
+														card_id_view : card_id_view,
+														projectName : projectName
+													});
 
 											$('#ViewModal').modal('hide');
 											$("#todoKB").load(

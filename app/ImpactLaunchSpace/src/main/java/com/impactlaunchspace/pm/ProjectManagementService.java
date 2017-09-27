@@ -1,8 +1,8 @@
 package com.impactlaunchspace.pm;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.sql.Date;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.impactlaunchspace.dao.BoardDAO;
 import com.impactlaunchspace.dao.CardDAO;
+import com.impactlaunchspace.dao.CardDocumentDAO;
 import com.impactlaunchspace.entity.Card;
 
 @Service
@@ -33,10 +34,10 @@ public class ProjectManagementService {
 		return boardDAO.retrieveBoardId(Project_Name, Project_Proposer);
 	}
 	
-	public void addCard(String modalCardTitle, String modalCardDescription, String status, String tags, int board_id, String username, String assignee, Timestamp timestamp, Date start_date, Date due_date) {
+	public int addCard(String modalCardTitle, String modalCardDescription, String status, String tags, int board_id, String username, String assignee, Timestamp timestamp, Date start_date, Date due_date) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDAO cardDAO = (CardDAO) context.getBean("cardDAO");
-		cardDAO.insert(new Card(board_id, modalCardTitle, modalCardDescription, username, assignee, timestamp, tags, status, start_date, due_date));
+		return cardDAO.insert(new Card(board_id, modalCardTitle, modalCardDescription, username, assignee, timestamp, tags, status, start_date, due_date));
 	}
 	
 	public void deleteCard(int card_id) {
@@ -75,6 +76,24 @@ public class ProjectManagementService {
 		return boardDAO.retrieveActivityLog(board_id);
 	}
 	
+	public void insertDocumentLink(int card_id, String[] fileNames){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CardDocumentDAO cardDocumentDAO = (CardDocumentDAO) context.getBean("cardDocumentDAO");
+		cardDocumentDAO.deleteAll(card_id);
+		for(String fileName:fileNames){
+			cardDocumentDAO.insertDocuments(card_id, fileName);
+		}
+	}
 	
+	public String[] retrieveDocumentList(int card_id){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CardDocumentDAO cardDocumentDAO = (CardDocumentDAO) context.getBean("cardDocumentDAO");
+		return cardDocumentDAO.retrieveList(card_id);
+	}
 	
+	public void deleteDocumentList(int card_id){
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
+		CardDocumentDAO cardDocumentDAO = (CardDocumentDAO) context.getBean("cardDocumentDAO");
+		cardDocumentDAO.deleteAll(card_id);
+	}
 }

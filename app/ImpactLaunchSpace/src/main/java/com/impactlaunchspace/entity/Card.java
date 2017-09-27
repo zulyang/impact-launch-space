@@ -17,10 +17,10 @@ public class Card {
 	private int card_order; 
 	private Date start_date;
 	private Date due_date; 
-	
+	private String[] documentList;
 	
 
-	public Card(int card_id, int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status ) {
+	public Card(int card_id, int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status, String[] documentList) {
 		super();
 		this.card_id = card_id;
 		this.board_id = board_id;
@@ -31,6 +31,7 @@ public class Card {
 		this.date_created = date_created;
 		this.tags = tags; 
 		this.status = status;
+		this.documentList = documentList;
 	}
 	
 	//this constructor is to be inserted into the database
@@ -48,7 +49,7 @@ public class Card {
 		this.due_date = due_date;
 	}
 	
-	public Card(int card_id, int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status, int card_order, Date start_date, Date due_date ) {
+	public Card(int card_id, int board_id, String card_title, String description, String owner, String assignee, Timestamp date_created, String tags, String status, int card_order, Date start_date, Date due_date, String[] documentList) {
 		super();
 		this.card_id = card_id;
 		this.board_id = board_id;
@@ -62,6 +63,7 @@ public class Card {
 		this.card_order = card_order;
 		this.start_date = start_date;
 		this.due_date = due_date;
+		this.documentList = documentList;
 	}
 	
 	public String getStatus() {
@@ -176,8 +178,13 @@ public class Card {
 	public void setAssignee(String assignee) {
 		this.assignee = assignee;
 	}
-	
-	
-	
+
+	public String[] getDocumentList() {
+		return documentList;
+	}
+
+	public void setDocumentList(String[] documentList) {
+		this.documentList = documentList;
+	}
 	
 }

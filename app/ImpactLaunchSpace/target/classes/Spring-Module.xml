@@ -35,4 +35,6 @@
 	<import resource="notifications/Spring-Notification.xml" />
 	<import resource="pm/Spring-Board.xml" />
 	<import resource="pm/Spring-Card.xml" />
+	<import resource="pm/Spring-CardDocument.xml" />
+	
 </beans>

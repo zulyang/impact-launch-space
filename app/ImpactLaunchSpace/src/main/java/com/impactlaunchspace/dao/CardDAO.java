@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.impactlaunchspace.entity.Card;
 
 public interface CardDAO {
-	public void insert(Card card);
+	public int insert(Card card);
 	public void edit(String card_title, String description, String tags, String assignee, Date start_date, Date due_date, int card_id);
 	public ArrayList<Card> retrieveCards(int board_id);
 	public ArrayList<Card> retrieveCardsByStatus(int board_id, String status);
