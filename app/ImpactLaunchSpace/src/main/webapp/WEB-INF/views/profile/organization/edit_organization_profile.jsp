@@ -17,8 +17,11 @@
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/profile/organization/edit_organization_profile.css" />
+<link href="<%=request.getContextPath()%>/resources/css/cropper.min.css"
+	rel="stylesheet">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.min.css">
+<script src="<%=request.getContextPath()%>/resources/lib/cropper.min.js"></script>
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 <script
