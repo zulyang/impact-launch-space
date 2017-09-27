@@ -244,15 +244,17 @@ function loader() {
 											</div>
 											<textarea style="display:none;" id="post<%=id%>" >${item.getUpdate_contents()}</textarea>
 											 <c:choose>
-											 	<c:when test="${username.equals(selected_project.getProject_proposer()) }">
-													<div id="update_edit<%=id%>"><a id="init<%=id%>" onclick="edit(this.id);" class="btn r-btn text-small">Edit</a></div>
-													<div id="update_save<%=id%>"><a id="dest<%=id%>" onclick="save(this.id);" class="btn r-btn highlight text-small">Save</a></div>
-													<div id="update_remove<%=id%>"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn r-btn highlight text-small">Delete</a></div>
+											 	<c:when test="${username.equals(selected_project.getProject_proposer()) }">                                 
+											 	    <div id="update_edit<%=id%>" class="update-inline-button"><a id="init<%=id%>" onclick="edit(this.id);" class="btn btn-update-edit"></a></div>
+                                                    <div id="update_save<%=id%>" class="update-inline-button"><a id="dest<%=id%>" onclick="save(this.id);" class="btn btn-update-save"></a></div>
+                                                    <div id="update_remove<%=id%>" style="display: inline-block;"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn btn-update-del"></a></div>
+
 												</c:when>
 												<c:when test="${username.equals(project_organization) && !username.equals(selected_project.getProject_proposer()) }">
-													<div id="update_edit<%=id%>"><a id="init<%=id%>" onclick="edit(this.id);" class="btn r-btn text-small">Edit</a></div>
-													<div id="update_save<%=id%>"><a id="dest<%=id%>" onclick="save(this.id);" class="btn r-btn highlight text-small">Save</a></div>
-													<div id="update_remove<%=id%>"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn r-btn highlight text-small">Delete</a></div>
+													<div id="update_edit<%=id%>" class="update-inline-button"><a id="init<%=id%>" onclick="edit(this.id);" class="btn btn-update-edit"></a></div>
+                                                    <div id="update_save<%=id%>" class="update-inline-button"><a id="dest<%=id%>" onclick="save(this.id);" class="btn btn-update-save"></a></div>
+                                                    <div id="update_remove<%=id%>" style="display: inline-block;"><a id="dele<%=id%>" onclick="dele(this.id);" class="btn btn-update-del"></a></div>
+
 												</c:when>
 											</c:choose>
 										</div>
