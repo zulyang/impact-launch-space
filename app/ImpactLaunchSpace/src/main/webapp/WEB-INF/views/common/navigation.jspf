@@ -1,9 +1,10 @@
+<style>a.chat:hover, .faq:hover{cursor: not-allowed;}</style>
 <div id="navigation">
 	<nav class="navbar navbar-default navbar-fixed-top profileNav">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#"> <img alt="ImpactLaunch.Space"
+				<a class="navbar-brand" href="/search-project"> <img alt="ImpactLaunch.Space"
 					id="logoLoggedIn"
 					src="<%=request.getContextPath()%>/resources/img/logo2.png">
 				</a>
@@ -35,7 +36,7 @@
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class=""><a class="navbar-brand" href="#"> <i
+					<li class=""><a class="navbar-brand" href="/search-project"> <i
 							class="fa fa-home homeIcon"></i>
 					</a></li>
 
@@ -45,7 +46,8 @@
 							class="notification-counter">${unreadCount}</span>
 					</a></li>
 
-					<li class="profileIcons"><a class="navbar-brand" href="/chat">
+					<li class="profileIcons">
+					<a class="navbar-brand chat">
 							<i class="fa fa-comments chatIcon"></i>
 					</a></li>
 
@@ -68,7 +70,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="/view-my-profile">View My Profile</a></li>
 							<li><a href="/change-password">Change Password</a></li>
-							<li><a href="#">FAQ</a></li>
+							<li><a href="#" class="faq">FAQ</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="/logout">Log Out</a></li>
 						</ul></li>
