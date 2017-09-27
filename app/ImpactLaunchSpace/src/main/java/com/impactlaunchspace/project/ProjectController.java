@@ -228,6 +228,21 @@ public class ProjectController {
 
 		// insert dummy project and username to test functionality
 		Project sampleProject = projectService.retrieveProject(project_name, project_proposer);
+		
+		//checking if the user is authorized
+		if (sampleProject.getOrganization() != null) {
+			OrganizationAccount organizationAccount = profileService
+					.findByCompanyName(sampleProject.getOrganization());
+			if(!sampleProject.getProject_proposer().equals(username) && !organizationAccount.getUsername().equals(username)){
+				return "error/" + "unauthorized";
+			}
+		}else{
+			if(!sampleProject.getProject_proposer().equals(username)){
+				return "error/" + "unauthorized";
+			}
+		}		
+		
+		
 		model.addAttribute("sample_project", sampleProject);
 		model.addAttribute("project_proposer", project_proposer);
 
@@ -618,6 +633,21 @@ public class ProjectController {
 		String username = (String)request.getSession().getAttribute("username");
 		
 		Project project = projectService.retrieveProject(project_name, project_proposer);
+		
+		//checking if the user is authorized
+		if (project.getOrganization() != null) {
+			OrganizationAccount organizationAccount = profileService
+					.findByCompanyName(project.getOrganization());
+			if(!project.getProject_proposer().equals(username) && !organizationAccount.getUsername().equals(username)){
+				return "error/" + "unauthorized";
+			}
+		}else{
+			if(!project.getProject_proposer().equals(username)){
+				return "error/" + "unauthorized";
+			}
+		}		
+		
+		
 		model.addAttribute("project", project);
 		model.addAttribute("project_proposer", project_proposer);
 		ArrayList<ProjectMemberList> member_list = projectService.retrieveMemberList(project_name, project_proposer);
@@ -677,6 +707,20 @@ public class ProjectController {
 		model.addAttribute("project_proposer",project_proposer);
 		
 		String username = (String)request.getSession().getAttribute("username");
+		Project project = projectService.retrieveProject(project_name, project_proposer);
+		//checking if the user is authorized
+		if (project.getOrganization() != null) {
+			OrganizationAccount organizationAccount = profileService
+					.findByCompanyName(project.getOrganization());
+			if(!project.getProject_proposer().equals(username) && !organizationAccount.getUsername().equals(username)){
+				return "error/" + "unauthorized";
+			}
+		}else{
+			if(!project.getProject_proposer().equals(username)){
+				return "error/" + "unauthorized";
+			}
+		}	
+				
 		int unreadCount = notificationService.countUnreadNotifications(username);
 	    model.addAttribute("unreadCount", unreadCount);
 	    

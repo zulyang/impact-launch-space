@@ -68,7 +68,19 @@ public class ProjectManagementController {
 
 		ArrayList<ProjectMemberList> members = projectService.retrieveMemberList(project_name, project_proposer);
 		// Should check and remove the current user
-
+		
+		ArrayList<String> member_usernames = new ArrayList<String>();
+		
+		for(ProjectMemberList member : members){
+			member_usernames.add(member.getProject_member_username());
+		}
+		
+		//checking if the user is authorized
+		if (!member_usernames.contains(username)) {
+			return "error/" + "unauthorized";
+		}	
+		
+		
 		for (int i = 0; i < members.size(); i++) {
 			if (members.get(i).getProject_member_username().equals(username)) {
 				members.remove(i);
