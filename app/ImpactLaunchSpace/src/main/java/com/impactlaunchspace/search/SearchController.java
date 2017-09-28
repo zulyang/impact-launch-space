@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.impactlaunchspace.entity.Project;
 import com.impactlaunchspace.entity.UserOfferedResource;
 import com.impactlaunchspace.project.ProjectService;
@@ -62,9 +65,25 @@ public class SearchController {
 			//method to sort by duration
 			Collections.sort(projects, Project.getProjectByDescDuration());
 		}
-
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject jObj = new JsonObject();
+        JsonArray jArr = new JsonArray();
+        JsonObject pObj = new JsonObject();
+        
 		for(int i = 0; i<projects.size(); i++){
-			
+			pObj.addProperty("projname", projects.get(i).getProject_name());
+			pObj.addProperty("projpurpose", projects.get(i).getPurpose());
+			pObj.addProperty("projDuration", projects.get(i).getDuration());
+			pObj.addProperty("projLocation", projects.get(i).getLocation());
+			pObj.addProperty("projStatus", projects.get(i).getProject_status());
+			pObj.addProperty("projProposer", projects.get(i).getProject_proposer());
+			if(projects.get(i).getProjectImage() == null){
+				pObj.addProperty("projPicture", "false");
+			}else{
+				pObj.addProperty("projPicture", "true");
+			}
+
 			String projname = projects.get(i).getProject_name();
 			String projpurpose = projects.get(i).getPurpose();
 			int projDuration = projects.get(i).getDuration();
@@ -73,10 +92,17 @@ public class SearchController {
 			String projProposer = projects.get(i).getProject_proposer();
 			String toReturn = projname + "," + projpurpose + "," + Integer.toString(projDuration) + "," + projLocation + ","+  projStatus + "," + projProposer; 
 			list.put(i+1, toReturn);
+			jArr.add(pObj);
+			pObj =  new JsonObject();
 		}
-
+		
+		if (jArr.size() != 0) {
+            jObj.add("results", jArr);
+        }
+		
 		String json = null;
-		json = new Gson().toJson(list);
+		//json = new Gson().toJson(list);
+		json = gson.toJson(jObj);
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

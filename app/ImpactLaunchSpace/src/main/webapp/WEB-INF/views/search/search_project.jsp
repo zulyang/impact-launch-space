@@ -34,97 +34,70 @@
 	    $(document)
 			.ready(
 					function() {
-						$('#searchbox')
-								.add('#causes')
-								.add('#location')
-								.add('#misc')
-								.on(
-										'keyup change',
-										function(event) {
+						$('#searchbox').add('#causes').add('#location').add('#misc').on('keyup change',	function(event) {
 
-											if ($("input#searchbox").val().length >= 3) {
-												var $searchbox = $(
-														"input#searchbox")
-														.val();
-											}
-											var $causes = $("select#causes")
-													.val();
-											var $location = $("select#location")
-													.val();
-											var $misc = $("select#misc").val();
+							if ($("input#searchbox").val().length >= 3) {
+								var $searchbox = $("input#searchbox").val();
+							}
+								var $causes = $("select#causes").val();
+								var $location = $("select#location").val();
+								var $misc = $("select#misc").val();
 
-											$
-													.get(
-															'searchforproject',
-															{
-																searchboxName : $searchbox,
-																causeName : $causes,
-																locationName : $location,
-																miscName : $misc
-															},
-															function(
-																	responseJson) {
-																$(
-																		"#projectResults")
-																		.empty()
-																var trHTML = '';
-																$
-																		.each(
-																				responseJson,
-																				function(
-																						key,
-																						value) {
+							$.get('searchforproject',{
+								searchboxName : $searchbox,
+								causeName : $causes,
+								locationName : $location,
+								miscName : $misc
+							},function(responseJson) {
+								$("#projectResults").empty();
+								var trHTML = '';
+								console.log(JSON.stringify(responseJson));
+								for (i in responseJson.results) {
+									var value = responseJson.results[i];
+									trHTML += '<div class="col m4"><div class="card"><div class="card-image">';
+	
+									if (value.projPicture === "true") {
+										trHTML += '<img src="/projectImageDisplay?project-name='
+												+ value.projname
+												+ '&project-proposer='
+												+ value.projProposer
+												+ '">';
+	
+									} else {
+										trHTML += '<img src="https://st.depositphotos.com/1724125/1373/v/950/depositphotos_13739151-stock-illustration-cartoon-astronaut.jpg">';
+									}
+	
+									trHTML += '<span class="card-title">'
+											+ value.projname
+											+ '</span></div>';
+	
+									if (value.projStatus == "new") {
+										trHTML += '<span class="label label-primary project_status">new</span>';
+									} else if (value.projStatus == "started") {
+										trHTML += '<span class="label label-success project_status">started</span>';
+									} else {
+										trHTML += '<span class="label label-default project_status">ended</span>';
+									}
+	
+									trHTML += '<div class="card-content"><p class="project_description">'
+											+ value.projpurpose
+											+ '<hr/><i class="fa fa-clock-o"></i> '
+											+ value.projDuration
+											+ ' day(s)<br><i class="fa fa-globe"></i> '
+											+ value.projLocation
+											+ '<br><i class="fa fa-user-circle-o"></i> '
+											+ value.projProposer
+											+ '</p></div>'
+											+ '<a href ="/view-project?project-name='
+											+ value.projname
+											+ '&project-proposer='
+											+ value.projProposer
+											+ '"><div class="card-action">View Project</div></a></div> </div>';
+								}
 
-																					var val = value
-																					var res = val
-																							.split(",");
-
-																					trHTML += '<div class="col m4"><div class="card"><div class="card-image">';
-
-																					if (res[13] !== null) {
-																						trHTML += '<img src="/projectImageDisplay?project-name='
-																								+ res[0]
-																								+ '&project-proposer='
-																								+ res[5]
-																								+ '">';
-
-																					} else {
-																						trHTML += '<img src="https://st.depositphotos.com/1724125/1373/v/950/depositphotos_13739151-stock-illustration-cartoon-astronaut.jpg">';
-																					}
-
-																					trHTML += '<span class="card-title">'
-																							+ res[0]
-																							+ '</span></div>';
-
-																					if (res[4] == "new") {
-																						trHTML += '<span class="label label-primary project_status">new</span>';
-																					} else if (res[4] == "started") {
-																						trHTML += '<span class="label label-success project_status">started</span>';
-																					} else {
-																						trHTML += '<span class="label label-default project_status">ended</span>';
-																					}
-
-																					trHTML += '<div class="card-content"><p class="project_description">'
-																							+ res[1]
-																							+ '<hr/><i class="fa fa-clock-o"></i> '
-																							+ res[2]
-																							+ ' day(s)<br><i class="fa fa-globe"></i> '
-																							+ res[3]
-																							+ '<br><i class="fa fa-user-circle-o"></i> '
-																							+ res[5]
-																							+ '</p></div>'
-																							+ '<a href ="/view-project?project-name='
-																							+ res[0]
-																							+ '&project-proposer='
-																							+ res[5]
-																							+ '"><div class="card-action">View Project</div></a></div> </div>';
-																				});
-																$(
-																		'#projectResults')
-																		.append(
-																				trHTML);
-															});
-										});
+								$('#projectResults').append(trHTML);
+								});
+							});
 					});
 </script>
 </head>

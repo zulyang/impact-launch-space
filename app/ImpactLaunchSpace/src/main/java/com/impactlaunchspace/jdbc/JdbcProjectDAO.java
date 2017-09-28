@@ -395,6 +395,11 @@ public class JdbcProjectDAO implements ProjectDAO {
 		
 		sql += "group by p.Project_Name, p.Project_Proposer";
 		
+		//if no search triggers, no results
+		if((searchbox == null || searchbox.length() < 3) && causes.equals("Select Cause") && location.equals("All")){
+			return new ArrayList<Project>();
+		}
+		
 		Connection conn = null;
 		try {
 			conn = dataSource.getConnection();
