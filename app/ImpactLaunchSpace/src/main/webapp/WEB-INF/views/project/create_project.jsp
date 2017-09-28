@@ -367,7 +367,9 @@
                             }
                  });
             
-            $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+            $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {       
+            	$(".sw-container").css({ 'height' : ''});
+            	
                 var elmForm = $("#form-step-" + stepNumber);
                 // stepDirection === 'forward' :- this condition allows to do the form validation 
                 // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
@@ -382,9 +384,10 @@
                 return true;
             });
             
-            $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {
+            $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection) {            	
                 // Enable finish button only on last step
-                if(stepNumber == 3){ 
+                if(stepNumber == 3){    		
+                	$(".sw-container").css({ 'height' : ''});
                     $('.btn-finish').removeClass('disabled');  
                 }else{
                     $('.btn-finish').addClass('disabled');
@@ -395,8 +398,6 @@
     </script>  
     
     <script>
-    
-
 	function uploadPicture() {
 		document.getElementById("uploadPicture").click();
 	}
@@ -433,6 +434,8 @@
     </script>
     
     <script>
+    var sw_container_height = 0;
+    
     $('#addResource')
 	.on(
 			'click',
@@ -498,32 +501,61 @@
 				cloned.find("select").val('');
 				cloned.find("textarea").val('');
 				cloned.attr('id', "resourceRow" + (parseInt(rowID, 10) + 1));
+				
+				sw_container_height = $(".sw-container").css("height");
+				sw_container_height = sw_container_height.slice(0, -2);
+				sw_container_height = parseInt(sw_container_height);
+				sw_container_height += 265;
+				sw_container_height += "px";
+				$(".sw-container").css("height", sw_container_height);
+				
 				cloned.insertAfter(lastRow);
 
 			});
 
-function del(id){
-var num = id.substring(4);
-
-var resourceCat = document.getElementById("resourceCategory"
-		+ num).value;
-var resourceName = document.getElementById("resourceName"
-		+ num).value;
-var resourceDes = document.getElementById("resourceDescription"
-		+ num).value;
-
-if (resourceCat === "" || resourceName === "" || resourceDes === "") {
-	alert("You cannot delete a resource with empty fields.");
-	return false;
-}
-
-if (confirm("Are you sure you want to delete this resource?") == true) {
-	$('#resourceRow' + num).remove();
-	return true;
-} else {
-	return false;
-}
-}
+			function del(id){				
+				var num = id.substring(4);
+				
+				if(num === "1"){
+					alert("You cannot remove the first resource. Please state at least 1 resource for your project to be created.");
+					return false;
+				}
+				
+				var resourceCat = document.getElementById("resourceCategory"
+						+ num).value;
+				var resourceName = document.getElementById("resourceName"
+						+ num).value;
+				var resourceDes = document.getElementById("resourceDescription"
+						+ num).value;
+				
+				/*if (resourceCat === "" || resourceName === "" || resourceDes === "") {
+					alert("You cannot delete a resource with empty fields.");
+					return false;
+				}*/
+				
+				if (confirm("Are you sure you want to delete this resource?") == true) {
+					$('#resourceRow' + num).remove();
+					
+					sw_container_height = $(".sw-container").css("height");
+					sw_container_height = sw_container_height.slice(0, -2);
+					sw_container_height = parseInt(sw_container_height);
+					sw_container_height -= 265;
+					console.log("new height: " + sw_container_height);
+					sw_container_height += "px";
+					$(".sw-container").css("height", sw_container_height);
+					
+					var lastRow = $('#resourcesNeeded').closest('#resourcesNeeded').find("div:last-child");
+					var rowID = lastRow.attr('id').substring(11);
+					if(rowID == 1){
+						$(".sw-container").css({ 'height' : ''});
+						$(".sw-container").css("min-height", "473px");
+					}
+					
+					return true;
+				} else {
+					return false;
+				}
+			}
     </script>
  
  <script>
