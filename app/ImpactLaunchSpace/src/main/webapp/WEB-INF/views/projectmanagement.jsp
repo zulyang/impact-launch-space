@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Manage My Project</title>
-<%@include file = "AuthenticateCookie.jsp"; %>
+<%@include file = "AuthenticateCookie.jsp"%>
 <link rel="icon" type="image/png"
 	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
 <link rel="stylesheet"
