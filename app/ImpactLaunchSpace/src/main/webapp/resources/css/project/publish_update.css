@@ -1,0 +1,145 @@
+.publish_update_container {
+	margin: 10% auto;
+	width: 70%;
+	background: #fff;
+	padding-left: 3em;
+	padding-right: 3em;
+	padding-bottom: 3em;
+}
+
+.update_post_title {
+	border-radius: 0;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	font-size: 16pt;
+	height: 2em;
+}
+
+/* Publish Button */
+.publish_button {
+	outline: none;
+	height: 40px;
+	text-align: center;
+	width: 15em;
+	border-radius: 40px;
+	background: #fff;
+	border: 2px solid #1ECD97;
+	color: #1ECD97;
+	letter-spacing: 1px;
+	text-shadow: 0;
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	margin-bottom: 1em;
+	text-transform: uppercase;
+}
+
+.publish_button:hover{
+	color: white;
+	background: #1ECD97;
+}
+
+.publish_button:active{
+	letter-spacing: 2px;
+}
+
+.publish_button:after{
+	content: "SUBMIT";
+}
+
+.onclic {
+  width: 40px;
+  border-color: #bbbbbb;
+  border-width:3px;
+  font-size:0;
+  border-left-color: #1ECD97;
+  animation: rotating 2s 0.25s linear infinite;
+}
+.onclic:after {
+    content:"";
+}
+  
+.onclic:hover {
+    color:#1ECD97;
+    background: white;
+}
+
+.validate {
+  font-size:13px;
+  color: white;
+  background: #1ECD97;
+}
+.validate:after {
+    font-family:'FontAwesome';
+    content:"\f00c";
+}
+
+@keyframes rotating {
+  from { 
+  transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Back Button */
+a.button {
+  display: block;
+  position: relative;
+  float: left;
+  width: 6em;
+  padding: 0;
+  margin: 2em 5em 2em 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 40px;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s ;
+  height: 3em;
+}
+
+.btnFloat {
+  background: none;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
+.btnFloat:before {
+  content: 'Back';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6em;
+  height: 3em;
+  border-radius: 5px;
+  transition: all 0.2s ;
+}
+
+.btnBack.btnFloat:before {
+  background: #bbbbbb;
+}
+
+.btnFloat:before {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
+}
+
+
+.btnBack {
+  background: #bbbbbb;
+}
+
+.btnFloat:hover:before {
+  margin-top: -2px;
+  margin-left: 0px;
+  transform: scale(1.1,1.1);
+  -ms-transform: scale(1.1,1.1);
+  -webkit-transform: scale(1.1,1.1);
+  box-shadow: 0px 5px 5px -2px rgba(0, 0, 0, 0.25);
+}

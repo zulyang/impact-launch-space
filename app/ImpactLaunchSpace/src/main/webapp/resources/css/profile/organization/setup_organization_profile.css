@@ -1,0 +1,28 @@
+.org_profile_container {
+	margin-top: 10%;
+	margin-bottom: 5rem;
+	height: 70rem;
+	width: 75rem;
+	border: 0.125rem solid #ccc;
+}
+
+.profile_save {
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+}
+
+.info_header{
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #ccc;
+	text-transform: uppercase;
+	font-size: 15pt;
+	font-weight: bold;
+}
+
+.intl-tel-input .country-list {
+	width: 1400%;
+}

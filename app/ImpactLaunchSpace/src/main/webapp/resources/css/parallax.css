@@ -1,0 +1,226 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	margin: 0;
+	min-width: 980px;
+	padding: 0;
+}
+
+p {
+	margin: 0 0 20px 0;
+}
+
+p {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size-adjust: 0.488;
+	font-weight: 200;
+	font-style: normal;
+}
+
+img {
+	border: 0;
+	width: 100%;
+}
+
+h1, #pixels {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size-adjust: 0.40;
+	font-weight: 700;
+	font-style: normal;
+}
+
+h2 {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size-adjust: 0.531;
+	font-weight: 500;
+	font-style: normal;
+}
+
+#header h1, #pixels {
+	color: #48941A;
+}
+
+.float-left {
+	float: left;
+	margin: 0 0 0 20px;
+}
+
+.float-right {
+	float: right;
+	margin: 0 20px 0 0;
+}
+
+.center {
+	font-size: 2.5em;
+	padding: 80px 0 0 0;
+	text-align: center;
+}
+
+#nav {
+	list-style: none;
+	position: fixed;
+	right: 20px;
+}
+
+#nav li {
+	margin: 0 0 15px 0;
+}
+
+#header, #intro, #second {
+	width: 100%;
+}
+
+#intro {
+	background: url("../img/landingpage.png") 50% 0 no-repeat fixed;
+	background-size: cover;
+	color: white;
+	height: 800px;
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+}
+
+#second {
+	background: url("../img/two.png") 50% 0 no-repeat fixed;
+	background-size: cover;
+	color: white;
+	height: 600px;
+	margin: 0 auto;
+	overflow: hidden;
+	padding: 0;
+	width: 100%;
+}
+
+#second .bg {
+	background: url("../img/two-overlay.png") 50% 0 no-repeat fixed;
+	background-size: cover;
+	height: 600px;
+	margin: 0 auto;
+	padding: 0;
+	position: absolute;
+	z-index: 200;
+	max-width: 1900px;
+	width: 100%;
+	overflow: hidden;
+}
+
+#third {
+	background: url("../img/third.png") 50% 0 no-repeat fixed;
+	background-size: cover;
+	color: white;
+	height: 600px;
+	padding: 100px 0 0 0;
+	width: 100%;
+	overflow: hidden;
+	padding: 0;
+}
+
+#third .bg {
+	background: url("../img/third-overlay.png") 50% 0 no-repeat fixed;
+	background-size: cover;
+	height: 600px;
+	margin: 0 auto;
+	padding: 0;
+	position: absolute;
+	z-index: 200;
+	max-width: 1900px;
+	width: 100%;
+	overflow: hidden;
+}
+
+#fourth {
+	background: url("../img/fourth.png") 50% 0 no-repeat fixed;
+	background-size: cover;
+	color: white;
+	height: 500px;
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+}
+
+#footer {
+	background-color: white;
+	text-align: center;
+	color: black;
+	font-size: 20px;
+	height: 100px;
+	margin: 0 auto;
+	padding: 40px 0 0 0;
+}
+
+.story {
+	margin: 0 auto;
+	min-width: 980px;
+	overflow: hidden;
+	width: 980px;
+}
+
+.linked_story {
+	margin: 0 auto;
+	min-width: 980px;
+	width: 980px;
+}
+
+.story .float-left, .story .float-right {
+	padding: 100px 0 0 0;
+	position: relative;
+	width: 350px;
+}
+
+#logo {
+	height: auto;
+	width: auto;
+	max-width: 70%;
+	max-height: 10rem;
+	background-size: contain;
+	margin-left: 3rem;
+}
+
+.container-parallax {
+	width: 100%;
+}
+
+#navigationLogin .navbar-default .navbar-nav>li>a:hover {
+	transition: 0.5s ease;
+	border-top: 4px solid white;
+	border-bottom: 4px solid white;
+}
+
+#navigationLogin .navbar-default {
+	background: transparent !important;
+	border: 0;
+}
+
+#navigationLogin .navbar-default .navbar-nav>li>a {
+	color: #ffffff;
+	font-size: 20px;
+	text-decoration: none;
+	padding: 20px 0;
+	margin: 0 20px;
+}
+
+#navigationLogin .nav_elements {
+	margin-top: 1.5rem;
+	margin-right: 6rem;
+	padding: 1.5rem;
+}
+
+.btn-learn {
+	color: white;
+	font-size: large;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0.4rem solid white;
+	border-radius: 0;
+	padding: 1.2rem 10rem;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.explore_btn:hover {
+	color: white;
+	text-decoration: none;
+}
