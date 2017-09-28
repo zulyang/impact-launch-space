@@ -15,13 +15,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/error.css" />
 </head>
-<script>
-	function loader() {
-		$(".se-pre-con").fadeOut("slow");
-	};
-</script>
-<body onload="loader()">
-	<!-- Replace following navbar with navbar of no entry -->
+
+<body>
 	<%
 		String username = (String) request.getSession().getAttribute("username");
 		System.out.println("username: " + username);
@@ -46,12 +41,9 @@
 					<div class="error-subheader">Looks like you are lost in
 						space...</div>
 					<div class="error-message">
-						<p>Application has encountered an error. Please contact our
-							administrator if this problem persists.</p>
+						<p>Application has encountered an error. Please try again.</p>
 						<div class="error-button">
-							<button type="button" class="btn btn-error-home">
-								<a href="/">Back To Home</a>
-							</button>
+								<a href="/" class="btn-error-home">Back To Home</a>
 						</div>
 					</div>
 				</div>

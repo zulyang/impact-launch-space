@@ -4,9 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Oops!</title>
+<link rel="icon" type="image/png"
+	href="<%=request.getContextPath()%>/resources/img/title_rocket_icon.png" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
+	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/error.css" />
 </head>
 <body>
 	<%
@@ -23,7 +29,26 @@
 	<%
 		}
 	%>
-	<h2>Something went wrong with your login! Oops</h2>
+	<div class="container-fluid" id="error">
+		<div class="row">
+			<div class="app-error-container">
+				<div class="app-error-card">
+					<img src="<%=request.getContextPath()%>/resources/img/Meteor.png"
+						alt="Oops!" class="app-error-image">
+					<div class="error-header">Oops!</div>
+					<div class="error-subheader">Looks like you are lost in
+						space...</div>
+					<div class="error-message">
+						<p>Something went wrong with your login. Please try again.</p>
+						<div class="error-button">
+								<a href="/login" class="btn-error-home">Back To Login</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 
 </body>
 </html>

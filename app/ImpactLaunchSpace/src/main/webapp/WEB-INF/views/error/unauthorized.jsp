@@ -16,56 +16,38 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/app.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/project/project.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/bootstrap-tagsinput.css" />
-<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/lib/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/error.css" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/jquery/jquery-3.2.1.min.js"></script>
 
 <script
 	src="<%=request.getContextPath()%>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script
-	src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
-<script
-	src="<%=request.getContextPath()%>/resources/lib/jquery-ui/jquery-ui.js"></script>
-<script src="<%=request.getContextPath()%>/resources/js/project.js"></script>
-<script
-	src="<%=request.getContextPath()%>/resources/js/bootstrap-tagsinput.js"></script>
-
-
+</head>
 
 </head>
-<script>
-	function loader() {
-		$(".se-pre-con").fadeOut("slow");
-	};
-</script>
-</head>
-<body onload="loader()" class="project">
-	
-	<div class="container-fluid">
-	
+<body>
+	<div class="container-fluid" id="error">
 		<div class="row">
-		
-			<div class="col-sm-12 col-md-12 col-lg-12">
-				<%@include file="../common/navigation.jspf"%>
-				<div class="se-pre-con"></div>
-				
-				
-					
-					<div class="row">
-						<div class="page-header">
-							<h2>Oops!</h2>
-							You do not have authorized access to this page.
+			<div class="app-error-container">
+				<div class="app-error-card">
+					<img src="<%=request.getContextPath()%>/resources/img/Meteor.png"
+						alt="Oops!" class="app-error-image">
+					<div class="error-header">Oops!</div>
+					<div class="error-subheader">Looks like you are lost in
+						space...</div>
+					<div class="error-message">
+						<p>You do not have authorized access to this page.</p>
+						<div class="error-button">
+								<a href="" class="btn-error-home" onclick="history.back(-1)">Back</a>
 						</div>
-
 					</div>
-
+				</div>
 			</div>
+
 		</div>
 	</div>
 
