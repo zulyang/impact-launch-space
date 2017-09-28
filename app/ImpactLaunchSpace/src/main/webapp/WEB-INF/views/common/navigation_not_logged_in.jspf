@@ -1,0 +1,24 @@
+<div id="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top profileNav">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/search-project"> <img alt="ImpactLaunch.Space"
+					id="logoLoggedIn"
+					src="<%=request.getContextPath()%>/resources/img/logo2.png">
+				</a>
+			</div>
+
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/login">Log In</a></li>
+					<li><a href="/register">Register</a></li>
+				</ul>
+
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+</div>

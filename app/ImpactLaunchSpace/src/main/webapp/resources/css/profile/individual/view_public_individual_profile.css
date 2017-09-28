@@ -1,0 +1,76 @@
+.view_public_individual_profile_container {
+	margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.circle_indi_profile_image {
+	margin-left: auto;
+    margin-right: auto;
+    display: flex;
+	border-radius: 50%;
+	width: 250px;
+	height: 250px;
+	min-height: 100%; 
+}
+
+.indi_bio {
+	width: 45rem;
+}
+
+.indi_skills {
+	display: inline-block;
+	background-color: #4CAF50;
+	border-radius: 25px;
+	border: 0.1rem solid #4CAF50;
+	width: auto;
+	white-space: nowrap;
+	color: white;
+	text-align: center;
+	font-size: medium;
+	padding-right: 5%;
+	padding-left: 5%;
+}
+
+.indi_project_area {
+	display: inline-block;
+	background-color: #24b8d7;
+	border-radius: 25px;
+	border: 0.1rem solid #24b8d7;
+	width: auto;
+	white-space: nowrap;
+	color: white;
+	text-align: center;
+	font-size: medium;
+	padding-right: 5%;
+	padding-left: 5%;
+}
+
+.indi_job_sector {
+	display: inline-block;
+	background-color: #eba410;
+	border-radius: 25px;
+	border: 0.1rem solid #eba410;
+	width: auto;
+	white-space: nowrap;
+	color: white;
+	text-align: center;
+	font-size: medium;
+	padding-right: 5%;
+	padding-left: 5%;
+}
+
+.indi_preferred_countries {
+	display: inline-block;
+	background-color: #ec0faa;
+	border-radius: 25px;
+	border: 0.1rem solid #ec0faa;
+	width: auto;
+	white-space: nowrap;
+	color: white;
+	text-align: center;
+	font-size: medium;
+	padding-right: 5%;
+	padding-left: 5%;
+}

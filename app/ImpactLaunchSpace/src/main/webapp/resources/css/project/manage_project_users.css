@@ -1,0 +1,47 @@
+.page-header {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.project_name {
+	text-align: center;
+}
+
+.invite_users_panel, .remove_users_panel {
+	margin: 5%
+}
+
+.invite_users_label {
+	white-space: nowrap;
+}
+
+.invite_users_input {
+	margin: 5%;
+}
+
+.invite_btn {
+	width: 23%;
+}
+
+.manage_project_users {
+	margin: 10% auto;
+	width: 70%;
+	background: #fff;
+}
+
+.users_table>tbody>tr>th, .users_table>tbody>tr>td {
+	padding: 15px;
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate {
+	margin: 2%
+}
+
+.username_link_profile {
+	font-weight: 700;
+}

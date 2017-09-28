@@ -1,0 +1,137 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+.manage-resource-container {
+	margin-top: 10rem;
+	margin-bottom: 5rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title {
+	background-color: #75abd9;
+	color: white;
+	font-weight: 700;
+	padding: 10px;
+	height: 40px;
+	width: 200px;
+	display: inline-block;
+	text-align: center;
+}
+
+.title-label {
+	font-weight: 400;
+	font-size: 24px;
+}
+
+.navbar-barnd {
+	vertical-align: middle;
+	line-height: 45px;
+}
+
+.btn-success.create, .btn-warning.guide {
+	margin-top: 10px;
+}
+
+.save, .cancel {
+	display: none;
+}
+
+.editable-field:disabled, .editable-field[disabled] {
+	border: 1px solid transparent;
+	background-color: transparent;
+}
+
+select:required:invalid {
+	color: #999999;
+}
+
+option[value=""][disabled] {
+	display: none;
+}
+
+option {
+	color: black;
+}
+
+.modal-title {
+	text-align: center;
+	
+}
+
+#resource_modal_content .modal-title{
+	font-size: 1.8em;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.resource_guide_start_button {
+	border-radius: 0;
+	margin-left: 25%;
+	margin-right: 25%;
+	width: 50%;
+}
+
+.modal_start_text {
+	font-size: 20px;
+	margin: 1% 0%;
+}
+
+.asset_header, .skills_header {
+	margin-left: 25%;
+	margin-right: 25%;
+	text-align: center;
+}
+
+.resource_modal_content {
+	border-radius: 0;
+	border: none;
+}
+
+.resource_modal_header {
+	border-bottom: none;
+	background-color: steelblue;
+	color: white;
+	font-family: 'Roboto Condensed', sans-serif;
+	letter-spacing: 1px;
+}
+
+.resource_modal_body {
+	background-color: steelblue;
+	color: white;
+	font-family: 'Quicksand', sans-serif;
+}
+
+.close { &:hover background rgba(black, 0.6);
+	
+}
+
+.close_img {
+	border-radius: 50%;
+	-webkit-transition: -webkit-transform .4s ease-in-out;
+	transition: transform .4s ease-in-out;
+}
+
+.close_img:hover {
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.resource_modal_footer {
+	border-top: none;
+	height: 70px;
+	background-color: white;
+	color: steelblue;
+	text-align: center;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+#resource_modal_content li:before {    
+	font-family: 'FontAwesome';
+	content: '\f00c';
+	margin:0 5px 0 -15px;
+	color: rgb(107, 255, 122);
+}
+
+#resource_modal_content ul { list-style-type: none; }

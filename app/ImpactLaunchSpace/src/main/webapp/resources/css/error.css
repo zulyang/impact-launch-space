@@ -1,0 +1,76 @@
+@import
+	url(https://fonts.googleapis.com/css?family=Archivo+Black|Francois+One|Lobster|Playfair+Display+SC|Raleway)
+	;
+
+#error {
+	background: white;
+	padding-bottom: 6em;
+	overflow:hidden;
+}
+
+.app-error-container {
+	width: 80%;
+	min-height: 50%; margin-top : 10em;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 6em;
+}
+
+.app-error-card {
+	margin-left: auto;
+	margin-right: auto;
+	height: 45rem;
+	width: 60rem;
+	position: relative;
+}
+
+#error .error-header {
+	font-family: 'Lobster', cursive;
+	text-align: center;
+	font-size: 4.5em;
+}
+
+.app-error-image {
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 3em;
+	display: flex;
+}
+
+.error-subheader {
+	color: rgb(155, 155, 155);
+	font-size: 1.5em;
+	font-family: 'Francois One', sans-serif;
+	text-align: center;
+}
+
+.error-message {
+	padding-left: 2em;
+	padding-right: 2em;
+	text-align: center;
+	margin-top: 1em;
+	font-family: 'Raleway', sans-serif;
+}
+
+#error .btn-error-home{
+	color: #091743;
+	border: 1px solid #091743;	
+	background: none;
+	border-radius: 5em;
+    padding: 0.5em 4em;
+}
+
+#error .btn-error-home:hover{
+	color:white;
+	background: #091743;
+}
+
+#error .error-button{
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+}
+#error a{
+	text-decoration: none;
+	color: inherit;
+}

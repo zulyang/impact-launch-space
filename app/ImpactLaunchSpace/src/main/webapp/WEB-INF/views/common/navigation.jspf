@@ -1,0 +1,96 @@
+<style>a.chat:hover, .faq:hover{cursor: not-allowed;}</style>
+<div id="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top profileNav">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/search-project"> <img alt="ImpactLaunch.Space"
+					id="logoLoggedIn"
+					src="<%=request.getContextPath()%>/resources/img/logo2.png">
+				</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+
+				<ul class="nav navbar-nav">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Projects <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/create-project">Create Project</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/search-project">Explore Projects</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/my-projects">My Projects</a></li>
+						</ul></li>
+
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Resources <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/manage-user-resources">Manage Resources</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/search-resource">Explore Resources</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class=""><a class="navbar-brand" href="/search-project"> <i
+							class="fa fa-home homeIcon"></i>
+					</a></li>
+
+					<li class="profileIcons"><a class="navbar-brand"
+						href="/notifications/messages/inbox"> <i
+							class="fa fa-bell alertsIcon"></i> <span
+							class="notification-counter">${unreadCount}</span>
+					</a></li>
+
+					<li class="profileIcons">
+					<a class="navbar-brand chat">
+							<i class="fa fa-comments chatIcon"></i>
+					</a></li>
+
+					<li class="profileIcons"><a class="navbar-brand"
+						href="/view-my-profile"> 
+						<img alt="profilePicture" id="profilePictureIcon"
+							class="profilePictureIcon"
+							src="/imageDisplay?username=${username}">
+					</a></li>
+
+					<li class="profileIcons"><a class="navbar-brand"
+						href="/view-my-profile">${username}</a>
+						<input type="hidden" id="username" value="${username}" /></li>
+					
+
+					<li class="dropdown"><a href="#" class="navbar-brand"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="/view-my-profile">View My Profile</a></li>
+							<li><a href="/change-password">Change Password</a></li>
+							<li><a href="#" class="faq">FAQ</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/logout">Log Out</a></li>
+						</ul></li>
+
+
+
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+</div>
+<script>
+	if ($(".notification-counter").text() === "" || $(".notification-counter").text() === "0") {
+		$(".notification-counter").hide()
+	}
+	
+	var im = document.getElementById('profilePictureIcon');
+	im.onerror = function(){
+	   im.src = "<%=request.getContextPath()%>/resources/img/profilePicture.png";
+	};
+</script>

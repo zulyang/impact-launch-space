@@ -1,0 +1,56 @@
+img {
+	max-width: 100%;
+}
+
+.image_container {
+	width: auto;
+	height: 500px;
+	border: 1px dotted;
+	background-color: rgba(162, 151, 151, 0.44);
+}
+
+.cropped_result {
+	background-color: rgba(162, 151, 151, 0.44);
+	border: 1px dotted;
+    margin: 5% auto;
+    width: 20vw;
+    height: 19vw;
+}
+
+.image_cropper_btns {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+	width: 15rem;
+	margin-top: 4%;
+}
+
+.btn_text {
+	color: white;
+}
+
+.btn_text:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.setup_profile_picture {
+	margin-top: 8%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+}
+
+.image_container {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.edit_org_profile_save {
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1rem;
+	width: 23rem;
+	text-align: center;
+}
