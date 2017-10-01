@@ -85,13 +85,13 @@ public class ProjectManagementService {
 		}
 	}
 	
-	public String[] retrieveDocumentList(int card_id){
+	public String[] retrieveDocumentLink(int card_id){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDocumentDAO cardDocumentDAO = (CardDocumentDAO) context.getBean("cardDocumentDAO");
 		return cardDocumentDAO.retrieveList(card_id);
 	}
 	
-	public void deleteDocumentList(int card_id){
+	public void deleteDocumentLink(int card_id){
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Module.xml");
 		CardDocumentDAO cardDocumentDAO = (CardDocumentDAO) context.getBean("cardDocumentDAO");
 		cardDocumentDAO.deleteAll(card_id);

@@ -247,9 +247,11 @@ public class ProjectManagementController {
 		int card_id_view2 = Integer.parseInt(card_id_view);
 		// might cause error if there is comma in the file name
 	    if(!modalCardDocLink.isEmpty()){
-	      String[] docLinkNames = modalCardDocLink.split(",");
-	      // submit to DB
-	      pmService.insertDocumentLink(card_id_view2, docLinkNames);
+	    	String[] docLinkNames = modalCardDocLink.split(",");
+			// submit to DB
+			pmService.insertDocumentLink(card_id_view2, docLinkNames);
+	    }else{
+	    	pmService.deleteDocumentLink(card_id_view2);
 	    }
 
 		if (start_date.equals("")) {
@@ -309,7 +311,7 @@ public class ProjectManagementController {
 		String modalCardAssignee = c.getAssignee();
 		int cardId = Integer.parseInt(card_id);
 		pmService.deleteCard(cardId);
-		pmService.deleteDocumentList(cardId);
+		pmService.deleteDocumentLink(cardId);
 
 		String username = (String) request.getSession().getAttribute("username"); // owner
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // timestamp
