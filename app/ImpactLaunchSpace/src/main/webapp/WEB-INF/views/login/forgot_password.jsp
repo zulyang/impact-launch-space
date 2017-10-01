@@ -46,7 +46,7 @@
 						<p id="forgotPasswordCheck">${forgotPasswordCheck}</p>
 					</form>
 
-					<a href="/login1" class="btn btn-default returnLogin" role="button">
+					<a href="/" class="btn btn-default returnLogin" role="button">
 						Return to Login</a>
 				</div>
 			</div>

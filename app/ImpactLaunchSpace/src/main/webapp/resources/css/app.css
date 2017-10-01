@@ -195,7 +195,7 @@ html, body {
 	width: 90%;
 }
 
-.welcome, .register_success_message, .verifyAccountMessage,
+.welcome, .register_success_message,
 	.unlockAccountMessage, .unlockAccountPinMessage {
 	justify-content: center;
 	display: flex;
@@ -298,12 +298,6 @@ html, body {
 
 .finePrint {
 	width: 30rem;
-}
-
-.registerError {
-	color: red;
-	width: 30rem;
-	text-align: center;
 }
 
 #passwordUnmatchMsg, #forgotPasswordCheck, #pinWrongMessage {

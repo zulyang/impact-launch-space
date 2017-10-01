@@ -9,8 +9,9 @@
                   
                     <ul class="nav navbar-nav navbar-right nav_elements">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/login">Log In</a></li>
+                        <!--  <li><a href="/login">Log In</a></li>
                         <li><a href="/register">Register</a></li>
+                        -->
                     </ul>
                 </div>
             </nav> 

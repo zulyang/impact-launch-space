@@ -127,7 +127,7 @@ public class LoginController {
 			ModelMap model) {
 		model.put("email", email);
 
-		int passLength = password1.length();
+		/*int passLength = password1.length();
 		boolean hasLetters = false;
 		boolean hasDigits = false;
 		boolean hasSomethingElse = false;
@@ -145,29 +145,29 @@ public class LoginController {
 		if (!hasLetters || !hasDigits || !hasSomethingElse || (passLength < 6)) {
 			model.addAttribute("passwordCheck",
 					"Your password did not meet all requirements.");
-			return "login/" + "register";
+			return "index";
 		}
 
 		// FRONT END TO PRINT ERROR THAT THE 2 PASSWORDS ENTERED DONT MATCH
 		if (!password1.equals(password2)) {
 			model.addAttribute("passwordCheck", "Please ensure that both your passwords match.");
-			return "login/" + "register";
-		}
+			return "index";
+		}*/
 
 		boolean usernameExists = loginService.userExists(username);
 		boolean emailExists = loginService.userExists(email);
 		// FRONT END TO PRINT ERROR THAT USERNAME AND EMAIL HAS ALR BEEN USED
 		if (usernameExists && emailExists) {
 			model.addAttribute("registerCheck", "The username and email is already in use.");
-			return "login/" + "register";
+			return "index";
 		} else if (usernameExists && !emailExists) {
 			// FRONT END TO PRINT ERROR THAT USERNAME HAS ALR BEEN USED
 			model.addAttribute("registerCheck", "The username is already in use.");
-			return "login/" + "register";
+			return "index";
 		} else if (!usernameExists && emailExists) {
 			// FRONT END TO PRINT ERROR THAT EMAIL HAS ALR BEEN USED
 			model.addAttribute("registerCheck", "The email is already in use.");
-			return "login/" + "register";
+			return "index";
 		}
 
 		boolean registerSuccess = registerService.registerNewUser(username, password1, email, user_type);
@@ -177,11 +177,11 @@ public class LoginController {
 			vtService.sendVerificationEmail(verificationCode, email);
 			// below is for resending verification
 			model.addAttribute("registerSuccess", "success");
-			return "login/" + "register";
+			return "login/" + "verify_account";
 		} else {
 			// FRONT END TO PRINT GENERIC ERROR, ERROR REGISTERING
 			model.addAttribute("registerCheck", "An error has occurred during registration.");
-			return "login/" + "register";
+			return "index";
 		}
 	}
 
@@ -360,7 +360,7 @@ public class LoginController {
 			// user does not exist
 			// FRONT END TO PRINT USERNAME/PW IS WRONG
 			model.addAttribute("loginValidation", "Username/password is incorrect.");
-			return "login/" + "login";
+			return "index";
 		} else {
 			isUser = loginService.authenticate(usernameemail, password);
 			isEnabled = loginService.checkEnabled(usernameemail);
@@ -369,7 +369,7 @@ public class LoginController {
 				// FRONT END TO PRINT THIS ACCOUNT IS LOCKED/UNVERIFIED
 				// account locked or verified, do not increase login attempts
 				model.addAttribute("loginValidation", "This account is locked or unverified.");
-				return "login/" + "login"; // lockedlogin
+				return "index"; // lockedlogin
 			} else if(!isEnabled && !isUser){
 				loginAttempts = loginService.getLoginAttempts(username);
 
@@ -380,13 +380,13 @@ public class LoginController {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG
 					model.addAttribute("loginValidation", "Username/password is incorrect.");
 					loginService.increaseLoginAttempts(username);
-					return "login/" + "login";
+					return "index";
 				} else {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS
 					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
 					// else lock the account
 					model.addAttribute("accountLockedValidation",
-							"Your account has been locked. You may unlock it here. ");
+							"Username/password is incorrect. Your account has been locked. You may unlock it here. ");
 					loginService.lockAccount(username);
 					return "login/" + "unlock_account";
 				}
@@ -402,13 +402,13 @@ public class LoginController {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG
 					model.addAttribute("loginValidation", "Username/password is incorrect.");
 					loginService.increaseLoginAttempts(username);
-					return "login/" + "login";
+					return "index";
 				} else {
 					// FRONT END TO PRINT USERNAME/PW IS WRONG, ACCOUNT IS
 					// LOCKED BECAUSE EXCEED 5 ATTEMPTS
 					// else lock the account
 					model.addAttribute("accountLockedValidation",
-							"Your account has been locked. You may unlock it here. ");
+							"Username/password is incorrect. Your account has been locked. You may unlock it here. ");
 					loginService.lockAccount(username);
 					return "login/" + "unlock_account";
 				}
@@ -534,7 +534,7 @@ public class LoginController {
 				}
 			}
 		}
-		return "login/" + "login";
+		return "index";
 	}
 
 	// forget my password
