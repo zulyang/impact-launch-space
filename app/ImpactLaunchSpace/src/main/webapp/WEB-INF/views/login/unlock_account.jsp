@@ -16,10 +16,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
-                    
-<%@include file="../common/navigationLogin.jspf" %>
-                    
-                    <div class="col-lg-12 form_container">
+
+				<%@include file="../common/navigationLogin.jspf"%>
+
+				<div class="col-lg-12 form_container">
                         <h4 class="unlockAccountMessage">Your account has been locked. You may unlock it here.</h4>
                         <form class="form-horizontal" action="sendresetcodelocked" method="POST">                                                   
                             <div class="form-group">   
@@ -37,7 +37,7 @@
                                     <button type="submit" class="btn btn-success field">Send me my verification token.</button>
                                 </div>
                             </div>
-                            <p class="accountUnlockValidation">${accountUnlockValidation}</p>
+                            <p style="color:red" class="accountUnlockValidation">${accountUnlockValidation}</p>
                             <div class="forget">
                                 <a href="/forgot-password">Forget your password?</a>
                             </div>

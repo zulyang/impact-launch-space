@@ -41,7 +41,7 @@
 					<div class="error-message">
 						<p>Something went wrong with your login. Please try again.</p>
 						<div class="error-button">
-								<a href="/login" class="btn-error-home">Back To Login</a>
+								<a href="/" class="btn-error-home">Back To Login</a>
 						</div>
 					</div>
 				</div>
