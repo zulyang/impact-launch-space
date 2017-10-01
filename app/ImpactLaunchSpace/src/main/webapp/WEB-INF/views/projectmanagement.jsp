@@ -345,11 +345,11 @@
 											<button id="uploadFiles" type="button"
 												class="btn btn-primary">Upload</button>
 										</div>
-										                                        <div id="fileListDiv" class="table-responsive col-md-12" >
+										<div id="fileListDiv" class="table-responsive col-md-12" >
                                             <table id="fileListTable" class="table" style="width: 100%;">
                                             <thead>
-		<tr>
-													                                                    <td class="col-md-5">Name</td>
+												<tr>
+													<td class="col-md-5">Name</td>
                                                     <td class="col-md-3">Date Modified</td>
                                                     <td class="col-md-2">Size</td>
                                                     <td class="col-md-1"></td>
@@ -722,8 +722,10 @@
 	$(document).ready(function() {
 		// page is now ready, initialize the calendar...
 		initialiseKB();
-		var calendarList = ${calendarList}
+		loadDT();
 		uploadFile();
+		
+		var calendarList = ${calendarList}
 		$('#fullcalendar').fullCalendar({
 			// put your options and callbacks here
 			height : 400,
@@ -953,11 +955,13 @@
 	$(document).ajaxSuccess(function() {
 		initialiseKB();
 		uploadFile();
+		loadDT();
 	});
 
 	$(document).ajaxError(function() {
 		initialiseKB();
 		uploadFile();
+		loadDT();
 	});
 </script>
 
@@ -1035,12 +1039,11 @@
 									$("#fileUploadDiv").load(
 											window.location.href
 													+ " #fileUploadDiv");
-									$("#fileListDiv").load(
-											window.location.href
-													+ " #fileListDiv");
+									$("#fileListDiv").load(window.location.href + " #fileListDiv");
 									$("#activitylogtablediv").load(
 											window.location.href
 													+ " #activitylogtablediv");
+									
 								}
 							});
 						} else {
@@ -1060,7 +1063,7 @@
 		          username:username, 
 		          board_id:board_id 
 		        }); 
-		        $("#fileListDiv").load(window.location.href + " #fileListDiv"); 
+		        $("#fileListDiv").load(window.location.href + " #fileListDiv");
 		        $("#activitylogtablediv").load(window.location.href + " #activitylogtablediv"); 
 		}		
 	};
@@ -1099,23 +1102,26 @@ function showCalendar(){
 </script>
 
 <script>
-$(document)
-.ready(
-        function() {
-            $('#fileListTable').DataTable({
-                responsive:true,
-                "columnDefs": [{
-                    "targets" : [3],
-                    "orderable":false
-                    }, {
-                        "targets": [4],
-                        "orderable":false
-                    
-                
-                }]
-            });
-            
-        });
-        </script>
+function loadDT() {
+    $('#fileListTable').DataTable({
+        responsive:true,
+        "columnDefs": [{
+            "targets" : [3],
+            "orderable":false
+            }, {
+                "targets": [4],
+                "orderable":false
+        }]
+    }); 
+    
+    $.fn.dataTable.ext.errMode = 'none';
+    
+    $('#fileListTable')
+        .on( 'error.dt', function ( e, settings, techNote, message ) {
+            //Error message DataTables warning: table id=fileListTable - Cannot reinitialise DataTable. For more information about this error, please see http://datatables.net/tn/3
+        } )
+        .DataTable();
+}
+</script>
 
 </html>
