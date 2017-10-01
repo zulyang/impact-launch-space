@@ -49,6 +49,12 @@
 	src='<%=request.getContextPath()%>/resources/lib/calendar/lib/moment.min.js'></script>
 <script
 	src='<%=request.getContextPath()%>/resources/lib/calendar/fullcalendar.js'></script>
+<link
+	href="<%=request.getContextPath()%>/resources/lib/select2/select2.min.css"
+	rel="stylesheet" />
+<script
+	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>	
+
 </head>
 
 <body>
@@ -448,12 +454,13 @@
 														
 													<!-- Documents -->
 													Choose Documents Reference 
-													<select id="modalCardDocLink" name="modalCardDocLink"
-														class="col-md-4 form-control" style="width: 100%" multiple="multiple">
+													<select required id="modalCardDocLink"
+														class="js-example-basic-multiple-documentLink"
+														multiple="multiple" name="modalCardDocLink" style="width: 100% !important;">
 														<c:forEach items="${filesList}" var="file">
 															<option value="${file.name}">${file.name}</option>
 														</c:forEach>
-													</select> 
+													</select>
 												</div>
 											</div>
 										</div>
@@ -522,12 +529,13 @@
 
 													<!-- Documents -->
 													Choose Documents Reference 
-													<select id="modalCardDocLinkView" name="modalCardDocLinkView"
-														class="col-md-4 form-control" style="width: 100%" multiple="multiple">
+													<select id="modalCardDocLinkView"
+														class="js-example-basic-multiple-documentLink"
+														multiple="multiple" name="modalCardDocLinkView" style="width: 100% !important;">
 														<c:forEach items="${filesList}" var="file">
 															<option value="${file.name}">${file.name}</option>
 														</c:forEach>
-													</select> 
+													</select>
 													
 													<div id="documentList_view"></div>
 													
@@ -706,6 +714,10 @@
 			editable : false,
 			events : calendarList
 		});
+		
+		$("#modalCardDocLinkView").select2({
+			placeholder : ""
+		});
 	});
 </script>
 
@@ -742,13 +754,19 @@
 		$('#dueDateView').val(due_date);
 		$('#card_id_view').val(newId);
 		
+		if(documentArr.length > 0){
+			$('#modalCardDocLinkView').val(documentArr).select2();
+		}else{
+			 $("#modalCardDocLinkView").val(null).trigger("change"); 
+		}
+		
 		var str = "";
 		documentArr.forEach(function(doc, index) {
 			str +="<a href=\"/saveFile?file=src/main/webapp/resources/storage/"+projectName+"_"+projectProposer+"/"+doc+"&project_name=${projectName}&project_proposer=${project_proposer}&username=${username}\">"+doc+"</a><br>";
 		});
+		
 		$('#documentList_view').html(str);
 		
-
 		$('#ViewModal').modal('show');
 	};
 
@@ -871,7 +889,7 @@
 											
 											if(modalCardDocLink!=null){
 						                        modalCardDocLink = modalCardDocLink.toString();
-						                      }
+						                    }
 											
 											
 											if (start_date === "") {
@@ -1062,4 +1080,5 @@ function showCalendar(){
        },200);
 }
 </script>
+
 </html>
