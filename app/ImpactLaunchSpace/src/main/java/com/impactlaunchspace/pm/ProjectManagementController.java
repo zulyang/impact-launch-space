@@ -230,9 +230,11 @@ public class ProjectManagementController {
 		notificationService.sendNotification(notification);
 		
 		// might cause error if there is comma in the file name
-		String[] docLinkNames = modalCardDocLink.split(",");
-		// submit to DB
-		pmService.insertDocumentLink(card_id, docLinkNames);
+	    if(!modalCardDocLink.isEmpty()){
+	      String[] docLinkNames = modalCardDocLink.split(",");
+	      // submit to DB
+	      pmService.insertDocumentLink(card_id, docLinkNames);
+	    }
 	}
 
 	@RequestMapping(value = "/edit-card", method = RequestMethod.POST)
@@ -244,9 +246,11 @@ public class ProjectManagementController {
 
 		int card_id_view2 = Integer.parseInt(card_id_view);
 		// might cause error if there is comma in the file name
-		String[] docLinkNames = modalCardDocLink.split(",");
-		// submit to DB
-		pmService.insertDocumentLink(card_id_view2, docLinkNames);
+	    if(!modalCardDocLink.isEmpty()){
+	      String[] docLinkNames = modalCardDocLink.split(",");
+	      // submit to DB
+	      pmService.insertDocumentLink(card_id_view2, docLinkNames);
+	    }
 
 		if (start_date.equals("")) {
 			start_date = null;

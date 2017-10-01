@@ -799,7 +799,12 @@
 													.val();
 
 											var due_date = $('#duedate').val();
-											var modalCardDocLink = $('#modalCardDocLink').val().toString();
+											var modalCardDocLink = $('#modalCardDocLink').val();
+											
+											if(modalCardDocLink!=null){
+												modalCardDocLink = modalCardDocLink.toString();
+											}
+											
 											if (start_date === "") {
 												start_date = null;
 											}
@@ -863,7 +868,12 @@
 													.val();
 											var card_id_view = $(
 													'#card_id_view').val();
-											var modalCardDocLink = $('#modalCardDocLinkView').val().toString();
+											var modalCardDocLink = $('#modalCardDocLinkView').val();
+											
+											if(modalCardDocLink!=null){
+						                        modalCardDocLink = modalCardDocLink.toString();
+						                      }
+											
 											
 											if (start_date === "") {
 												start_date = null;
