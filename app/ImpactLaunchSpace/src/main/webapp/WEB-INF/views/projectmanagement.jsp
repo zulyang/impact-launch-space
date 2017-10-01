@@ -135,7 +135,7 @@
 								<li><a href="#activity-log" data-toggle="tab"
 									aria-expanded="false"><span class>Activity Log</span></a></li>
 								<li><a href="#project-calendar" data-toggle="tab"
-									aria-expanded="false"><span class>Calendar</span></a></li>
+									aria-expanded="false" onClick="showCalendar()"><span class>Calendar</span></a></li>
 								<li><a href="#documents" data-toggle="tab"
 									aria-expanded="false"><span class>Documents</span></a></li>
 								<li><a href="#group-chat" data-toggle="tab"
@@ -318,17 +318,16 @@
 
 											<div id="dropzone" class="dropzone">
 												<div class="fileupload_wrapper">
-													Drop files here, or <label class="fileupload_label">browse
-														for files <input id="fileupload" type="file" name="files"
+													Drop files here, or <label id="browseFiles" title="Click Here to Choose Files" class="fileupload_label" onmouseover="hoverBrowse()" onmouseout="outBrowse()">
+														browse for files<input id="fileupload" type="file" name="files"
 														multiple="multiple">
 													</label>
 												</div>
 											</div>
-
 											<div id="files" class="thumbnails clearfix"></div>
 
 											<button id="uploadFiles" type="button"
-												class="btn btn-primary" onclick="this.disabled = true">Upload</button>
+												class="btn btn-primary">Upload</button>
 										</div>
 										<div id="fileListDiv">
 											<table>
@@ -978,6 +977,7 @@
 					function(event) {
 						if (filesList.length > 0) {
 							event.preventDefault();
+							document.getElementById("uploadFiles").disabled = true;
 							formData.append('project_name', project_name);
 							formData.append('project_proposer',
 									project_proposer);
@@ -1039,4 +1039,27 @@
     
 </script>
 
+<script>
+function hoverBrowse(){
+	  $("#browseFiles").
+	    stop().
+	    animate({
+	      color:"#1ea69a"
+	      }, 1000);
+	  }
+function outBrowse(){
+	  $("#browseFiles").
+	    stop().
+	    animate({
+	    	color:"black"
+	      }, 1000);
+	  }
+</script>
+<script>
+function showCalendar(){
+	setTimeout(function () {
+		$(".fc-today-button").click();
+       },200);
+}
+</script>
 </html>
