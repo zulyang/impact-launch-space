@@ -28,6 +28,9 @@
 	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script
 	src="//blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+	    <script
+    src="<%=request.getContextPath()%>/resources/lib/jquery-migrate/jquery-migrate-1.4.1.js"></script>
+	
 <script
 	src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
 <script
@@ -54,6 +57,11 @@
 	rel="stylesheet" />
 <script
 	src="<%=request.getContextPath()%>/resources/lib/select2/select2.min.js"></script>	
+	    <link rel="stylesheet" type="text/css"
+    href="<%=request.getContextPath()%>/resources/lib/datatables/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+    src="<%=request.getContextPath()%>/resources/lib/datatables/js/jquery.dataTables.js"></script>
+	
 
 </head>
 
@@ -319,12 +327,14 @@
 
 									<div role="tabpanel" class="tab-pane fade" id="documents">
 										<h3 class="tabs-header">DOCUMENTS</h3>
-										<div id="fileUploadDiv" class="container">
+										<div id="fileUploadDiv" class="fileUploadDiv">
 											<h1>Project Documents</h1>
 
 											<div id="dropzone" class="dropzone">
 												<div class="fileupload_wrapper">
-													Drop files here, or <label id="browseFiles" title="Click Here to Choose Files" class="fileupload_label" onmouseover="hoverBrowse()" onmouseout="outBrowse()">
+													                                                    <img src="<%=request.getContextPath() %>/resources/img/fileupload.png" alt="">
+                                                    <br>Drop files here, or <label id="browseFiles" title="Click Here to Choose Files" class="fileupload_label" onmouseover="hoverBrowse();" onmouseout="outBrowse();"><br>
+
 														browse for files<input id="fileupload" type="file" name="files"
 														multiple="multiple">
 													</label>
@@ -335,13 +345,18 @@
 											<button id="uploadFiles" type="button"
 												class="btn btn-primary">Upload</button>
 										</div>
-										<div id="fileListDiv">
-											<table>
-												<tr>
-													<td>Name</td>
-													<td>Date Modified</td>
-													<td>Size</td>
-												</tr>
+										                                        <div id="fileListDiv" class="table-responsive col-md-12" >
+                                            <table id="fileListTable" class="table" style="width: 100%;">
+                                            <thead>
+		<tr>
+													                                                    <td class="col-md-5">Name</td>
+                                                    <td class="col-md-3">Date Modified</td>
+                                                    <td class="col-md-2">Size</td>
+                                                    <td class="col-md-1"></td>
+                                                    <td class="col-md-1"></td>
+                                                </tr></thead>
+                                                <tbody id="docFileListRow">
+
 												<c:forEach items="${filesList}" var="file">
 													<tr>
 														<td>${file.getName()}</td>
@@ -373,13 +388,15 @@
 															%> <c:out value="${fileSize}" /></td>
 														<td><a
 															href="/saveFile?file=${file}&project_name=${projectName}&project_proposer=${project_proposer}&username=${username}"><button
-																	type="button" class="btn btn-success">Download</button></a>
+                                                                    type="button" class="btn btn-success" title="Download file"><i class="fa fa-download"></i></button></a>
+
 														<td>
-															<button type="button" class="btn btn-error"
-																onClick="deleteFile('${file}')">Delete</button>
+                                                            <button type="button" class="btn btn-danger"
+                                                                onClick="deleteFile('${file}')" title="Delete"><i class="fa fa-trash"></i></button>
 														</td>
 													</tr>
 												</c:forEach>
+												</tbody>
 											</table>
 										</div>
 									</div>
@@ -1080,5 +1097,25 @@ function showCalendar(){
        },200);
 }
 </script>
+
+<script>
+$(document)
+.ready(
+        function() {
+            $('#fileListTable').DataTable({
+                responsive:true,
+                "columnDefs": [{
+                    "targets" : [3],
+                    "orderable":false
+                    }, {
+                        "targets": [4],
+                        "orderable":false
+                    
+                
+                }]
+            });
+            
+        });
+        </script>
 
 </html>

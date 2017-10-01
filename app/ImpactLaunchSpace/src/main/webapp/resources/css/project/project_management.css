@@ -179,7 +179,7 @@
 }
 
 .dropzone {
-	border: 1px dashed #cccccc;
+    border: 1px dashed #5bc0de;
 	padding: 30px;
 	background: #fff;
 }
@@ -188,6 +188,9 @@
 	display: none;
 }
 
+.fileupload_label:hover {
+	cursor: pointer;
+}
 .project-management-container form, #progress, .project-management-container input, .project-management-container .form-actions, #files {
 	margin: 10px 0;
 }
@@ -208,3 +211,14 @@
 	font-style: italic;
 	border-bottom: 1px dotted; 
 }
+
+
+.fileUploadDiv{
+    margin-bottom: 2em;
+}
+
+#fileUploadDiv .fileupload_wrapper{
+    margin-left: auto;
+    margin-right: auto;
+}
+
