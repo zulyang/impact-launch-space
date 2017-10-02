@@ -53,7 +53,7 @@
 					<div class="lt-left">
 						<div class="form-group">
 							<div>
-								<label for="exampleInputEmail2">Email or Phone</label>
+								<label for="exampleInputEmail2">Email or Username</label>
 							</div>
 							<input name="usernameemail" type="text" required
 								class="form-control input-sm" id="inputEmail3"
@@ -103,7 +103,7 @@
 								name="email" required="required" type="email"
 								placeholder="Email address" /> <input
 								class="form-control input-lg" name="password1" id="password1"
-								required="required" placeholder="New Password" type="password" />
+								required="required" placeholder="Password" type="password" />
 							<input name="password2" id="password2" required="required"
 								class="form-control input-lg" name="password"
 								placeholder="Repeat your password" type="password"
