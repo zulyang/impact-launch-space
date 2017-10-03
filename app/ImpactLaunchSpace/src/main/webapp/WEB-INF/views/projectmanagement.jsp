@@ -282,7 +282,7 @@
 														<br> ${done.getTags()}</br>
 														
 														<button id="view${done.getCard_id()}" type="submit"
-															name="view" class="btn btn-primary" onClick="view()">
+															name="view" class="btn btn-primary" onClick="view(this.id)">
 															<i class="fa fa-pencil"></i> View
 														</button>
 
