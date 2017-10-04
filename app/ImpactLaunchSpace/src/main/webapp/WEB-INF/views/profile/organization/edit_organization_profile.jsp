@@ -77,7 +77,9 @@
 													class="btn btn-info edit_org_profile_save"> <i
 													class="fa fa-picture-o" aria-hidden="true"
 													style="font: none;"></i>&nbspChoose your profile picture
-												</label> <input type="file" name="image" id="editChooseOrgPic"
+												</label> 
+												<p style="color:red">*Please use only .jpeg images for now. PNG images will be allowed soon.</p>
+												<input type="file" name="image" id="editChooseOrgPic"
 													style="visibility: hidden;" onchange="readURL(this);" />
 												<div class="image_container" id="image_container">
 													<img id="blah" src="#" alt="" />
